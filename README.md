@@ -1,4 +1,4 @@
-# PsiCore - Sistema de Gerenciamento para Psicólogos
+# Seren - Sistema de Gerenciamento de Agendamentos para Psicólogos
 
 Sistema de Gerenciamento para Psicólogos, desenvolvido em React.js.
 
