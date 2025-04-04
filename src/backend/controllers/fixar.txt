@@ -1,0 +1,1 @@
+Lógica dos endpoints (ex: criar usuário)
