@@ -1,6 +1,6 @@
 import React from 'react';
 import './Cadastro.css';
-import imgMulherCadastro from '../../images/image-mulher-cadastro.png';
+import imgMulherCadastro from '../../assets/images/image-mulher-cadastro.png';
 
 function Cadastro() {
     return(

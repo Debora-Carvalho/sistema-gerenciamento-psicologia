@@ -1,6 +1,6 @@
 import React from 'react';
 import './PaginaModelo.css';
-import imgMulherLogin from '../../images/image-mulher-login.png';
+import imgMulherLogin from '../../assets/images/image-mulher-login.png';
 
 function PaginaModelo() {
     return(
