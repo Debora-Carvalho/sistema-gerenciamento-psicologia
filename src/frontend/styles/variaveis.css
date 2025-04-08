@@ -4,6 +4,8 @@
 :root {
     --primary-color: #922E1A; 
     --secondary-color: #F6C6B8;
+    --neutral-color-100: #ffffff;
+    --neutral-color-900: #000000;
     --font-family-principal: 'Roboto', sans-serif;
     --font-family-logo: 'Sacramento', sans-serif, cursive;
     --font-size-titulo-desktop: 50px;
