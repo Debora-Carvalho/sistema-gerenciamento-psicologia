@@ -12,7 +12,7 @@
 
 .container-conteudo {
     position: relative;
-    margin: 1% 0 0 0;
+    margin: 4% 0 0 0;
     z-index: 2;
 }
 
@@ -80,6 +80,11 @@
     border: none;
     border-radius: 30px;
     cursor: pointer;
+    transition: 0.5s;
+}
+
+.container form .btn-verificar-codigo:hover {
+    background-color: #da563c;    
 }
 
 .link-reenviar-codigo {
@@ -87,7 +92,7 @@
     text-decoration: underline;
     font-weight: 600;
     cursor: pointer;    
-    transition: ease color;
+    transition: 0.5s;
 }
 
 .link-reenviar-codigo:hover {
@@ -96,7 +101,7 @@
 
 .container .imagem-principal {
     position: absolute;       
-    bottom: 0;
+    bottom: 10px;
     left: 50%;
     transform: translateX(-50%);
     width: 90%;

@@ -7,8 +7,8 @@ function App() {
     return (
         <div className="App">
             <Cadastro /> 
-            {/* <LoginEsqueciSenha /> */}
-            {/* <LoginCodigoRecuperacao /> */} 
+            {/* <LoginEsqueciSenha />  */}
+            {/* <LoginCodigoRecuperacao />  */}
         </div>
     );
 }
