@@ -1,7 +1,7 @@
 import React from 'react';
-import './Login.css';
+import './LoginCadastro.css';
 
-function Login() {
+function LoginCadastro() {
     return(
         <div className='container'>
             <h1>Página de Login</h1>
@@ -9,4 +9,4 @@ function Login() {
     );
 }
 
-export default Login;
+export default LoginCadastro;
