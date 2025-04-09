@@ -1,14 +1,9 @@
-import './styles/App.css';
-import Cadastro from './pages/Cadastro/Cadastro.js';
-//import LoginEsqueciSenha from './pages/LoginEsqueciSenha/LoginEsqueciSenha.js';
-//import LoginCodigoRecuperacao from './pages/LoginCodigoRecuperacaoSenha/LoginCodigoRecuperacaoSenha.js';
+import AppRoutes from "../backend/routes/router.js";
 
 function App() {
     return (
         <div className="App">
-            <Cadastro /> 
-            {/* <LoginEsqueciSenha />  */}
-            {/* <LoginCodigoRecuperacao />  */}
+            <AppRoutes />
         </div>
     );
 }

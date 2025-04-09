@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import './LoginEsqueciSenha.css';
 import imgMulherEsqueciSenha from '../../assets/images/image-mulher-esquecisenha.png';
+import useDocumentTitle from '../../components/useDocumentTitle'
 
 function LoginEsqueciSenha() {
+    useDocumentTitle("Recuperar Senha | Seren");// mudando o Title da pagina
+
     const [email, setEmail] = useState('');
     const [mensagemErro, setMensagemErro] = useState('');
 
@@ -66,7 +69,7 @@ function LoginEsqueciSenha() {
                 <p className='texto-explicativo'>
                     Lembrou a senha?&nbsp;&nbsp;
                     <span>
-                        <a className='link-pagina-login'>Login</a>
+                        <a href='/' className='link-pagina-login'>Login</a>
                     </span>
                 </p>
             </div>
