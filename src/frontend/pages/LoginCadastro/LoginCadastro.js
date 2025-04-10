@@ -4,7 +4,7 @@ import './LoginCadastro.css';
 function LoginCadastro() {
     return(
         <div className='container'>
-            <h1>Página de Login</h1>
+            <h1>Página de Login aaaaaaaaaaaaaaaaaa</h1>
         </div>
     );
 }
