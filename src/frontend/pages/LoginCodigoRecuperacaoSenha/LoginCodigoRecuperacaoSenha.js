@@ -64,7 +64,7 @@ function LoginCodigoRecuperacaoSenha() {
                 <p className='texto-explicativo'>
                     Não recebeu o código?&nbsp;&nbsp;
                     <span>
-                        <a className='link-reenviar-codigo'>Reenviar</a>
+                        <a href="/"className='link-reenviar-codigo'>Reenviar</a>
                     </span>
                 </p>
             </div>
