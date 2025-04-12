@@ -16,7 +16,7 @@ function Cadastro() {
   const [confirmaSenha, setConfirmaSenha] = useState('');
   const [mensagemErro, setMensagemErro] = useState('');
 
-  const validarFormulario = () => {
+  const validarCadastro= () => {
     if (!username || !telephone || !email || !senha || !confirmaSenha) {
       return 'Preencha todos os campos.';
     }
@@ -31,8 +31,8 @@ function Cadastro() {
       return 'Número de celular inválido.'; 
     }
 
-    if (senha.length < 6) {
-      return 'A senha deve ter no mínimo 6 caracteres.'; 
+    if (senha.length < 8) {
+      return 'A senha deve ter no mínimo 8 caracteres.'; 
     }
 
     if (senha !== confirmaSenha) {
@@ -45,14 +45,15 @@ function Cadastro() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const erro = validarFormulario();
+    const erro = validarCadastro();
     setMensagemErro(erro);
 
     if (!erro) {
       console.log({ username, telephone, email });
       alert("Dados cadastrados com sucesso!");
 
-      // Limpa os campos
+      // essa parte limpa os campos
+      // se não quiserem que limpem, podem mudar pra voltar pra login 
       setUsername('');
       setTelephone('');
       setEmail('');
@@ -62,7 +63,8 @@ function Cadastro() {
   };
 
   return (
-    <div className="container">
+    <div className="container-cadastro">
+      <div className='bem-vinda'>
       <h1 id="primeiro-titulo-cadastro">Bem-vinda ao</h1>
       <h1 id="titulo-logo">Seren!</h1>
 
@@ -76,8 +78,9 @@ function Cadastro() {
           Logar-se
         </button>
       </Link>
+      </div>
 
-      <form className="formulario" onSubmit={handleSubmit}>
+      <form className="formulario-cadastro" onSubmit={handleSubmit}>
         <h1 id="segundo-titulo-cadastro">Crie sua conta</h1>
 
         <div>
