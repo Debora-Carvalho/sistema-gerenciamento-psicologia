@@ -7,19 +7,21 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
     "@testing-library/user-event": "^13.5.0",
+    "bcryptjs": "^3.0.2",
     "mongodb": "^6.15.0",
+    "nodemailer": "^6.10.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^6.30.0",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-"scripts": {
-  "start": "concurrently \"react-scripts start\" \"cross-env PORT=4000 node src/backend/server.js\"",
-  "build": "react-scripts build",
-  "test": "react-scripts test",
-  "eject": "react-scripts eject"
-},
+  "scripts": {
+    "start": "concurrently \"react-scripts start\" \"cross-env PORT=4000 node src/backend/server.js\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

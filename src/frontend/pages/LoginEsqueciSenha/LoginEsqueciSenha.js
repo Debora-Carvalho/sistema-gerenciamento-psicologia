@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import { useNavigate} from 'react-router-dom';
 import './LoginEsqueciSenha.css';
 import imgMulherEsqueciSenha from '../../assets/images/image-mulher-esquecisenha.png';
 import useDocumentTitle from '../../components/useDocumentTitle'
 
 function LoginEsqueciSenha() {
     useDocumentTitle("Recuperar Senha | Seren");// mudando o Title da pagina
-
     const [email, setEmail] = useState('');
     const [mensagemErro, setMensagemErro] = useState('');
+    const navigate = useNavigate();
+    const [desabilitado, setDesabilitado] = useState(false);
 
     const validarEmail = (email) => {
         if (!email.includes('@')) {
@@ -23,14 +25,38 @@ function LoginEsqueciSenha() {
         return ''; 
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const erro = validarEmail(email);
         setMensagemErro(erro);
 
         if (!erro) {
             console.log('email válido, prosseguir com envio...');
-            // Backend: acrescentar codigo para o envio do email
+            setDesabilitado(true);
+            try {
+                const resposta = await fetch("http://localhost:4000/recuperar-senha", {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email }),
+                });
+    
+                const data = await resposta.json();
+    
+                if (!resposta.ok) {
+                    setMensagemErro(data.error || 'Erro ao enviar o e-mail. Tente novamente.');
+                    return;
+                }
+                setMensagemErro('');
+                alert('Código de recuperação enviado para seu e-mail!');
+                navigate('/recuperar-senha/codigo',{ state: { email } })
+            } catch (err) {
+                console.error(err);
+                setMensagemErro('Erro de conexão com o servidor.');
+            } finally {
+                setTimeout(() => setDesabilitado(false), 30000);
+            }
         }
     };
 
@@ -84,3 +110,4 @@ function LoginEsqueciSenha() {
 }
 
 export default LoginEsqueciSenha;
+

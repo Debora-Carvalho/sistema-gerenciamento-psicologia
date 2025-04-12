@@ -11,6 +11,9 @@ const client = new MongoClient(uri, {
   }
 })
 
+const bcrypt = require('bcryptjs');
+
+
 async function connect() {
     try {
         await client.connect(); 
@@ -31,7 +34,7 @@ async function connect() {
       const user = await usuariosCollection.findOne({ email });
         
       // se tiver email e a senha conferir então o userID será o id que está na propriedade do documento(_id)
-      if (user && user.senha === senha) {
+      if (user && await bcrypt.compare(senha, user.password)) {
         return { success: true, userID: user._id };
       } else {
         return { success: false, message: "Credenciais inválidas" };
