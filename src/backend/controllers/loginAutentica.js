@@ -34,7 +34,7 @@ async function connect() {
       const user = await usuariosCollection.findOne({ email });
         
       // se tiver email e a senha conferir então o userID será o id que está na propriedade do documento(_id)
-      if (user && await bcrypt.compare(senha, user.password)) {
+      if (user && await bcrypt.compare(senha, user.senha)) {
         return { success: true, userID: user._id };
       } else {
         return { success: false, message: "Credenciais inválidas" };

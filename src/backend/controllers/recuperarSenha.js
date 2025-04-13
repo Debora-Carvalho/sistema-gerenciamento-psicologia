@@ -76,7 +76,17 @@ async function parseBody(req) {
         res.writeHead(400);
         return res.end(JSON.stringify({ error: "Código inválido ou expirado" }));
       }
-  
+
+      await db.collection("Usuario").updateOne(
+        { email },
+        {
+          $unset: {
+            recoveryCode: "",
+            recoveryexpira: ""
+          }
+        }
+      );
+      
       res.writeHead(200);
       return res.end(JSON.stringify({ message: "Código válido" }));
     }
@@ -95,7 +105,7 @@ async function parseBody(req) {
       await db.collection("Usuario").updateOne(
         { email },
         {
-          $set: { password: hash },
+          $set: { senha: hash },
         }
       );
   
