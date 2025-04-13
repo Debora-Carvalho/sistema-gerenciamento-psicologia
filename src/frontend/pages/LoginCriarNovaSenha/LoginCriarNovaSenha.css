@@ -162,7 +162,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #b36b6b70; /* leve desfoque - ajustar para a cor padrão*/
+    background: #ffe8e293; /* leve desfoque - ajustar para a cor padrão*/
     backdrop-filter: blur(1px);
     z-index: 99;
     display: flex;
