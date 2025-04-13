@@ -2,8 +2,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sacramento&display=swap');
 
 :root {
-    --primary-color: #922E1A; 
-    --secondary-color: #F6C6B8;
+    --primary-color: #01429E; 
+    --secondary-color: #ffe6ea;
+    --background-color-tela: #fcf2f4e7;
     --neutral-color-100: #ffffff;
     --neutral-color-900: #000000;
     --font-family-principal: 'Roboto', sans-serif;
