@@ -50,12 +50,12 @@ function LoginEsqueciSenha() {
                 }
                 setMensagemErro('');
                 alert('Código de recuperação enviado para seu e-mail!');
-                navigate('/recuperar-senha/codigo',{ state: { email } })
+                navigate('/recuperar-senha/codigo',{ state: { email } }) // mandando o email para a página de código
             } catch (err) {
                 console.error(err);
                 setMensagemErro('Erro de conexão com o servidor.');
             } finally {
-                setTimeout(() => setDesabilitado(false), 30000);
+                setTimeout(() => setDesabilitado(false), 30000); // tempo de limite para evitar spam
             }
         }
     };

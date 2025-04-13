@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 function LoginCodigoRecuperacaoSenha() {
     const [codigo, setCodigo] = useState('');
     const { state } = useLocation();
-    const email = state?.email;
+    const email = state?.email; // pegando o email pelo estado da outra página, pois são páginas diferentes 
     const navigate = useNavigate();
     const [mensagemErro, setMensagemErro] = useState('');
     const [desabilitado, setDesabilitado] = useState(false);
@@ -15,7 +15,7 @@ function LoginCodigoRecuperacaoSenha() {
     
     useEffect(() => {
         if (!email) {
-            navigate('/');
+            navigate('/'); // caso não identificar o email retornar
         }
     }, [email, navigate]);
     
@@ -74,7 +74,7 @@ function LoginCodigoRecuperacaoSenha() {
                 if (response.ok) {
                     console.log('Código válido, prosseguir com envio...');
                     await alert("Código válido!")
-                    navigate('/recuperar-senha/nova-senha',{ state: { email } })
+                    navigate('/recuperar-senha/nova-senha',{ state: { email } }) // enviando o email para a página de senha
                 } else {
                     setMensagemErro(data.error || 'Erro desconhecido');
                 }

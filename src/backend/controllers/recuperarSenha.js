@@ -11,7 +11,7 @@ const client = new MongoClient(uri, {
   }
 })
 
-const { sendRecoveryEmail } = require("../services/emailService");
+const { sendRecoveryEmail } = require("../services/emailService"); 
 const bcrypt = require("bcryptjs");
 
 async function connect() {
@@ -52,8 +52,8 @@ async function parseBody(req) {
         { email },
         {
           $set: {
-            recoveryCode: code,
-            recoveryexpira: expira
+            recoveryCode: code, // adicionando o código como atributo no usuário para termos controle sobre ele
+            recoveryexpira: expira // tempo de expiração
           }
         }
       );
@@ -71,7 +71,7 @@ async function parseBody(req) {
       if (
         !user ||
         user.recoveryCode !== code ||
-        new Date() > new Date(user.recoveryexpira)
+        new Date() > new Date(user.recoveryexpira) // verificação necessária para ver se o código ainda está válido
       ) {
         res.writeHead(400);
         return res.end(JSON.stringify({ error: "Código inválido ou expirado" }));
@@ -82,7 +82,7 @@ async function parseBody(req) {
         {
           $unset: {
             recoveryCode: "",
-            recoveryexpira: ""
+            recoveryexpira: "" // removendo os atributos de código no usuário
           }
         }
       );
@@ -100,12 +100,12 @@ async function parseBody(req) {
         return res.end(JSON.stringify({ error: "Usuário não encontrado!" }));
       }
   
-      const hash = await bcrypt.hash(novaSenha, 10);
+      const hash = await bcrypt.hash(novaSenha, 10); // criptogrando com hash
   
       await db.collection("Usuario").updateOne(
         { email },
         {
-          $set: { senha: hash },
+          $set: { senha: hash }, //atualizando a senha
         }
       );
   

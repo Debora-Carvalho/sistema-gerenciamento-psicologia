@@ -2,9 +2,9 @@ const { recuperarSenhaHandler } = require("../../backend/controllers/recuperarSe
 
 const { loginHandler } = require("../../backend/controllers/loginAutentica.js");
 
-// Função do servidor (delegação das rotas)
+// função do servidor (delegação das rotas)
 const handlerRouter = async (req, res) => {
-  // Configurar CORS e headers
+  // configurar CORS e headers
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -15,7 +15,7 @@ const handlerRouter = async (req, res) => {
     return res.end();
   }
 
-  // Delegação das rotas para o recuperaSenha.js
+  // delegação das rotas para o recuperaSenha.js
   if (
     (req.url === "/recuperar-senha" ||
      req.url === "/recuperar-senha/codigo" ||
@@ -25,7 +25,7 @@ const handlerRouter = async (req, res) => {
     return await recuperarSenhaHandler(req, res);
   }
   
-
+  // delegação da rota para login
   if (req.url === "/" && req.method === "POST") {
     return await loginHandler(req, res);
   }
