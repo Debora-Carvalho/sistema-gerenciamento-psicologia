@@ -28,7 +28,8 @@ function LoginCriarNovaSenha() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const erro = validarSenha(senha, confirmarSenha);
-    
+    // usar senha Valeriano24@
+
         if (erro) {
             setMensagemErro(erro);
             setErroSenhaInvalida(true);
@@ -87,7 +88,8 @@ function LoginCriarNovaSenha() {
                         Criar nova senha
                     </button>
 
-                    <button id='btn-login' className='btn-login' type='button'>
+                    <button id='btn-login' className='btn-login' type='button'onClick={() => window.location.href = '/'}>
+                    
                         Login
                     </button>
                 </form>
@@ -98,9 +100,10 @@ function LoginCriarNovaSenha() {
                 <div className="popup-box">
                     <h3>Senha alterada</h3>
                     <p>Você alterou sua senha com sucesso.<br />Por favor, faça novo login</p>
-                    <button className="btn-popup" onClick={() => console.log('Redirecionar login')}>
-                        Fazer Login
-                    </button>
+                    <button className="btn-popup" onClick={() => window.location.href = '/'}>
+    Fazer Login
+</button>
+
                 </div>
             </div>
         )}
