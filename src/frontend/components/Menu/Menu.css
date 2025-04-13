@@ -5,7 +5,7 @@
     border-radius: 20px;
     box-shadow: 0px 10px 16px -6px rgba(0, 0, 0, 0.2);
     width: 221px;
-    height: 500px;
+    height: 70vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -61,7 +61,7 @@
     cursor: pointer;
 }
 
-/* Responsivo */
+/* responsivo */
 @media (max-width: 768px) {
     .container-menu {
         transform: translateX(-100%);
@@ -76,7 +76,7 @@
     }
 
     .container-menu {
-        height: 100vh;
+        height: 70vh;
         width: 100%;
         max-width: 400px;
     }

@@ -23,11 +23,14 @@ function PaginaInicial() {
                     <div className='cards-indicadores'>
                         <CardsIndicadores />
                     </div>
-                    <div className='cards-botoes-funcionalidades'>
-                        <p>colocar o grid de botoes aqui</p>
-                    </div>
-                    <div className='card-calendario'>
-                        <p>colocar o calenadario aqui</p>
+
+                    <div className='container-botoes-calendario'>
+                        <div className='cards-botoes-funcionalidades'>
+                            <p>colocar o grid de botoes aqui</p>
+                        </div>
+                        <div className='card-calendario'>
+                            <p>colocar o calenadario aqui</p>
+                        </div>                       
                     </div>
                 </div>
             </div>

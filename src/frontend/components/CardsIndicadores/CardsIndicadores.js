@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './CardsIndicadores.css';
+import { IoIosArrowForward } from "react-icons/io";
 
 function CardsIndicadores() {
     const totalNotificacoes = 131;
@@ -9,19 +10,23 @@ function CardsIndicadores() {
     return(
         <div className='container-cards'>
             <div className='card'>
-                <p>{totalNotificacoes}</p>
+                <p className='numeroIndicador'>{totalNotificacoes}</p>
                 <p className='texto-descritivo'>Notificações</p>
             </div>
 
-            <div className='card'>
-                <p>{totalInativos}</p>
+            <div className='card linha-separacao'>
+                <p className='numeroIndicador'>{totalInativos}</p>
                 <p className='texto-descritivo'>Pacientes inativos</p>
             </div>
 
             <div className='card'>
-                <p>{totalPagamentosPendentes}</p>
+                <p className='numeroIndicador'>{totalPagamentosPendentes}</p>
                 <p className='texto-descritivo'>Pagamentos a vencer</p>
             </div>
+
+            <div className='card'>
+                <IoIosArrowForward className='icon-seta' />
+            </div>            
         </div>
     );
 }
