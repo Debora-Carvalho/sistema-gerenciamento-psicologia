@@ -26,7 +26,33 @@ function PaginaInicial() {
 
                     <div className='container-botoes-calendario'>
                         <div className='cards-botoes-funcionalidades'>
-                            <p>colocar o grid de botoes aqui</p>
+                            <div className='card'>
+                                <img src={imgBtnPacientes} alt='Ilustração'/>
+                                <a className='btn-pacientes' href='#'>
+                                    <p>Pacientes</p>
+                                </a>
+                            </div>
+
+                            <div className='card'>
+                                <img src={imgBtnAnotacoes} alt='Ilustração'/>
+                                <a className='btn-anotacoes' href='#'>
+                                    <p>Anotações</p>
+                                </a>
+                            </div>
+
+                            <div className='card'>
+                                <img src={imgBtnAgendamentos} alt='Ilustração'/>
+                                <a className='btn-agendamentos' href='#'>
+                                    <p>Agendamentos</p>
+                                </a>
+                            </div>
+
+                            <div className='card'>
+                                <img src={imgBtnPagamentos} alt='Ilustração'/>
+                                <a className='btn-pagamentos' href='#'>
+                                    <p>Pagamentos</p>
+                                </a>
+                            </div>
                         </div>
                         <div className='card-calendario'>
                             <p>colocar o calenadario aqui</p>

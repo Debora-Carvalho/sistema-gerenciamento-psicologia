@@ -22,3 +22,20 @@
 .container-conteudo-cards {
     width: calc(100vw - 221px);
 }
+
+.container-botoes-calendario {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+}
+
+.cards-botoes-funcionalidades {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.cards-botoes-funcionalidades .card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
