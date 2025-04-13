@@ -214,3 +214,73 @@
 .input-container input.erro {
     border: 3px solid #D10000 !important;
 }
+
+
+/*Responsividade*/
+
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+    }
+
+    .container-conteudo {
+        margin: 0;
+    }
+
+    .container .titulo-principal {
+        font-size: 1.5rem;
+    }
+
+    .container .texto-explicativo {
+        font-size: 0.9rem;
+        line-height: 1.2;
+    }
+
+    .campo-incluir-nova-senha .input-container input {
+        width: 90%;
+        max-width: 354px;
+        height: 45px;
+        font-size: 0.9rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .container form .btn-confirmar,
+    .container form .btn-login {
+        width: 90%;
+        max-width: 200px;
+        height: 48px;
+        font-size: 1rem;
+        margin-top: 20px;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+    }
+
+    .container .imagem-principal {
+        width: 90%;
+        bottom: 0;
+        max-width: 100%;
+    }
+
+    .popup-box {
+        width: 90%;
+        max-width: 300px; 
+        margin: 0 auto; 
+        padding: 20px;
+        border-radius: 40px;
+    }
+
+    .popup-box h3 {
+        font-size: 1.1rem;
+    }
+
+    .popup-box p {
+        font-size: 0.9rem;
+    }
+
+    .btn-popup {
+        padding: 0.6rem 1.5rem;
+    }
+}
