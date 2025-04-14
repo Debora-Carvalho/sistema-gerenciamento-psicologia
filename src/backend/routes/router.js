@@ -6,6 +6,8 @@ import Home from "../../frontend/pages/LoginCadastro/LoginCadastro";
 import EsqueciSenha from "../../frontend/pages/LoginEsqueciSenha/LoginEsqueciSenha";
 import CodigoRecuperarSenha from "../../frontend/pages/LoginCodigoRecuperacaoSenha/LoginCodigoRecuperacaoSenha";
 import NovaSenha from "../../frontend/pages/LoginCriarNovaSenha/LoginCriarNovaSenha";
+import PaginaPacientes from "../../frontend/pages/PaginaPacientes/PaginaPacientes";
+
 
 const AppRoutes = () => {
     return (
@@ -16,6 +18,7 @@ const AppRoutes = () => {
                 <Route path="/recuperar-senha" element={<EsqueciSenha />} />
                 <Route path="/recuperar-senha/codigo" element={<CodigoRecuperarSenha />} />
                 <Route path="/recuperar-senha/nova-senha" element={<NovaSenha />} />
+                <Route path="/pacientes" element={<PaginaPacientes />} />
             </Routes>
         </BrowserRouter>
     );
