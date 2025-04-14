@@ -8,6 +8,7 @@ import imgBtnAgendamentos from '../../assets/images/image-btn-home-agendamentos.
 import imgBtnPacientes from '../../assets/images/image-btn-home-pacientes.png';
 import imgBtnPagamentos from '../../assets/images/image-btn-home-pagamentos.png';
 import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
+import Calendario from '../../components/Calendario/Calendario.js';
 
 function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
@@ -55,7 +56,7 @@ function PaginaInicial() {
                             </div>
                         </div>
                         <div className='card-calendario'>
-                            <p>colocar o calenadario aqui</p>
+                            <Calendario />
                         </div>                       
                     </div>
                 </div>
