@@ -102,14 +102,14 @@ function PaginaPacientes() {
         }
         setNovoPaciente({ nome: '', idade: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
         setMostrarFormulario(false);
-        setErroCadastro(''); // Limpa a mensagem de erro ao salvar com sucesso
+        setErroCadastro(''); 
     };
 
     const editarPaciente = (index) => {
-        setNovoPaciente({...pacientes[index]}); // Cria uma cópia para não alterar o estado diretamente
+        setNovoPaciente({...pacientes[index]}); 
         setEditandoIndex(index);
         setMostrarFormulario(true);
-        setErroCadastro(''); // Limpa qualquer mensagem de erro anterior ao editar
+        setErroCadastro(''); 
     };
 
     const toggleMenuMobile = () => {
@@ -250,6 +250,7 @@ function PaginaPacientes() {
             </div>
 
             {mostrarFormulario && (
+                
                 <div className="modal-formulario">
                     <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Adicionar novo paciente'}</h3>
                     {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>} {/* Mensagem de erro */}
