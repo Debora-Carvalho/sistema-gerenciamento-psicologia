@@ -6,6 +6,8 @@ import EsqueciSenha from "../../frontend/pages/LoginEsqueciSenha/LoginEsqueciSen
 import CodigoRecuperarSenha from "../../frontend/pages/LoginCodigoRecuperacaoSenha/LoginCodigoRecuperacaoSenha";
 import NovaSenha from "../../frontend/pages/LoginCriarNovaSenha/LoginCriarNovaSenha";
 import ProtectedRoute from "./protectedroute";
+
+
 const AppRoutes = () => {
     return (
         <BrowserRouter>
