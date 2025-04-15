@@ -1,14 +1,17 @@
 import React, {useState, useEffect} from 'react';
 import './LoginCriarNovaSenha.css';
 import { useLocation, useNavigate } from 'react-router-dom';
+import imgMulherNovaSenha from '../../assets/images/image-mulher-novasenha.png';
 
 function LoginCriarNovaSenha() {
     const [novaSenha, setNovaSenha] = useState('');
     const [mensagemErro, setMensagemErro] = useState('');
-    const [mensagemSucesso, setMensagemSucesso] = useState('');
     const navigate = useNavigate();
     const { state } = useLocation();
     const email = state?.email;
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [erroSenhaInvalida, setErroSenhaInvalida] = useState(false);
+    const [popupAberto, setPopupAberto] = useState(false);
 
     useEffect(() => {
             if (!email) {
@@ -18,12 +21,21 @@ function LoginCriarNovaSenha() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+        
         if (!novaSenha ) {
             setMensagemErro('Preencha todos os campos.');
             return;
         }
+        
+        const erro = validarSenha(novaSenha, confirmarSenha);
+        // usar senha Valeriano24@
 
+        if (erro) {
+            setMensagemErro(erro);
+            setErroSenhaInvalida(true);
+            return;
+        }
+        
         try {
             const response = await fetch('http://localhost:4000/recuperar-senha/nova-senha', {
                 method: 'POST',
@@ -40,41 +52,107 @@ function LoginCriarNovaSenha() {
 
             if (response.ok) {
                 setMensagemErro('');
-                setMensagemSucesso('Senha atualizada com sucesso!');
-                setTimeout(() => {
-                    navigate('/');
-                }, 2000);
+                console.log('Senha atualizada com sucesso!')
+                setPopupAberto(true);
+                setMensagemErro('');
+                setErroSenhaInvalida(false);
             } else {
                 setMensagemErro(data.error || 'Erro ao atualizar a senha');
-                setMensagemSucesso('');
             }
         } catch (err) {
             console.error('Erro ao enviar nova senha', err);
             setMensagemErro('Erro de conexão com o servidor.');
         }
-    };
 
+        };
 
-    return(
-        <div className='container'>
-            <h1>Criar nova senha</h1>
-            <form onSubmit={handleSubmit}>
-                {mensagemErro && <p className="erro">{mensagemErro}</p>}
-                {mensagemSucesso && <p className="sucesso">{mensagemSucesso}</p>}
+        const validarSenha = (novaSenha, confirmarSenha) => {
+            const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    
+            if (!regexSenhaForte.test(novaSenha)) {
+                return 'Senha inválida';
+            }
+    
+            if (novaSenha !== confirmarSenha) {
+                return 'As senhas não coincidem.';
+            }
+    
+            return '';
+        };
 
-                <label htmlFor="novaSenha">Nova senha:</label>
-                <input
-                    type="password"
-                    id="novaSenha"
-                    value={novaSenha}
-                    onChange={(e) => setNovaSenha(e.target.value)}
-                    required
+        return (
+            <div className='container'>
+                <div className='container-conteudo'>
+                    <h1 className='titulo-principal'>Crie sua nova senha</h1>
+                    <p className='texto-explicativo'>Sua nova senha deve ser diferente das anteriores.</p>
+                    <p className='texto-explicativo'>Recomendamos utilizar no mínimo 8 caracteres.</p>
+    
+                    <form onSubmit={handleSubmit}>
+                        <div className='campo-incluir-nova-senha'>
+                            <div className='input-container'>
+                                {mensagemErro && (
+                                    <p className='mensagem-erro'>{mensagemErro}</p>
+                                )}
+                                <label htmlFor='senha'>Nova senha</label>
+                                <input
+                                    type='password'
+                                    id='senha'
+                                    className={erroSenhaInvalida ? 'erro' : ''}
+                                    placeholder='Nova senha'
+                                    value={novaSenha}
+                                    onChange={(e) => setNovaSenha(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+    
+                        <div className='campo-incluir-nova-senha'>
+                            <div className='input-container'>
+                                <label htmlFor='confirmarSenha'>Confirmar nova senha</label>
+                                <input
+                                    type='password'
+                                    id='confirmarSenha'
+                                    className={erroSenhaInvalida ? 'erro' : ''}
+                                    placeholder='Confirmar nova senha'
+                                    value={confirmarSenha}
+                                    onChange={(e) => setConfirmarSenha(e.target.value)}
+                                    required
+                                />
+                            </div>
+                        </div>
+    
+                        <button id='btn-confirmar' className='btn-confirmar' type='submit'>
+                            Criar nova senha
+                        </button>
+    
+                        <button id='btn-login' className='btn-login' type='button'onClick={() => window.location.href = '/'}>
+                            Login
+                        </button>
+                    </form>
+                </div>
+    
+                {popupAberto && (
+                <div className="popup-overlay">
+                    <div className="popup-box">
+                        <h3>Senha alterada</h3>
+                        <p>Você alterou sua senha com sucesso.<br />Por favor, faça novo login</p>
+                        <button className="btn-popup" onClick={() => window.location.href = '/'}>
+                            Fazer Login
+                        </button>
+    
+                    </div>
+                </div>
+            )}
+    
+                <img
+                    src={imgMulherNovaSenha}
+                    className='imagem-principal'
+                    alt="Mulher sentada usando seu notebook no chão"
                 />
+            </div>
+        );
+    }
 
-                <button type="submit">Atualizar Senha</button>
-            </form>
-        </div>
-    );
-}
+
 
 export default LoginCriarNovaSenha;

@@ -99,9 +99,15 @@ async function parseBody(req) {
         res.writeHead(400);
         return res.end(JSON.stringify({ error: "Usuário não encontrado!" }));
       }
-  
+      
+      if (await bcrypt.compare(novaSenha, user.senha)) {
+        res.writeHead(400, { 'Content-Type': 'application/json' });
+        return res.end(JSON.stringify({ error: 'A nova senha não pode ser igual à senha atual.' }));
+      }
+      
       const hash = await bcrypt.hash(novaSenha, 10); // criptogrando com hash
-  
+
+      
       await db.collection("Usuario").updateOne(
         { email },
         {
