@@ -41,8 +41,8 @@ function PaginaPacientes() {
     const [erroCadastro, setErroCadastro] = useState('');
 
     useEffect(() => {
-        const handleClickOutside = () => {
-            if (mostrarFiltrosVisuais) {
+        const handleClickOutside = (event) => {
+            if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
                 setMostrarFiltrosVisuais(false);
             }
         };
@@ -102,14 +102,14 @@ function PaginaPacientes() {
         }
         setNovoPaciente({ nome: '', idade: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
         setMostrarFormulario(false);
-        setErroCadastro(''); 
+        setErroCadastro('');
     };
 
     const editarPaciente = (index) => {
-        setNovoPaciente({...pacientes[index]}); 
+        setNovoPaciente({...pacientes[index]});
         setEditandoIndex(index);
         setMostrarFormulario(true);
-        setErroCadastro(''); 
+        setErroCadastro('');
     };
 
     const toggleMenuMobile = () => {
@@ -191,7 +191,7 @@ function PaginaPacientes() {
                 <div className="lista-pacientes">
                     <div className="botoes-mobile">
                         <button
-                            className="btn filtro cinza pequeno"
+                            className={`btn filtro cinza pequeno ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
@@ -211,7 +211,7 @@ function PaginaPacientes() {
                     </div>
 
                     {mostrarFiltrosVisuais && (
-                        <div className="filtros-colunas-mobile">
+                        <div className="filtros-colunas-mobile" onClick={(e) => e.stopPropagation()}>
                             <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
                             <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
                             <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
@@ -250,7 +250,7 @@ function PaginaPacientes() {
             </div>
 
             {mostrarFormulario && (
-                
+
                 <div className="modal-formulario">
                     <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Adicionar novo paciente'}</h3>
                     {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>} {/* Mensagem de erro */}
@@ -313,7 +313,7 @@ function PaginaPacientes() {
                     <div className="form-row buttons">
                         <button onClick={() => {
                             setMostrarFormulario(false);
-                            setErroCadastro(''); 
+                            setErroCadastro('');
                         }}>Sair</button>
                         <button onClick={adicionarPaciente}>Salvar</button>
                     </div>

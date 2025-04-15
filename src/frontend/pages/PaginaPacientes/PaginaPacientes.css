@@ -17,18 +17,16 @@
 }
 
 .menu-lateral {
-
-    background-color: #FCF3F5;
+    background-color: #f6f3fc;
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
-    /*EU PASSEI DOMINGO INTEIRO TENTANDO ENTENDER O POR QUÊ DE FICAR UM RISCO NO MENU LATERAL... E ERA POR CONTA DESSA SOMBRA box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);*/
     z-index: 20;
     display: flex;
     flex-direction: column;
-    margin-left:25px;
-    transition: left 0.3s ease-in-out; /* Adiciona transição suave */
+    margin-left: 25px;
+    transition: left 0.3s ease-in-out;
 }
 
 .menu-lateral.menu-mobile-visivel {
@@ -41,7 +39,7 @@
     color: var(--primary-color);
     cursor: pointer;
     margin-right: 20px;
-    z-index: 30; 
+    z-index: 30;
 }
 
 .conteudo-principal {
@@ -52,7 +50,7 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    transition: margin-left 0.3s ease-in-out; /* transição suave */
+    transition: margin-left 0.3s ease-in-out;
 }
 
 .conteudo-principal.menu-mobile-visivel {
@@ -260,7 +258,7 @@
     background-color: #fff9f9;
     padding: 45px 45px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);/*posso retirar a sombra*/
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
     z-index: 101;
     width: 1000px;
     max-width: 100%;
@@ -278,8 +276,6 @@
     text-align: center;
 }
 
-
-
 .form-row {
     display: flex;
     gap: 20px;
@@ -287,11 +283,10 @@
 }
 
 .form-group {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
 }
-
 
 .form-group input {
     padding: 25px;
@@ -301,10 +296,10 @@
     font-size: 1em;
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* DUAS HORAS PARA COLOCAR A sombra inferior */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.form-group input::placeholder { /* Para navegadores modernos */
+.form-group input::placeholder {
     color: #777;
 }
 
@@ -316,12 +311,11 @@
     font-size: 1em;
     width: 100%;
     box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-
 .form-group select option {
-    color: #333; 
+    color: #333;
 }
 
 .form-row.buttons {
@@ -359,10 +353,14 @@
     background-color: #0056b3;
 }
 
+.container-filtro {
+    position: relative; /* Importante para o posicionamento absoluto do menu */
+}
+
 .filtros-colunas {
     position: absolute;
-    right: 0;
-    top: calc(100% + 8px);
+    top: calc(100% + 10px); /* Ajuste conforme necessário */
+    left: 0; /* Alinha à esquerda do botão */
     background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -397,7 +395,6 @@
     accent-color: var(--primary-color);
 }
 
-
 .filtros-colunas-mobile {
     display: none !important;
 }
@@ -413,7 +410,7 @@
     }
 }
 
-/* Primeira tentativa às cegas mobile- consertar menu e filtros*/
+/* Estilos para dispositivos móveis */
 @media (max-width: 768px) {
     .pagina-container {
         flex-direction: column;
@@ -430,7 +427,7 @@
 
     .menu-hamburguer {
         display: block;
-        position: fixed; 
+        position: fixed;
         top: 20px;
         left: 20px;
         z-index: 30;
@@ -440,18 +437,18 @@
     }
 
     .top-bar {
-        flex-direction: column; 
-        align-items: flex-start; 
+        flex-direction: column;
+        align-items: flex-start;
         margin-bottom: 20px;
     }
 
     .container-pesquisa {
-        width: 100%; 
-        margin-top: 15px; 
+        width: 100%;
+        margin-top: 15px;
     }
 
     .usuario-info {
-        display: none; 
+        display: none;
     }
 
     .titulo-acoes-container {
@@ -461,35 +458,35 @@
     }
 
     .botoes-desktop {
-        display: none; 
-    }
-
-    .lista-pacientes .botoes-mobile {
-        display: flex; 
-        margin-bottom: 15px;
-    }
-
-    .lista-pacientes .tabela-pacientes th:not(:first-child), 
-    .lista-pacientes .tabela-pacientes td:not(:first-child) { 
         display: none;
     }
 
-    .lista-pacientes .tabela-pacientes th:first-child, 
+    .lista-pacientes .botoes-mobile {
+        display: flex;
+        margin-bottom: 15px;
+    }
+
+    .lista-pacientes .tabela-pacientes th:not(:first-child),
+    .lista-pacientes .tabela-pacientes td:not(:first-child) {
+        display: none;
+    }
+
+    .lista-pacientes .tabela-pacientes th:first-child,
     .lista-pacientes .tabela-pacientes td:first-child {
-        display: table-cell; 
-        width: 100%; 
+        display: table-cell;
+        width: 100%;
     }
 
     .lista-pacientes .tabela-pacientes td {
         padding: 12px 8px;
         font-size: 14px;
-        display: grid; 
-        grid-template-columns: 1fr auto; 
+        display: grid;
+        grid-template-columns: 1fr auto;
         align-items: center;
     }
 
     .acoes {
-        justify-self: end; 
+        justify-self: end;
     }
 
     .btn.filtro.pequeno.ativo {
@@ -497,11 +494,10 @@
         color: white;
     }
 
-    
     .filtros-colunas {
         right: auto;
         left: 0;
         width: 180px;
-        top: calc(100% + 5px); 
+        top: calc(100% + 5px);
     }
 }
