@@ -19,7 +19,16 @@ function PaginaPacientes() {
 
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [novoPaciente, setNovoPaciente] = useState({ nome: '', idade: '', data: '' });
+    const [novoPaciente, setNovoPaciente] = useState({
+        nome: '',
+        idade: '',
+        genero: '',
+        estadoCivil: '',
+        telefone: '',
+        email: '',
+        preferenciaContato: '',
+        dataNascimento: ''
+    });
     const [editandoIndex, setEditandoIndex] = useState(null);
     const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
     const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
@@ -29,8 +38,8 @@ function PaginaPacientes() {
         data: true,
         idade: true
     });
+    const [erroCadastro, setErroCadastro] = useState('');
 
-    // Fechar o menu de filtros ao clicar fora
     useEffect(() => {
         const handleClickOutside = () => {
             if (mostrarFiltrosVisuais) {
@@ -78,6 +87,11 @@ function PaginaPacientes() {
     };
 
     const adicionarPaciente = () => {
+        if (!novoPaciente.nome || !novoPaciente.telefone) {
+            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
+            return;
+        }
+
         if (editandoIndex !== null) {
             const novos = [...pacientes];
             novos[editandoIndex] = novoPaciente;
@@ -86,14 +100,16 @@ function PaginaPacientes() {
         } else {
             setPacientes([...pacientes, novoPaciente]);
         }
-        setNovoPaciente({ nome: '', idade: '', data: '' });
+        setNovoPaciente({ nome: '', idade: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
         setMostrarFormulario(false);
+        setErroCadastro(''); // Limpa a mensagem de erro ao salvar com sucesso
     };
 
     const editarPaciente = (index) => {
-        setNovoPaciente(pacientes[index]);
+        setNovoPaciente({...pacientes[index]}); // Cria uma cópia para não alterar o estado diretamente
         setEditandoIndex(index);
         setMostrarFormulario(true);
+        setErroCadastro(''); // Limpa qualquer mensagem de erro anterior ao editar
     };
 
     const toggleMenuMobile = () => {
@@ -143,8 +159,8 @@ function PaginaPacientes() {
                     <h2 className="titulo-pacientes">Pacientes</h2>
                     <div className="botoes-desktop">
                         <div className="container-filtro">
-                            <button 
-                                className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`} 
+                            <button
+                                className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
@@ -155,7 +171,7 @@ function PaginaPacientes() {
                             {mostrarFiltrosVisuais && (
                                 <div className="filtros-colunas" onClick={(e) => e.stopPropagation()}>
                                     <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
-                                    <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data</label>
+                                    <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
                                     <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
                                 </div>
                             )}
@@ -163,7 +179,10 @@ function PaginaPacientes() {
                         <button className="btn pdf cinza" onClick={exportarPDF}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
-                        <button className="btn adicionar cinza" onClick={() => setMostrarFormulario(true)}>
+                        <button className="btn adicionar cinza" onClick={() => {
+                            setMostrarFormulario(true);
+                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                        }}>
                             <AiOutlineUserAdd /> Adicionar paciente
                         </button>
                     </div>
@@ -171,8 +190,8 @@ function PaginaPacientes() {
 
                 <div className="lista-pacientes">
                     <div className="botoes-mobile">
-                        <button 
-                            className="btn filtro cinza pequeno" 
+                        <button
+                            className="btn filtro cinza pequeno"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
@@ -183,7 +202,10 @@ function PaginaPacientes() {
                         <button className="btn pdf cinza pequeno" onClick={exportarPDF}>
                             <BsFileEarmarkPdf />
                         </button>
-                        <button className="btn adicionar cinza pequeno" onClick={() => setMostrarFormulario(true)}>
+                        <button className="btn adicionar cinza pequeno" onClick={() => {
+                            setMostrarFormulario(true);
+                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                        }}>
                             <AiOutlineUserAdd />
                         </button>
                     </div>
@@ -191,7 +213,7 @@ function PaginaPacientes() {
                     {mostrarFiltrosVisuais && (
                         <div className="filtros-colunas-mobile">
                             <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
-                            <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data</label>
+                            <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
                             <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
                         </div>
                     )}
@@ -229,27 +251,71 @@ function PaginaPacientes() {
 
             {mostrarFormulario && (
                 <div className="modal-formulario">
-                    <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Novo Paciente'}</h3>
-                    <input
-                        type="text"
-                        placeholder="Nome"
-                        value={novoPaciente.nome}
-                        onChange={e => setNovoPaciente({ ...novoPaciente, nome: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Idade"
-                        value={novoPaciente.idade}
-                        onChange={e => setNovoPaciente({ ...novoPaciente, idade: e.target.value })}
-                    />
-                    <input
-                        type="text"
-                        placeholder="Data da sessão"
-                        value={novoPaciente.data}
-                        onChange={e => setNovoPaciente({ ...novoPaciente, data: e.target.value })}
-                    />
-                    <button onClick={adicionarPaciente}>Salvar</button>
-                    <button onClick={() => setMostrarFormulario(false)}>Cancelar</button>
+                    <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Adicionar novo paciente'}</h3>
+                    {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>} {/* Mensagem de erro */}
+                    <div className="form-row">
+                        <div className="form-group">
+                            <input type="text" placeholder="Nome" value={novoPaciente.nome}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, nome: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <input type="text" placeholder="Idade" value={novoPaciente.idade}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, idade: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <select value={novoPaciente.genero}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, genero: e.target.value })}>
+                                <option value="">Gênero</option>
+                                <option value="Feminino">Feminino</option>
+                                <option value="Masculino">Masculino</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <select value={novoPaciente.estadoCivil}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, estadoCivil: e.target.value })}>
+                                <option value="">Estado Civil</option>
+                                <option value="Solteiro(a)">Solteiro(a)</option>
+                                <option value="Casado(a)">Casado(a)</option>
+                                <option value="Divorciado(a)">Divorciado(a)</option>
+                                <option value="Viúvo(a)">Viúvo(a)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <input type="tel" placeholder="Telefone" value={novoPaciente.telefone}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, telefone: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <input type="email" placeholder="E-mail" value={novoPaciente.email}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, email: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="form-row">
+                        <div className="form-group">
+                            <select value={novoPaciente.preferenciaContato}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, preferenciaContato: e.target.value })}>
+                                <option value="">Preferência de Contato</option>
+                                <option value="Telefone">Telefone</option>
+                                <option value="E-mail">E-mail</option>
+                                <option value="WhatsApp">WhatsApp</option>
+                            </select>
+                        </div>
+                        <div className="form-group">
+                            <input type="date" placeholder="Data de Nascimento" value={novoPaciente.dataNascimento}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, dataNascimento: e.target.value })} />
+                        </div>
+                    </div>
+                    <div className="form-row buttons">
+                        <button onClick={() => {
+                            setMostrarFormulario(false);
+                            setErroCadastro(''); 
+                        }}>Sair</button>
+                        <button onClick={adicionarPaciente}>Salvar</button>
+                    </div>
                 </div>
             )}
         </div>

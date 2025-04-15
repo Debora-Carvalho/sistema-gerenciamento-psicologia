@@ -28,6 +28,11 @@
     display: flex;
     flex-direction: column;
     margin-left: 35px;
+    transition: left 0.3s ease-in-out; /* Adiciona transição suave */
+}
+
+.menu-lateral.menu-mobile-visivel {
+    left: 0;
 }
 
 .menu-hamburguer {
@@ -36,6 +41,7 @@
     color: var(--primary-color);
     cursor: pointer;
     margin-right: 20px;
+    z-index: 30; 
 }
 
 .conteudo-principal {
@@ -46,6 +52,11 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    transition: margin-left 0.3s ease-in-out; /* transição suave */
+}
+
+.conteudo-principal.menu-mobile-visivel {
+    margin-left: 0;
 }
 
 .top-bar {
@@ -245,50 +256,105 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #fff;
+    background-color: #fff9f9;
     padding: 30px 40px;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);/*posso retirar a sombra*/
     z-index: 101;
-    width: 400px;
+    width: 750px;
     max-width: 90%;
     font-family: var(--font-family-principal);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
 }
 
 .modal-formulario h3 {
     margin-bottom: 20px;
-    font-size: 20px;
-    color: var(--primary-color);
+    font-size: 25px;
+    color: black;
+    width: 100%;
+    text-align: center;
 }
 
-.modal-formulario input {
-    display: block;
+.form-row {
+    display: flex;
+    gap: 20px;
     width: 100%;
-    padding: 10px;
-    margin-bottom: 12px;
+}
+
+.form-group {
+    flex: 1; 
+    display: flex;
+    flex-direction: column;
+}
+
+
+.form-group input {
+    padding: 15px;
     border-radius: 8px;
     border: 1px solid #ccc;
     font-family: var(--font-family-principal);
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* DUAS HORAS PARA COLOCAR A sombra inferior */
 }
 
-.modal-formulario button {
-    margin-top: 10px;
-    margin-right: 10px;
-    padding: 10px 16px;
-    border: none;
+.form-group input::placeholder { /* Para navegadores modernos */
+    color: #777;
+}
+
+.form-group select {
+    padding: 15px;
     border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: var(--font-family-principal);
+    font-size: 1em;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+}
+
+.form-group select option {
+    color: #333; 
+}
+
+.form-row.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    gap: 10px;
+}
+
+.form-row.buttons button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 20px;
     font-size: 14px;
     cursor: pointer;
-    background-color: var(--primary-color);
     color: white;
     font-family: var(--font-family-principal);
+    transition: background-color 0.2s ease;
 }
 
-.modal-formulario button:hover {
-    background-color: #003399cc;
+.form-row.buttons button:first-child {
+    background-color: #0056b3;
 }
 
-/* Estilos para o menu suspenso de filtros */
+.form-row.buttons button:first-child:hover {
+    background-color: #5a6268;
+}
+
+.form-row.buttons button:last-child {
+    background-color: var(--primary-color);
+}
+
+.form-row.buttons button:last-child:hover {
+    background-color: #0056b3;
+}
+
 .filtros-colunas {
     position: absolute;
     right: 0;
@@ -327,12 +393,11 @@
     accent-color: var(--primary-color);
 }
 
-/* Removendo o estilo do filtro embaixo */
+
 .filtros-colunas-mobile {
     display: none !important;
 }
 
-/* Animação para o menu de filtros */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -344,7 +409,7 @@
     }
 }
 
-/* Estilos para dispositivos móveis */
+/* Primeira tentativa às cegas mobile- consertar menu e filtros*/
 @media (max-width: 768px) {
     .pagina-container {
         flex-direction: column;
@@ -359,44 +424,68 @@
         left: -250px;
     }
 
-    .menu-lateral.menu-mobile-visivel {
-        left: 0;
-    }
-
     .menu-hamburguer {
         display: block;
+        position: fixed; 
+        top: 20px;
+        left: 20px;
         z-index: 30;
+        background: none;
+        border: none;
+        padding: 8px;
     }
 
     .top-bar {
-        justify-content: space-between;
+        flex-direction: column; 
+        align-items: flex-start; 
+        margin-bottom: 20px;
     }
 
     .container-pesquisa {
-        width: calc(100% - 60px);
+        width: 100%; 
+        margin-top: 15px; 
     }
 
     .usuario-info {
-        display: none;
+        display: none; 
     }
 
     .titulo-acoes-container {
         flex-direction: column;
         align-items: flex-start;
+        margin-bottom: 15px;
     }
 
     .botoes-desktop {
-        display: none;
+        display: none; 
     }
 
     .lista-pacientes .botoes-mobile {
-        display: flex;
+        display: flex; 
+        margin-bottom: 15px;
     }
 
-    .lista-pacientes .tabela-pacientes th,
+    .lista-pacientes .tabela-pacientes th:not(:first-child), 
+    .lista-pacientes .tabela-pacientes td:not(:first-child) { 
+        display: none;
+    }
+
+    .lista-pacientes .tabela-pacientes th:first-child, 
+    .lista-pacientes .tabela-pacientes td:first-child {
+        display: table-cell; 
+        width: 100%; 
+    }
+
     .lista-pacientes .tabela-pacientes td {
         padding: 12px 8px;
         font-size: 14px;
+        display: grid; 
+        grid-template-columns: 1fr auto; 
+        align-items: center;
+    }
+
+    .acoes {
+        justify-self: end; 
     }
 
     .btn.filtro.pequeno.ativo {
@@ -404,10 +493,11 @@
         color: white;
     }
 
-    /* Ajuste para mobile - menu suspenso */
+    
     .filtros-colunas {
         right: auto;
         left: 0;
         width: 180px;
+        top: calc(100% + 5px); 
     }
 }
