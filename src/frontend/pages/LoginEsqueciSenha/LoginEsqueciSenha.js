@@ -46,7 +46,7 @@ function LoginEsqueciSenha() {
                         <div className='input-container'>
                             {/* mostrar o erro */}
                             {mensagemErro && (
-                                <p className='mensagem-erro'>{mensagemErro}</p>
+                                <p className='mensagem-erro-campo-esqueci-senha'>{mensagemErro}</p>
                             )}
                             <label htmlFor='email'>Email</label>
 

@@ -42,7 +42,7 @@ function LoginCodigoRecuperacaoSenha() {
                         <div className='input-container'>
                             {/* mostrar o erro */}
                             {mensagemErro && (
-                                <p className='mensagem-erro'>{mensagemErro}</p>
+                                <p className='mensagem-erro-campo-codigo'>{mensagemErro}</p>
                             )}
                             <label htmlFor='codigo'>Código de segurança</label>
 
