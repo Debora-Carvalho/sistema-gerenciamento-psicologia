@@ -1,6 +1,6 @@
 @import '../../styles/variaveis.css';
 
-.container {
+.container-esqueci-senha {
     max-width: 100vw;
     max-height: 100vh;
     width: 100%; 
@@ -10,20 +10,20 @@
     text-align: center
 }
 
-.container-conteudo {
+.container-conteudo-esqueci-senha {
     position: relative;
     margin: 4% 0 0 0;
     z-index: 2;
 }
 
-.container .titulo-principal {
+.container-esqueci-senha .titulo-principal {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-titulo-desktop);
     font-weight: var(--font-weight-titulo);
     color: var(--primary-color);
 }
 
-.container .texto-explicativo {
+.container-esqueci-senha .texto-explicativo {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-paragrafo-desktop);
     font-weight: var(--font-weight-paragrafo);
@@ -66,11 +66,11 @@
     top: -0.5rem;
     left: 0.4rem;
     font-size: 1.2rem;
-    border-color: #922E1A;
-    color: #922E1A; 
+    border-color: var(--primary-color);
+    color: var(--primary-color); 
 }
 
-.container form .btn-enviar-email {
+.container-esqueci-senha form .btn-enviar-email {
     background-color: var(--primary-color);
     color: var(--neutral-color-100);
     font-size: 18px;
@@ -83,8 +83,8 @@
     transition: 0.5s;
 }
 
-.container form .btn-enviar-email:hover {
-    background-color: #da563c;    
+.container-esqueci-senha form .btn-enviar-email:hover {
+    background-color: var(--primary-color-btn-hover);    
 }
 
 .link-pagina-login {
@@ -96,10 +96,10 @@
 }
 
 .link-pagina-login:hover {
-    color: #da563c;
+    color: var(--primary-color-btn-hover);
 }
 
-.container .imagem-principal {
+.container-esqueci-senha .imagem-principal {
     position: absolute;       
     bottom: 10px;
     left: 50%;

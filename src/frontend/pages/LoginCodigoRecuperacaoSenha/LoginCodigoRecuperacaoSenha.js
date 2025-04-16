@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginCodigoRecuperacaoSenha.css';
+import '../../pages/LoginCodigoRecuperacaoSenha/LoginCodigoRecuperacaoSenha.css';
 import imgHomemVerifiqueEmail from '../../assets/images/image-homem-verifiqueemail.png';
 
 function LoginCodigoRecuperacaoSenha() {
@@ -32,8 +32,8 @@ function LoginCodigoRecuperacaoSenha() {
     };
 
     return (
-        <div className='container'>
-            <div className='container-conteudo'> 
+        <div className='container-recuperar-senha'>
+            <div className='container-conteudo-recuperar-senha'> 
                 <h1 className='titulo-principal'>Verifique seu email</h1>
                 <p className='texto-explicativo'>Digite o código de segurança recebido por email</p>
 

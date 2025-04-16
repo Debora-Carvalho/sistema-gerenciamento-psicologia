@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginEsqueciSenha.css';
+import '../../pages/LoginEsqueciSenha/LoginEsqueciSenha.css';
 import imgMulherEsqueciSenha from '../../assets/images/image-mulher-esquecisenha.png';
 import useDocumentTitle from '../../components/useDocumentTitle'
 
@@ -35,8 +35,8 @@ function LoginEsqueciSenha() {
     };
 
     return (
-        <div className='container'>
-            <div className='container-conteudo'> 
+        <div className='container-esqueci-senha'>
+            <div className='container-conteudo-esqueci-senha'> 
                 <h1 className='titulo-principal'>Esqueci minha senha</h1>
                 <p className='texto-explicativo'>Confirme o email cadastrado nessa conta para receber</p>
                 <p className='texto-explicativo'>um código de segurança e criar uma nova senha</p>
