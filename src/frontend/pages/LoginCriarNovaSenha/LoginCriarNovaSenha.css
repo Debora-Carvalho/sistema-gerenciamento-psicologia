@@ -20,7 +20,7 @@
     font-family: var(--font-family-principal);
     font-size: var(--font-size-titulo-desktop);
     font-weight: var(--font-weight-titulo);
-    color: #01429E;
+    color: var(--primary-color);
 }
 
 .container .texto-explicativo {
@@ -70,8 +70,8 @@
     top: -0.5rem;
     left: 0.4rem;
     font-size: 1.2rem;
-    border-color: #01429E;
-    color: #01429E; 
+    border-color: var(--primary-color);
+    color: var(--primary-color); 
     
 }
 
@@ -94,12 +94,11 @@
 }
 
 .container form .btn-confirmar{
-    background-color:#01429E;    
+    background-color: var(--primary-color);    
 }
 
-
 .container form .btn-confirmar {
-    background-color: #01429E;
+    background-color: var(--primary-color);
     color: var(--neutral-color-100);
     font-size: 18px;
     font-weight: 500;
@@ -115,15 +114,19 @@
     margin-right: auto; 
 }
 
+.container form .btn-confirmar:hover {
+    background-color: var(--primary-color-btn-hover);
+}
+
 /* Botão Login */
 .container form .btn-login {
     background-color: transparent;
-    color: #01429E;
+    color: var(--primary-color);
     font-size: 18px;
     font-weight: 500;
     width: 356.25px;
     height: 52.5px;
-    border: 2px solid #01429E;
+    border: 2px solid var(--primary-color);
     border-radius: 30px;
     cursor: pointer;
     transition: 0.5s;
@@ -135,7 +138,8 @@
 
 
 .container form .btn-login:hover {
-    background-color: #01429E;
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
 }
 
 
@@ -193,7 +197,7 @@
 }
 
 .btn-popup {
-    background-color: #01429E;
+    background-color: var(--primary-color);
     color: #fff;
     border: none;
     border-radius: 30px;
@@ -206,8 +210,7 @@
 }
 
 .btn-popup:hover {
-    background-color: #01429E;
-    
+    background-color: var(--primary-color);
 }
 
 

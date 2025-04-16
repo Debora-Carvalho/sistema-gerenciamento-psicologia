@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './LoginCriarNovaSenha.css';
+import '../../pages/LoginCriarNovaSenha/LoginCriarNovaSenha.css';
 import imgMulherNovaSenha from '../../assets/images/image-mulher-novasenha.png';
 
 function LoginCriarNovaSenha() {
@@ -101,9 +101,8 @@ function LoginCriarNovaSenha() {
                     <h3>Senha alterada</h3>
                     <p>Você alterou sua senha com sucesso.<br />Por favor, faça novo login</p>
                     <button className="btn-popup" onClick={() => window.location.href = '/'}>
-    Fazer Login
-</button>
-
+                        Fazer Login
+                    </button>
                 </div>
             </div>
         )}
