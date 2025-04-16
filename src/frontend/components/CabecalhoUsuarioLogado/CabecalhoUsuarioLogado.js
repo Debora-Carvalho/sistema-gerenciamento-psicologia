@@ -1,5 +1,5 @@
 import React from "react";
-import './CabecalhoUsuarioLogado.css';
+import '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.css';
 import { RiSearchLine } from "react-icons/ri";
 
 function CabecalhoUsuarioLogado() {
@@ -7,12 +7,12 @@ function CabecalhoUsuarioLogado() {
     const emailUsuario = 'email@email.com';
 
     return(
-        <div className='container-cabecalho'>
+        <div className='container-cabecalho-logado'>
             <div className='container-logo'>
                 Seren
             </div>
 
-            <div className="container-barra-pesquisa">
+            <div className="container-barra-pesquisa-logado">
                 <RiSearchLine className="icon-lupa" alt="Ícone de lupa"/>
                 <input 
                     id="pesquisa-input" 
@@ -24,7 +24,7 @@ function CabecalhoUsuarioLogado() {
                 />
             </div>
 
-            <div className='container-perfil'>
+            <div className='container-perfil-logado'>
                 <div className='foto-perfil'></div>
                 <div className='infos-usuario'>
                     <p className="nome-usuario">{nomeUsuario}</p>

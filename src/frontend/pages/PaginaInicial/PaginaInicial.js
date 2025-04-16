@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './PaginaInicial.css';
+import '../../pages/PaginaInicial/PaginaInicial.css';
 import CabecalhoPaginaInicial from '../../components/CabecalhoPaginaInicial/CabecalhoPaginaInicial.js';
 import Menu from '../../components/Menu/Menu.js';
 import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores.js';
@@ -11,22 +11,22 @@ import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
 import Calendario from '../../components/Calendario/Calendario.js';
 
 function PaginaInicial() {
-    useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
+    useDocumentTitle("Página Inicial | Seren");
 
     return(
-        <div className='container'>
+        <div className='container-pagina-inicial'>
             <CabecalhoPaginaInicial />
-            <div className='container-conteudo'>
+            <div className='container-conteudo-pagina-inicial'>
                 <div className='navbar'>
                     <Menu />
                 </div>
-                <div className='container-conteudo-cards'>
+                <div className='container-conteudo-cards-pagina-inicial'>
                     <div className='cards-indicadores'>
                         <CardsIndicadores />
                     </div>
 
-                    <div className='container-botoes-calendario'>
-                        <div className='cards-botoes-funcionalidades'>
+                    <div className='container-botoes-calendario-pagina-inicial'>
+                        <div className='cards-botoes-funcionalidades-pagina-inicial'>
                             <div className='card'>
                                 <img src={imgBtnPacientes} alt='Ilustração'/>
                                 <a className='btn-pacientes' href='#'>
@@ -55,7 +55,7 @@ function PaginaInicial() {
                                 </a>
                             </div>
                         </div>
-                        <div className='card-calendario'>
+                        <div className='card-calendario-pagina-inicial'>
                             <Calendario />
                         </div>                       
                     </div>

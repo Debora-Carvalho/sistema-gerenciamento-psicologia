@@ -1,6 +1,6 @@
 @import '../../styles/variaveis.css';
 
-.container {
+.container-pagina-inicial {
     display: flex;
     flex-direction: column;
     max-width: 100vw;
@@ -11,24 +11,25 @@
     padding: 0;
 }
 
-.container-conteudo {
+.container-conteudo-pagina-inicial {
     display: flex;
     flex-direction: row;
-    padding: 0 40px;
+    padding: 40px;
+    margin-top: 5px;
     gap: 40px;
 }
 
-.container-conteudo-cards {
+.container-conteudo-cards-pagina-inicial {
     width: calc(100vw - 221px);
 }
 
-.container-botoes-calendario {
+.container-botoes-calendario-pagina-inicial {
     display: grid;
     grid-template-columns: 2fr 1fr;
     height: calc(100vh - 400px);
 }
 
-.cards-botoes-funcionalidades {
+.cards-botoes-funcionalidades-pagina-inicial {
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 1fr 1fr;
@@ -36,7 +37,7 @@
     grid-gap: 20px;
 }
 
-.cards-botoes-funcionalidades .card {
+.cards-botoes-funcionalidades-pagina-inicial .card {
     background-color: var(--secondary-color);
     display: flex;
     align-items: center;
@@ -48,7 +49,7 @@
     border-radius: 20px;
 }
 
-.cards-botoes-funcionalidades .card img {
+.cards-botoes-funcionalidades-pagina-inicial .card img {
     height: 150px;
 }
 
@@ -59,6 +60,7 @@
     font-size: 18px;
     font-weight: 500;
     text-decoration: none;
+    text-align: center;
     width: 220px;  
     height: 35.09px;  
     border: none;
