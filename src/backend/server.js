@@ -1,4 +1,4 @@
-// servidor
+//servidor
 
 const http = require("http");
 const { handlerRouter } = require("../backend/routes/handlerRoutes");

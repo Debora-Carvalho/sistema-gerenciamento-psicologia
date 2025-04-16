@@ -1,8 +1,7 @@
+const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario.js');
 const { loginHandler } = require("../../backend/controllers/loginAutentica.js");
 
-// função do servidor (delegação das rotas)
 const handlerRouter = async (req, res) => {
-  // configurar CORS e headers
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
@@ -13,14 +12,38 @@ const handlerRouter = async (req, res) => {
     return res.end();
   }
 
-  // delegação da rota para login
-  if (req.url === "/" && req.method === "POST") {
-    return await loginHandler(req, res);
+  if (req.url === "/auth" && req.method === "POST") {
+    let body = "";
+
+    req.on("data", chunk => {
+      body += chunk;
+    });
+
+    req.on("end", async () => {
+      try {
+        const data = JSON.parse(body);
+
+        if (data.action === "login") {
+          return await loginHandler({ ...req, body: data }, res);
+        } else if (data.action === "cadastro") {
+          return await cadastroUsuarioHandler({ ...req, body: data }, res);
+        } else {
+          res.writeHead(400);
+          return res.end(JSON.stringify({ error: "Ação inválida" }));
+        }
+
+      } catch (error) {
+        console.error("Erro ao processar requisição:", error);
+        res.writeHead(500);
+        res.end(JSON.stringify({ error: "Erro interno no servidor" }));
+      }
+    });
+
+    return;
   }
 
-  // Se a rota não for encontrada
   res.writeHead(404);
   res.end(JSON.stringify({ error: "Rota não encontrada" }));
 };
 
-module.exports = {handlerRouter};
+module.exports = { handlerRouter };

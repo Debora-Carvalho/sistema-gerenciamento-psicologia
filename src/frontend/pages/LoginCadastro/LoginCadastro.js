@@ -72,11 +72,41 @@ function LoginCadastro() {
       if (tipoFormulario === 'cadastro') {
         const erro = validarCadastro();
         setMensagemErro(erro);
-  
+
         if (!erro) {
-          console.log({ username, telephone, email });
-          alert("Dados cadastrados com sucesso!");
+          
+          const userData = {
+            action: "cadastro",
+            email,
+            senha,
+            username,
+            telephone
+          };
   
+            try {
+              // realiza a requisição POST usando fetch
+              const response = await fetch("http://localhost:4000/auth", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json", // define o tipo de conteúdo
+                },
+                body: JSON.stringify(userData), // converte os dados em JSON
+              });
+  
+                const data = await response.json();
+                // checa se a resposta foi bem-sucedida 
+                if (response.ok && data.success) {
+                
+                  await alert("Cadastro concluído! Acessando login...");
+                  window.location.reload();
+  
+              } else {
+                alert( data.error ||"Erro ao cadastrar! ");
+              }
+            } catch (error) {
+              console.error("Erro na requisição:", error);
+              alert("Erro na comunicação com o servidor.");
+            }
           setUsername('');
           setTelephone('');
           setEmail('');
@@ -91,14 +121,15 @@ function LoginCadastro() {
 
       if (!erro) {
           // dados a serem enviados para a loginAutentica
-        const userData = {
-          email,
-          senha
+          const userData = {
+            action: "login",
+            email,
+            senha
           };
 
           try {
             // realiza a requisição POST usando fetch
-            const response = await fetch("http://localhost:4000/", {
+            const response = await fetch("http://localhost:4000/auth", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json", // define o tipo de conteúdo
