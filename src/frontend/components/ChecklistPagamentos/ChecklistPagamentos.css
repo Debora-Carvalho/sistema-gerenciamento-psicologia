@@ -1,0 +1,11 @@
+@import '../../styles/variaveis.css';
+
+.pagamentos-checklist label {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-family: var(--font-family-principal);
+    color: #868383;
+    margin-bottom: 10px;
+}
