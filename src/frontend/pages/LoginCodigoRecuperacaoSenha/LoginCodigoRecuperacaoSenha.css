@@ -19,7 +19,7 @@
 .container .titulo-principal {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-titulo-desktop);
-    font-weight: var(--font-weight-paragrafo);
+    font-weight: var(--font-weight-titulo);
     color: var(--primary-color);
 }
 
