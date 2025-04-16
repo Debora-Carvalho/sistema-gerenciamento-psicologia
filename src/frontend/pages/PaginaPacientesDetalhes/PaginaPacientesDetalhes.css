@@ -1,6 +1,6 @@
 @import '../../styles/variaveis.css';
 
-.container {
+.container-pacientes-detalhes {
     font-family: var(--font-family-principal);
     display: flex;
     flex-direction: column;
@@ -12,14 +12,14 @@
     padding: 0;
 }
 
-.container-conteudo {
+.container-conteudo-pacientes-detalhes {
     display: flex;
     flex-direction: row;
-    padding: 0 40px;
+    padding: 40px;
     gap: 40px;
 }
 
-.container-conteudo-cards {
+.container-conteudo-cards-pacientes-detalhes {
     width: calc(100vw - 221px);
 }
 
