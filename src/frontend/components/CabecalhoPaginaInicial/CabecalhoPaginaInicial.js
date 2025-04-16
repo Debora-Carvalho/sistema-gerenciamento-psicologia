@@ -2,51 +2,82 @@ import React, { useEffect, useState } from 'react';
 import './CabecalhoPaginaInicial.css';
 
 function CabecalhoPaginaInicial() {
-    const nomeUsuario = 'Ianara';
-    const totalAgendamentos = 15;
+  const totalAgendamentos = 15;
 
-    const [saudacao, setSaudacao] = useState('');
+  const [saudacao, setSaudacao] = useState('');
+  const [usuario, setUsuario] = useState(null);
 
-    // atualizar a saudação com base na hora do sistema
-    const atualizarSaudacao = () => {
-        const horaAtual = new Date().getHours();
+  // Define antes de usar
+  const atualizarSaudacao = () => {
+    const horaAtual = new Date().getHours();
+    if (horaAtual < 12) {
+      setSaudacao('Bom dia');
+    } else if (horaAtual < 18) {
+      setSaudacao('Boa tarde');
+    } else {
+      setSaudacao('Boa noite');
+    }
+  };
 
-        if (horaAtual < 12) {
-            setSaudacao('Bom dia');
-        } else if (horaAtual < 18) {
-            setSaudacao('Boa tarde');
-        } else {
-            setSaudacao('Boa noite');
+  useEffect(() => {
+    async function buscarUsuario() {
+      try {
+        const userID = localStorage.getItem("userID");
+
+        if (!userID) {
+          console.error("userID não encontrado no localStorage.");
+          return;
         }
-    };
 
-    useEffect(() => {
-        atualizarSaudacao(); 
+        const response = await fetch("http://localhost:4000/pagina-inicial", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ userID })
+        });
 
-        const intervalo = setInterval(() => {
-            atualizarSaudacao(); // atualiza a saudação a cada minuto
-        }, 60000); // 60.000 ms = 1 minuto
+        const data = await response.json();
 
-        return () => clearInterval(intervalo); 
-    }, []);
+        if (response.ok) {
+          setUsuario(data.usuario);
+        } else {
+          console.error(data.error);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+      }
+    }
 
-    return (
-        <div className='container-cabecalho'>
-            <div className='container-logo'>
-                Seren
-            </div>
+    buscarUsuario();
+    atualizarSaudacao();
 
-            <div className='container-cumprimentos'>
-                <p className='texto-cumprimentos'>{saudacao}, {nomeUsuario}</p>
-            </div>
+    const intervalo = setInterval(() => {
+      atualizarSaudacao();
+    }, 60000);
 
-            <div className='container-agendamentos'>
-                <p className='texto-agendamentos'>
-                    Faltam <span>{totalAgendamentos}</span> atendimentos
-                </p>
-            </div>
-        </div>
-    );
+    return () => clearInterval(intervalo);
+  }, []);
+
+  if (!usuario) {
+    return <div>Carregando usuário...</div>;
+  }
+
+  return (
+    <div className='container-cabecalho'>
+      <div className='container-logo'>
+        Seren
+      </div>
+
+      <div className='container-cumprimentos'>
+        <p className='texto-cumprimentos'>{saudacao}, {usuario.username}</p>
+      </div>
+
+      <div className='container-agendamentos'>
+        <p className='texto-agendamentos'>
+          Faltam <span>{totalAgendamentos}</span> atendimentos
+        </p>
+      </div>
+    </div>
+  );
 }
 
 export default CabecalhoPaginaInicial;

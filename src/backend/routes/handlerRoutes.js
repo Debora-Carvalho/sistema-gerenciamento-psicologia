@@ -1,7 +1,7 @@
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario.js');
 const { loginHandler } = require("../../backend/controllers/loginAutentica.js");
 const { recuperarSenhaHandler } = require("../../backend/controllers/recuperarSenha.js");
-
+const { buscarUsuarioHandler } = require("../controllers/buscarUsuarios.js"); // 
 
 const getRequestBody = (req) => {
   return new Promise((resolve, reject) => {
@@ -19,12 +19,10 @@ const getRequestBody = (req) => {
 };
 
 const handlerRouter = async (req, res) => {
-
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-
 
   if (req.method === "OPTIONS") {
     res.writeHead(204);
@@ -41,6 +39,17 @@ const handlerRouter = async (req, res) => {
       await recuperarSenhaHandler(req, res); 
     } catch (error) {
       console.error("Erro em recuperarSenhaHandler:", error);
+      res.writeHead(500);
+      res.end(JSON.stringify({ error: "Erro interno no servidor" }));
+    }
+    return;
+  }
+
+  if (req.url === "/pagina-inicial" && req.method === "POST") {
+    try {
+      await buscarUsuarioHandler(req, res); 
+    } catch (error) {
+      console.error("Erro em buscarUsuarioHandler:", error);
       res.writeHead(500);
       res.end(JSON.stringify({ error: "Erro interno no servidor" }));
     }
