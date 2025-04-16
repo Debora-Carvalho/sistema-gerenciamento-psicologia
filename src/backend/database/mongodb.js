@@ -1,7 +1,7 @@
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const uri = "mongodb+srv://serenAdmins:seren123@seren.ow7lda9.mongodb.net/?retryWrites=true&w=majority&appName=Seren";
-// por favor utilizar esta conexão acima para conectar no mongodb Csompass, apenas o link.
+// por favor utilizar esta conexão acima para conectar no mongodb Compass, apenas o link.
 
 // criando um cliente mongo com as configurações da api do servidor do mongo.
 const client = new MongoClient(uri, {
