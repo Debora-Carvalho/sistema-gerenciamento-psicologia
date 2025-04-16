@@ -147,7 +147,7 @@ function LoginCadastro() {
                 // se login for bem-sucedido, salva o userID no localStorage
                 localStorage.setItem("userID", data.userID);
                 alert("Login concluído! Acessando sistema...");
-                navigate("/dashboard"); // redireciona para o dashboard, depois vai ser mudado para a url adequada para a dashboard 
+                navigate("/pagina-inicial"); // redireciona para o pagina-inicial, depois vai ser mudado para a url adequada para a pagina-inicial 
 
             } else {
               alert( data.message ||"Erro ao tentar autenticar! ");
@@ -224,7 +224,7 @@ function LoginCadastro() {
               </button>
     
               <div className="recuperar-senha">
-                <Link to="/recuperar-senha/nova-senha">
+                <Link to="/recuperar-senha">
                   Esqueceu sua senha?
                 </Link>
               </div>

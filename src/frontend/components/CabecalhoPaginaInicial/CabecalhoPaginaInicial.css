@@ -1,0 +1,40 @@
+@import '../../styles/variaveis.css';
+
+.container-cabecalho {
+    display: grid;
+    grid-template-columns: 1fr 3fr 1fr;
+    margin: 0;
+    padding: 0 40px;
+    height: 7.5vh;
+    align-items: center;
+    text-align: start;
+}
+
+.container-cabecalho p {
+    font-family: var(--font-family-principal);
+    color: #000000;
+    font-size: var(--font-size-paragrafo-desktop);
+}
+
+.container-logo  {
+    font-family: var(--font-family-logo);
+    color: var(--primary-color);
+    font-size: var(--font-size-logo-desktop);
+    font-weight: var(--font-weight-logo);
+}
+
+.container-cumprimentos .texto-cumprimentos {
+    font-size: 40px;
+    font-weight: 200;
+}
+
+.container-agendamentos .texto-agendamentos {
+    font-size: 25px;
+    font-weight: 300;
+    color: var(--primary-color);
+    text-align: end;
+}
+
+.container-agendamentos .texto-agendamentos span {
+    font-weight: bold;
+}
