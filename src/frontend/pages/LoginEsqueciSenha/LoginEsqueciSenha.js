@@ -62,7 +62,7 @@ function LoginEsqueciSenha() {
 
     return (
         <div className='container'>
-            <div className='container-conteudo'> 
+            <div className='container-conteudo-esqueci-senha'> 
                 <h1 className='titulo-principal'>Esqueci minha senha</h1>
                 <p className='texto-explicativo'>Confirme o email cadastrado nessa conta para receber</p>
                 <p className='texto-explicativo'>um código de segurança e criar uma nova senha</p>

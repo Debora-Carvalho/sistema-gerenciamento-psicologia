@@ -158,7 +158,7 @@ function LoginCadastro() {
                 </div>
                 <button className="btn-entrar" type="submit">Entrar</button>
                 <div className="recuperar-senha">
-                  <Link to="/recuperar-senha/nova-senha">Esqueceu sua senha?</Link>
+                  <Link to="/recuperar-senha">Esqueceu sua senha?</Link>
                   </div>
                   </div>
                   <img className="img-login" src={imgMulherLogin} alt="Mulher com notebook" />

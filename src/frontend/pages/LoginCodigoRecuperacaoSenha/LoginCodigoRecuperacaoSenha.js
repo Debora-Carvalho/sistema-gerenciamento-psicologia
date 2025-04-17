@@ -88,7 +88,7 @@ function LoginCodigoRecuperacaoSenha() {
             
     return (
         <div className='container'>
-            <div className='container-conteudo'> 
+            <div className='container-conteudo-recuperar-senha'> 
                 <h1 className='titulo-principal'>Verifique seu email</h1>
                 <p className='texto-explicativo'>Digite o código de segurança recebido por email</p>
 

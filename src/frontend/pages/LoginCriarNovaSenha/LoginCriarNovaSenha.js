@@ -82,7 +82,7 @@ function LoginCriarNovaSenha() {
 
         return (
             <div className='container'>
-                <div className='container-conteudo'>
+                <div className='container-conteudo-nova-senha'>
                     <h1 className='titulo-principal'>Crie sua nova senha</h1>
                     <p className='texto-explicativo'>Sua nova senha deve ser diferente das anteriores.</p>
                     <p className='texto-explicativo'>Recomendamos utilizar no mínimo 8 caracteres.</p>
