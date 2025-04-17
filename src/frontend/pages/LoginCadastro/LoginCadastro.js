@@ -41,7 +41,6 @@ function LoginCadastro() {
       setMensagemErro(erro);
 
       if (!erro) {
-        
         const userData = {
           action: "cadastro",
           email,
@@ -50,30 +49,27 @@ function LoginCadastro() {
           telephone
         };
 
-          try {
-            // realiza a requisição POST usando fetch
-            const response = await fetch("http://localhost:4000/auth", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json", // define o tipo de conteúdo
-              },
-              body: JSON.stringify(userData), // converte os dados em JSON
-            });
+        try {
+          const response = await fetch("http://localhost:4000/auth", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData),
+          });
 
-              const data = await response.json();
-              // checa se a resposta foi bem-sucedida 
-              if (response.ok && data.success) {
-              
-                await alert("Cadastro concluído! Acessando login...");
-                window.location.reload();
-
-            } else {
-              alert( data.error ||"Erro ao cadastrar! ");
-            }
-          } catch (error) {
-            console.error("Erro na requisição:", error);
-            alert("Erro na comunicação com o servidor.");
+          const data = await response.json();
+          if (response.ok && data.success) {
+            await alert("Cadastro concluído! Acessando login...");
+            window.location.reload();
+          } else {
+            alert(data.error || "Erro ao cadastrar!");
           }
+        } catch (error) {
+          console.error("Erro na requisição:", error);
+          alert("Erro na comunicação com o servidor.");
+        }
+
         setUsername('');
         setTelephone('');
         setEmail('');
@@ -82,12 +78,11 @@ function LoginCadastro() {
       }
     }
 
-  if (tipoFormulario === 'login') {
-    const erro = validarLogin();
-    setMensagemErro(erro);
+    if (tipoFormulario === 'login') {
+      const erro = validarLogin();
+      setMensagemErro(erro);
 
-    if (!erro) {
-        // dados a serem enviados para a loginAutentica
+      if (!erro) {
         const userData = {
           action: "login",
           email,
@@ -95,29 +90,24 @@ function LoginCadastro() {
         };
 
         try {
-          // realiza a requisição POST usando fetch
           const response = await fetch("http://localhost:4000/auth", {
             method: "POST",
             headers: {
-              "Content-Type": "application/json", // define o tipo de conteúdo
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(userData), // converte os dados em JSON
+            body: JSON.stringify(userData),
           });
 
-            const data = await response.json();
-            // checa se a resposta foi bem-sucedida 
-            if (response.ok && data.success) {
-              if (lembreDeMim) {
-                localStorage.setItem('emailSalvo', email);
-              }
-
-              // se login for bem-sucedido, salva o userID no localStorage
-              localStorage.setItem("userID", data.userID);
-              alert("Login concluído! Acessando sistema...");
-              navigate("/pagina-inicial"); 
-
+          const data = await response.json();
+          if (response.ok && data.success) {
+            if (lembreDeMim) {
+              localStorage.setItem('emailSalvo', email);
+            }
+            localStorage.setItem("userID", data.userID);
+            alert("Login concluído! Acessando sistema...");
+            navigate("/pagina-inicial");
           } else {
-            alert( data.message ||"Erro ao tentar autenticar! ");
+            alert(data.message || "Erro ao tentar autenticar!");
           }
         } catch (error) {
           console.error("Erro na requisição:", error);
@@ -128,11 +118,11 @@ function LoginCadastro() {
         setSenha('');
         setLembreDeMim(false);
       }
-      }
-      };
+    }
+  };
 
   return (
-    <div className={`container ${modoCadastro ? "mostrar-cadastro" : ""}`}>
+    <div className={`container-lc ${modoCadastro ? "mostrar-cadastro" : ""}`}>
       <div className="first-content">
         <div className="first-column">
           <h1 className="titulo">Bem-vinda de volta ao</h1>
@@ -157,19 +147,22 @@ function LoginCadastro() {
                 exit={{ opacity: 0, x: -50 }}
                 transition={{ duration: 0.5 }}
               >
+                <div className='conteudo-login1'>
                 <h1 className="titulo">Login</h1>
-                <div><MdEmail className="icon" /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div><FaLock className="icon" /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
+                {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
+                <div className="form"><MdEmail  /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                <div className="form" ><FaLock /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
                 <div className="checkbox-container">
                   <input type="checkbox" id="lembreDeMim" checked={lembreDeMim} onChange={(e) => setLembreDeMim(e.target.checked)} />
-                  <label htmlFor="lembreDeMim">Lembre de mim</label>
+                  <label id="lembre" htmlFor="lembreDeMim">Lembre de mim</label>
                 </div>
-                {mensagemErro && <p className="mensagem-erro">{mensagemErro}</p>}
                 <button className="btn-entrar" type="submit">Entrar</button>
                 <div className="recuperar-senha">
-                  <Link to="/recuperar-senha">Esqueceu sua senha?</Link>
+                  <Link to="/recuperar-senha/nova-senha">Esqueceu sua senha?</Link>
+                  </div>
+                  </div>
                   <img className="img-login" src={imgMulherLogin} alt="Mulher com notebook" />
-                </div>
+               
               </motion.form>
             )}
           </AnimatePresence>
@@ -178,13 +171,15 @@ function LoginCadastro() {
 
       <div className="second-content">
         <div className="first-column">
+        <div className='conteudo-login'> 
           <h1 className="titulo">Bem-vinda ao</h1>
           <h1 className="titulo-logo">Seren!</h1>
           <div className="subtitulo">
             <h4>Cadastre-se para gerenciar sua vida profissional</h4>
             <h4>Já tem uma conta?</h4>
-          </div>
+            </div>
           <button className="btn-logar-se" onClick={() => setModoCadastro(false)}>Logar-se</button>
+          </div>
           <img className="img-planta-login" src={imgPlanta} alt="Planta vermelha" />
         </div>
 
@@ -200,16 +195,18 @@ function LoginCadastro() {
                 exit={{ opacity: 0, x: 50 }}
                 transition={{ duration: 0.5 }}
               >
+                <div className='conteudo-cadastro'>
                 <h1 className="titulo">Crie sua conta</h1>
-                <div><FaUser className="icon" /><input type="text" placeholder="Nome e sobrenome" value={username} onChange={(e) => setUsername(e.target.value)} /></div>
-                <div><BsFillTelephoneFill className="icon" /><input type="tel" placeholder="Celular" value={telephone} onChange={(e) => setTelephone(e.target.value)} /></div>
-                <div><MdEmail className="icon" /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div><FaLock className="icon" /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
-                <div><FaLock className="icon" /><input type="password" placeholder="Confirmação de senha" value={confirmaSenha} onChange={(e) => setConfirmaSenha(e.target.value)} /></div>
-                {mensagemErro && <p className="mensagem-erro">{mensagemErro}</p>}
+                {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
+                <div className="form"><FaUser/><input type="text" placeholder="Nome e sobrenome" value={username} onChange={(e) => setUsername(e.target.value)} /></div>
+                <div  className="form" ><BsFillTelephoneFill/><input type="tel" placeholder="Celular" value={telephone} onChange={(e) => setTelephone(e.target.value)} /></div>
+                <div className="form"><MdEmail/><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                <div  className="form" ><FaLock/><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
+                <div  className="form" ><FaLock/><input type="password" placeholder="Confirmação de senha" value={confirmaSenha} onChange={(e) => setConfirmaSenha(e.target.value)} /></div>
                 <button className="btn-criar" type="submit">Criar conta</button>
                 <img className="img-cadastro" src={imgMulherCadastro} alt="Mulher com notebook" />
-              </motion.form>
+                </div>
+              </motion.form> 
             )}
           </AnimatePresence>
         </div>
