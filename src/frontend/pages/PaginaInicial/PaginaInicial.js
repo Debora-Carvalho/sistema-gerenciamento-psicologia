@@ -14,13 +14,13 @@ function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
 
     return(
-        <div className='container'>
+        <div className='container-pagina-inicial'>
             <CabecalhoPaginaInicial />
-            <div className='container-conteudo'>
+            <div className='container-conteudo-pagina-inicial'>
                 <div className='navbar'>
                     <Menu />
                 </div>
-                <div className='container-conteudo-cards'>
+                <div className='container-conteudo-cards-pagina-inicial'>
                     <div className='cards-indicadores'>
                         <CardsIndicadores />
                     </div>

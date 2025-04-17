@@ -150,8 +150,8 @@ function LoginCadastro() {
                 <div className='conteudo-login1'>
                 <h1 className="titulo">Login</h1>
                 {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
-                <div className="form"><MdEmail  /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div className="form" ><FaLock /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
+                <div className="conteudo-cadastro-formulario"><MdEmail  /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                <div className="conteudo-cadastro-formulario" ><FaLock /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
                 <div className="checkbox-container">
                   <input type="checkbox" id="lembreDeMim" checked={lembreDeMim} onChange={(e) => setLembreDeMim(e.target.checked)} />
                   <label id="lembre" htmlFor="lembreDeMim">Lembre de mim</label>
@@ -198,11 +198,11 @@ function LoginCadastro() {
                 <div className='conteudo-cadastro'>
                 <h1 className="titulo">Crie sua conta</h1>
                 {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
-                <div className="form"><FaUser/><input type="text" placeholder="Nome e sobrenome" value={username} onChange={(e) => setUsername(e.target.value)} /></div>
-                <div  className="form" ><BsFillTelephoneFill/><input type="tel" placeholder="Celular" value={telephone} onChange={(e) => setTelephone(e.target.value)} /></div>
-                <div className="form"><MdEmail/><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
-                <div  className="form" ><FaLock/><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
-                <div  className="form" ><FaLock/><input type="password" placeholder="Confirmação de senha" value={confirmaSenha} onChange={(e) => setConfirmaSenha(e.target.value)} /></div>
+                <div className="conteudo-cadastro-formulario"><FaUser/><input type="text" placeholder="Nome e sobrenome" value={username} onChange={(e) => setUsername(e.target.value)} /></div>
+                <div  className="conteudo-cadastro-formulario" ><BsFillTelephoneFill/><input type="tel" placeholder="Celular" value={telephone} onChange={(e) => setTelephone(e.target.value)} /></div>
+                <div className="conteudo-cadastro-formulario"><MdEmail/><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
+                <div  className="conteudo-cadastro-formulario" ><FaLock/><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
+                <div  className="conteudo-cadastro-formulario" ><FaLock/><input type="password" placeholder="Confirmação de senha" value={confirmaSenha} onChange={(e) => setConfirmaSenha(e.target.value)} /></div>
                 <button className="btn-criar" type="submit">Criar conta</button>
                 <img className="img-cadastro" src={imgMulherCadastro} alt="Mulher com notebook" />
                 </div>

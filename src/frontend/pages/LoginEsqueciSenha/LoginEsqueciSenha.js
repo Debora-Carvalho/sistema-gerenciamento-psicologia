@@ -70,10 +70,7 @@ function LoginEsqueciSenha() {
                 <form onSubmit={handleSubmit}>
                     <div className='campo-esqueci-senha'>
                         <div className='input-container'>
-                            {/* mostrar o erro */}
-                            {mensagemErro && (
-                                <p className='mensagem-erro'>{mensagemErro}</p>
-                            )}
+
                             <label htmlFor='email'>Email</label>
 
                             <input
@@ -84,6 +81,11 @@ function LoginEsqueciSenha() {
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
+
+                            {/* mostrar o erro */}
+                            {mensagemErro && (
+                                <p className='mensagem-erro'>{mensagemErro}</p>
+                            )}
                         </div>
                     </div>
 

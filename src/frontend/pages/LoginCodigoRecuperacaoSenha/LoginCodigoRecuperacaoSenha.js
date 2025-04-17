@@ -95,10 +95,7 @@ function LoginCodigoRecuperacaoSenha() {
                 <form onSubmit={handleSubmit}>
                     <div className='campo-incluir-codigo'>
                         <div className='input-container'>
-                            {/* mostrar o erro */}
-                            {mensagemErro && (
-                                <p className='mensagem-erro'>{mensagemErro}</p>
-                            )}
+
                             <label htmlFor='codigo'>Código de segurança</label>
 
                             <input
@@ -108,6 +105,11 @@ function LoginCodigoRecuperacaoSenha() {
                                 onChange={(e) => setCodigo(e.target.value)}
                                 required
                             />
+
+                            {/* mostrar o erro */}
+                            {mensagemErro && (
+                                <p className='mensagem-erro'>{mensagemErro}</p>
+                            )}
                         </div>
                     </div>
 

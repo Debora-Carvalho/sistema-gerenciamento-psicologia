@@ -154,7 +154,7 @@
     padding: 10px;
     max-width: 200px;
     width: 100%;
-    margin-left: 80px;
+    /* margin-left: 80px; */
     font-family: var(--font-family-principal);
 }
 
@@ -165,15 +165,15 @@
     transition: background-color 0, 7s ease;
 }
 
-form {
+/* form {
     width: 60%;
     max-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
+} */
 
-.form {
+.conteudo-cadastro-formulario {
     display: flex;
     align-items: center;
     border-radius: 10px;
@@ -181,7 +181,7 @@ form {
     padding: 4px 0;
 }
 
-form input {
+.conteudo-cadastro-formulario input {
     border: none;
     outline: none;
     width: 100%;
@@ -367,11 +367,11 @@ form input {
         padding: 8px;
     }
 
-    form {
+    /* form {
         width: 100%;
-    }
+    } */
 
-    .form {
+    .conteudo-cadastro-formulario {
         flex-direction: row;
         padding: 6px 10px;
     }

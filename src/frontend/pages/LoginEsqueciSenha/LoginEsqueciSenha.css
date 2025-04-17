@@ -7,7 +7,7 @@
     height: 100%; 
     margin: 0;
     padding: 0;
-    text-align: center
+    text-align: center;
 }
 
 .container-conteudo-esqueci-senha {
@@ -66,8 +66,8 @@
     top: -0.5rem;
     left: 0.4rem;
     font-size: 1.2rem;
-    border-color: #922E1A;
-    color: #922E1A; 
+    border-color: var(--primary-color);
+    color: var(--primary-color); 
 }
 
 .container form .btn-enviar-email {
@@ -84,7 +84,7 @@
 }
 
 .container form .btn-enviar-email:hover {
-    background-color: #da563c;    
+    background-color: var(--primary-color-btn-hover);    
 }
 
 .link-pagina-login {
@@ -96,7 +96,7 @@
 }
 
 .link-pagina-login:hover {
-    color: #da563c;
+    color: var(--primary-color-btn-hover);
 }
 
 .container .imagem-principal {
@@ -110,8 +110,7 @@
 
 .mensagem-erro {
     font-family: var(--font-family-principal);
-    font-size: 16px;
+    font-size: 25px;
     color: #D10000;
-    margin-top: -30px;
     margin-bottom: 16px;
 }
