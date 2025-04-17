@@ -29,7 +29,7 @@ function PaginaInicial() {
                         <div className='cards-botoes-funcionalidades'>
                             <div className='card'>
                                 <img src={imgBtnPacientes} alt='Ilustração'/>
-                                <a className='btn-pacientes' href='#'>
+                                <a className='btn-pacientes' href='/pacientes'>
                                     <p>Pacientes</p>
                                 </a>
                             </div>

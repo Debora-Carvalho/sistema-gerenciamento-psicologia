@@ -9,6 +9,39 @@ import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
 function PaginaPacientes() {
+    const [usuario, setUsuario] = useState(null);
+    
+        useEffect(() => {
+            async function buscarUsuario() {
+                try {
+                    const userID = localStorage.getItem("userID");
+    
+                    if (!userID) {
+                        console.error("userID não encontrado no localStorage.");
+                        return;
+                    }
+    
+                    const response = await fetch("http://localhost:4000/pagina-inicial", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ userID })
+                    });
+    
+                    const data = await response.json();
+    
+                    if (response.ok) {
+                        setUsuario(data.usuario);
+                    } else {
+                        console.error(data.error);
+                    }
+                } catch (error) {
+                    console.error("Erro ao buscar usuário:", error);
+                }
+            }
+    
+            buscarUsuario();
+        }, []);
+
     const [pacientes, setPacientes] = useState([
         { nome: 'Andreia Oliveira Justina', data: '27/09/2025', idade: '42 anos' },
         { nome: 'Maria Fernanda Gonzales', data: '30/09/2025', idade: '22 anos' },
@@ -53,11 +86,11 @@ function PaginaPacientes() {
         };
     }, [mostrarFiltrosVisuais]);
 
-    const pacientesFiltrados = pacientes.filter(p =>
-        p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-        p.data.includes(filtro) ||
-        p.idade.includes(filtro)
-    );
+    // const pacientesFiltrados = pacientes.filter(p =>
+    //     p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+    //     p.data.includes(filtro) ||
+    //     p.idade.includes(filtro)
+    // );
 
     const exportarPDF = () => {
         const doc = new jsPDF();
@@ -86,24 +119,56 @@ function PaginaPacientes() {
         doc.save('pacientes.pdf');
     };
 
-    const adicionarPaciente = () => {
-        if (!novoPaciente.nome || !novoPaciente.telefone) {
-            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
-            return;
-        }
+const adicionarPaciente = async () => {
+    const userID = localStorage.getItem("userID");
 
-        if (editandoIndex !== null) {
-            const novos = [...pacientes];
-            novos[editandoIndex] = novoPaciente;
-            setPacientes(novos);
-            setEditandoIndex(null);
+    if (!novoPaciente.nome || !novoPaciente.telefone) {
+        setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
+        return;
+    }
+
+    try {
+        const response = await fetch("http://localhost:4000/pacientes", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ ...novoPaciente, userID }), // ← Aqui está a correção
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+            if (editandoIndex !== null) {
+                const novosPacientes = [...pacientes];
+                novosPacientes[editandoIndex] = data.pacienteCadastrado;
+                setPacientes(novosPacientes);
+                setEditandoIndex(null);
+            } else {
+                setPacientes([...pacientes, data.pacienteCadastrado]);
+            }
+
+            setNovoPaciente({
+                nome: '',
+                idade: '',
+                genero: '',
+                estadoCivil: '',
+                telefone: '',
+                email: '',
+                preferenciaContato: '',
+                dataNascimento: ''
+            });
+            setMostrarFormulario(false);
+            setErroCadastro('');
         } else {
-            setPacientes([...pacientes, novoPaciente]);
+            setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
         }
-        setNovoPaciente({ nome: '', idade: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
-        setMostrarFormulario(false);
-        setErroCadastro('');
-    };
+    } catch (error) {
+        console.error("Erro ao enviar dados do paciente:", error);
+        setErroCadastro("Erro ao comunicar com o servidor.");
+    }
+};
+
 
     const editarPaciente = (index) => {
         setNovoPaciente({...pacientes[index]});
@@ -148,10 +213,16 @@ function PaginaPacientes() {
                     </div>
                     <div className="usuario-info">
                         <div className="avatar" />
-                        <div className="info-texto">
-                            <strong>Ianara Holanda</strong>
-                            <span>email@email.com</span>
-                        </div>
+                        {usuario ? (
+                            <div className="info-texto">
+                                <strong>{usuario.username}</strong>
+                                <span>{usuario.email}</span>
+                            </div>
+                        ) : (
+                            <div className="info-texto">
+                                <strong>Carregando...</strong>
+                            </div>
+                        )}
                     </div>
                 </header>
 
@@ -228,7 +299,7 @@ function PaginaPacientes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pacientesFiltrados.map((paciente, index) => (
+                            {/* {pacientesFiltrados.map((paciente, index) => (
                                 <tr key={index}>
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
@@ -243,7 +314,7 @@ function PaginaPacientes() {
                                         </div>
                                     </td>
                                 </tr>
-                            ))}
+                            ))} */}
                         </tbody>
                     </table>
                 </div>
