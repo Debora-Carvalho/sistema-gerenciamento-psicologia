@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../pages/PaginaInicial/PaginaInicial.css';
+import './PaginaInicial.css';
 import CabecalhoPaginaInicial from '../../components/CabecalhoPaginaInicial/CabecalhoPaginaInicial.js';
 import Menu from '../../components/Menu/Menu.js';
 import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores.js';
@@ -11,7 +11,7 @@ import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
 import Calendario from '../../components/Calendario/Calendario.js';
 
 function PaginaInicial() {
-    useDocumentTitle("Página Inicial | Seren");
+    useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
 
     return(
         <div className='container-pagina-inicial'>
@@ -25,11 +25,11 @@ function PaginaInicial() {
                         <CardsIndicadores />
                     </div>
 
-                    <div className='container-botoes-calendario-pagina-inicial'>
-                        <div className='cards-botoes-funcionalidades-pagina-inicial'>
+                    <div className='container-botoes-calendario'>
+                        <div className='cards-botoes-funcionalidades'>
                             <div className='card'>
                                 <img src={imgBtnPacientes} alt='Ilustração'/>
-                                <a className='btn-pacientes' href='#'>
+                                <a className='btn-pacientes' href='/pacientes'>
                                     <p>Pacientes</p>
                                 </a>
                             </div>
@@ -55,7 +55,7 @@ function PaginaInicial() {
                                 </a>
                             </div>
                         </div>
-                        <div className='card-calendario-pagina-inicial'>
+                        <div className='card-calendario'>
                             <Calendario />
                         </div>                       
                     </div>

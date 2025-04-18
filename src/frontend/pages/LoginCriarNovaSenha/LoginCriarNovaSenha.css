@@ -10,7 +10,7 @@
     text-align: center;
 }
 
-.container-conteudo {
+.container-conteudo-nova-senha{
     position: relative;
     margin: 4% 0 0 0;
     z-index: 2;
@@ -28,7 +28,7 @@
     font-size: var(--font-size-paragrafo-desktop);
     font-weight: var(--font-weight-paragrafo);
     color: var(--neutral-color-900);
-    line-height: 5px;
+    line-height: 30px;
 }
 
 .campo-incluir-nova-senha {

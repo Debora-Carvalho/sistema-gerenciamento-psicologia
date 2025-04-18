@@ -5,14 +5,19 @@ import { HiOutlineCog8Tooth } from "react-icons/hi2";
 import { AiOutlineQuestionCircle, AiOutlineMenu } from "react-icons/ai";
 import { IoIosMenu } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
+import { useNavigate } from 'react-router-dom';
 
 function Menu() {
     const [active, setActive] = useState('perfil');
     const [isOpen, setIsOpen] = useState(false);
-
+    const navigate = useNavigate();
     const handleClick = (section) => {
         setActive(section);
         setIsOpen(false); // fecha o menu no mobile quando a usuária clicar 
+        if (section === 'sair') {
+            localStorage.removeItem("userID");
+            navigate("/"); 
+        }
     };
 
     return (

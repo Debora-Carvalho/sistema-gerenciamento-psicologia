@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.css';
+import './PaginaPacientesDetalhes.css';
 import useDocumentTitle from '../../components/useDocumentTitle';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import ChecklistPagamentos from '../../components/ChecklistPagamentos/ChecklistPagamentos.js'
@@ -10,14 +10,14 @@ function PaginaPacientesDetalhes() {
     useDocumentTitle("Pacientes | Seren");
 
     return(
-        <div className='container-pacientes-detalhes'>
+        <div className='container'>
             <CabecalhoUsuarioLogado />
-            <div className='container-conteudo-pacientes-detalhes'>
+            <div className='container-conteudo'>
                 <div className='navbar'>
                     <Menu />
                 </div>
 
-                <div className='container-conteudo-cards-pacientes-detalhes'>
+                <div className='container-conteudo-cards'>
                     <div className='cards-paciente-pagamentos'>
                         <div className='card-paciente'>
                             <div className='card-paciente__cabecalho'>

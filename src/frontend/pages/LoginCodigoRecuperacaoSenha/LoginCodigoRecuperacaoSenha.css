@@ -1,6 +1,6 @@
 @import '../../styles/variaveis.css';
 
-.container-recuperar-senha {
+.container {
     max-width: 100vw;
     max-height: 100vh;
     width: 100%; 
@@ -16,14 +16,14 @@
     z-index: 2;
 }
 
-.container-recuperar-senha .titulo-principal {
+.container .titulo-principal {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-titulo-desktop);
-    font-weight: var(--font-weight-titulo);
+    font-weight: var(--font-weight-paragrafo);
     color: var(--primary-color);
 }
 
-.container-recuperar-senha .texto-explicativo {
+.container .texto-explicativo {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-paragrafo-desktop);
     font-weight: var(--font-weight-paragrafo);
@@ -70,7 +70,7 @@
     color: var(--primary-color); 
 }
 
-.container-recuperar-senha form .btn-verificar-codigo {
+.container form .btn-verificar-codigo {
     background-color: var(--primary-color);
     color: var(--neutral-color-100);
     font-size: 18px;
@@ -83,7 +83,7 @@
     transition: 0.5s;
 }
 
-.container-recuperar-senha form .btn-verificar-codigo:hover {
+.container form .btn-verificar-codigo:hover {
     background-color: var(--primary-color-btn-hover);    
 }
 
@@ -99,7 +99,7 @@
     color: var(--primary-color-btn-hover);
 }
 
-.container-recuperar-senha .imagem-principal {
+.container .imagem-principal {
     position: absolute;       
     bottom: 10px;
     left: 50%;
@@ -108,10 +108,9 @@
     z-index: 1; 
 }
 
-.mensagem-erro-campo-codigo {
+.mensagem-erro {
     font-family: var(--font-family-principal);
-    font-size: 18px;
+    font-size: 25px;
     color: #D10000;
-    margin-top: -30px;
-    margin-bottom: 16px;
+    margin-bottom: 20px;
 }
