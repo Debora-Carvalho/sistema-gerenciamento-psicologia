@@ -9,6 +9,10 @@ import NovaSenha from "../../frontend/pages/LoginCriarNovaSenha/LoginCriarNovaSe
 import ProtectedRoute from "./protectedroute";
 import PaginaPacientes from "../../frontend/pages/PaginaPacientes/PaginaPacientes";
 import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.js";
+import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
+
+
+
 
 const AppRoutes = () => {
     return (
@@ -23,6 +27,7 @@ const AppRoutes = () => {
                     <Route path="/pacientes" element={<PaginaPacientes />} />
                     <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                 </Route>
+                <Route path="/calendario" element={<PaginaCalendario />} />
             </Routes>
 
         </BrowserRouter>
