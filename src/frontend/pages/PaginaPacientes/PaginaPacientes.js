@@ -5,52 +5,15 @@ import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import useUsuarios from '../../hooks/useUsuarios';
 
 function PaginaPacientes() {
-    const [usuario, setUsuario] = useState(null);
-    
-        useEffect(() => {
-            async function buscarUsuario() {
-                try {
-                    const userID = localStorage.getItem("userID");
-    
-                    if (!userID) {
-                        console.error("userID não encontrado no localStorage.");
-                        return;
-                    }
-    
-                    const response = await fetch("http://localhost:4000/pagina-inicial", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ userID })
-                    });
-    
-                    const data = await response.json();
-    
-                    if (response.ok) {
-                        setUsuario(data.usuario);
-                    } else {
-                        console.error(data.error);
-                    }
-                } catch (error) {
-                    console.error("Erro ao buscar usuário:", error);
-                }
-            }
-    
-            buscarUsuario();
-        }, []);
+    const { usuario } = useUsuarios();
 
     const [pacientes, setPacientes] = useState([
         { nome: 'Andreia Oliveira Justina', data: '27/09/2025', idade: '42 anos' },
-        { nome: 'Maria Fernanda Gonzales', data: '30/09/2025', idade: '22 anos' },
-        { nome: 'Roberto da Silva Souza', data: '01/10/2025', idade: '35 anos' },
-        { nome: 'Fabricio da Costa', data: '11/05/2025', idade: '26 anos' },
-        { nome: 'Maria da Conceição Oliveira', data: '01/07/2025', idade: '55 anos' },
     ]);
 
-    const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
         nome: '',
@@ -65,113 +28,67 @@ function PaginaPacientes() {
     const [editandoIndex, setEditandoIndex] = useState(null);
     const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
     const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
-    const [mostrarFiltrosVisuais, setMostrarFiltrosVisuais] = useState(false);
     const [colunasVisiveis, setColunasVisiveis] = useState({
         nome: true,
         data: true,
         idade: true
     });
     const [erroCadastro, setErroCadastro] = useState('');
+    const [pesquisaTexto, setPesquisaTexto] = useState('');
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
-                setMostrarFiltrosVisuais(false);
-            }
-        };
+    const adicionarPaciente = async () => {
+        const userID = localStorage.getItem("userID");
 
-        document.addEventListener('click', handleClickOutside);
-        return () => {
-            document.removeEventListener('click', handleClickOutside);
-        };
-    }, [mostrarFiltrosVisuais]);
-
-    // const pacientesFiltrados = pacientes.filter(p =>
-    //     p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-    //     p.data.includes(filtro) ||
-    //     p.idade.includes(filtro)
-    // );
-
-    const exportarPDF = () => {
-        const doc = new jsPDF();
-        doc.text('Lista de Pacientes', 14, 16);
-
-        const colunas = [];
-        const linhas = [];
-
-        if (colunasVisiveis.nome) colunas.push('Nome');
-        if (colunasVisiveis.data) colunas.push('Data da sessão');
-        if (colunasVisiveis.idade) colunas.push('Idade');
-
-        pacientes.forEach(p => {
-            const linha = [];
-            if (colunasVisiveis.nome) linha.push(p.nome);
-            if (colunasVisiveis.data) linha.push(p.data);
-            if (colunasVisiveis.idade) linha.push(p.idade);
-            linhas.push(linha);
-        });
-
-        autoTable(doc, {
-            startY: 20,
-            head: [colunas],
-            body: linhas
-        });
-        doc.save('pacientes.pdf');
-    };
-
-const adicionarPaciente = async () => {
-    const userID = localStorage.getItem("userID");
-
-    if (!novoPaciente.nome || !novoPaciente.telefone) {
-        setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
-        return;
-    }
-
-    try {
-        const response = await fetch("http://localhost:4000/pacientes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...novoPaciente, userID }), // ← Aqui está a correção
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            if (editandoIndex !== null) {
-                const novosPacientes = [...pacientes];
-                novosPacientes[editandoIndex] = data.pacienteCadastrado;
-                setPacientes(novosPacientes);
-                setEditandoIndex(null);
-            } else {
-                setPacientes([...pacientes, data.pacienteCadastrado]);
-            }
-
-            setNovoPaciente({
-                nome: '',
-                idade: '',
-                genero: '',
-                estadoCivil: '',
-                telefone: '',
-                email: '',
-                preferenciaContato: '',
-                dataNascimento: ''
-            });
-            setMostrarFormulario(false);
-            setErroCadastro('');
-        } else {
-            setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
+        if (!novoPaciente.nome || !novoPaciente.telefone) {
+            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
+            return;
         }
-    } catch (error) {
-        console.error("Erro ao enviar dados do paciente:", error);
-        setErroCadastro("Erro ao comunicar com o servidor.");
-    }
-};
+
+        try {
+            const response = await fetch("http://localhost:4000/cadastroPaciente", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ...novoPaciente, userID }), // ← Aqui está a correção
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                if (editandoIndex !== null) {
+                    const novosPacientes = [...pacientes];
+                    novosPacientes[editandoIndex] = data.pacienteCadastrado;
+                    setPacientes(novosPacientes);
+                    setEditandoIndex(null);
+                } else {
+                    setPacientes([...pacientes, data.pacienteCadastrado]);
+                }
+
+                setNovoPaciente({
+                    nome: '',
+                    idade: '',
+                    genero: '',
+                    estadoCivil: '',
+                    telefone: '',
+                    email: '',
+                    preferenciaContato: '',
+                    dataNascimento: ''
+                });
+                setMostrarFormulario(false);
+                setErroCadastro('');
+            } else {
+                setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
+            }
+        } catch (error) {
+            console.error("Erro ao enviar dados do paciente:", error);
+            setErroCadastro("Erro ao comunicar com o servidor.");
+        }
+    };
 
 
     const editarPaciente = (index) => {
-        setNovoPaciente({...pacientes[index]});
+        setNovoPaciente({ ...pacientes[index] });
         setEditandoIndex(index);
         setMostrarFormulario(true);
         setErroCadastro('');
@@ -198,16 +115,16 @@ const adicionarPaciente = async () => {
                         <HiMenu />
                     </button>
                     <div className="container-pesquisa">
-                        <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
+                        <FiSearch className={`icone-lupa ${campoPesquisaFocado || pesquisaTexto ? 'escondido' : ''}`} />
                         <input
                             type="text"
                             className="campo-pesquisa"
-                            value={filtro}
-                            onChange={e => setFiltro(e.target.value)}
+                            value={pesquisaTexto}
+                            onChange={e => setPesquisaTexto(e.target.value)}
                             onFocus={() => setCampoPesquisaFocado(true)}
                             onBlur={() => setCampoPesquisaFocado(false)}
                         />
-                        {!campoPesquisaFocado && !filtro && (
+                        {!campoPesquisaFocado && !pesquisaTexto && (
                             <span className="texto-pesquisa">Pesquisar paciente</span>
                         )}
                     </div>
@@ -229,25 +146,13 @@ const adicionarPaciente = async () => {
                 <div className="titulo-acoes-container">
                     <h2 className="titulo-pacientes">Pacientes</h2>
                     <div className="botoes-desktop">
-                        <div className="container-filtro">
-                            <button
-                                className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
-                                }}
-                            >
-                                <FiFilter /> Filtros
-                            </button>
-                            {mostrarFiltrosVisuais && (
-                                <div className="filtros-colunas" onClick={(e) => e.stopPropagation()}>
-                                    <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
-                                    <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
-                                    <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
-                                </div>
-                            )}
-                        </div>
-                        <button className="btn pdf cinza" onClick={exportarPDF}>
+                        <button
+                            className="btn filtro cinza"
+                            onClick={() => console.log("Filtro clicado!")}>
+                            <FiFilter /> Filtros
+                        </button>
+
+                        <button className="btn pdf cinza">
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
@@ -262,15 +167,12 @@ const adicionarPaciente = async () => {
                 <div className="lista-pacientes">
                     <div className="botoes-mobile">
                         <button
-                            className={`btn filtro cinza pequeno ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
-                            }}
-                        >
+                            className="btn filtro cinza pequeno"
+                            onClick={() => console.log("Filtro clicado!")}>
                             <FiFilter />
                         </button>
-                        <button className="btn pdf cinza pequeno" onClick={exportarPDF}>
+
+                        <button className="btn pdf cinza pequeno">
                             <BsFileEarmarkPdf />
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
@@ -281,13 +183,13 @@ const adicionarPaciente = async () => {
                         </button>
                     </div>
 
-                    {mostrarFiltrosVisuais && (
+                    {/* {mostrarFiltrosVisuais && (
                         <div className="filtros-colunas-mobile" onClick={(e) => e.stopPropagation()}>
                             <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
                             <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
                             <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
                         </div>
-                    )}
+                    )} */}
 
                     <table className="tabela-pacientes">
                         <thead>
@@ -299,7 +201,7 @@ const adicionarPaciente = async () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {pacientesFiltrados.map((paciente, index) => (
+                            {pacientes.map((paciente, index) => (
                                 <tr key={index}>
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
@@ -314,7 +216,7 @@ const adicionarPaciente = async () => {
                                         </div>
                                     </td>
                                 </tr>
-                            ))} */}
+                            ))}
                         </tbody>
                     </table>
                 </div>

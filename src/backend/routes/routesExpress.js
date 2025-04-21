@@ -10,10 +10,10 @@ const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
 // Exemplo de rotas Express:
 router.post('/authLogin', loginHandler);
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
+router.post('/dadosUsuario', buscarUsuarioHandler);
 
 router.post('/recuperar-senha', recuperarSenhaHandler);
-router.post('/pagina-inicial', buscarUsuarioHandler);
-router.post('/pacientes', cadastroPacienteHandler);
+router.post('/cadastroPaciente', cadastroPacienteHandler);
 
 module.exports = router;
 
