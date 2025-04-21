@@ -443,4 +443,12 @@
     .btn-cadastre-se {
         font-size: 16px;
     }
+    
+    .mensagem-erro-login {
+        color: #ff4d4d;
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
 }
