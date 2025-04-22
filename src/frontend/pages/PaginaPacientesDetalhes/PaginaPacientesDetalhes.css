@@ -1,6 +1,6 @@
 @import '../../styles/variaveis.css';
 
-.container {
+.container-pacientes-detalhes {
     font-family: var(--font-family-principal);
     display: flex;
     flex-direction: column;
@@ -12,14 +12,14 @@
     padding: 0;
 }
 
-.container-conteudo {
+.container-conteudo-pacientes-detalhes {
     display: flex;
     flex-direction: row;
-    padding: 0 40px;
+    padding: 40px;
     gap: 40px;
 }
 
-.container-conteudo-cards {
+.container-conteudo-cards-pacientes-detalhes {
     width: calc(100vw - 221px);
 }
 
@@ -29,6 +29,7 @@
     justify-content: space-between;
     gap: 40px
 }
+
 
 /* CARD : INFORMAÇÕES DO PACIENTE */
 
@@ -49,7 +50,7 @@
     width: 100%;    
 }
 
-.card-paciente .card-paciente__cabecalho .nome-paciente {
+.card-paciente .nome-paciente {
     font-size: 24px;
 }
 
@@ -58,13 +59,19 @@
     color: var(--primary-color);
 }
 
+.card-paciente .btn-editar-paciente{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
 .card-paciente .card-paciente__infos {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: start;
 }
 
-.card-paciente .card-paciente__botoes {
+ .card-paciente__botoes {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: start;
@@ -113,4 +120,37 @@
     max-height: 80%;      
     overflow-y: auto;      
     padding-right: 8px;
+}
+
+/* CARD EDITAR INFORMAÇÕES */
+
+.modal-formulario-pacientes{
+    font-family: var(--font-family-principal);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.form-group-pacientes{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 20;
+}
+
+.form-group-pacientes input, .form-group-pacientes select{
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-family: var(--font-family-principal);
+    font-size: 1em;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(50% - 10px); /* dois por linha, com espaçamento */
+    min-width: 200px; /* garante responsividade */
+}
+
+.titulo-editar{
+    text-align: center;
 }
