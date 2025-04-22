@@ -28,7 +28,7 @@ function Calendario() {
     const [eventos, setEventos] = useState(eventosPadrao);
     const [eventoSelecionado, setEventoSelecionado] = useState(null);
     const [eventosFiltrados, setEventosFiltrados] = useState(eventosPadrao);
-    const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para controlar o menu hamburger
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const eventStyle = (event) => ({
         style: {
@@ -44,13 +44,8 @@ function Calendario() {
         setEventosFiltrados(updatedEvents);
     };
 
-    const handleEventClick = (evento) => {
-        setEventoSelecionado(evento);
-    };
-
-    const handleEventClose = () => {
-        setEventoSelecionado(null);
-    };
+    const handleEventClick = (evento) => setEventoSelecionado(evento);
+    const handleEventClose = () => setEventoSelecionado(null);
 
     const handleAdicionar = (novoEvento) => {
         const novo = { ...novoEvento, id: eventos.length + 1 };
@@ -79,30 +74,25 @@ function Calendario() {
         setEventosFiltrados(atividadesSelecionadas);
     };
 
-    const handleNavigate = (newDate) => {
-        setDate(newDate);
-    };
-
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen); // Alterna o estado do menu
-    };
+    const handleNavigate = (newDate) => setDate(newDate);
+    const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
         <div className="tela">
-            {/* Logo "Seren" */}
-            <h1 className="seren-logo">Seren</h1>
+            <div className="top-bar">
+                <h1 className="seren-logo">Seren</h1>
+                <div className="hamburger-menu" onClick={toggleMenu}>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                    <div className="bar"></div>
+                </div>
+            </div>
 
-            <div className={`menu-container ${isMenuOpen ? "open" : ""}`}> 
+            <div className={`menu-container ${isMenuOpen ? "open" : ""}`}>
                 <Menu />
             </div>
 
-            <div className="hamburger-menu" onClick={toggleMenu}>
-                <div className="bar"></div>
-                <div className="bar"></div>
-                <div className="bar"></div>
-            </div>
-
-            <div className="toolbar p-4" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+            <div className="toolbar">
                 <Adicionar onAdicionar={handleAdicionar} />
                 <FiltroAtividades
                     atividades={eventos}
