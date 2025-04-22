@@ -28,6 +28,7 @@ function Calendario() {
     const [eventos, setEventos] = useState(eventosPadrao);
     const [eventoSelecionado, setEventoSelecionado] = useState(null);
     const [eventosFiltrados, setEventosFiltrados] = useState(eventosPadrao);
+    const [isMenuOpen, setIsMenuOpen] = useState(false); // Estado para controlar o menu hamburger
 
     const eventStyle = (event) => ({
         style: {
@@ -82,10 +83,24 @@ function Calendario() {
         setDate(newDate);
     };
 
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen); // Alterna o estado do menu
+    };
+
     return (
         <div className="tela">
-            {}
-            <Menu />
+            {/* Logo "Seren" */}
+            <h1 className="seren-logo">Seren</h1>
+
+            <div className={`menu-container ${isMenuOpen ? "open" : ""}`}> 
+                <Menu />
+            </div>
+
+            <div className="hamburger-menu" onClick={toggleMenu}>
+                <div className="bar"></div>
+                <div className="bar"></div>
+                <div className="bar"></div>
+            </div>
 
             <div className="toolbar p-4" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
                 <Adicionar onAdicionar={handleAdicionar} />
