@@ -6,9 +6,11 @@ import { MdEmail } from 'react-icons/md';
 import imgMulherCadastro from '../../assets/images/image-mulher-cadastro.png';
 import imgMulherLogin from '../../assets/images/image-mulher-login.png';
 import imgPlanta from '../../assets/images/image-planta-login.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './LoginCadastro.css';
 import useDocumentTitle from '../../components/useDocumentTitle';
+import useCadastro from '../../hooks/useCadastro';
+import useLogin from '../../hooks/useLogin';
 
 function LoginCadastro() {
     const [modoCadastro, setModoCadastro] = useState(false);
@@ -19,7 +21,8 @@ function LoginCadastro() {
     const [confirmaSenha, setConfirmaSenha] = useState('');
     const [lembreDeMim, setLembreDeMim] = useState(false);
     const [mensagemErro, setMensagemErro] = useState('');
-    const navigate = useNavigate();
+    const  { realizarCadastro } = useCadastro();
+    const { realizarLogin } = useLogin();
 
     useDocumentTitle('Login e Cadastro | Seren');
 
@@ -54,29 +57,7 @@ function LoginCadastro() {
 
             if (!erro) {
                 const userData = { email, senha, username, telephone };
-
-                try {
-                    const response = await fetch("http://localhost:4000/cadastroUsuario", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(userData),
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
-                        setMensagemErro("Cadastro concluído! Acessando login...");
-                        window.location.reload();
-                    } else {
-                        setMensagemErro(data.error || "Erro ao cadastrar!");
-                    }
-                } catch (error) {
-                    console.error("Erro na requisição:", error);
-                    setMensagemErro("Erro na comunicação com o servidor.");
-                }
-
+                realizarCadastro(userData, setMensagemErro);
                 setUsername('');
                 setTelephone('');
                 setEmail('');
@@ -96,34 +77,8 @@ function LoginCadastro() {
             setMensagemErro(''); // limpa a mensagem se não houver erro
 
             if (!erro) {
-                const userData = { email, senha };
-
-                try {
-                    const response = await fetch("http://localhost:4000/authLogin", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                        },
-                        body: JSON.stringify(userData),
-                    });
-
-                    const data = await response.json();
-
-                    if (response.ok && data.success) {
-                        if (lembreDeMim) {
-                            localStorage.setItem('emailSalvo', email);
-                        }
-                        localStorage.setItem("userID", data.userID);
-                        setMensagemErro("Login concluído! Acessando sistema...");
-                        navigate("/pagina-inicial");
-                    } else {
-                        setMensagemErro(data.message || "Erro ao tentar autenticar!");
-                    }
-                } catch (error) {
-                    console.error("Erro na requisição:", error);
-                    setMensagemErro("Erro na comunicação com o servidor.");
-                }
-
+                
+                realizarLogin({ email, senha, lembreDeMim }, setMensagemErro);
                 setEmail('');
                 setSenha('');
                 setLembreDeMim(false);

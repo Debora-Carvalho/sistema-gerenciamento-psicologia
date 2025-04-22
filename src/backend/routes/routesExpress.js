@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { loginHandler } = require('../controllers/loginAutentica');
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
-const { recuperarSenhaHandler } = require('../controllers/recuperarSenha');
+const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
 
@@ -12,8 +12,11 @@ router.post('/authLogin', loginHandler);
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
 
-router.post('/recuperar-senha', recuperarSenhaHandler);
+router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);
+router.post('/recuperarCodigo', solicitarCodigoSenhaHandler);
+router.post('/recuperarNovaSenha', redefinirSenhaHandler);
+
 
 module.exports = router;
 
