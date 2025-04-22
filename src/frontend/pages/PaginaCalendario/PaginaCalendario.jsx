@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import moment from "moment"; 
+import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
-import '../../components/ComponentsCalendario/Components-Calendario-css.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'moment/locale/pt-br';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "moment/locale/pt-br";
 
+import '../../components/ComponentsCalendario/Components-Calendario-css.css';
+import '../../components/Menu/Menu.css';
+
+import Menu from '../../components/Menu/Menu';
 import eventosPadrao from "../../components/ComponentsCalendario/eventosPadrao";
 import EventModal from "../../components/ComponentsCalendario/EventModal";
 import Adicionar from '../../components/ComponentsCalendario/Adicionar';
@@ -22,7 +26,7 @@ function Calendario() {
     const [view, setView] = useState('month');
     const [date, setDate] = useState(new Date());
     const [eventos, setEventos] = useState(eventosPadrao);
-    const [eventoSelecionado, SeteventoSelecionado] = useState(null);
+    const [eventoSelecionado, setEventoSelecionado] = useState(null);
     const [eventosFiltrados, setEventosFiltrados] = useState(eventosPadrao);
 
     const eventStyle = (event) => ({
@@ -32,22 +36,19 @@ function Calendario() {
     });
 
     const moverEventos = ({ event, start, end }) => {
-        const updatedEvents = eventos.map((e) => {
-            if (e.id === event.id) {
-                return { ...e, start, end };
-            }
-            return e;
-        });
+        const updatedEvents = eventos.map((e) =>
+            e.id === event.id ? { ...e, start, end } : e
+        );
         setEventos(updatedEvents);
         setEventosFiltrados(updatedEvents);
     };
 
     const handleEventClick = (evento) => {
-        SeteventoSelecionado(evento);
+        setEventoSelecionado(evento);
     };
 
     const handleEventClose = () => {
-        SeteventoSelecionado(null);
+        setEventoSelecionado(null);
     };
 
     const handleAdicionar = (novoEvento) => {
@@ -61,17 +62,16 @@ function Calendario() {
         const atualizados = eventos.filter((event) => event.id !== eventId);
         setEventos(atualizados);
         setEventosFiltrados(atualizados);
-        SeteventoSelecionado(null);
+        setEventoSelecionado(null);
     };
 
     const handleEventUpdate = (updatedEvent) => {
-        const atualizados = eventos.map((event) => {
-            if (event.id === updatedEvent.id) return updatedEvent;
-            return event;
-        });
+        const atualizados = eventos.map((event) =>
+            event.id === updatedEvent.id ? updatedEvent : event
+        );
         setEventos(atualizados);
         setEventosFiltrados(atualizados);
-        SeteventoSelecionado(null);
+        setEventoSelecionado(null);
     };
 
     const handleSelecionarAtividades = (atividadesSelecionadas) => {
@@ -83,20 +83,26 @@ function Calendario() {
     };
 
     return (
-        <div className='tela'>
-            <div className='toolbar p-4' style={{ maxHeight: '100vh', overflowY: 'auto' }}>
+        <div className="tela">
+            {}
+            <Menu />
+
+            <div className="toolbar p-4" style={{ maxHeight: '100vh', overflowY: 'auto' }}>
                 <Adicionar onAdicionar={handleAdicionar} />
-                <FiltroAtividades atividades={eventos} onSelecionarAtividades={handleSelecionarAtividades} />
+                <FiltroAtividades
+                    atividades={eventos}
+                    onSelecionarAtividades={handleSelecionarAtividades}
+                />
             </div>
 
-            <div className='calendario'>
+            <div className="calendario">
                 <DragAndDropCalendar
                     date={date}
                     view={view}
                     defaultView="month"
                     views={['month', 'week', 'day', 'agenda']}
-                    onView={(newView) => setView(newView)}
-                    onNavigate={(newDate) => handleNavigate(newDate)}
+                    onView={setView}
+                    onNavigate={handleNavigate}
                     events={eventosFiltrados}
                     localizer={localizer}
                     resizable
@@ -105,7 +111,7 @@ function Calendario() {
                     onSelectEvent={handleEventClick}
                     eventPropGetter={eventStyle}
                     components={{ toolbar: CustomTollbar }}
-                    className='calendar'
+                    className="calendar"
                 />
             </div>
 

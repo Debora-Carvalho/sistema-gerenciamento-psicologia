@@ -10,6 +10,7 @@ import ProtectedRoute from "./protectedroute";
 import PaginaPacientes from "../../frontend/pages/PaginaPacientes/PaginaPacientes";
 import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.js";
 import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
+import Calendario from '../../frontend/components/Calendario/Calendario';
 
 
 
@@ -28,6 +29,8 @@ const AppRoutes = () => {
                     <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                 </Route>
                 <Route path="/calendario" element={<PaginaCalendario />} />
+                <Route path="/calendario1" element={<Calendario />} />
+
             </Routes>
 
         </BrowserRouter>

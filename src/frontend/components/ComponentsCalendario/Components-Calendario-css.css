@@ -1,4 +1,4 @@
-/*@import '../../styles/variaveis.css';*/
+@import '../../styles/variaveis.css';
 
 .tela {
     display: flex;
@@ -223,80 +223,4 @@
     font-weight: bold;
     margin: 0 20px;
 }
-
-
-
-/*
-.calendar {
-    height: 90vh;
-    width: 95%;
-    margin: 20px auto;
-    font-family: var(--font-family-principal);
-    position: relative;
-    z-index: 1;
-}
-
-
-.rbc-event {
-    background-color: var(--primary-color);
-    color: var(--neutral-color-100);
-    padding: 2px 5px;
-    border-radius: 3px;
-    font-weight: var(--font-weight-paragrafo);
-    transition: background-color 0.1s ease;
-}
-
-.rbc-event:hover {
-    background-color: var(--primary-color-btn-hover);
-}
-
-
-.rbc-header {
-    padding: 10px;
-    background-color: var(--secondary-color);
-    font-weight: var(--font-weight-titulo);
-    color: var(--neutral-color-900);
-    border-bottom: 2px solid var(--primary-color);
-}
-
-.rbc-month-view, 
-.rbc-time-view, 
-.rbc-agenda-view {
-    border: 1px solid #ddd;
-    background-color: var(--neutral-color-100);
-}
-
-
-.rbc-toolbar {
-    margin-bottom: 15px;
-}
-
-.rbc-toolbar button {
-    background: var(--neutral-color-100);
-    border: 1px solid var(--primary-color);
-    padding: 5px 10px;
-    margin: 0 5px;
-    border-radius: 3px;
-    color: var(--primary-color);
-    font-weight: var(--font-weight-paragrafo);
-    transition: all 0.3s ease;
-}
-
-.rbc-toolbar button:hover,
-.rbc-toolbar button.rbc-active {
-    background-color: var(--primary-color);
-    color: var(--neutral-color-100);
-}
-
-.modal{
-    width: 100%;
-    height: 100%;
-    background-color: black ;
-}
-
-.modal-content{
-    background-color: aliceblue;
-    padding: 20px ;
-}
-*/
 
