@@ -39,7 +39,7 @@ function Adicionar({ onAdicionar }) {
             }
 
             const userID = localStorage.getItem("userID"); 
-            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.desc, novoEvento.color);
+            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.desc, novoEvento.color, novoEvento.tipo);
 
             if (agendamentoId) { 
                 setNovoEvento({
