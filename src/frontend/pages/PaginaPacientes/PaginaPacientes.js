@@ -5,11 +5,12 @@ import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
 import useUsuarios from '../../hooks/useUsuarios';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
 import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
+import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
+import {atualizarPaciente} from '../../hooks/pacientes/UsePacienteAtualizar';
+import {cadastrarPaciente} from '../../hooks/pacientes/usePacienteCadastrar';
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
@@ -73,92 +74,7 @@ function PaginaPacientes() {
         p.data.includes(filtro) ||
         p.idade.includes(filtro)
     );
-
-    const atualizarPaciente = async () => {
-        const userID = localStorage.getItem("userID");
     
-        try {
-            const response = await fetch("http://localhost:4000/editarPaciente", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ ...novoPaciente, userID, id: novoPaciente._id }),
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-                const novosPacientes = [...pacientes];
-                novosPacientes[editandoIndex] = data.pacienteAtualizado;
-                setPacientes(novosPacientes);
-                resetarFormulario();
-            } else {
-                setErroCadastro(data.error || 'Erro ao editar paciente.');
-            }
-        } catch (error) {
-            console.error("Erro ao editar paciente:", error);
-            setErroCadastro("Erro ao comunicar com o servidor.");
-        }
-    };
-    
-    const cadastrarPaciente = async () => {
-        const userID = localStorage.getItem("userID");
-    
-        if (!novoPaciente.nome || !novoPaciente.telefone) {
-            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
-            return;
-        }
-    
-        try {
-            const response = await fetch("http://localhost:4000/cadastroPaciente", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({ ...novoPaciente, userID }),
-            });
-    
-            const data = await response.json();
-    
-            if (response.ok) {
-                setPacientes([...pacientes, data.pacienteCadastrado]);
-                resetarFormulario();
-            } else {
-                setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
-            }
-        } catch (error) {
-            console.error("Erro ao cadastrar paciente:", error);
-            setErroCadastro("Erro ao comunicar com o servidor.");
-        }
-    };
-    
-
-    const excluirPaciente = async (pacienteID) => {
-        try {
-            const resposta = await fetch("http://localhost:4000/excluirPaciente", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ pacienteID })
-            });
-
-            const dados = await resposta.json();
-
-            if (!resposta.ok) {
-                console.error("Erro ao excluir paciente:", dados.error);
-                return;
-            }
-
-            // Remove o paciente da lista local
-            setPacientes(prevPacientes => prevPacientes.filter(p => p._id !== pacienteID));
-        } catch (erro) {
-            console.error("Erro ao se comunicar com o servidor:", erro);
-        }
-    };
-
-
     const editarPaciente = (id) => {
         const index = pacientes.findIndex(p => p._id === id);
         if (index !== -1) {
@@ -274,8 +190,8 @@ function PaginaPacientes() {
                         >
                             <FiFilter />
                         </button>
-                        <button className="btn pdf cinza pequeno" onClick={exportarPDF}>
-                            <BsFileEarmarkPdf />
+                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
+                            <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
                             setNovoPaciente({
@@ -325,7 +241,7 @@ function PaginaPacientes() {
                                             <BsThreeDots />
                                             <div className="menu-popup">
                                                 <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
-                                                <button onClick={() => excluirPaciente(paciente._id)}>Excluir</button>
+                                                <button onClick={() => excluirPaciente(paciente._id, setPacientes)}>Excluir</button>
 
                                             </div>
                                         </div>
@@ -404,7 +320,7 @@ function PaginaPacientes() {
                             setErroCadastro('');
                         }}>Sair</button>
                         <button className="btn salvar" onClick={() => {
-                            editandoIndex !== null ? atualizarPaciente() : cadastrarPaciente();
+                            editandoIndex !== null ? atualizarPaciente(novoPaciente, pacientes,editandoIndex,setPacientes,resetarFormulario,setErroCadastro) : cadastrarPaciente(novoPaciente, pacientes,editandoIndex,setPacientes,resetarFormulario,setErroCadastro);
                         }}>
                             {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
                         </button>
