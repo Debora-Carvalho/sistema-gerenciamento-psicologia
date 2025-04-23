@@ -1,7 +1,7 @@
 
 ### 📁 `frontend/hooks/README.md`
 
-```md
+
 # 📌 Pasta: hooks
 
 Este diretório contém **React Hooks personalizados** utilizados no projeto **Sistema de Gerenciamento para Psicólogos**.
