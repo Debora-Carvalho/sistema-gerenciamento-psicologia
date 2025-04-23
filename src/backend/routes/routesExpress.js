@@ -6,6 +6,8 @@ const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
 const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
+const { buscarAgendamentosHandler } = require('../controllers/buscarAgendamentos');
+const { adicionarAgendamentoHandler } = require('../controllers/adicionarAgendamento');
 
 // Exemplo de rotas Express:
 router.post('/authLogin', loginHandler);
@@ -16,7 +18,8 @@ router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);
 router.post('/recuperarCodigo', solicitarCodigoSenhaHandler);
 router.post('/recuperarNovaSenha', redefinirSenhaHandler);
-
+router.post('/buscarAgendamentos', buscarAgendamentosHandler);
+router.post('/criarAgendamentos', adicionarAgendamentoHandler);
 
 module.exports = router;
 
