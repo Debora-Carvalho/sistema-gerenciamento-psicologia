@@ -5,16 +5,20 @@ const { loginHandler } = require('../controllers/loginAutentica');
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
 const { recuperarSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
-const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
+const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
+const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
+const { excluirPacientesHandler } = require('../controllers/crudPaciente/excluirPaciente');
 
-// Exemplo de rotas Express:
 router.post('/authLogin', loginHandler);
+router.post('/recuperar-senha', recuperarSenhaHandler);
+//Crud usuario:
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
 
-router.post('/recuperar-senha', recuperarSenhaHandler);
+//Crud paciente
 router.post('/cadastroPaciente', cadastroPacienteHandler);
-
+router.post('/dadosPacientes', buscarPacientesHandler);
+router.post('/excluirPaciente', excluirPacientesHandler);
 module.exports = router;
 
 

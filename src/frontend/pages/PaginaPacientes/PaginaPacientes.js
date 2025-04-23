@@ -5,15 +5,17 @@ import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
+import jsPDF from 'jspdf';
+import autoTable from 'jspdf-autotable';
 import useUsuarios from '../../hooks/useUsuarios';
 
 function PaginaPacientes() {
+    console.log("UserID do localStorage:", localStorage.getItem("userID"));
+
     const { usuario } = useUsuarios();
+    const [pacientes, setPacientes] = useState([]);
 
-    const [pacientes, setPacientes] = useState([
-        { nome: 'Andreia Oliveira Justina', data: '27/09/2025', idade: '42 anos' },
-    ]);
-
+    const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
         nome: '',
@@ -28,13 +30,98 @@ function PaginaPacientes() {
     const [editandoIndex, setEditandoIndex] = useState(null);
     const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
     const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
+    const [mostrarFiltrosVisuais, setMostrarFiltrosVisuais] = useState(false);
     const [colunasVisiveis, setColunasVisiveis] = useState({
         nome: true,
         data: true,
         idade: true
     });
     const [erroCadastro, setErroCadastro] = useState('');
-    const [pesquisaTexto, setPesquisaTexto] = useState('');
+
+    useEffect(() => {
+        async function buscarPacientes() {
+            const userID = localStorage.getItem("userID");
+            try {
+                const resposta = await fetch('http://localhost:4000/dadosPacientes', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ userID: userID })
+                });
+
+                const textoResposta = await resposta.text();
+                console.log("Resposta recebida:", textoResposta);
+                const dados = JSON.parse(textoResposta);
+
+
+                if (!resposta.ok) {
+                    console.error('Erro ao buscar pacientes:', dados.error);
+                    return;
+                }
+
+                const pacientesFormatados = dados.pacientes.map(p => ({
+                    nome: p.nome,
+                    data: p.ultima_sessao || 'Data não informada',
+                    idade: p.idade
+                }));
+
+                setPacientes(pacientesFormatados);
+
+            } catch (erro) {
+                console.error('Erro de conexão com o servidor:', erro);
+            }
+        }
+
+        buscarPacientes();
+    }, []);
+    
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
+                setMostrarFiltrosVisuais(false);
+            }
+        };
+
+        document.addEventListener('click', handleClickOutside);
+        return () => {
+            document.removeEventListener('click', handleClickOutside);
+        };
+    }, [mostrarFiltrosVisuais]);
+
+    const pacientesFiltrados = pacientes.filter(p =>
+        p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+        p.data.includes(filtro) ||
+        p.idade.includes(filtro)
+    );
+
+    const exportarPDF = () => {
+        const doc = new jsPDF();
+        doc.text('Lista de Pacientes', 14, 16);
+
+        const colunas = [];
+        const linhas = [];
+
+        if (colunasVisiveis.nome) colunas.push('Nome');
+        if (colunasVisiveis.data) colunas.push('Data da sessão');
+        if (colunasVisiveis.idade) colunas.push('Idade');
+
+        pacientes.forEach(p => {
+            const linha = [];
+            if (colunasVisiveis.nome) linha.push(p.nome);
+            if (colunasVisiveis.data) linha.push(p.data);
+            if (colunasVisiveis.idade) linha.push(p.idade);
+            linhas.push(linha);
+        });
+
+        autoTable(doc, {
+            startY: 20,
+            head: [colunas],
+            body: linhas
+        });
+        doc.save('pacientes.pdf');
+    };
 
     const adicionarPaciente = async () => {
         const userID = localStorage.getItem("userID");
@@ -86,7 +173,6 @@ function PaginaPacientes() {
         }
     };
 
-
     const editarPaciente = (index) => {
         setNovoPaciente({ ...pacientes[index] });
         setEditandoIndex(index);
@@ -115,16 +201,16 @@ function PaginaPacientes() {
                         <HiMenu />
                     </button>
                     <div className="container-pesquisa">
-                        <FiSearch className={`icone-lupa ${campoPesquisaFocado || pesquisaTexto ? 'escondido' : ''}`} />
+                        <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
                         <input
                             type="text"
                             className="campo-pesquisa"
-                            value={pesquisaTexto}
-                            onChange={e => setPesquisaTexto(e.target.value)}
+                            value={filtro}
+                            onChange={e => setFiltro(e.target.value)}
                             onFocus={() => setCampoPesquisaFocado(true)}
                             onBlur={() => setCampoPesquisaFocado(false)}
                         />
-                        {!campoPesquisaFocado && !pesquisaTexto && (
+                        {!campoPesquisaFocado && !filtro && (
                             <span className="texto-pesquisa">Pesquisar paciente</span>
                         )}
                     </div>
@@ -146,13 +232,25 @@ function PaginaPacientes() {
                 <div className="titulo-acoes-container">
                     <h2 className="titulo-pacientes">Pacientes</h2>
                     <div className="botoes-desktop">
-                        <button
-                            className="btn filtro cinza"
-                            onClick={() => console.log("Filtro clicado!")}>
-                            <FiFilter /> Filtros
-                        </button>
-
-                        <button className="btn pdf cinza">
+                        <div className="container-filtro">
+                            <button
+                                className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
+                                }}
+                            >
+                                <FiFilter /> Filtros
+                            </button>
+                            {mostrarFiltrosVisuais && (
+                                <div className="filtros-colunas" onClick={(e) => e.stopPropagation()}>
+                                    <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
+                                    <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
+                                    <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
+                                </div>
+                            )}
+                        </div>
+                        <button className="btn pdf cinza" onClick={exportarPDF}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
@@ -167,12 +265,15 @@ function PaginaPacientes() {
                 <div className="lista-pacientes">
                     <div className="botoes-mobile">
                         <button
-                            className="btn filtro cinza pequeno"
-                            onClick={() => console.log("Filtro clicado!")}>
+                            className={`btn filtro cinza pequeno ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
+                            }}
+                        >
                             <FiFilter />
                         </button>
-
-                        <button className="btn pdf cinza pequeno">
+                        <button className="btn pdf cinza pequeno" onClick={exportarPDF}>
                             <BsFileEarmarkPdf />
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
@@ -183,13 +284,13 @@ function PaginaPacientes() {
                         </button>
                     </div>
 
-                    {/* {mostrarFiltrosVisuais && (
+                    {mostrarFiltrosVisuais && (
                         <div className="filtros-colunas-mobile" onClick={(e) => e.stopPropagation()}>
                             <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
                             <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
                             <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
                         </div>
-                    )} */}
+                    )}
 
                     <table className="tabela-pacientes">
                         <thead>
@@ -201,7 +302,7 @@ function PaginaPacientes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pacientes.map((paciente, index) => (
+                            {pacientesFiltrados.map((paciente, index) => (
                                 <tr key={index}>
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}

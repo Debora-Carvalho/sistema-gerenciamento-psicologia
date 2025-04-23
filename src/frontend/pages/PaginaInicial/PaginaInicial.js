@@ -13,6 +13,9 @@ import Calendario from '../../components/Calendario/Calendario.js';
 function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
 
+    console.log("UserID do localStorage:", localStorage.getItem("userID"));
+
+
     return(
         <div className='container-pagina-inicial'>
             <CabecalhoPaginaInicial />

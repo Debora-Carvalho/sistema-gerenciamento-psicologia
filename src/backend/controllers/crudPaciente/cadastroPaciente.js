@@ -1,4 +1,4 @@
-const connectToDatabase = require("../config/mongodb");
+const connectToDatabase = require("../../config/mongodb");
 
 async function cadastroPacienteHandler(req, res) {
     try {
