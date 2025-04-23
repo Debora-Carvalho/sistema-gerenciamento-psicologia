@@ -14,7 +14,22 @@ function PaginaPacientes() {
 
     const { usuario } = useUsuarios();
     const [pacientes, setPacientes] = useState([]);
-
+    const resetarFormulario = () => {
+        setNovoPaciente({
+            nome: '',
+            idade: '',
+            genero: '',
+            estadoCivil: '',
+            telefone: '',
+            email: '',
+            preferenciaContato: '',
+            dataNascimento: ''
+        });
+        setEditandoIndex(null);
+        setMostrarFormulario(false);
+        setErroCadastro('');
+    };
+    
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
@@ -130,20 +145,11 @@ function PaginaPacientes() {
         doc.save('pacientes.pdf');
     };
 
-    const adicionarPaciente = async () => {
+    const atualizarPaciente = async () => {
         const userID = localStorage.getItem("userID");
     
-        if (!novoPaciente.nome || !novoPaciente.telefone) {
-            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
-            return;
-        }
-    
         try {
-            const endpoint = editandoIndex !== null
-                ? "http://localhost:4000/editarPaciente"
-                : "http://localhost:4000/cadastroPaciente";
-    
-            const response = await fetch(endpoint, {
+            const response = await fetch("http://localhost:4000/editarPaciente", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -154,32 +160,46 @@ function PaginaPacientes() {
             const data = await response.json();
     
             if (response.ok) {
-                if (editandoIndex !== null) {
-                    const novosPacientes = [...pacientes];
-                    novosPacientes[editandoIndex] = data.pacienteAtualizado;
-                    setPacientes(novosPacientes);
-                    setEditandoIndex(null);
-                } else {
-                    setPacientes([...pacientes, data.pacienteCadastrado]);
-                }
-    
-                setNovoPaciente({
-                    nome: '',
-                    idade: '',
-                    genero: '',
-                    estadoCivil: '',
-                    telefone: '',
-                    email: '',
-                    preferenciaContato: '',
-                    dataNascimento: ''
-                });
-                setMostrarFormulario(false);
-                setErroCadastro('');
+                const novosPacientes = [...pacientes];
+                novosPacientes[editandoIndex] = data.pacienteAtualizado;
+                setPacientes(novosPacientes);
+                resetarFormulario();
             } else {
-                setErroCadastro(data.error || 'Erro ao salvar paciente.');
+                setErroCadastro(data.error || 'Erro ao editar paciente.');
             }
         } catch (error) {
-            console.error("Erro ao enviar dados do paciente:", error);
+            console.error("Erro ao editar paciente:", error);
+            setErroCadastro("Erro ao comunicar com o servidor.");
+        }
+    };
+    
+    const cadastrarPaciente = async () => {
+        const userID = localStorage.getItem("userID");
+    
+        if (!novoPaciente.nome || !novoPaciente.telefone) {
+            setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
+            return;
+        }
+    
+        try {
+            const response = await fetch("http://localhost:4000/cadastroPaciente", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ ...novoPaciente, userID }),
+            });
+    
+            const data = await response.json();
+    
+            if (response.ok) {
+                setPacientes([...pacientes, data.pacienteCadastrado]);
+                resetarFormulario();
+            } else {
+                setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
+            }
+        } catch (error) {
+            console.error("Erro ao cadastrar paciente:", error);
             setErroCadastro("Erro ao comunicar com o servidor.");
         }
     };
@@ -454,7 +474,12 @@ function PaginaPacientes() {
                             setMostrarFormulario(false);
                             setErroCadastro('');
                         }}>Sair</button>
-                        <button onClick={adicionarPaciente}>Salvar</button>
+                        <button className="btn salvar" onClick={() => {
+                            editandoIndex !== null ? atualizarPaciente() : cadastrarPaciente();
+                        }}>
+                            {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
+                        </button>
+
                     </div>
                 </div>
             )}

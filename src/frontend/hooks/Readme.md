@@ -1,7 +1,6 @@
 
 ### 📁 `frontend/hooks/README.md`
 
-```md
 # 📌 Pasta: hooks
 
 Este diretório contém **React Hooks personalizados** utilizados no projeto **Sistema de Gerenciamento para Psicólogos**.
@@ -17,7 +16,6 @@ Organizar e centralizar **lógicas reutilizáveis** relacionadas a estados, efei
 Cada hook deve ser definido em um arquivo separado com o prefixo `use` seguido de seu propósito.
 
 **Exemplo:**
-```
 useUsuario.js         -> Responsável por buscar os dados do usuário logado.
 useAgendamentos.js    -> (Exemplo futuro) Buscar e filtrar agendamentos.
 ```
