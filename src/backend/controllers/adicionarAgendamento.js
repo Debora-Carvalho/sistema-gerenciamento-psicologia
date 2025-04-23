@@ -3,19 +3,22 @@ const connectToDatabase = require("../config/mongodb");
 
 async function adicionarAgendamentoHandler(req, res) {
     try {
-        const { userID, dataInicio, dataFim, color } = req.body;
+        const { userID, titulo, dataInicio, dataFim, desc, color, tipo } = req.body;
 
-        if (!userID ||  !dataInicio || !dataFim) {
-            return res.status(400).json({ error: "userID, servico, dataInicio e dataFim são obrigatórios" });
+        if (!userID || !titulo || !dataInicio || !dataFim) {
+            return res.status(400).json({ error: "userID, título, dataInicio e dataFim são obrigatórios" });
         }
 
         const db = await connectToDatabase();
 
         const novoAgendamento = {
             userID: new ObjectId(userID),  
+            titulo,
             dataInicio: new Date(dataInicio),  
-            dataFim: new Date(dataFim),        
-            color: color || "#3174ad",         
+            dataFim: new Date(dataFim),      
+            desc,  
+            color: color || "#3174ad",   
+            tipo      
         };
 
         const resultado = await db.collection("Agendamento").insertOne(novoAgendamento);

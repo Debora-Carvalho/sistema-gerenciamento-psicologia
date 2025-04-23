@@ -9,11 +9,11 @@ function Adicionar({ onAdicionar }) {
         start: '',
         end: '',
         desc: '',
-        color: '',
+        color: '#3174ad',
         tipo: '',
     });
     const [expanded, setExpanded] = useState(false);
-    const { adicionarAgendamento, loading, error, successMessage } = useCriarAgendamentos();
+    const { adicionarAgendamento } = useCriarAgendamentos();
 
 
     const handleChange = (e) => {
@@ -39,13 +39,13 @@ function Adicionar({ onAdicionar }) {
             }
 
             const userID = localStorage.getItem("userID"); 
-            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.color);
+            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.desc, novoEvento.color);
 
             if (agendamentoId) { 
                 setNovoEvento({
-                    title: '',
-                    start: '',
-                    end: '',
+                    titulo: '',
+                    dataInicio: '',
+                    dataFim: '',
                     desc: '',
                     color: '#3174ad', 
                     tipo: ''
@@ -59,7 +59,7 @@ function Adicionar({ onAdicionar }) {
 
     return (
         <div className="adicionar p-3 rounded border border-white" style={{ backgroundColor: '#e9ecef', color: '#212529' }}>
-            <h3>Adicionar Evento</h3>
+            <h3>Adicionar Agendamento</h3>
             <Form onSubmit={handleSubmit}>
                 <Form.Group controlId='formBasicTitle'>
                     <Form.Label>Título do Evento</Form.Label>
@@ -105,6 +105,7 @@ function Adicionar({ onAdicionar }) {
                 </Collapse>
                 
                 <button
+                    type="button"
                     className="adicionar-evento-plus"
                     onClick={handleToggleExpanded}
                     aria-label="Expandir para adicionar mais descrições">

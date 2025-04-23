@@ -6,10 +6,22 @@ import {
   Collapse
 } from 'react-bootstrap';
 import './Components-Calendario-css.css';
+import useDeleteAgendamento from "../../hooks/useExcluirAgendamentos";
+import useAlterarAgendamento from "../../hooks/useAlterarAgendamentos";
 
 const EventModal = ({evento, onClose, onDelete, onUpdate}) =>{
-    const [editedEvent, setEditedEvent] = useState({...evento});
+    const [editedEvent, setEditedEvent] = useState({
+        ...evento,
+        titulo: evento.titulo || "",
+        dataInicio: evento.dataInicio || new Date(),
+        dataFim: evento.dataFim || new Date(),
+        desc: evento.desc || "",
+        color: evento.color || "#3174ad",
+        tipo: evento.tipo || null
+        });
     const [collapsed, setCollapsed] = useState(true);
+    const { deleteAgendamento } = useDeleteAgendamento();
+    const { alterarAgendamento } = useAlterarAgendamento();
 
     const handleInputChange = (e)=>{
         const {name,value} = e.target;
@@ -34,13 +46,23 @@ const EventModal = ({evento, onClose, onDelete, onUpdate}) =>{
         }
     }
     const handleDelete = () =>{
-        onDelete(evento.id);
+        deleteAgendamento(evento.id, onDelete);
     }
-    const handleUpdate = () =>{
-        onUpdate(editedEvent);
-        onClose();
-    }
-
+    const handleUpdate = () => {
+        const eventData = {
+            titulo: editedEvent.title,
+            dataInicio: editedEvent.start.toISOString(), 
+            dataFim: editedEvent.end.toISOString(),      
+            desc: editedEvent.desc,
+            color: editedEvent.color,
+            tipo: editedEvent.tipo
+        };
+        alterarAgendamento(editedEvent.id, eventData, () => {
+            onUpdate(eventData); 
+            onClose();        
+        });
+    };
+    
     const adjustDate = (date) =>{
         const adjustedDate = new Date(date);
         adjustedDate.setHours(adjustedDate.getHours() - 3);

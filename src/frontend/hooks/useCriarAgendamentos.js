@@ -1,14 +1,5 @@
-import { useState } from 'react';
-
 export default function useAdicionarAgendamento() {
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState(null);
-    const [successMessage, setSuccessMessage] = useState('');
-
-    const adicionarAgendamento = async (userID, dataInicio, dataFim, color = "#3174ad") => {
-        setLoading(true);
-        setError(null);
-        setSuccessMessage('');
+    const adicionarAgendamento = async (userID, titulo, dataInicio, dataFim, desc, color = "#3174ad", tipo) => {
 
         try {
             const response = await fetch("http://localhost:4000/criarAgendamentos", {
@@ -18,32 +9,30 @@ export default function useAdicionarAgendamento() {
                 },
                 body: JSON.stringify({
                     userID,
+                    titulo,
                     dataInicio,
                     dataFim,
-                    color
+                    desc,
+                    color,
+                    tipo
                 }),
             });
 
             const data = await response.json();
 
             if (response.ok && data.success) {
-                setSuccessMessage("Agendamento adicionado com sucesso!");
+                alert("Agendamento criado com sucesso!")
                 return data.agendamentoId;
             } else {
-                setError(data.error || "Erro ao adicionar agendamento.");
+                alert(data.error || "Erro ao adicionar agendamento.");
             }
         } catch (error) {
             console.error("Erro ao adicionar agendamento:", error);
-            setError("Erro na comunicação com o servidor.");
-        } finally {
-            setLoading(false);
+            alert("Erro na comunicação com o servidor.");
         }
     };
 
     return {
-        adicionarAgendamento,
-        loading,
-        error,
-        successMessage,
+        adicionarAgendamento
     };
 }

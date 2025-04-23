@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
+import useAlterarAgendamento from "../../hooks/useAlterarAgendamentos";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
@@ -31,48 +32,34 @@ function Calendario() {
     const [eventosFiltrados, setEventosFiltrados] = useState(eventosPadrao);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const { buscarAgendamentos } = useAgendamentos();
-    const [loading, setLoading] = useState(true); 
-    const [mensagemErro, setMensagemErro] = useState(""); 
+    const { alterarAgendamento } = useAlterarAgendamento();
 
 
     useEffect(() => {
         const userID = localStorage.getItem("userID");
 
         if (!userID) {
-            setMensagemErro("Usuário não autenticado.");
-            setLoading(false);
             return;
         }
 
-        buscarAgendamentos(userID).then(({ agendamentos, success, error }) => {
-            if (!success) {
-                setMensagemErro(error);
-                setLoading(false);
-                return;
-            }
+        buscarAgendamentos(userID).then(({ agendamentos }) => {
 
             if (!Array.isArray(agendamentos)) {
-                setMensagemErro("Erro ao processar agendamentos.");
-                setLoading(false);
                 return;
-            }
-
-            if (agendamentos.length === 0) {
-                setMensagemErro("Nenhum agendamento encontrado.");
             }
 
             const eventosFormatados = agendamentos.map((ag, idx) => ({
                 id: ag._id || idx,
-                title: ag.servico,
+                title: ag.titulo,
                 start: new Date(ag.dataInicio),
                 end: new Date(ag.dataFim),
+                desc: ag.desc,
                 color: ag.color || "#3174ad",
                 ...ag,
             }));
 
             setEventos(eventosFormatados);
             setEventosFiltrados(eventosFormatados);
-            setLoading(false); // Fim do carregamento
         });
     }, [buscarAgendamentos]);
 
@@ -84,11 +71,24 @@ function Calendario() {
 
     const moverEventos = ({ event, start, end }) => {
         const updatedEvents = eventos.map((e) =>
-            e.id === event.id ? { ...e, start, end } : e
+          e.id === event.id ? { ...e, start, end } : e
         );
         setEventos(updatedEvents);
         setEventosFiltrados(updatedEvents);
-    };
+      
+        const novosDados = {
+          titulo: event.title,
+          dataInicio: start.toISOString(),
+          dataFim: end.toISOString(),
+          desc: event.desc,
+          color: event.color,
+          tipo: event.tipo,
+        };
+      
+        alterarAgendamento(event.id, novosDados, () => {
+        });
+      };
+      
 
     const handleEventClick = (evento) => setEventoSelecionado(evento);
     const handleEventClose = () => setEventoSelecionado(null);
