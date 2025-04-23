@@ -8,12 +8,14 @@ import { HiMenu } from "react-icons/hi";
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import useUsuarios from '../../hooks/useUsuarios';
-
+import usePacientes from '../../hooks/pacientes/usePacientesListar';
+import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
     const { usuario } = useUsuarios();
-    const [pacientes, setPacientes] = useState([]);
+    const { pacientes, setPacientes} = usePacientes();
+
     const resetarFormulario = () => {
         setNovoPaciente({
             nome: '',
@@ -54,52 +56,6 @@ function PaginaPacientes() {
     const [erroCadastro, setErroCadastro] = useState('');
 
     useEffect(() => {
-        async function buscarPacientes() {
-            const userID = localStorage.getItem("userID");
-            try {
-                const resposta = await fetch('http://localhost:4000/dadosPacientes', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ userID: userID })
-                });
-
-                const textoResposta = await resposta.text();
-                console.log("Resposta recebida:", textoResposta);
-                const dados = JSON.parse(textoResposta);
-
-
-                if (!resposta.ok) {
-                    console.error('Erro ao buscar pacientes:', dados.error);
-                    return;
-                }
-
-                const pacientesFormatados = dados.pacientes.map(p => ({
-                    _id: p._id,
-                    nome: p.nome,
-                    idade: p.idade,
-                    data: p.ultima_sessao || 'Data não informada',
-                    genero: p.genero,
-                    estadoCivil: p.estadoCivil,
-                    telefone: p.telefone,
-                    email: p.email,
-                    preferenciaContato: p.preferenciaContato,
-                    dataNascimento: p.dataNascimento
-                }));
-
-                setPacientes(pacientesFormatados);
-
-            } catch (erro) {
-                console.error('Erro de conexão com o servidor:', erro);
-            }
-        }
-
-        buscarPacientes();
-    }, []);
-
-
-    useEffect(() => {
         const handleClickOutside = (event) => {
             if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
                 setMostrarFiltrosVisuais(false);
@@ -117,33 +73,6 @@ function PaginaPacientes() {
         p.data.includes(filtro) ||
         p.idade.includes(filtro)
     );
-
-    const exportarPDF = () => {
-        const doc = new jsPDF();
-        doc.text('Lista de Pacientes', 14, 16);
-
-        const colunas = [];
-        const linhas = [];
-
-        if (colunasVisiveis.nome) colunas.push('Nome');
-        if (colunasVisiveis.data) colunas.push('Data da sessão');
-        if (colunasVisiveis.idade) colunas.push('Idade');
-
-        pacientes.forEach(p => {
-            const linha = [];
-            if (colunasVisiveis.nome) linha.push(p.nome);
-            if (colunasVisiveis.data) linha.push(p.data);
-            if (colunasVisiveis.idade) linha.push(p.idade);
-            linhas.push(linha);
-        });
-
-        autoTable(doc, {
-            startY: 20,
-            head: [colunas],
-            body: linhas
-        });
-        doc.save('pacientes.pdf');
-    };
 
     const atualizarPaciente = async () => {
         const userID = localStorage.getItem("userID");
@@ -310,7 +239,7 @@ function PaginaPacientes() {
                                 </div>
                             )}
                         </div>
-                        <button className="btn pdf cinza" onClick={exportarPDF}>
+                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
