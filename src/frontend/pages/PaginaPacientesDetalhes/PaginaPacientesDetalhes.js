@@ -5,11 +5,18 @@ import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/Cabe
 import ChecklistPagamentos from "../../components/ChecklistPagamentos/ChecklistPagamentos.js";
 import Menu from "../../components/Menu/Menu.js";
 import { PiNotePencilBold } from "react-icons/pi";
+import { FaRegTrashCan } from "react-icons/fa6";
 
 function PaginaPacientesDetalhes() {
   useDocumentTitle("Pacientes | Seren");
 
-  const [usuario, setUsuario] = useState(null);
+  const [setUsuario] = useState(null);
+  const [popupAberto, setPopupAberto] = useState(false);
+  const [popupExcluir, setPopupExcluir] = useState(false);
+  const [popupSucesso, setPopupSucesso] = useState(false);
+  const excluirPaciente = () => {
+    // back, coloque aqui a lógica que preferirem para excluir o usuário
+  };
 
   useEffect(() => {
     async function buscarUsuario() {
@@ -99,7 +106,7 @@ function PaginaPacientesDetalhes() {
           preferenciaContato: "",
           dataNascimento: "",
         });
-
+        setPopupAberto(true);
         setMostrarFormulario(false);
         setErroCadastro("");
       } else {
@@ -128,12 +135,24 @@ function PaginaPacientesDetalhes() {
                   </p>
                 )}
                 <div>
-                  <button
-                    className="btn-editar-paciente"
-                    onClick={() => setMostrarFormulario(true)}
-                  >
-                    <PiNotePencilBold className="icon-edicao" />
-                  </button>
+                  <div className="acao-paciente">
+                    {mostrarFormulario ? (
+                      <button
+                        className="btn-excluir-paciente"
+                        onClick={() => setPopupExcluir(true)}
+                      >
+                        <FaRegTrashCan className="icon-exclusao" />
+                      </button>
+                    ) : (
+                      <button
+                        className="btn-editar-paciente"
+                        onClick={() => setMostrarFormulario(true)}
+                      >
+                        <PiNotePencilBold className="icon-edicao" />
+                      </button>
+                    )}
+                  </div>
+
                   {mostrarFormulario && (
                     <div className="modal-formulario-pacientes">
                       <h3 className="titulo-editar"> Editar Paciente</h3>
@@ -264,6 +283,67 @@ function PaginaPacientesDetalhes() {
                 </div>
               </div>
 
+              {popupAberto && (
+                <div className="popup-overlay">
+                  <div className="popup-box">
+                    <h3>Informações de paciente salvas!</h3>
+                    <p>Você alterou informações deste paciente com sucesso!</p>
+                    <button
+                      className="btn-popup"
+                      onClick={() =>
+                        (window.location.href = "/pacientes-detalhes")
+                      }
+                    >
+                      Ok, entendi!
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {popupExcluir && (
+                <div className="popup-overlay">
+                  <div className="popup-box">
+                    <h3>Deseja excluir este paciente?</h3>
+                    <p>Você não poderá reverter esta ação.</p>
+                    <div className="popup-buttons">
+                      <button
+                        className="btn-nao"
+                        onClick={() => setPopupExcluir(false)}
+                      >
+                        Não, cancelar
+                      </button>
+                      <button
+                        className="btn-sim"
+                        onClick={() => {
+                          excluirPaciente();
+                          setPopupExcluir(false);
+                          setPopupSucesso(true);
+                          setPopupSucesso(true);
+                        }}
+                      >
+                        Sim, excluir
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {popupSucesso && (
+                <div className="popup-overlay">
+                  <div className="popup-box">
+                    <h3>Dados excluídos com sucesso!</h3>
+                    <button
+                      className="btn-popup"
+                      onClick={() =>
+                        (window.location.href = "/pacientes-detalhes")
+                      }
+                    >
+                      Ok
+                    </button>
+                  </div>
+                </div>
+              )}
+
               {!mostrarFormulario && (
                 <div className="card-paciente__infos">
                   <div>
@@ -305,19 +385,17 @@ function PaginaPacientesDetalhes() {
                   <a className="btn-plano-tratamento" href="#">
                     <p>Plano de tratamento</p>
                   </a>
-                </div>
+                </div> 
               )}
             </div>
 
             <div className="card-pagamentos">
               <h3>Pagamentos</h3>
-
               <div className="card-pagamentos-checklist">
                 <ChecklistPagamentos className="checklist" />
               </div>
             </div>
           </div>
-
           <div className="cards-anotacoes">
             <div className="container-anotacoes-salvas">
               <h1>Registros de sessões</h1>

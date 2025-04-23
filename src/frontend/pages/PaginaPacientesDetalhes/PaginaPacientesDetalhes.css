@@ -59,10 +59,23 @@
     color: var(--primary-color);
 }
 
-.card-paciente .btn-editar-paciente{
+.card-paciente .card-paciente__cabecalho .icon-exclusao {
+    font-size: 25px;
+    color: rgb(197, 39, 39);
+}
+
+.card-paciente .btn-editar-paciente {
     border: none;
     background-color: transparent;
     cursor: pointer;
+}
+
+.card-paciente .btn-excluir-paciente{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    left: 600px;
+    position: relative;
 }
 
 .card-paciente .card-paciente__infos {
@@ -147,10 +160,49 @@
     font-size: 1em;
     box-sizing: border-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    flex: 1 1 calc(50% - 10px); /* dois por linha, com espaçamento */
-    min-width: 200px; /* garante responsividade */
+    flex: 1 1 calc(50% - 10px); 
+    min-width: 200px; 
 }
 
 .titulo-editar{
     text-align: center;
+}
+
+.popup-buttons{
+    display: flex;
+    gap: 16px;               
+    justify-content: space-between;
+    font-family: var(--font-family-principal);
+}
+
+.popup-buttons button {
+    flex: 1;                 
+    height: 40px;
+    border: none;
+    border-radius: 20px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+.popup-buttons .btn-sim{
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.popup-buttons .btn-sim:hover{
+    background-color: rgb(111, 111, 255);
+    transition: 0.5s;
+}
+
+.popup-buttons .btn-nao{
+    background-color: rgb(212, 208, 208);
+    color: var(--primary-color);
+    transition: 0.5s;
+}
+
+.popup-buttons .btn-nao:hover{
+    background-color: rgb(161, 161, 161);
 }
