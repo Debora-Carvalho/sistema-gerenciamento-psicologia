@@ -61,9 +61,16 @@ function PaginaPacientes() {
                 }
 
                 const pacientesFormatados = dados.pacientes.map(p => ({
+                    _id: p._id,
                     nome: p.nome,
+                    idade: p.idade,
                     data: p.ultima_sessao || 'Data não informada',
-                    idade: p.idade
+                    genero: p.genero,
+                    estadoCivil: p.estadoCivil,
+                    telefone: p.telefone,
+                    email: p.email,
+                    preferenciaContato: p.preferenciaContato,
+                    dataNascimento: p.dataNascimento
                 }));
 
                 setPacientes(pacientesFormatados);
@@ -75,7 +82,7 @@ function PaginaPacientes() {
 
         buscarPacientes();
     }, []);
-    
+
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -125,33 +132,37 @@ function PaginaPacientes() {
 
     const adicionarPaciente = async () => {
         const userID = localStorage.getItem("userID");
-
+    
         if (!novoPaciente.nome || !novoPaciente.telefone) {
             setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
             return;
         }
-
+    
         try {
-            const response = await fetch("http://localhost:4000/cadastroPaciente", {
+            const endpoint = editandoIndex !== null
+                ? "http://localhost:4000/editarPaciente"
+                : "http://localhost:4000/cadastroPaciente";
+    
+            const response = await fetch(endpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ ...novoPaciente, userID }), // ← Aqui está a correção
+                body: JSON.stringify({ ...novoPaciente, userID, id: novoPaciente._id }),
             });
-
+    
             const data = await response.json();
-
+    
             if (response.ok) {
                 if (editandoIndex !== null) {
                     const novosPacientes = [...pacientes];
-                    novosPacientes[editandoIndex] = data.pacienteCadastrado;
+                    novosPacientes[editandoIndex] = data.pacienteAtualizado;
                     setPacientes(novosPacientes);
                     setEditandoIndex(null);
                 } else {
                     setPacientes([...pacientes, data.pacienteCadastrado]);
                 }
-
+    
                 setNovoPaciente({
                     nome: '',
                     idade: '',
@@ -165,19 +176,48 @@ function PaginaPacientes() {
                 setMostrarFormulario(false);
                 setErroCadastro('');
             } else {
-                setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
+                setErroCadastro(data.error || 'Erro ao salvar paciente.');
             }
         } catch (error) {
             console.error("Erro ao enviar dados do paciente:", error);
             setErroCadastro("Erro ao comunicar com o servidor.");
         }
     };
+    
 
-    const editarPaciente = (index) => {
-        setNovoPaciente({ ...pacientes[index] });
-        setEditandoIndex(index);
-        setMostrarFormulario(true);
-        setErroCadastro('');
+    const excluirPaciente = async (pacienteID) => {
+        try {
+            const resposta = await fetch("http://localhost:4000/excluirPaciente", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ pacienteID })
+            });
+
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                console.error("Erro ao excluir paciente:", dados.error);
+                return;
+            }
+
+            // Remove o paciente da lista local
+            setPacientes(prevPacientes => prevPacientes.filter(p => p._id !== pacienteID));
+        } catch (erro) {
+            console.error("Erro ao se comunicar com o servidor:", erro);
+        }
+    };
+
+
+    const editarPaciente = (id) => {
+        const index = pacientes.findIndex(p => p._id === id);
+        if (index !== -1) {
+            setNovoPaciente({ ...pacientes[index] });
+            setEditandoIndex(index);
+            setMostrarFormulario(true);
+            setErroCadastro('');
+        }
     };
 
     const toggleMenuMobile = () => {
@@ -254,11 +294,23 @@ function PaginaPacientes() {
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
+                            setNovoPaciente({
+                                nome: '',
+                                idade: '',
+                                genero: '',
+                                estadoCivil: '',
+                                telefone: '',
+                                email: '',
+                                preferenciaContato: '',
+                                dataNascimento: ''
+                            });
+                            setEditandoIndex(null); // ← importante: garante que o formulário entenda que é um novo cadastro
                             setMostrarFormulario(true);
-                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                            setErroCadastro('');
                         }}>
                             <AiOutlineUserAdd /> Adicionar paciente
                         </button>
+
                     </div>
                 </div>
 
@@ -277,11 +329,23 @@ function PaginaPacientes() {
                             <BsFileEarmarkPdf />
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
+                            setNovoPaciente({
+                                nome: '',
+                                idade: '',
+                                genero: '',
+                                estadoCivil: '',
+                                telefone: '',
+                                email: '',
+                                preferenciaContato: '',
+                                dataNascimento: ''
+                            });
+                            setEditandoIndex(null);
                             setMostrarFormulario(true);
-                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                            setErroCadastro('');
                         }}>
                             <AiOutlineUserAdd />
                         </button>
+
                     </div>
 
                     {mostrarFiltrosVisuais && (
@@ -302,8 +366,8 @@ function PaginaPacientes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pacientesFiltrados.map((paciente, index) => (
-                                <tr key={index}>
+                            {pacientesFiltrados.map((paciente) => (
+                                <tr key={paciente._id}>
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
                                     {colunasVisiveis.idade && <td>{paciente.idade}</td>}
@@ -311,8 +375,9 @@ function PaginaPacientes() {
                                         <div className="acoes">
                                             <BsThreeDots />
                                             <div className="menu-popup">
-                                                <button onClick={() => editarPaciente(index)}>Editar</button>
-                                                <button onClick={() => setPacientes(pacientes.filter((_, i) => i !== index))}>Excluir</button>
+                                                <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
+                                                <button onClick={() => excluirPaciente(paciente._id)}>Excluir</button>
+
                                             </div>
                                         </div>
                                     </td>

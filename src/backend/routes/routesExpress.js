@@ -7,7 +7,8 @@ const { recuperarSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
 const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
-const { excluirPacientesHandler } = require('../controllers/crudPaciente/excluirPaciente');
+const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirPaciente');
+const {editarPacienteHandler} = require('../controllers/crudPaciente/editarPaciente')
 
 router.post('/authLogin', loginHandler);
 router.post('/recuperar-senha', recuperarSenhaHandler);
@@ -18,7 +19,8 @@ router.post('/dadosUsuario', buscarUsuarioHandler);
 //Crud paciente
 router.post('/cadastroPaciente', cadastroPacienteHandler);
 router.post('/dadosPacientes', buscarPacientesHandler);
-router.post('/excluirPaciente', excluirPacientesHandler);
+router.post('/excluirPaciente', excluirPacienteHandler);
+router.post('/editarPaciente', editarPacienteHandler)
 module.exports = router;
 
 
