@@ -11,7 +11,6 @@ const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirP
 const { editarPacienteHandler } = require('../controllers/crudPaciente/editarPaciente')
 const { buscarPacienteHandler } = require('../controllers/crudPaciente/buscarPacinete');
 router.post('/authLogin', loginHandler);
-// router.post('/recuperar-senha', recuperarSenhaHandler);
 //Crud usuario:
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
