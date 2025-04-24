@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { loginHandler } = require('../controllers/loginAutentica');
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
-const { recuperarSenhaHandler } = require('../controllers/recuperarSenha');
+const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
 const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
@@ -16,8 +16,11 @@ router.post('/recuperar-senha', recuperarSenhaHandler);
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
 
-//Crud paciente
+router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);
+router.post('/recuperarCodigo', solicitarCodigoSenhaHandler);
+router.post('/recuperarNovaSenha', redefinirSenhaHandler);
+
 router.post('/dadosPacientes', buscarPacientesHandler);
 router.post('/dadosPaciente', buscarPacienteHandler);
 router.post('/excluirPaciente', excluirPacienteHandler);

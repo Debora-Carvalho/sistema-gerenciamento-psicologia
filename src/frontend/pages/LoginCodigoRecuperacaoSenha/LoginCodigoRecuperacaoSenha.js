@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './LoginCodigoRecuperacaoSenha.css';
 import imgHomemVerifiqueEmail from '../../assets/images/image-homem-verifiqueemail.png';
 import { useLocation, useNavigate } from 'react-router-dom';
+import useRecuperarCodigo from '../../hooks/useRecuperarCodigo';
+import useRecuperarSenha from '../../hooks/useRecuperarSenha';
 
 function LoginCodigoRecuperacaoSenha() {
     const [codigo, setCodigo] = useState('');
@@ -11,6 +13,9 @@ function LoginCodigoRecuperacaoSenha() {
     const [mensagemErro, setMensagemErro] = useState('');
     const [desabilitado, setDesabilitado] = useState(false);
     const codigoCorreto = '123456'; // valor para simulacao do código enviado por email
+    const { verificarCodigo } = useRecuperarCodigo();
+    const { enviarCodigo } = useRecuperarSenha();
+    
  
     
     useEffect(() => {
@@ -28,27 +33,7 @@ function LoginCodigoRecuperacaoSenha() {
     
     const reenviarCodigo = async () => {
         setDesabilitado(true);
-        try {
-          const res = await fetch('http://localhost:4000/recuperar-senha', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email }),
-          });
-      
-          const data = await res.json();
-      
-          if (!res.ok) {
-            alert(data.error || "Erro ao reenviar código.");
-            return;
-          }
-      
-          alert("Novo código enviado para o seu e-mail.");
-        } catch (err) {
-          console.error(err);
-          alert("Erro de conexão ao tentar reenviar o código.");
-        } finally {
-            setTimeout(() => setDesabilitado(false), 30000);
-        }
+        enviarCodigo(email, setMensagemErro, setDesabilitado);
       };
 
     const handleSubmit = async (e) => {
@@ -56,33 +41,9 @@ function LoginCodigoRecuperacaoSenha() {
         const erro = validarCodigo(codigo);
         setMensagemErro(erro);
         
-
         if (!erro) {
             console.log('codigo válido, prosseguir com envio...');
-            try {
-                const response = await fetch('http://localhost:4000/recuperar-senha/codigo', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: email, 
-                        code: codigo
-                    })
-                });const data = await response.json();
-
-                if (response.ok) {
-                    console.log('Código válido, prosseguir com envio...');
-                    await alert("Código válido!")
-                    navigate('/recuperar-senha/nova-senha',{ state: { email } }) // enviando o email para a página de senha
-                } else {
-                    setMensagemErro(data.error || 'Erro desconhecido');
-                }
-
-            } catch (error) {
-                setMensagemErro('Erro de conexão. Tente novamente.');
-                console.error('Erro ao enviar código para o backend', error);
-            }
+            verificarCodigo({ email, codigo }, setMensagemErro);
         }
     };
             
