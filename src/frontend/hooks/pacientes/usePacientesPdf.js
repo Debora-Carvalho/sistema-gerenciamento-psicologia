@@ -1,5 +1,6 @@
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import calcularIdade from './utilCalcularIdade.js';
 
 export function exportarPDF(pacientes, colunasVisiveis) {
     const doc = new jsPDF();
@@ -14,7 +15,7 @@ export function exportarPDF(pacientes, colunasVisiveis) {
         const linha = [];
         if (colunasVisiveis.nome) linha.push(p.nome);
         if (colunasVisiveis.data) linha.push(p.data);
-        if (colunasVisiveis.idade) linha.push(p.idade);
+        if (colunasVisiveis.idade) linha.push(calcularIdade(p.dataNascimento));
         linhas.push(linha);
     });
 

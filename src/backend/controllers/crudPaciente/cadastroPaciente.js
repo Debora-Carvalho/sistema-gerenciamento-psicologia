@@ -5,7 +5,7 @@ async function cadastroPacienteHandler(req, res) {
         const db = await connectToDatabase();
         const {
             nome,
-            idade,
+            profissao,
             genero,
             estadoCivil,
             telefone,
@@ -24,7 +24,7 @@ async function cadastroPacienteHandler(req, res) {
 
         const novoPaciente = {
             nome,
-            idade,
+            profissao,
             genero,
             estadoCivil,
             telefone,

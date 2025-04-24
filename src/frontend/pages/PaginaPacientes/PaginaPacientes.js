@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
 import Menu from '../../components/Menu/Menu';
@@ -12,6 +12,7 @@ import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
 import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
 import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
+import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
@@ -28,7 +29,7 @@ function PaginaPacientes() {
     const resetarFormulario = () => {
         setNovoPaciente({
             nome: '',
-            idade: '',
+            profissao: '',
             genero: '',
             estadoCivil: '',
             telefone: '',
@@ -45,7 +46,7 @@ function PaginaPacientes() {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
         nome: '',
-        idade: '',
+        profissao: '',
         genero: '',
         estadoCivil: '',
         telefone: '',
@@ -80,8 +81,9 @@ function PaginaPacientes() {
     const pacientesFiltrados = pacientes.filter(p =>
         p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
         p.data.includes(filtro) ||
-        p.idade.includes(filtro)
+        calcularIdade(p.dataNascimento).toString().includes(filtro)
     );
+    
 
     const editarPaciente = (id) => {
         const index = pacientes.findIndex(p => p._id === id);
@@ -169,7 +171,7 @@ function PaginaPacientes() {
                         <button className="btn adicionar cinza" onClick={() => {
                             setNovoPaciente({
                                 nome: '',
-                                idade: '',
+                                profissao: '',
                                 genero: '',
                                 estadoCivil: '',
                                 telefone: '',
@@ -204,7 +206,7 @@ function PaginaPacientes() {
                         <button className="btn adicionar cinza pequeno" onClick={() => {
                             setNovoPaciente({
                                 nome: '',
-                                idade: '',
+                                profissao: '',
                                 genero: '',
                                 estadoCivil: '',
                                 telefone: '',
@@ -247,7 +249,7 @@ function PaginaPacientes() {
                                 >
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
-                                    {colunasVisiveis.idade && <td>{paciente.idade}</td>}
+                                    {colunasVisiveis.idade && ( <td>{calcularIdade(paciente.dataNascimento)}</td>)}
                                     <td>
                                         <div className="acoes">
                                             <BsThreeDots onClick={(e) => { e.stopPropagation(); }} style={{ cursor: "pointer" }} />
@@ -279,8 +281,8 @@ function PaginaPacientes() {
                                 onChange={e => setNovoPaciente({ ...novoPaciente, nome: e.target.value })} />
                         </div>
                         <div className="form-group">
-                            <input type="text" placeholder="Idade" value={novoPaciente.idade}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, idade: e.target.value })} />
+                            <input type="text" placeholder="Profissão" value={novoPaciente.profissao}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, profissao: e.target.value })} />
                         </div>
                     </div>
                     <div className="form-row">

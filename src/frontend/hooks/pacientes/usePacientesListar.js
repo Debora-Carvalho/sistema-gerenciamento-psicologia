@@ -21,7 +21,7 @@ const usePacientes = () => {
                 const pacientesFormatados = dados.pacientes.map(p => ({
                     _id: p._id,
                     nome: p.nome,
-                    idade: p.idade,
+                    profissao: p.profissao,
                     data: p.ultima_sessao || 'Data não informada',
                     genero: p.genero,
                     estadoCivil: p.estadoCivil,

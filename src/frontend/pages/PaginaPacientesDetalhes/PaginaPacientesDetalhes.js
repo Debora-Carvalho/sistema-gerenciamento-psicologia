@@ -9,6 +9,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import usePacienteDetalhes from "../../hooks/pacientes/usePacienteDetalhes.js";
 import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
+import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 
 function PaginaPacientesDetalhes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
@@ -25,7 +26,7 @@ function PaginaPacientesDetalhes() {
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
         nome: paciente?.nome || '',
-        idade: paciente?.idade || '',
+        profissao: paciente?.profissao || '',
         genero: paciente?.genero || '',
         estadoCivil: paciente?.estadoCivil || '',
         telefone: paciente?.telefone || '',
@@ -38,7 +39,7 @@ function PaginaPacientesDetalhes() {
     const resetarFormulario = () => {
         setNovoPaciente({
             nome: '',
-            idade: '',
+            profissao: '',
             genero: '',
             estadoCivil: '',
             telefone: '',
@@ -54,7 +55,7 @@ function PaginaPacientesDetalhes() {
         if (!paciente) return;
         setNovoPaciente({
             nome: paciente.nome,
-            idade: paciente.idade,
+            profissao: paciente.profissao,
             genero: paciente.genero,
             estadoCivil: paciente.estadoCivil,
             telefone: paciente.telefone,
@@ -120,12 +121,12 @@ function PaginaPacientesDetalhes() {
 
                                                 <input
                                                     type="text"
-                                                    placeholder="Idade"
-                                                    value={novoPaciente.idade}
+                                                    placeholder="profissao"
+                                                    value={novoPaciente.profissao}
                                                     onChange={(e) =>
                                                         setNovoPaciente({
                                                             ...novoPaciente,
-                                                            idade: e.target.value,
+                                                            profissao: e.target.value,
                                                         })
                                                     }
                                                 />
@@ -299,7 +300,7 @@ function PaginaPacientesDetalhes() {
                                     <div className="card-paciente__infos">
                                         <div>
                                             <p className="paciente-atributo">
-                                                Idade: <span>{paciente.nome}</span>
+                                                Idade: <span>{calcularIdade(paciente.dataNascimento)}</span>
                                             </p>
                                             <p className="paciente-atributo">
                                                 Gênero: <span>{paciente.genero}</span>
@@ -308,7 +309,7 @@ function PaginaPacientesDetalhes() {
                                                 Estado civil: <span>{paciente.estadoCivil}</span>
                                             </p>
                                             <p className="paciente-atributo">
-                                                Profissão: <span>{paciente.nome}</span>
+                                                Profissão: <span>{paciente.profissao}</span>
                                             </p>
                                         </div>
                                         <div>
@@ -344,6 +345,14 @@ function PaginaPacientesDetalhes() {
                                     </a>
                                     <a className="btn-plano-tratamento" href="#">
                                         <p>Plano de tratamento</p>
+                                    </a>
+                                    <a
+                                        className="btn-plano-tratamento"
+                                        href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <p>WhatsApp</p>
                                     </a>
                                 </div>
                             )}

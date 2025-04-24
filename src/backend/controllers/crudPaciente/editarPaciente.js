@@ -7,7 +7,7 @@ async function editarPacienteHandler(req, res) {
         const {
             id,
             nome,
-            idade,
+            profissao,
             genero,
             estadoCivil,
             telefone,
@@ -23,7 +23,7 @@ async function editarPacienteHandler(req, res) {
 
         const pacienteAtualizado = {
             nome,
-            idade,
+            profissao,
             genero,
             estadoCivil,
             telefone,

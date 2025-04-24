@@ -7,13 +7,12 @@ export const atualizarPaciente = async (novoPaciente, setPacientes, resetarFormu
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ ...novoPaciente, userID, id: novoPaciente._id }),  // Passando o ID do paciente
+            body: JSON.stringify({ ...novoPaciente, userID, id: novoPaciente._id }),
         });
 
         const data = await response.json();
 
         if (response.ok) {
-            // A lógica agora lida apenas com os dados atualizados, sem necessidade de pacientes e editandoIndex
             setPacientes((prevPacientes) => 
                 prevPacientes.map((paciente) => 
                     paciente._id === novoPaciente._id ? data.pacienteAtualizado : paciente
