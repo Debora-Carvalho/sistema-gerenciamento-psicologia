@@ -1,11 +1,19 @@
 export const excluirPaciente = async (pacienteID, setPacientes) => {
+    // Se pacienteID não for passado, tenta buscar do localStorage
+    const idParaExcluir = pacienteID || localStorage.getItem("pacienteID");
+
+    if (!idParaExcluir) {
+        console.error("ID do paciente não fornecido nem encontrado no localStorage.");
+        return;
+    }
+
     try {
         const resposta = await fetch("http://localhost:4000/excluirPaciente", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ pacienteID })
+            body: JSON.stringify({ pacienteID: idParaExcluir })
         });
 
         const dados = await resposta.json();
@@ -15,8 +23,15 @@ export const excluirPaciente = async (pacienteID, setPacientes) => {
             return;
         }
 
-        // Remove o paciente da lista local
-        setPacientes(prevPacientes => prevPacientes.filter(p => p._id !== pacienteID));
+        console.log("Paciente excluído com sucesso:", dados.message);
+
+        // Se setPacientes foi passado, remove da lista local
+        if (setPacientes) {
+            setPacientes(prevPacientes =>
+                prevPacientes.filter(p => p._id !== idParaExcluir)
+            );
+        }
+
     } catch (erro) {
         console.error("Erro ao se comunicar com o servidor:", erro);
     }

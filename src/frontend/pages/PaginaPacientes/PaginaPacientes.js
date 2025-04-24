@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
 import Menu from '../../components/Menu/Menu';
 import { FiFilter, FiSearch } from "react-icons/fi";
@@ -9,13 +10,20 @@ import useUsuarios from '../../hooks/useUsuarios';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
 import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
 import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
-import {atualizarPaciente} from '../../hooks/pacientes/UsePacienteAtualizar';
-import {cadastrarPaciente} from '../../hooks/pacientes/usePacienteCadastrar';
+import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
+import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
     const { usuario } = useUsuarios();
-    const { pacientes, setPacientes} = usePacientes();
+    const { pacientes, setPacientes } = usePacientes();
+    const navigate = useNavigate();
+
+    const handleAbrirDetalhesPaciente = (pacienteId) => {
+        localStorage.setItem("pacienteID", pacienteId);
+        navigate("/pacientes-detalhes");
+    };
+
 
     const resetarFormulario = () => {
         setNovoPaciente({
@@ -32,7 +40,7 @@ function PaginaPacientes() {
         setMostrarFormulario(false);
         setErroCadastro('');
     };
-    
+
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
@@ -74,7 +82,7 @@ function PaginaPacientes() {
         p.data.includes(filtro) ||
         p.idade.includes(filtro)
     );
-    
+
     const editarPaciente = (id) => {
         const index = pacientes.findIndex(p => p._id === id);
         if (index !== -1) {
@@ -232,17 +240,24 @@ function PaginaPacientes() {
                         </thead>
                         <tbody>
                             {pacientesFiltrados.map((paciente) => (
-                                <tr key={paciente._id}>
+                                <tr
+                                    key={paciente._id}
+                                    onClick={() => handleAbrirDetalhesPaciente(paciente._id)}
+                                    style={{ cursor: "pointer" }}
+                                >
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
                                     {colunasVisiveis.idade && <td>{paciente.idade}</td>}
                                     <td>
                                         <div className="acoes">
-                                            <BsThreeDots />
+                                            <BsThreeDots onClick={(e) => {e.stopPropagation();}}style={{ cursor: "pointer" }}/>
                                             <div className="menu-popup">
-                                                <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
-                                                <button onClick={() => excluirPaciente(paciente._id, setPacientes)}>Excluir</button>
-
+                                                <button onClick={(e) => { e.stopPropagation(); editarPaciente(paciente._id); }}>
+                                                    Editar
+                                                </button>
+                                                <button onClick={(e) => { e.stopPropagation(); excluirPaciente(paciente._id, setPacientes); }}>
+                                                    Excluir
+                                                </button>
                                             </div>
                                         </div>
                                     </td>
@@ -320,11 +335,10 @@ function PaginaPacientes() {
                             setErroCadastro('');
                         }}>Sair</button>
                         <button className="btn salvar" onClick={() => {
-                            editandoIndex !== null ? atualizarPaciente(novoPaciente, pacientes,editandoIndex,setPacientes,resetarFormulario,setErroCadastro) : cadastrarPaciente(novoPaciente, pacientes,editandoIndex,setPacientes,resetarFormulario,setErroCadastro);
+                            editandoIndex !== null ? atualizarPaciente(setErroCadastro, novoPaciente, editandoIndex, resetarFormulario, pacientes, setPacientes) : cadastrarPaciente(novoPaciente, pacientes, editandoIndex, setPacientes, resetarFormulario, setErroCadastro);
                         }}>
                             {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
                         </button>
-
                     </div>
                 </div>
             )}

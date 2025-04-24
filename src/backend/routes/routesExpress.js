@@ -8,8 +8,8 @@ const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
 const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
 const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirPaciente');
-const {editarPacienteHandler} = require('../controllers/crudPaciente/editarPaciente')
-
+const { editarPacienteHandler } = require('../controllers/crudPaciente/editarPaciente')
+const { buscarPacienteHandler } = require('../controllers/crudPaciente/buscarPacinete');
 router.post('/authLogin', loginHandler);
 router.post('/recuperar-senha', recuperarSenhaHandler);
 //Crud usuario:
@@ -19,8 +19,10 @@ router.post('/dadosUsuario', buscarUsuarioHandler);
 //Crud paciente
 router.post('/cadastroPaciente', cadastroPacienteHandler);
 router.post('/dadosPacientes', buscarPacientesHandler);
+router.post('/dadosPaciente', buscarPacienteHandler);
 router.post('/excluirPaciente', excluirPacienteHandler);
 router.post('/editarPaciente', editarPacienteHandler)
+
 module.exports = router;
 
 
