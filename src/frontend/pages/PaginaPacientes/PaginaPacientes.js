@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
 import Menu from '../../components/Menu/Menu';
@@ -250,7 +250,7 @@ function PaginaPacientes() {
                                     {colunasVisiveis.idade && <td>{paciente.idade}</td>}
                                     <td>
                                         <div className="acoes">
-                                            <BsThreeDots onClick={(e) => {e.stopPropagation();}}style={{ cursor: "pointer" }}/>
+                                            <BsThreeDots onClick={(e) => { e.stopPropagation(); }} style={{ cursor: "pointer" }} />
                                             <div className="menu-popup">
                                                 <button onClick={(e) => { e.stopPropagation(); editarPaciente(paciente._id); }}>
                                                     Editar
@@ -334,9 +334,31 @@ function PaginaPacientes() {
                             setMostrarFormulario(false);
                             setErroCadastro('');
                         }}>Sair</button>
-                        <button className="btn salvar" onClick={() => {
-                            editandoIndex !== null ? atualizarPaciente(setErroCadastro, novoPaciente, editandoIndex, resetarFormulario, pacientes, setPacientes) : cadastrarPaciente(novoPaciente, pacientes, editandoIndex, setPacientes, resetarFormulario, setErroCadastro);
-                        }}>
+                        <button
+                            className="btn salvar"
+                            onClick={async () => {
+                                if (editandoIndex !== null) {
+                                    const sucesso = await atualizarPaciente(
+                                        setErroCadastro,
+                                        novoPaciente,
+                                        editandoIndex,
+                                        resetarFormulario,
+                                        pacientes,
+                                        setPacientes
+                                    );
+                                    if (sucesso) window.location.reload();
+                                } else {
+                                    cadastrarPaciente(
+                                        novoPaciente,
+                                        pacientes,
+                                        editandoIndex,
+                                        setPacientes,
+                                        resetarFormulario,
+                                        setErroCadastro
+                                    );
+                                }
+                            }}
+                        >
                             {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
                         </button>
                     </div>

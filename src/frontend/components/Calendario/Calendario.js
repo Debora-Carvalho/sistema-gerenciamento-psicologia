@@ -23,7 +23,7 @@ export default function Calendario() {
             </div>
 
             {/* inserir o link para a pagina do calendário de agendamento */}
-            <Link to="/pagina-do-calendario" className="btn-expandir-calendario"> 
+            <Link to="/calendario" className="btn-expandir-calendario"> 
                 <FiMaximize2 className="btn-expandir-calendario__icon" />
             </Link>
         </div>

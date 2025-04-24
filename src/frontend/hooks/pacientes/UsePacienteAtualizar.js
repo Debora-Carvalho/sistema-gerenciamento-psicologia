@@ -22,9 +22,11 @@ export const atualizarPaciente = async (setErroCadastro, novoPaciente, editandoI
             } else {
                 setErroCadastro(data.error || 'Erro ao editar paciente.');
             }
+            return true;
         } catch (error) {
             console.error("Erro ao editar paciente:", error);
             setErroCadastro("Erro ao comunicar com o servidor.");
+            return false
         }
     } else {
         // Versão simplificada que atualiza os dados com apenas o novoPaciente

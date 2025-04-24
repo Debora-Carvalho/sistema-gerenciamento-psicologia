@@ -1,6 +1,10 @@
 const { ObjectId } = require("mongodb");
 const connectToDatabase = require("../../config/mongodb");
 
+function isValidObjectId(id) {
+    return ObjectId.isValid(id) && String(new ObjectId(id)) === id;
+}
+
 async function buscarPacienteHandler(req, res) {
     try {
         const { pacienteID } = req.body;
@@ -9,8 +13,11 @@ async function buscarPacienteHandler(req, res) {
             return res.status(400).json({ error: "pacienteID é obrigatório" });
         }
 
-        const db = await connectToDatabase();
+        if (!isValidObjectId(pacienteID)) {
+            return res.status(400).json({ error: "pacienteID inválido" });
+        }
 
+        const db = await connectToDatabase();
         const paciente = await db.collection("Paciente").findOne({ _id: new ObjectId(pacienteID) });
 
         if (!paciente) {

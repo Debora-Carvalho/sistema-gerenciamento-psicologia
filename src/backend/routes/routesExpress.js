@@ -5,6 +5,13 @@ const { loginHandler } = require('../controllers/loginAutentica');
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
 const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
+// const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
+const { buscarAgendamentosHandler } = require('../controllers/buscarAgendamentos');
+const { adicionarAgendamentoHandler } = require('../controllers/adicionarAgendamento');
+const { excluirAgendamentoHandler } = require('../controllers/excluirAgendamento');
+const { alterarAgendamentoHandler } = require('../controllers/alterarAgendamento');
+
+// Exemplo de rotas Express:
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
 const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
 const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirPaciente');
@@ -19,6 +26,10 @@ router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);
 router.post('/recuperarCodigo', solicitarCodigoSenhaHandler);
 router.post('/recuperarNovaSenha', redefinirSenhaHandler);
+router.post('/buscarAgendamentos', buscarAgendamentosHandler);
+router.post('/criarAgendamentos', adicionarAgendamentoHandler);
+router.delete('/excluirAgendamentos', excluirAgendamentoHandler);
+router.put('/alterarAgendamentos', alterarAgendamentoHandler);
 
 router.post('/dadosPacientes', buscarPacientesHandler);
 router.post('/dadosPaciente', buscarPacienteHandler);
