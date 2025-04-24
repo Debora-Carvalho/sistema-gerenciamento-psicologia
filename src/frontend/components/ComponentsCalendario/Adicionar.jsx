@@ -65,20 +65,17 @@ function Adicionar({ onAdicionar }) {
                     <Form.Label>Título do Evento</Form.Label>
                     <Form.Control type="text" placeholder="Digite o Título" name="title" value={novoEvento.title} onChange={handleChange} />
                 </Form.Group>
-                <Row>
-                    <Col xs={6}>
+                
                         <Form.Group controlId="formBasicStart">
                             <Form.Label>Início</Form.Label>
                             <Form.Control type="datetime-local" name="start" value={novoEvento.start} onChange={handleChange} />
                         </Form.Group>
-                    </Col>
-                    <Col xs={6}>
+                    
                         <Form.Group controlId="formBasicEnd">
                             <Form.Label>Término</Form.Label>
                             <Form.Control type="datetime-local" name="end" value={novoEvento.end} onChange={handleChange} />
                         </Form.Group>
-                    </Col>
-                </Row>
+                    
                 <Collapse in={expanded}>
                     <div>
                         <div>
