@@ -1,95 +1,35 @@
 @import '../../styles/variaveis.css';
 
-/* Container com bordas arredondadas e sombra suave */
-.container-calendario {
-    border-radius: 12px;
-    background-color: #fff;
-    padding: 16px;
-    box-shadow: 0 0 4px rgba(33, 150, 243, 0.2);
-    border: 1px solid rgba(33, 150, 243, 0.1);
-    width: 34vw;
-    height: 95%;
-    margin-top: 20px;
-    font-family: var(--font-family-principal);
-    overflow: hidden; 
-    box-sizing: border-box;
-  }
-  
-  .fc {
+.calendario-inicial-container {
     max-width: 100%;
-    height: 95%;
-    box-sizing: border-box;
-  }
-  
-  /* Título e data selecionada */
-  .fc-toolbar-title {
-    font-size: 20px;
-    font-weight: 500;
-    color: #333;
-    white-space: nowrap; 
-  }
-
-.fc-prev-button {
-    background-color: var(--primary-color);
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
 }
   
-  /* Botões de navegação */
-  .fc-button {
-    background-color: var(--primary-color);
-    border: none;
-    color: #fff;
-    padding: 4px 8px;
-    border-radius: 6px;
-    font-size: 14px;
-  }
-  
-  .fc-button:hover {
-    background-color: rgba(25, 118, 210, 0.1);
-  }
-  
-  /* Número dos dias */
-  .fc-daygrid-day-number {
-    color: #333;
-    font-weight: 100;
-    font-size: 14px;
-    z-index: 1;
-  }
-  
-  /* Dia atual destacado */
-  .fc-day-today {
-    background-color: var(--primary-color);
-    color: #fff;
-    font-weight: 100;
-  }
-  
-  /* Dia selecionado (evento) */
-  .fc-event {
-    background-color: #1976d2;
-    color: #fff;
-    font-size: 13px;
-    padding: 2px 6px;
-    border-radius: 20px;
-    border: none;
-    max-width: 100%;
-    box-sizing: border-box;
-  }
-  
-  /* Rodapé com botões estilo "Cancel" e "OK" */
-  .fc-footer {
+.calendario-inicial-topo {
     display: flex;
     justify-content: space-between;
-    margin-top: 12px;
-  }
-  
-  .fc-footer button {
-    background: none;
-    border: none;
-    font-weight: bold;
-    color: #1976d2;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.calendario-inicial-topo__datahora {
+    color: var(--primary-color);
+}
+
+.btn-expandir-calendario__icon {
+    color: var(--primary-color);
     cursor: pointer;
-  }
-  
-  .fc-footer button:hover {
-    text-decoration: underline;
-  }
+    transition: 0.3s;
+}
+
+.btn-expandir-calendario__icon:hover {
+    color: var(--primary-color-btn-hover);
+}
   
