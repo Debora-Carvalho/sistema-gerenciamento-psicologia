@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import './LoginCriarNovaSenha.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import imgMulherNovaSenha from '../../assets/images/image-mulher-novasenha.png';
+import useNovaSenha from '../../hooks/useNovaSenha';
 
 function LoginCriarNovaSenha() {
     const [novaSenha, setNovaSenha] = useState('');
@@ -12,6 +13,7 @@ function LoginCriarNovaSenha() {
     const [confirmarSenha, setConfirmarSenha] = useState('');
     const [erroSenhaInvalida, setErroSenhaInvalida] = useState(false);
     const [popupAberto, setPopupAberto] = useState(false);
+    const { atualizarSenha } = useNovaSenha();
 
     useEffect(() => {
             if (!email) {
@@ -36,33 +38,7 @@ function LoginCriarNovaSenha() {
             return;
         }
         
-        try {
-            const response = await fetch('http://localhost:4000/recuperar-senha/nova-senha', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    email,
-                    novaSenha
-                }),
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                setMensagemErro('');
-                console.log('Senha atualizada com sucesso!')
-                setPopupAberto(true);
-                setMensagemErro('');
-                setErroSenhaInvalida(false);
-            } else {
-                setMensagemErro(data.error || 'Erro ao atualizar a senha');
-            }
-        } catch (err) {
-            console.error('Erro ao enviar nova senha', err);
-            setMensagemErro('Erro de conexão com o servidor.');
-        }
+        atualizarSenha({ email, novaSenha }, setMensagemErro, setPopupAberto, setErroSenhaInvalida);
 
         };
 

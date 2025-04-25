@@ -1,60 +1,52 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
 import Menu from '../../components/Menu/Menu';
 import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
 import { HiMenu } from "react-icons/hi";
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
-
+import useUsuarios from '../../hooks/useUsuarios';
+import usePacientes from '../../hooks/pacientes/usePacientesListar';
+import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
+import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
+import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
+import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
+import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 function PaginaPacientes() {
-    const [usuario, setUsuario] = useState(null);
-    
-        useEffect(() => {
-            async function buscarUsuario() {
-                try {
-                    const userID = localStorage.getItem("userID");
-    
-                    if (!userID) {
-                        console.error("userID não encontrado no localStorage.");
-                        return;
-                    }
-    
-                    const response = await fetch("http://localhost:4000/pagina-inicial", {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ userID })
-                    });
-    
-                    const data = await response.json();
-    
-                    if (response.ok) {
-                        setUsuario(data.usuario);
-                    } else {
-                        console.error(data.error);
-                    }
-                } catch (error) {
-                    console.error("Erro ao buscar usuário:", error);
-                }
-            }
-    
-            buscarUsuario();
-        }, []);
+    console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
-    const [pacientes, setPacientes] = useState([
-        { nome: 'Andreia Oliveira Justina', data: '27/09/2025', idade: '42 anos' },
-        { nome: 'Maria Fernanda Gonzales', data: '30/09/2025', idade: '22 anos' },
-        { nome: 'Roberto da Silva Souza', data: '01/10/2025', idade: '35 anos' },
-        { nome: 'Fabricio da Costa', data: '11/05/2025', idade: '26 anos' },
-        { nome: 'Maria da Conceição Oliveira', data: '01/07/2025', idade: '55 anos' },
-    ]);
+    const { usuario } = useUsuarios();
+    const { pacientes, setPacientes } = usePacientes();
+    const navigate = useNavigate();
+
+    const handleAbrirDetalhesPaciente = (pacienteId) => {
+        localStorage.setItem("pacienteID", pacienteId);
+        navigate("/pacientes-detalhes");
+    };
+
+
+    const resetarFormulario = () => {
+        setNovoPaciente({
+            nome: '',
+            profissao: '',
+            genero: '',
+            estadoCivil: '',
+            telefone: '',
+            email: '',
+            preferenciaContato: '',
+            dataNascimento: ''
+        });
+        setEditandoIndex(null);
+        setMostrarFormulario(false);
+        setErroCadastro('');
+    };
 
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
         nome: '',
-        idade: '',
+        profissao: '',
         genero: '',
         estadoCivil: '',
         telefone: '',
@@ -86,95 +78,21 @@ function PaginaPacientes() {
         };
     }, [mostrarFiltrosVisuais]);
 
-    // const pacientesFiltrados = pacientes.filter(p =>
-    //     p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-    //     p.data.includes(filtro) ||
-    //     p.idade.includes(filtro)
-    // );
+    const pacientesFiltrados = pacientes.filter(p =>
+        p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+        p.data.includes(filtro) ||
+        calcularIdade(p.dataNascimento).toString().includes(filtro)
+    );
+    
 
-    const exportarPDF = () => {
-        const doc = new jsPDF();
-        doc.text('Lista de Pacientes', 14, 16);
-
-        const colunas = [];
-        const linhas = [];
-
-        if (colunasVisiveis.nome) colunas.push('Nome');
-        if (colunasVisiveis.data) colunas.push('Data da sessão');
-        if (colunasVisiveis.idade) colunas.push('Idade');
-
-        pacientes.forEach(p => {
-            const linha = [];
-            if (colunasVisiveis.nome) linha.push(p.nome);
-            if (colunasVisiveis.data) linha.push(p.data);
-            if (colunasVisiveis.idade) linha.push(p.idade);
-            linhas.push(linha);
-        });
-
-        autoTable(doc, {
-            startY: 20,
-            head: [colunas],
-            body: linhas
-        });
-        doc.save('pacientes.pdf');
-    };
-
-const adicionarPaciente = async () => {
-    const userID = localStorage.getItem("userID");
-
-    if (!novoPaciente.nome || !novoPaciente.telefone) {
-        setErroCadastro('Por favor, preencha o nome e o telefone do paciente.');
-        return;
-    }
-
-    try {
-        const response = await fetch("http://localhost:4000/pacientes", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ ...novoPaciente, userID }), // ← Aqui está a correção
-        });
-
-        const data = await response.json();
-
-        if (response.ok) {
-            if (editandoIndex !== null) {
-                const novosPacientes = [...pacientes];
-                novosPacientes[editandoIndex] = data.pacienteCadastrado;
-                setPacientes(novosPacientes);
-                setEditandoIndex(null);
-            } else {
-                setPacientes([...pacientes, data.pacienteCadastrado]);
-            }
-
-            setNovoPaciente({
-                nome: '',
-                idade: '',
-                genero: '',
-                estadoCivil: '',
-                telefone: '',
-                email: '',
-                preferenciaContato: '',
-                dataNascimento: ''
-            });
-            setMostrarFormulario(false);
+    const editarPaciente = (id) => {
+        const index = pacientes.findIndex(p => p._id === id);
+        if (index !== -1) {
+            setNovoPaciente({ ...pacientes[index] });
+            setEditandoIndex(index);
+            setMostrarFormulario(true);
             setErroCadastro('');
-        } else {
-            setErroCadastro(data.error || 'Erro ao cadastrar paciente.');
         }
-    } catch (error) {
-        console.error("Erro ao enviar dados do paciente:", error);
-        setErroCadastro("Erro ao comunicar com o servidor.");
-    }
-};
-
-
-    const editarPaciente = (index) => {
-        setNovoPaciente({...pacientes[index]});
-        setEditandoIndex(index);
-        setMostrarFormulario(true);
-        setErroCadastro('');
     };
 
     const toggleMenuMobile = () => {
@@ -247,15 +165,27 @@ const adicionarPaciente = async () => {
                                 </div>
                             )}
                         </div>
-                        <button className="btn pdf cinza" onClick={exportarPDF}>
+                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
+                            setNovoPaciente({
+                                nome: '',
+                                profissao: '',
+                                genero: '',
+                                estadoCivil: '',
+                                telefone: '',
+                                email: '',
+                                preferenciaContato: '',
+                                dataNascimento: ''
+                            });
+                            setEditandoIndex(null); // ← importante: garante que o formulário entenda que é um novo cadastro
                             setMostrarFormulario(true);
-                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                            setErroCadastro('');
                         }}>
                             <AiOutlineUserAdd /> Adicionar paciente
                         </button>
+
                     </div>
                 </div>
 
@@ -270,15 +200,27 @@ const adicionarPaciente = async () => {
                         >
                             <FiFilter />
                         </button>
-                        <button className="btn pdf cinza pequeno" onClick={exportarPDF}>
-                            <BsFileEarmarkPdf />
+                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
+                            <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
+                            setNovoPaciente({
+                                nome: '',
+                                profissao: '',
+                                genero: '',
+                                estadoCivil: '',
+                                telefone: '',
+                                email: '',
+                                preferenciaContato: '',
+                                dataNascimento: ''
+                            });
+                            setEditandoIndex(null);
                             setMostrarFormulario(true);
-                            setErroCadastro(''); // Limpa qualquer erro ao abrir o formulário
+                            setErroCadastro('');
                         }}>
                             <AiOutlineUserAdd />
                         </button>
+
                     </div>
 
                     {mostrarFiltrosVisuais && (
@@ -299,22 +241,30 @@ const adicionarPaciente = async () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {/* {pacientesFiltrados.map((paciente, index) => (
-                                <tr key={index}>
+                            {pacientesFiltrados.map((paciente) => (
+                                <tr
+                                    key={paciente._id}
+                                    onClick={() => handleAbrirDetalhesPaciente(paciente._id)}
+                                    style={{ cursor: "pointer" }}
+                                >
                                     {colunasVisiveis.nome && <td>{paciente.nome}</td>}
                                     {colunasVisiveis.data && <td>{paciente.data}</td>}
-                                    {colunasVisiveis.idade && <td>{paciente.idade}</td>}
+                                    {colunasVisiveis.idade && ( <td>{calcularIdade(paciente.dataNascimento)}</td>)}
                                     <td>
                                         <div className="acoes">
-                                            <BsThreeDots />
+                                            <BsThreeDots onClick={(e) => { e.stopPropagation(); }} style={{ cursor: "pointer" }} />
                                             <div className="menu-popup">
-                                                <button onClick={() => editarPaciente(index)}>Editar</button>
-                                                <button onClick={() => setPacientes(pacientes.filter((_, i) => i !== index))}>Excluir</button>
+                                                <button onClick={(e) => { e.stopPropagation(); editarPaciente(paciente._id); }}>
+                                                    Editar
+                                                </button>
+                                                <button onClick={(e) => { e.stopPropagation(); excluirPaciente(paciente._id, setPacientes); }}>
+                                                    Excluir
+                                                </button>
                                             </div>
                                         </div>
                                     </td>
                                 </tr>
-                            ))} */}
+                            ))}
                         </tbody>
                     </table>
                 </div>
@@ -331,8 +281,8 @@ const adicionarPaciente = async () => {
                                 onChange={e => setNovoPaciente({ ...novoPaciente, nome: e.target.value })} />
                         </div>
                         <div className="form-group">
-                            <input type="text" placeholder="Idade" value={novoPaciente.idade}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, idade: e.target.value })} />
+                            <input type="text" placeholder="Profissão" value={novoPaciente.profissao}
+                                onChange={e => setNovoPaciente({ ...novoPaciente, profissao: e.target.value })} />
                         </div>
                     </div>
                     <div className="form-row">
@@ -386,7 +336,33 @@ const adicionarPaciente = async () => {
                             setMostrarFormulario(false);
                             setErroCadastro('');
                         }}>Sair</button>
-                        <button onClick={adicionarPaciente}>Salvar</button>
+                        <button
+                            className="btn salvar"
+                            onClick={async () => {
+                                if (editandoIndex !== null) {
+                                    const sucesso = await atualizarPaciente(
+                                        setErroCadastro,
+                                        novoPaciente,
+                                        editandoIndex,
+                                        resetarFormulario,
+                                        pacientes,
+                                        setPacientes
+                                    );
+                                    if (sucesso) window.location.reload();
+                                } else {
+                                    cadastrarPaciente(
+                                        novoPaciente,
+                                        pacientes,
+                                        editandoIndex,
+                                        setPacientes,
+                                        resetarFormulario,
+                                        setErroCadastro
+                                    );
+                                }
+                            }}
+                        >
+                            {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
+                        </button>
                     </div>
                 </div>
             )}

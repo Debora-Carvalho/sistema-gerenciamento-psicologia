@@ -6,9 +6,14 @@ import Home from "../../frontend/pages/LoginCadastro/LoginCadastro";
 import EsqueciSenha from "../../frontend/pages/LoginEsqueciSenha/LoginEsqueciSenha";
 import CodigoRecuperarSenha from "../../frontend/pages/LoginCodigoRecuperacaoSenha/LoginCodigoRecuperacaoSenha";
 import NovaSenha from "../../frontend/pages/LoginCriarNovaSenha/LoginCriarNovaSenha";
-import ProtectedRoute from "./protectedroute";
+import ProtectedRoute from "./protectedRouteReact.js";
 import PaginaPacientes from "../../frontend/pages/PaginaPacientes/PaginaPacientes";
 import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.js";
+import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
+import Calendario from '../../frontend/components/Calendario/Calendario';
+
+
+
 
 const AppRoutes = () => {
     return (
@@ -22,9 +27,12 @@ const AppRoutes = () => {
                     <Route path="/pagina-inicial" element={<PaginaInicial />} />
                     <Route path="/pacientes" element={<PaginaPacientes />} />
                     <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
+                    <Route path="/calendario" element={<PaginaCalendario />} />
+                    <Route path="/calendario1" element={<Calendario />} />
                 </Route>
-            </Routes>
 
+
+            </Routes>
         </BrowserRouter>
     );
 }

@@ -93,8 +93,8 @@
     width: 100%;
     padding: 10px 15px 10px 40px;
     border-radius: 12px;
-    border: 1px solid var(--neutral-color-100);
-    background-color: var(--neutral-color-100);
+    border: 1px solid #fff;
+    background-color: #fff;
     font-size: 14px;
     font-family: var(--font-family-principal);
 }
@@ -167,7 +167,7 @@
 
 .btn.filtro.ativo {
     background-color: var(--primary-color);
-    color: var(--neutral-color-100);
+    color: white;
 }
 
 .lista-pacientes {
@@ -223,7 +223,7 @@
     position: absolute;
     right: 0;
     top: 24px;
-    background: var(--neutral-color-100);
+    background: #fff;
     box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     border-radius: 12px;
     padding: 6px 0;
@@ -332,13 +332,13 @@
     border-radius: 20px;
     font-size: 14px;
     cursor: pointer;
-    color: var(--neutral-color-100);
+    color: white;
     font-family: var(--font-family-principal);
     transition: background-color 0.2s ease;
 }
 
 .form-row.buttons button:first-child {
-    background-color: var(--primary-color);
+    background-color: #0056b3;
 }
 
 .form-row.buttons button:first-child:hover {
@@ -350,7 +350,7 @@
 }
 
 .form-row.buttons button:last-child:hover {
-    background-color: var(--primary-color-btn-hover);
+    background-color: #0056b3;
 }
 
 .container-filtro {
@@ -361,7 +361,7 @@
     position: absolute;
     top: calc(100% + 10px); /* Ajuste conforme necessário */
     left: 0; /* Alinha à esquerda do botão */
-    background-color: var(--neutral-color-100);
+    background-color: #fff;
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 12px 16px;
@@ -491,7 +491,7 @@
 
     .btn.filtro.pequeno.ativo {
         background-color: var(--primary-color);
-        color: var(--neutral-color-100);
+        color: white;
     }
 
     .filtros-colunas {
@@ -500,4 +500,5 @@
         width: 180px;
         top: calc(100% + 5px);
     }
+
 }

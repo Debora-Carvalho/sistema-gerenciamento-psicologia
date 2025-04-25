@@ -13,8 +13,12 @@ import Calendario from '../../components/Calendario/Calendario.js';
 function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
 
+    console.log("UserID do localStorage:", localStorage.getItem("userID"));
+
+
     return(
         <div className='container-pagina-inicial'>
+            <br></br>
             <CabecalhoPaginaInicial />
             <div className='container-conteudo-pagina-inicial'>
                 <div className='navbar'>
@@ -55,6 +59,7 @@ function PaginaInicial() {
                                 </a>
                             </div>
                         </div>
+                        
                         <div className='card-calendario'>
                             <Calendario />
                         </div>                       

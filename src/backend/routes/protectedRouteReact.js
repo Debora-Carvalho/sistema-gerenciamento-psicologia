@@ -2,13 +2,13 @@ import React from "react";
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-  const userID = localStorage.getItem("userID");
+    const userID = localStorage.getItem("userID");
 
-  if (!userID) {
-    return <Navigate to="/" />;
-  }
+    if (!userID) {
+        return <Navigate to="/" />;
+    }
 
-  return <Outlet />;
+    return <Outlet />;
 };
 
 export default ProtectedRoute;
