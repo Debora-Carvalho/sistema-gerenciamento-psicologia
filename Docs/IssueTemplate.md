@@ -1,12 +1,14 @@
 
+### Orientações sobre campos a Direita e Titulo
 Use este modelo para descrever um bug ou sugerir uma nova funcionalidade.
 
 title: "[Título resumido]"
 
-labels: ' deixe vazio'
+labels: 'Deixe vazio se nenhuma das opções for cabivel'
 
 assignees: 'Deixe vazio ate que uma do grupo decida pegar esta issue'
 
+Apartir daqui começa o template.
 
 ### 🧩 Contexto  
 Descreva brevemente o que está acontecendo ou o que você gostaria de adicionar.  
