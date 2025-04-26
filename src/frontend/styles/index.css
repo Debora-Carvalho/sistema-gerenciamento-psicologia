@@ -1,13 +1,51 @@
-body {
-    margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+/* abaixo está o import das fonts 'Roboto' e 'Sacramento' do Google Fonts  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sacramento&display=swap');
+
+/* Reset CSS básico */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+  
+html, body {
+  height: 100%;
+  font-family: 'Roboto', sans-serif; 
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #fff; 
+  color: #000; 
+}
+  
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+  
+input, button, textarea, select {
+  font: inherit;
+  border: none;
+  background: none;
+  outline: none;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-        monospace;
+button {
+  cursor: pointer;
 }
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+  

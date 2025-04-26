@@ -1,4 +1,19 @@
+/* abaixo está o import das fonts 'Roboto' e 'Sacramento' do Google Fonts  */
+@import url('https://fonts.googleapis.com/css2?family=Roboto&family=Sacramento&display=swap');
+
 :root {
-    --primary-color: #922E1A; 
-    --secondary-color: #F6C6B8;
+    --primary-color: #01429E; 
+    --primary-color-btn-hover: #6aa8ff;
+    --secondary-color: #ffe6ea;
+    --background-color-tela: #fcf2f4e7;
+    --neutral-color-100: #ffffff;
+    --neutral-color-900: #000000;
+    --font-family-principal: 'Roboto', sans-serif;
+    --font-family-logo: 'Sacramento', sans-serif, cursive;
+    --font-size-titulo-desktop: 50px;
+    --font-size-paragrafo-desktop: 20px;
+    --font-size-logo-desktop: 64px;
+    --font-weight-titulo: 500;     /* peso de fonte medium */
+    --font-weight-paragrafo: 300;  /* peso de fonte light */
+    --font-weight-logo: 400;      /* peso de fonte regular */
 }

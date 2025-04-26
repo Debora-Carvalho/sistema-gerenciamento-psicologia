@@ -1,10 +1,9 @@
-import './styles/App.css';
-import Cadastro from './assets/pages/Cadastro/Cadastro';
+import AppRoutes from "../backend/routes/router.js";
 
 function App() {
     return (
         <div className="App">
-            <Cadastro />
+            <AppRoutes />
         </div>
     );
 }

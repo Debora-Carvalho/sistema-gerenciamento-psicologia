@@ -1,0 +1,35 @@
+@import '../../styles/variaveis.css';
+
+.calendario-inicial-container {
+    max-width: 100%;
+    margin: 2rem;
+    padding: 2rem;
+    background-color: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Roboto', sans-serif;
+}
+  
+.calendario-inicial-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-weight: 500;
+    font-size: 2rem;
+}
+
+.calendario-inicial-topo__datahora {
+    color: var(--primary-color);
+}
+
+.btn-expandir-calendario__icon {
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.btn-expandir-calendario__icon:hover {
+    color: var(--primary-color-btn-hover);
+}
+  

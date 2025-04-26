@@ -1,0 +1,116 @@
+@import '../../styles/variaveis.css';
+
+.container {
+    max-width: 100vw;
+    max-height: 100vh;
+    width: 100%; 
+    height: 100%; 
+    margin: 0;
+    padding: 0;
+    text-align: center
+}
+
+.container-conteudo-recuperar-senha {
+    position: relative;
+    margin: 4% 0 0 0;
+    z-index: 2;
+}
+
+.container .titulo-principal {
+    font-family: var(--font-family-principal);
+    font-size: var(--font-size-titulo-desktop);
+    font-weight: var(--font-weight-paragrafo);
+    color: var(--primary-color);
+}
+
+.container .texto-explicativo {
+    font-family: var(--font-family-principal);
+    font-size: var(--font-size-paragrafo-desktop);
+    font-weight: var(--font-weight-paragrafo);
+    color: var(--neutral-color-900);
+    line-height: 5px;
+}
+
+.campo-incluir-codigo {
+    display: flex;
+    justify-content: center;
+}
+
+.campo-incluir-codigo .input-container {
+    display: flex;
+    flex-direction: column;
+    margin: 2.5rem 0 2rem 0;
+}
+
+.campo-incluir-codigo .input-container label {
+    position: fixed;
+    margin: 10px;
+    font-family: var(--font-family-principal);
+    font-size: 0.8rem;
+    color: var(--neutral-color-900);
+    pointer-events: none;
+    padding: 0 10px;
+}
+
+.campo-incluir-codigo .input-container input {
+    width: 354px;
+    height: 70px;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    padding: 0 20px;
+}
+
+.campo-incluir-codigo .input-container input:focus {
+    outline: none;
+    top: -0.5rem;
+    left: 0.4rem;
+    font-size: 1.2rem;
+    border-color: var(--primary-color);
+    color: var(--primary-color); 
+}
+
+.container form .btn-verificar-codigo {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    font-size: 18px;
+    font-weight: 500;
+    width: 356.25px;  
+    height: 52.5px;  
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.container form .btn-verificar-codigo:hover {
+    background-color: var(--primary-color-btn-hover);    
+}
+
+.link-reenviar-codigo {
+    color: var(--primary-color);
+    text-decoration: underline;
+    font-weight: 600;
+    cursor: pointer;    
+    transition: 0.5s;
+}
+
+.link-reenviar-codigo:hover {
+    color: var(--primary-color-btn-hover);
+}
+
+.container .imagem-principal {
+    position: absolute;       
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    z-index: 1; 
+}
+
+.mensagem-erro {
+    font-family: var(--font-family-principal);
+    font-size: 25px;
+    color: #D10000;
+    margin-bottom: 20px;
+}

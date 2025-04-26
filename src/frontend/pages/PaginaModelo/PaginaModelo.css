@@ -1,0 +1,30 @@
+@import '../../styles/variaveis.css';
+
+.container {
+    max-height: 100vh;
+    height: 100%; 
+    width: 100%; 
+    margin: 0;
+    padding: 0;
+}
+
+.container h1 {
+    font-family: var(--font-family-principal);
+    color: var(--primary-color);
+    font-size: var(--font-size-titulo-desktop);
+    font-weight: var(--font-weight-titulo);
+}
+
+.container .logo-seren {
+    font-family: var(--font-family-logo);
+    color: var(--primary-color);
+    font-size: var(--font-size-logo-desktop);
+    font-weight: var(--font-weight-logo);
+}
+
+.container p {
+    font-family: var(--font-family-principal);
+    color: #000000;
+    font-size: var(--font-size-paragrafo-desktop);
+    font-weight: var(--font-weight-paragrafo);
+}
