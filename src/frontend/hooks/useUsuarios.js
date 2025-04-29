@@ -10,7 +10,7 @@ export default function useUsuarios() {
             if (!userID) return;
 
             try {
-                const response = await fetch("http://localhost:4000/dadosUsuario", {
+                const response = await fetch("/api/server/dadosUsuario", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ userID }),

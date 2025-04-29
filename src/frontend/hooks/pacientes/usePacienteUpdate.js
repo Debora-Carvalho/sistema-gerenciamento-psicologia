@@ -2,7 +2,7 @@ export const atualizarPaciente = async (novoPaciente, setPacientes, resetarFormu
     const userID = localStorage.getItem("userID");
 
     try {
-        const response = await fetch("http://localhost:4000/editarPaciente", {
+        const response = await fetch("/api/server/editarPaciente", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

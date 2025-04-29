@@ -1,7 +1,7 @@
 export default function useAlterarAgendamento() {
     const alterarAgendamento = async (agendamentoId, novosDados, onUpdate) => {
         try {
-            const response = await fetch("http://localhost:4000/alterarAgendamentos", {
+            const response = await fetch("/api/server/alterarAgendamentos", {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

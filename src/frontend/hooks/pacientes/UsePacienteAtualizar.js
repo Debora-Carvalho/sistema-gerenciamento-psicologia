@@ -4,7 +4,7 @@ export const atualizarPaciente = async (setErroCadastro, novoPaciente, editandoI
 
     if (pacientes && setPacientes !== undefined) {
         try {
-            const response = await fetch("http://localhost:4000/editarPaciente", {
+            const response = await fetch("/api/server/editarPaciente", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

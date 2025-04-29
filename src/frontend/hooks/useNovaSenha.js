@@ -1,7 +1,7 @@
 export default function useNovaSenha() {
     const atualizarSenha = async ({ email, novaSenha }, setMensagemErro, setPopupAberto, setErroSenhaInvalida) => {
         try {
-            const response = await fetch('http://localhost:4000/recuperarNovaSenha', {
+            const response = await fetch('/api/server/recuperarNovaSenha', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
