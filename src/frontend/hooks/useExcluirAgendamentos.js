@@ -2,7 +2,7 @@ export default function useDeleteAgendamento() {
     const deleteAgendamento = async (agendamentoId, onDelete) => {
 
         try {
-            const response = await fetch("/api/server/excluirAgendamentos", {
+            const response = await fetch("/api/excluirAgendamentos", {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

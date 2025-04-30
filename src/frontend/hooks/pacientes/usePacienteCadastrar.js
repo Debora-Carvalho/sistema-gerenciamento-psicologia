@@ -7,7 +7,7 @@ export const cadastrarPaciente = async (novoPaciente, pacientes,editandoIndex,se
     }
 
     try {
-        const response = await fetch("/api/server/cadastroPaciente", {
+        const response = await fetch("/api/cadastroPaciente", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

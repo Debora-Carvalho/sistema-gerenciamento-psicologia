@@ -5,7 +5,7 @@ export default function useLogin() {
 
     const realizarLogin = async ({ email, senha, lembreDeMim }, setMensagemErro) => {
         try {
-            const response = await fetch("/api/server/authLogin", {
+            const response = await fetch("/api/authLogin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

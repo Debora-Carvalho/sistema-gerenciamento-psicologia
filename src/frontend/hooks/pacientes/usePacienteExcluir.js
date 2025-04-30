@@ -8,7 +8,7 @@ export const excluirPaciente = async (pacienteID, setPacientes) => {
     }
 
     try {
-        const resposta = await fetch("/api/server/excluirPaciente", {
+        const resposta = await fetch("/api/excluirPaciente", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

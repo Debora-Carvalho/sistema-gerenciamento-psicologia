@@ -5,7 +5,7 @@ export default function useRecuperarCodigo() {
 
     const verificarCodigo = async ({ email, codigo }, setMensagemErro) => {
         try {
-            const response = await fetch('/api/server/recuperarCodigo', {
+            const response = await fetch('/api/recuperarCodigo', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

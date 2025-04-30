@@ -2,7 +2,7 @@ export default function useCadastro() {
 
     const realizarCadastro = async (userData, setMensagemErro) => {
         try {
-            const response = await fetch("/api/server/cadastroUsuario", {
+            const response = await fetch("/api/cadastroUsuario", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

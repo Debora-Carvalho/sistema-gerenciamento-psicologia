@@ -5,7 +5,7 @@ export default function useRecuperarSenha() {
 
     const enviarCodigo = async (email, setMensagemErro, setDesabilitado) => {
         try {
-            const resposta = await fetch("/api/server/recuperarSenha", {
+            const resposta = await fetch("/api/recuperarSenha", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

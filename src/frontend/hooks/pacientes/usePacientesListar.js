@@ -9,7 +9,7 @@ const usePacientes = () => {
         const buscarPacientes = async () => {
             const userID = localStorage.getItem("userID");
             try {
-                const resposta = await fetch('/api/server/dadosPacientes', {
+                const resposta = await fetch('/api/dadosPacientes', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userID })

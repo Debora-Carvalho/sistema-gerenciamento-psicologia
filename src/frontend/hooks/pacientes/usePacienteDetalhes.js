@@ -10,7 +10,7 @@ export default function usePacienteDetalhes() {
             if (!pacienteID) return;
 
             try {
-                const response = await fetch("/api/server/dadosPaciente", {
+                const response = await fetch("/api/dadosPaciente", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ pacienteID }),

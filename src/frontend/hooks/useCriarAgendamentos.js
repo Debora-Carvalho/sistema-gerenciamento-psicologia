@@ -2,7 +2,7 @@ export default function useAdicionarAgendamento() {
     const adicionarAgendamento = async (userID, titulo, dataInicio, dataFim, desc, color = "#3174ad", tipo) => {
 
         try {
-            const response = await fetch("/api/server/criarAgendamentos", {
+            const response = await fetch("/api/criarAgendamentos", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

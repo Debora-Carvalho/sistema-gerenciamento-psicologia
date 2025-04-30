@@ -1,6 +1,7 @@
 {
   "name": "sistema-gerenciamento-psicologia",
   "version": "0.1.0",
+  "main": "api/server.js",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -46,7 +47,7 @@
     "cross-env": "^7.0.3"
   },
   "scripts": {
-    "start": "concurrently \"react-scripts start\" \"cross-env PORT=4000 node src/backend/server.js\"",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
