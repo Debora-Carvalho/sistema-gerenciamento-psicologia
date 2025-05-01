@@ -1,4 +1,3 @@
-
 ### Orientações sobre campos a Direita e Titulo
 Use este modelo para descrever um bug ou sugerir uma nova funcionalidade.
 
