@@ -1,8 +1,9 @@
+import BASE_URL from './configRota';
 export default function useDeleteAgendamento() {
     const deleteAgendamento = async (agendamentoId, onDelete) => {
 
         try {
-            const response = await fetch("http://localhost:4000/excluirAgendamentos", {
+            const response = await fetch(`${BASE_URL}/excluirAgendamentos`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',

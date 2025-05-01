@@ -1,8 +1,10 @@
+import BASE_URL from './configRota';
+
 export default function useCadastro() {
 
     const realizarCadastro = async (userData, setMensagemErro) => {
         try {
-            const response = await fetch("http://localhost:4000/cadastroUsuario", {
+            const response = await fetch(`${BASE_URL}/cadastroUsuario`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

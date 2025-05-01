@@ -17,7 +17,11 @@ const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPa
 const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirPaciente');
 const { editarPacienteHandler } = require('../controllers/crudPaciente/editarPaciente')
 const { buscarPacienteHandler } = require('../controllers/crudPaciente/buscarPacinete');
+const {indexBackend} = require('../controllers/indexBackend');
+
 router.post('/authLogin', loginHandler);
+router.get('/', indexBackend)
+
 //Crud usuario:
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);

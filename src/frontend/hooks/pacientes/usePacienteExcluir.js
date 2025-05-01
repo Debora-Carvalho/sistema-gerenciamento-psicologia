@@ -1,3 +1,4 @@
+import BASE_URL from '../configRota';
 export const excluirPaciente = async (pacienteID, setPacientes) => {
     // Se pacienteID não for passado, tenta buscar do localStorage
     const idParaExcluir = pacienteID || localStorage.getItem("pacienteID");
@@ -8,7 +9,7 @@ export const excluirPaciente = async (pacienteID, setPacientes) => {
     }
 
     try {
-        const resposta = await fetch("http://localhost:4000/excluirPaciente", {
+        const resposta = await fetch(`${BASE_URL}/excluirPaciente`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
