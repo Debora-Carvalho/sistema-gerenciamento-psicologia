@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from './configRota';
 
 export default function useRecuperarCodigo() {
     const navigate = useNavigate();
 
     const verificarCodigo = async ({ email, codigo }, setMensagemErro) => {
         try {
-            const response = await fetch('http://localhost:4000/recuperarCodigo', {
+            const response = await fetch(`${BASE_URL}/recuperarCodigo`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,11 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+import BASE_URL from './configRota';
 
 export default function useLogin() {
     const navigate = useNavigate();
 
     const realizarLogin = async ({ email, senha, lembreDeMim }, setMensagemErro) => {
         try {
-            const response = await fetch("http://localhost:4000/authLogin", {
+            const response = await fetch(`${BASE_URL}/authLogin`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

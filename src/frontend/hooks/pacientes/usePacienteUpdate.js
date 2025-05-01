@@ -1,8 +1,9 @@
+import BASE_URL from '../configRota';
 export const atualizarPaciente = async (novoPaciente, setPacientes, resetarFormulario, setErroCadastro) => {
     const userID = localStorage.getItem("userID");
 
     try {
-        const response = await fetch("http://localhost:4000/editarPaciente", {
+        const response = await fetch(`${BASE_URL}/editarPaciente`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
