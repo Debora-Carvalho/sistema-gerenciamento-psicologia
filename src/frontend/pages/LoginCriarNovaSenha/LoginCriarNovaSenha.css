@@ -118,7 +118,6 @@
     background-color: var(--primary-color-btn-hover);
 }
 
-/* Botão Login */
 .container form .btn-login {
     background-color: transparent;
     color: var(--primary-color);
@@ -131,7 +130,7 @@
     cursor: pointer;
     transition: 0.5s;
     margin-top: 120px; 
-    display: block; /* Força quebra de linha */
+    display: block; 
     margin-left: auto;
     margin-right: auto; 
 }
@@ -166,7 +165,7 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #ffe8e293; /* leve desfoque - ajustar para a cor padrão*/
+    background: #ffe8e293; 
     backdrop-filter: blur(1px);
     z-index: 99;
     display: flex;
