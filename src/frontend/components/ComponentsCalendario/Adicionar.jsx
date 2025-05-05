@@ -50,6 +50,7 @@ function Adicionar({ onAdicionar }) {
                     color: '#3174ad', 
                     tipo: ''
                 });
+                window.location.reload();
             }
         } else {
             alert('Por favor, preencha todos os campos.');
