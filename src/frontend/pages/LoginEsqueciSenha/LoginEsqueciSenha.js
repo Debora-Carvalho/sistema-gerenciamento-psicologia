@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import './LoginEsqueciSenha.css';
 import imgMulherEsqueciSenha from '../../assets/images/image-mulher-esquecisenha.png';
 import useDocumentTitle from '../../components/useDocumentTitle'
+import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import PopupPadrao from '../../components/PopupPadrao/PopupPadrao.js';
 import useRecuperarSenha from '../../hooks/useRecuperarSenha';
 
 
@@ -9,7 +12,9 @@ function LoginEsqueciSenha() {
     useDocumentTitle("Recuperar Senha | Seren");// mudando o Title da pagina
     const [email, setEmail] = useState('');
     const [mensagemErro, setMensagemErro] = useState('');
+    const navigate = useNavigate();
     const [desabilitado, setDesabilitado] = useState(false);
+    const [popupAberto, setPopupAberto] = useState(false);
     const { enviarCodigo } = useRecuperarSenha();
 
     const validarEmail = (email) => {
@@ -34,7 +39,12 @@ function LoginEsqueciSenha() {
         if (!erro) {
             console.log('email válido, prosseguir com envio...');
             setDesabilitado(true);
-            enviarCodigo(email, setMensagemErro, setDesabilitado);
+            enviarCodigo(
+                email,
+                setMensagemErro,
+                setDesabilitado,
+                () => setPopupAberto(true) // exibir o popup
+            );
         }
     };
 
@@ -64,21 +74,32 @@ function LoginEsqueciSenha() {
                             {mensagemErro && (
                                 <p className='mensagem-erro'>{mensagemErro}</p>
                             )}
+
+                            <button id='btn-enviar-email' className='btn-enviar-email' type='submit'>
+                                Enviar email
+                            </button>
                         </div>
                     </div>
-
-                    <button id='btn-enviar-email' className='btn-enviar-email' type='submit'>
-                        Enviar email
-                    </button>
                 </form>
 
                 <p className='texto-explicativo'>
                     Lembrou a senha?&nbsp;&nbsp;
                     <span>
-                        <a href='/' className='link-pagina-login'>Login</a>
+                        <Link to="/" className="link-pagina-login">Login</Link>
                     </span>
                 </p>
             </div>
+
+            <PopupPadrao
+                aberto={popupAberto}
+                titulo="Código enviado!"
+                mensagem="Enviamos um código para o e-mail informado. Verifique sua caixa de entrada."
+                textoBotao="Continuar"
+                onBotaoClick={() => {
+                    setPopupAberto(false);
+                    navigate('/recuperar-senha/codigo', { state: { email } });
+                }}
+            />
             
             <img
                 src={imgMulherEsqueciSenha}
