@@ -6,12 +6,11 @@
 }
 
 .container-lc {
+    background-color: #f7cabd;
     width: 100%;
     height: 100vh;
     display: flex;
     font-family: var(--font-family-principal);
-    background-color: #f7cabd;
-    margin: 0;
 }
 
 .first-content,
@@ -56,7 +55,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
+    text-align: center; 
 }
 
 .first-column {
@@ -77,6 +76,7 @@
 }
 
 .conteudo-cadastro {
+    position: static;
     width: 100%;
     max-width: 440px;
     display: flex;
@@ -217,238 +217,157 @@
 }
 
 /* IMAGENS */
-.img-login {
+  .img-login {
     position: fixed;
+    top: 68vh;           
+    right: 70vw;        
+    width: 20vw;         
+    max-width: 300px;   
+    max-height: 50vh;    
+    object-fit: contain;
+    z-index: 2;
+  }
+  
+  .img-cadastro {
+    position: fixed;
+    top: 68vh;
+    left: 70vw;
+    width: 20vw;
     max-width: 300px;
-    width: 100%;
-    top: 65vh;
-    right: 152vh;
-}
-
-.img-cadastro {
+    max-height: 50vh;
+    object-fit: contain;
+    z-index: 2;
+  }
+  
+  .img-planta-cadastro {
     position: fixed;
-    max-width: 300px;
-    width: 100%;
-    margin: 0;
-    top: 66vh;
-    left: 151vh;
-    z-index: -1;
-}
-
-.img-planta-cadastro {
+    bottom: 9vh;
+    right: 10vw;
+    width: 10vw;
+    max-width: 80px;
+    max-height: 30vh;
+    object-fit: contain;
+    z-index: 2;
+  }
+  
+  .img-planta-login {
     position: fixed;
-    right: 25vh;
-    bottom: 65px;
+    bottom: 11vh;
+    left: 9.5vw;
+    width: 10vw;
     max-width: 80px;
-    margin: 0;
-}
-
-.img-planta-login {
-    margin-right: 430px;
-    max-width: 80px;
-    margin-top: 300px;
-    z-index: 1;
-}
+    max-height: 30vh;
+    object-fit: contain;
+    z-index: 2;
+  }
+  
 
 /* RESPONSIVIDADE */
-@media (max-width: 1024px) {
 
-    .first-content,
-    .second-content {
-        padding: 0 20%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
+/* Tablets e telas médias */
+/* Tablets (<= 768px) */
+@media (max-width: 768px) {
+    .titulo, .titulo-logo {
+      font-size: 2rem;
+      text-align: center;
     }
-
-    .first-column,
-    .second-column {
-        width: 100%;
-        height: auto;
-        padding: 80px 0;
+  
+    .subtitulo h4 {
+      font-size: 1rem;
+      text-align: center;
     }
-
-    /* IMAGENS RESPOSIVIDADE */
-    .img-login {
-        top: auto;
-        bottom: 10vh;
-        right: 5vw;
-        max-width: 150px;
+  
+    .conteudo-cadastro-formulario input {
+      font-size: 0.9rem;
+      padding: 0.8rem;
     }
-
-    .img-cadastro {
-        top: auto;
-        bottom: 10vh;
-        left: 5vw;
-        max-width: 150px;
+  
+    .checkbox-container label {
+      font-size: 0.9rem;
     }
-
-    .img-planta-cadastro {
-        right: 2vw;
-        bottom: 2vh;
-        max-width: 60px;
-    }
-
-    .img-planta-login {
-        margin-right: 0;
-        position: fixed;
-        right: 2vw;
-        bottom: 2vh;
-        margin-top: 0;
-        max-width: 60px;
-    }
-}
-
-@media screen and (max-width: 768px) {
-
-    .first-content,
-    .second-content {
-        padding: 0 5%;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .first-column,
-    .second-column {
-        width: 100%;
-        height: auto;
-        padding: 20px;
-    }
-
-    .first-column .container-lc.mostrar-cadastro,
-    .second-column .container-lc.mostrar-cadastro {
-        width: 100%;
-        height: auto;
-        padding: 60px;
-    }
-
-    .img-login,
-    .img-cadastro,
-    .img-planta-login,
-    .img-planta-cadastro {
-        display: none;
-    }
-}
-
-/* Celulares pequenos - até 480px */
-@media screen and (max-width: 480px) {
-
-    .first-content,
-    .second-content {
-        padding: 0 5%;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .titulo {
-        font-size: 24px;
-    }
-
-    .titulo-logo {
-        font-size: 32px;
-    }
-
-    .conteudo-login,
-    .conteudo-cadastro,
-    .conteudo-login1 {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 10px;
-        height: auto;
-    }
-
-    .btn-criar,
-    .btn-entrar,
-    .btn-logar-se,
-    .btn-cadastre-se {
-        font-size: 14px;
-        padding: 8px;
-    }
-
-    /* form {
-        width: 100%;
-    } */
-
-    .conteudo-cadastro-formulario {
-        flex-direction: row;
-        padding: 6px 10px;
-    }
-
-    .img-login,
-    .img-cadastro,
-    .img-planta-login,
-    .img-planta-cadastro {
-        display: none;
-    }
-}
-
-/* Dispositivos médios - tablets (481px até 1024px) */
-@media screen and (min-width: 481px) and (max-width: 1024px) {
-
-    .first-content,
-    .second-content {
-        padding: 0 10%;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .first-column,
-    .second-column {
-        width: 100%;
-        height: auto;
-        padding: 20px;
-    }
-
-    .conteudo-login,
-    .conteudo-cadastro,
-    .conteudo-login1 {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 20px;
-    }
-
-    .img-login,
-    .img-cadastro,
-    .img-planta-login,
-    .img-planta-cadastro {
-        display: none;
-    }
-}
-
-/* Telas grandes - desktops grandes */
-@media screen and (min-width: 1440px) {
-
-    .first-content,
-    .second-content {
-        padding: 0 25%;
-    }
-
-    .titulo {
-        font-size: 36px;
-    }
-
-    .titulo-logo {
-        font-size: 48px;
-    }
-
-    .form input {
-        font-size: 16px;
-    }
-
-    .btn-criar,
-    .btn-entrar,
-    .btn-logar-se,
-    .btn-cadastre-se {
-        font-size: 16px;
-    }
-    
+  
     .mensagem-erro-login {
-        color: #ff4d4d;
-        font-size: 14px;
-        margin-bottom: 10px;
-        text-align: center;
+      font-size: 0.9rem;
+      text-align: center;
     }
-    
-}
+  
+    /* Imagens principais */
+    .img-login,
+    .img-cadastro {
+      position: static; /* Remove o fixed */
+      width: 50%;
+      max-width: 200px;
+      height: auto;
+      margin: 1rem auto;
+      display: block;
+    }
+  
+    /* Imagens das plantas */
+    .img-planta-cadastro,
+    .img-planta-login {
+      position: static;
+      width: 20%;
+      max-width: 50px;
+      height: auto;
+      margin: 0.5rem auto;
+      display: block;
+    }
+  }
+  
+  /* Celulares pequenos (<= 480px) */
+  @media (max-width: 480px) {
+    .titulo, .titulo-logo {
+      font-size: 1.6rem;
+    }
+  
+    .subtitulo h4 {
+      font-size: 0.9rem;
+    }
+  
+    .conteudo-cadastro-formulario input {
+      font-size: 0.8rem;
+      padding: 0.7rem;
+    }
+  
+    .form-login, .form-cadastro {
+      width: 95%;
+      padding: 1.5rem 1rem;
+    }
+  
+    .btn-cadastre-se, .btn-logar-se, .btn-entrar, .btn-criar {
+      width: 100%;
+      padding: 0.7rem;
+      font-size: 0.9rem;
+    }
+  
+    /* Imagens principais */
+    .img-login,
+    .img-cadastro {
+      position: static;
+      width: 60%;
+      max-width: 150px;
+      height: auto;
+      margin: 1rem auto;
+      display: block;
+    }
+  
+    /* Imagens das plantas */
+    .img-planta-cadastro,
+    .img-planta-login {
+      position: static;
+      width: 25%;
+      max-width: 40px;
+      height: auto;
+      margin: 0.5rem auto;
+      display: block;
+    }
+  
+    .checkbox-container {
+      justify-content: center;
+    }
+  
+    .recuperar-senha a {
+      font-size: 0.9rem;
+    }
+  }
+  

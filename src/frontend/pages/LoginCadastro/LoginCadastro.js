@@ -20,7 +20,8 @@ function LoginCadastro() {
     const [telephone, setTelephone] = useState('');
     const [confirmaSenha, setConfirmaSenha] = useState('');
     const [lembreDeMim, setLembreDeMim] = useState(false);
-    const [mensagemErro, setMensagemErro] = useState('');
+    const [mensagemErroLogin, setMensagemErroLogin] = useState('');
+    const [mensagemErroCadastro, setMensagemErroCadastro] = useState('');    
     const  { realizarCadastro } = useCadastro();
     const { realizarLogin } = useLogin();
 
@@ -50,14 +51,15 @@ function LoginCadastro() {
 
     const handleSubmit = async (e, tipoFormulario) => {
         e.preventDefault();
-
+    
         if (tipoFormulario === 'cadastro') {
             const erro = validarCadastro();
-            setMensagemErro(erro);
-
+            setMensagemErroCadastro(erro);
+            setMensagemErroLogin(''); // limpar mensagem do outro
+    
             if (!erro) {
                 const userData = { email, senha, username, telephone };
-                realizarCadastro(userData, setMensagemErro);
+                realizarCadastro(userData, setMensagemErroCadastro);
                 setUsername('');
                 setTelephone('');
                 setEmail('');
@@ -65,26 +67,25 @@ function LoginCadastro() {
                 setConfirmaSenha('');
             }
         }
-
+    
         if (tipoFormulario === 'login') {
             const erro = validarLogin();
-
+            setMensagemErroLogin(erro);
+            setMensagemErroCadastro(''); // limpar mensagem do outro
+    
             if (erro) {
-                setMensagemErro(erro);
-                return; // Interrompe o processo se houver erro
+                return; // Interrompe se houver erro
             }
-
-            setMensagemErro(''); // limpa a mensagem se não houver erro
-
+    
             if (!erro) {
-                
-                realizarLogin({ email, senha, lembreDeMim }, setMensagemErro);
+                realizarLogin({ email, senha, lembreDeMim }, setMensagemErroLogin);
                 setEmail('');
                 setSenha('');
                 setLembreDeMim(false);
             }
         }
     };
+    
 
 
     return (
@@ -115,7 +116,7 @@ function LoginCadastro() {
                             >
                                 <div className='conteudo-login1'>
                                     <h1 className="titulo">Login</h1>
-                                    {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
+                                    {mensagemErroLogin && <p className="mensagem-erro-login">{mensagemErroLogin}</p>}
                                     <div className="conteudo-cadastro-formulario"><MdEmail /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
                                     <div className="conteudo-cadastro-formulario" ><FaLock /><input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} /></div>
                                     <div className="checkbox-container">
@@ -163,7 +164,7 @@ function LoginCadastro() {
                             >
                                 <div className='conteudo-cadastro'>
                                     <h1 className="titulo">Crie sua conta</h1>
-                                    {mensagemErro && <p className="mensagem-erro-login">{mensagemErro}</p>}
+                                    {mensagemErroCadastro && <p className="mensagem-erro-login">{mensagemErroCadastro}</p>}
                                     <div className="conteudo-cadastro-formulario"><FaUser /><input type="text" placeholder="Nome e sobrenome" value={username} onChange={(e) => setUsername(e.target.value)} /></div>
                                     <div className="conteudo-cadastro-formulario" ><BsFillTelephoneFill /><input type="tel" placeholder="Celular" value={telephone} onChange={(e) => setTelephone(e.target.value)} /></div>
                                     <div className="conteudo-cadastro-formulario"><MdEmail /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
