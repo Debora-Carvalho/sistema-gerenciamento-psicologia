@@ -26,9 +26,9 @@ function CabecalhoPaginaInicial() {
 
     return (
         <div className='container-cabecalho'>
-            <div className='container-logo'>
+            {/* <div className='container-logo'>
                 Seren
-            </div>
+            </div> */}
 
             <div className='container-cumprimentos'>
                 <p className='texto-cumprimentos'>{saudacao}, {usuario.username}</p>

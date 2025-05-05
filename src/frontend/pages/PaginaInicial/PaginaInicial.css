@@ -6,7 +6,8 @@
     max-width: 100vw !important;
     max-height: 100vh !important;
     width: 100%; 
-    height: 100vh; 
+    height: 100%; 
+    top: 0;
     margin: 0;
     padding: 0;
 }
@@ -14,14 +15,12 @@
 .container-conteudo-pagina-inicial {
     display: flex;
     flex-direction: row;
-    align-items: end;
-    padding: 0 40px;
+    top: 0;
     gap: 40px;
 }
 
 .container-conteudo-pagina-inicial .navbar {
     display: flex;
-    padding: 40px 0;
 }
 
 .container-conteudo-cards-pagina-inicial {
