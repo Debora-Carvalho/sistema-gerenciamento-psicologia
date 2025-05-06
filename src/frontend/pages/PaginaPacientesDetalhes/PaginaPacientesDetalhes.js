@@ -348,7 +348,7 @@ function PaginaPacientesDetalhes() {
                                     </a>
                                     <a
                                         className="btn-plano-tratamento"
-                                        href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
+                                        href={`ttps://wa.me/${paciente?.telefone}`}
                                         target="_blank"
                                         rel="noopener noreferrer"
                                     >
