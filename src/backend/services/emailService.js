@@ -66,7 +66,7 @@ async function sendAppointmentConfirmationToPatient(to, patientName, date, time,
         html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 8px;">
             <div style="text-align: center;">
-            <img src="https://exemplo.com/sua-logo.png" alt="Logo Seren" style="max-width: 150px; margin-bottom: 20px;" />
+            <img src="https://raw.githubusercontent.com/Debora-Carvalho/sistema-gerenciamento-psicologia/refs/heads/master/src/frontend/assets/images/image-btn-home-pacientes.png" alt="Logo Seren" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #4A90E2;">Agendamento Confirmado</h2>
             <p>Olá ${patientName},</p>
