@@ -1,0 +1,96 @@
+@import '../../styles/variaveis.css';
+
+.container-menu-principal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 40px;
+    max-height: 100vh;
+    height: 100%;
+}
+
+.container-logo-menu-principal  {
+    display: flex;
+    font-family: var(--font-family-logo);
+    color: var(--primary-color);
+    font-size: var(--font-size-logo-desktop);
+    font-weight: var(--font-weight-logo);
+}
+
+.container-menu-principal-items {
+    background-color: var(--neutral-color-100);
+    border-radius: 20px;
+    box-shadow: 0px 10px 16px -6px rgba(0, 0, 0, 0.2);
+    width: 221px;
+    height: calc(100vh - 180px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0;
+    padding: 20px 5px;
+    font-family: var(--font-family-principal);
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+
+.menu-principal-items,
+.menu-principal-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; 
+}
+
+.menu-btn, .menu-btn-sair {
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 18px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.menu-btn-sair {
+    color: rgb(243, 45, 45);
+}
+
+.menu-btn:hover, .menu-btn-sair:hover {
+    background-color: var(--secondary-color);
+}
+
+.menu-btn.active, .menu-btn-sair.active {
+    background-color: var(--secondary-color);
+}
+
+.icon, .icon-sair {
+    font-size: 24px;
+}
+
+.caixa-menu-responsivo {
+    display: none;
+}
+
+/* Responsividade - adaptando para aparecer o componente MenuResponsivo*/
+@media (max-width: 768px) {
+    .caixa-menu-responsivo {
+        display: flex;
+        align-items: start;
+        justify-content: start;
+        padding: 20px;
+    }    
+
+    .container-logo-menu-principal {
+        display: none;
+    }
+
+    .menu-principal {
+        display: none;
+    }
+}

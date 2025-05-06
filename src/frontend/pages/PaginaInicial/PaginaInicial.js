@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PaginaInicial.css';
 import CabecalhoPaginaInicial from '../../components/CabecalhoPaginaInicial/CabecalhoPaginaInicial.js';
-import Menu from '../../components/Menu/Menu.js';
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores.js';
 import useDocumentTitle from '../../components/useDocumentTitle';
 import imgBtnAgendamentos from '../../assets/images/image-btn-home-agendamentos.png';
@@ -18,13 +18,14 @@ function PaginaInicial() {
 
     return(
         <div className='container-pagina-inicial'>
-            <br></br>
-            <CabecalhoPaginaInicial />
             <div className='container-conteudo-pagina-inicial'>
                 <div className='navbar'>
-                    <Menu />
+                    <MenuPrincipal />
                 </div>
+                
                 <div className='container-conteudo-cards-pagina-inicial'>
+                    <CabecalhoPaginaInicial />
+
                     <div className='cards-indicadores'>
                         <CardsIndicadores />
                     </div>
