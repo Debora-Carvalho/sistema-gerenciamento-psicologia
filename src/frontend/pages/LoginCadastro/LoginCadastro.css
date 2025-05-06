@@ -2,15 +2,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    /* overflow: hidden; */
+
 }
 
 .container-lc {
-    background-color: #f7cabd;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    font-family: var(--font-family-principal);
+  background-color: #f7cabd;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  font-family: var(--font-family-principal);
+  position: relative; 
+  overflow: hidden; 
 }
 
 .first-content,
@@ -23,7 +25,7 @@
     justify-content: space-between;
     padding: 0 10%;
     box-sizing: border-box;
-    transition: transform 1s ease-in-out;
+    transition: transform 1.3s ease-in-out;
 }
 
 .first-content {
@@ -72,7 +74,6 @@
 
 .conteudo-login {
     height: 300px;
-    position: fixed;
 }
 
 .conteudo-cadastro {
@@ -86,7 +87,7 @@
     z-index: 2;
 }
 
-.conteudo-login1 {
+.conteudo-login-campos {
     width: 100%;
     max-width: 440px;
     display: flex;
@@ -117,7 +118,6 @@
     font-weight: var(--font-weight-paragrafo);
     color: black;
     bottom: 20px;
-    position: relative;
 }
 
 .btn-logar-se,
@@ -154,7 +154,6 @@
     padding: 10px;
     max-width: 200px;
     width: 100%;
-    /* margin-left: 80px; */
     font-family: var(--font-family-principal);
 }
 
@@ -219,8 +218,8 @@
 /* IMAGENS */
   .img-login {
     position: fixed;
-    top: 68vh;           
-    right: 70vw;        
+    top: 69vh;           
+    right: 71vw;        
     width: 20vw;         
     max-width: 300px;   
     max-height: 50vh;    
@@ -241,7 +240,7 @@
   
   .img-planta-cadastro {
     position: fixed;
-    bottom: 9vh;
+    bottom: 11vh;
     right: 10vw;
     width: 10vw;
     max-width: 80px;
@@ -263,111 +262,114 @@
   
 
 /* RESPONSIVIDADE */
-
 /* Tablets e telas médias */
-/* Tablets (<= 768px) */
 @media (max-width: 768px) {
-    .titulo, .titulo-logo {
-      font-size: 2rem;
-      text-align: center;
-    }
-  
-    .subtitulo h4 {
-      font-size: 1rem;
-      text-align: center;
-    }
-  
-    .conteudo-cadastro-formulario input {
-      font-size: 0.9rem;
-      padding: 0.8rem;
-    }
-  
-    .checkbox-container label {
-      font-size: 0.9rem;
-    }
-  
-    .mensagem-erro-login {
-      font-size: 0.9rem;
-      text-align: center;
-    }
-  
-    /* Imagens principais */
-    .img-login,
-    .img-cadastro {
-      position: static; /* Remove o fixed */
-      width: 50%;
-      max-width: 200px;
-      height: auto;
-      margin: 1rem auto;
-      display: block;
-    }
-  
-    /* Imagens das plantas */
-    .img-planta-cadastro,
-    .img-planta-login {
-      position: static;
-      width: 20%;
-      max-width: 50px;
-      height: auto;
-      margin: 0.5rem auto;
-      display: block;
-    }
+  .container-lc {
+    flex-direction: column;
   }
-  
-  /* Celulares pequenos (<= 480px) */
-  @media (max-width: 480px) {
-    .titulo, .titulo-logo {
-      font-size: 1.6rem;
-    }
-  
-    .subtitulo h4 {
-      font-size: 0.9rem;
-    }
-  
-    .conteudo-cadastro-formulario input {
-      font-size: 0.8rem;
-      padding: 0.7rem;
-    }
-  
-    .form-login, .form-cadastro {
-      width: 95%;
-      padding: 1.5rem 1rem;
-    }
-  
-    .btn-cadastre-se, .btn-logar-se, .btn-entrar, .btn-criar {
-      width: 100%;
-      padding: 0.7rem;
-      font-size: 0.9rem;
-    }
-  
-    /* Imagens principais */
-    .img-login,
-    .img-cadastro {
-      position: static;
-      width: 60%;
-      max-width: 150px;
-      height: auto;
-      margin: 1rem auto;
-      display: block;
-    }
-  
-    /* Imagens das plantas */
-    .img-planta-cadastro,
-    .img-planta-login {
-      position: static;
-      width: 25%;
-      max-width: 40px;
-      height: auto;
-      margin: 0.5rem auto;
-      display: block;
-    }
-  
-    .checkbox-container {
-      justify-content: center;
-    }
-  
-    .recuperar-senha a {
-      font-size: 0.9rem;
-    }
+
+  .first-content,
+  .second-content {
+    flex-direction: column;
+    padding: 30px;
+    width: 100%;
+    justify-content: center;
   }
+
+  .first-column,
+  .second-column {
+    width: 100%;
+    height: 100vh;
+    padding: 20px 10px;
+  }
+
+  .titulo, .titulo-logo {
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .subtitulo h4 {
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .conteudo-login{
+    text-align: center;
+    display: contents;
+  }
+
+  .conteudo-login-campos,
+  .conteudo-cadastro {
+    max-width: 100%;
+    width: 100%;
+    padding: 0 10px;
+  }
+
+  .conteudo-cadastro-formulario input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .btn-cadastre-se, .btn-logar-se,
+  .btn-entrar, .btn-criar {
+    width: 100%;
+    font-size: 1rem;
+    padding: 12px;
+  }
+
+  .recuperar-senha a {
+    font-size: 0.9rem;
+  }
+
+  /* Ocultar imagens no mobile */
+  .img-login,
+  .img-cadastro,
+  .img-planta-login,
+  .img-planta-cadastro {
+    display: none;
+  }
+}
+
+  .btn-logar-se,
+  .btn-cadastre-se,
+  .btn-criar,
+  .btn-entrar {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .recuperar-senha a {
+    font-size: 0.9rem;
+    display: block;
+    text-align: center;
+  }
+
+/* Ajustes extras para telas até 480px */
+@media (max-width: 480px) {
+  .titulo {
+    font-size: 1.6rem;
+  }
+
+  .titulo-logo {
+    font-size: 1.3rem;
+  }
+
+  .conteudo-cadastro-formulario input {
+    font-size: 0.9rem;
+    padding: 10px;
+  }
+
+  .conteudo-login-campos,
+  .conteudo-cadastro {
+    padding: 10px 0;
+  }
+
+  .btn-logar-se,
+  .btn-cadastre-se,
+  .btn-criar,
+  .btn-entrar {
+    font-size: 0.9rem;
+    padding: 0.8rem;
+  }
+}
   

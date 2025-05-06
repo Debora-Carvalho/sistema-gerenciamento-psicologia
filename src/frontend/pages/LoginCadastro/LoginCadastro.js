@@ -114,7 +114,7 @@ function LoginCadastro() {
                                 exit={{ opacity: 0, x: -50 }}
                                 transition={{ duration: 0.5 }}
                             >
-                                <div className='conteudo-login1'>
+                                <div className='conteudo-login-campos'>
                                     <h1 className="titulo">Login</h1>
                                     {mensagemErroLogin && <p className="mensagem-erro-login">{mensagemErroLogin}</p>}
                                     <div className="conteudo-cadastro-formulario"><MdEmail /><input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} /></div>
