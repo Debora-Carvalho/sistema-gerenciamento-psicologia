@@ -328,7 +328,7 @@ function PaginaPacientes() {
                         </div>
                         <div className="form-group">
                             <input type="date" placeholder="Data de Nascimento" value={novoPaciente.dataNascimento}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, dataNascimento: e.target.value })} />
+                                onChange={e => setNovoPaciente({ ...novoPaciente, dataNascimento: e.target.value })} />Data de Nascimento
                         </div>
                     </div>
                     <div className="form-row buttons">

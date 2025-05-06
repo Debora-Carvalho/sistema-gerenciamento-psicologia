@@ -124,28 +124,6 @@ function Calendario() {
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
     return (
-        <div className="tela">
-            <div className="top-bar">
-                <h1 className="seren-logo">Seren</h1>
-                <div className="hamburger-menu" onClick={toggleMenu}>
-                    <div className="bar"></div>
-                    <div className="bar"></div>
-                    <div className="bar"></div>
-                </div>
-            </div>
-
-            <div className={`menu-container ${isMenuOpen ? "open" : ""}`}>
-                <Menu />
-            </div>
-
-            <div className="toolbar">
-                <Adicionar onAdicionar={handleAdicionar} />
-                <FiltroAtividades
-                    atividades={eventos}
-                    onSelecionarAtividades={handleSelecionarAtividades}
-                />
-            </div>
-
             <div className="calendario">
                 <DragAndDropCalendar
                     date={date}
@@ -166,15 +144,7 @@ function Calendario() {
                 />
             </div>
 
-            {eventoSelecionado && (
-                <EventModal
-                    evento={eventoSelecionado}
-                    onClose={handleEventClose}
-                    onDelete={handleEventDelete}
-                    onUpdate={handleEventUpdate}
-                />
-            )}
-        </div>
+    
     );
 }
 
