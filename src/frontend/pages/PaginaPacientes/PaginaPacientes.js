@@ -13,6 +13,7 @@ import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
 import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
+
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
@@ -20,11 +21,16 @@ function PaginaPacientes() {
     const { pacientes, setPacientes } = usePacientes();
     const navigate = useNavigate();
 
+
+    const [mostrarPopup, setMostrarPopup] = useState(false);
+    const [mensagemPopup, setMensagemPopup] = useState('');
+    const [tipoPopup, setTipoPopup] = useState(''); // 'sucesso' ou 'erro'
+    const [confirmarExportacao, setConfirmarExportacao] = useState(false); // Novo estado para confirmação
+
     const handleAbrirDetalhesPaciente = (pacienteId) => {
         localStorage.setItem("pacienteID", pacienteId);
         navigate("/pacientes-detalhes");
     };
-
 
     const resetarFormulario = () => {
         setNovoPaciente({
@@ -40,6 +46,17 @@ function PaginaPacientes() {
         setEditandoIndex(null);
         setMostrarFormulario(false);
         setErroCadastro('');
+    };
+
+    const mostrarNotificacao = (mensagem, tipo) => {
+        setMensagemPopup(mensagem);
+        setTipoPopup(tipo);
+        setMostrarPopup(true);
+
+        //esconde depois de uns segundos, coloquei 10 apra testar
+        setTimeout(() => {
+            setMostrarPopup(false);
+        }, 10000);
     };
 
     const [filtro, setFiltro] = useState('');
@@ -64,26 +81,36 @@ function PaginaPacientes() {
         idade: true
     });
     const [erroCadastro, setErroCadastro] = useState('');
+    const [menuAberto, setMenuAberto] = useState(null);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutsideFiltro = (event) => {
             if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
                 setMostrarFiltrosVisuais(false);
             }
         };
 
-        document.addEventListener('click', handleClickOutside);
+        document.addEventListener('click', handleClickOutsideFiltro);
         return () => {
-            document.removeEventListener('click', handleClickOutside);
+            document.removeEventListener('click', handleClickOutsideFiltro);
         };
     }, [mostrarFiltrosVisuais]);
 
+    useEffect(() => {
+        const handleClickOutsideAcoes = (e) => {
+            if (!e.target.closest('.acoes')) {
+                setMenuAberto(null);
+            }
+        };
+        document.addEventListener('click', handleClickOutsideAcoes);
+        return () => document.removeEventListener('click', handleClickOutsideAcoes);
+    }, []);
+
     const pacientesFiltrados = pacientes.filter(p =>
         p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-        p.data.includes(filtro) ||
-        calcularIdade(p.dataNascimento).toString().includes(filtro)
+        (p.data && p.data.includes(filtro)) ||
+        (p.dataNascimento && calcularIdade(p.dataNascimento).toString().includes(filtro))
     );
-    
 
     const editarPaciente = (id) => {
         const index = pacientes.findIndex(p => p._id === id);
@@ -93,6 +120,7 @@ function PaginaPacientes() {
             setMostrarFormulario(true);
             setErroCadastro('');
         }
+        setMenuAberto(null);
     };
 
     const toggleMenuMobile = () => {
@@ -103,8 +131,52 @@ function PaginaPacientes() {
         setColunasVisiveis(prev => ({ ...prev, [campo]: !prev[campo] }));
     };
 
+    const handleExcluirPaciente = (id) => {
+        excluirPaciente(id, setPacientes);
+        setMenuAberto(null);
+    };
+
+    // Nova função para lidar com o clique no botão de exportar
+    const handleExportarPdfClick = () => {
+        setConfirmarExportacao(true); // Mostrar o popup de confirmação
+    };
+
+    // Função para confirmar o download do PDF
+    const confirmarDownloadPdf = async () => {
+        setConfirmarExportacao(false); // Fechar o popup de confirmação
+        try {
+            await exportarPDF(pacientes, colunasVisiveis);
+            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso'); // Opcional: Mostrar notificação de sucesso
+        } catch (error) {
+            mostrarNotificacao('Erro ao exportar PDF. Tente novamente.', 'erro');
+        }
+    };
+
+    // Função para cancelar o download do PDF
+    const cancelarDownloadPdf = () => {
+        setConfirmarExportacao(false); // Fechar o popup de confirmação
+    };
+
     return (
         <div className="pagina-container">
+            {/* Popup de notificação */}
+            {mostrarPopup && (
+                <div className={`popup-notificacao ${tipoPopup}`}>
+                    {mensagemPopup}
+                </div>
+            )}
+
+            {/* Popup de confirmação para exportar PDF */}
+            {confirmarExportacao && (
+                <div className="modal-confirmacao">
+                    <p>Deseja realmente exportar a lista de pacientes para PDF?</p>
+                    <div className="botoes-confirmacao">
+                        <button onClick={confirmarDownloadPdf} className="btn salvar">Sim</button>
+                        <button onClick={cancelarDownloadPdf} className="btn cinza">Não</button>
+                    </div>
+                </div>
+            )}
+
             <div className={`menu-lateral ${menuMobileVisivel ? 'menu-mobile-visivel' : ''}`}>
                 <div className="logo-seren">Seren</div>
                 <Menu />
@@ -165,7 +237,7 @@ function PaginaPacientes() {
                                 </div>
                             )}
                         </div>
-                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
+                        <button onClick={handleExportarPdfClick}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
@@ -179,13 +251,12 @@ function PaginaPacientes() {
                                 preferenciaContato: '',
                                 dataNascimento: ''
                             });
-                            setEditandoIndex(null); // ← importante: garante que o formulário entenda que é um novo cadastro
+                            setEditandoIndex(null);
                             setMostrarFormulario(true);
                             setErroCadastro('');
                         }}>
                             <AiOutlineUserAdd /> Adicionar paciente
                         </button>
-
                     </div>
                 </div>
 
@@ -200,7 +271,7 @@ function PaginaPacientes() {
                         >
                             <FiFilter />
                         </button>
-                        <button onClick={() => exportarPDF(pacientes, colunasVisiveis)}>
+                        <button onClick={handleExportarPdfClick}>
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
@@ -220,7 +291,6 @@ function PaginaPacientes() {
                         }}>
                             <AiOutlineUserAdd />
                         </button>
-
                     </div>
 
                     {mostrarFiltrosVisuais && (
@@ -241,40 +311,44 @@ function PaginaPacientes() {
                             </tr>
                         </thead>
                         <tbody>
-                            {pacientesFiltrados.map((paciente) => (
-                                <tr
-                                    key={paciente._id}
-                                    onClick={() => handleAbrirDetalhesPaciente(paciente._id)}
-                                    style={{ cursor: "pointer" }}
-                                >
-                                    {colunasVisiveis.nome && <td>{paciente.nome}</td>}
-                                    {colunasVisiveis.data && <td>{paciente.data}</td>}
-                                    {colunasVisiveis.idade && ( <td>{calcularIdade(paciente.dataNascimento)}</td>)}
-                                    <td>
-                                        <div className="acoes">
-                                            <BsThreeDots onClick={(e) => { e.stopPropagation(); }} style={{ cursor: "pointer" }} />
-                                            <div className="menu-popup">
-                                                <button onClick={(e) => { e.stopPropagation(); editarPaciente(paciente._id); }}>
-                                                    Editar
-                                                </button>
-                                                <button onClick={(e) => { e.stopPropagation(); excluirPaciente(paciente._id, setPacientes); }}>
-                                                    Excluir
-                                                </button>
+                            {pacientesFiltrados.length > 0 ? (
+                                pacientesFiltrados.map((paciente) => (
+                                    <tr key={paciente._id} onClick={() => handleAbrirDetalhesPaciente(paciente._id)}>
+                                        {colunasVisiveis.nome && <td>{paciente.nome || 'N/A'}</td>}
+                                        {colunasVisiveis.data && <td>{paciente.data || 'N/A'}</td>}
+                                        {colunasVisiveis.idade && <td>{paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'}</td>}
+                                        <td className="acoes-td" onClick={(e) => e.stopPropagation()}>
+                                            <div
+                                                className={`acoes ${menuAberto === paciente._id ? 'ativo' : ''}`}
+                                                onClick={() => setMenuAberto(menuAberto === paciente._id ? null : paciente._id)}
+                                            >
+                                                <BsThreeDots />
+                                                {menuAberto === paciente._id && (
+                                                    <div className="menu-popup">
+                                                        <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
+                                                        <button onClick={() => handleExcluirPaciente(paciente._id)}>Excluir</button>
+                                                    </div>
+                                                )}
                                             </div>
-                                        </div>
+                                        </td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}>
+                                        Nenhum paciente encontrado
                                     </td>
                                 </tr>
-                            ))}
+                            )}
                         </tbody>
                     </table>
                 </div>
             </div>
 
             {mostrarFormulario && (
-
                 <div className="modal-formulario">
                     <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Adicionar novo paciente'}</h3>
-                    {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>} {/* Mensagem de erro */}
+                    {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>}
                     <div className="form-row">
                         <div className="form-group">
                             <input type="text" placeholder="Nome" value={novoPaciente.nome}
@@ -348,16 +422,26 @@ function PaginaPacientes() {
                                         pacientes,
                                         setPacientes
                                     );
-                                    if (sucesso) window.location.reload();
+                                    if (sucesso) {
+                                        mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
+                                        window.location.reload();
+                                    } else {
+                                        mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
+                                    }
                                 } else {
-                                    cadastrarPaciente(
-                                        novoPaciente,
-                                        pacientes,
-                                        editandoIndex,
-                                        setPacientes,
-                                        resetarFormulario,
-                                        setErroCadastro
-                                    );
+                                    try {
+                                        await cadastrarPaciente(
+                                            novoPaciente,
+                                            pacientes,
+                                            editandoIndex,
+                                            setPacientes,
+                                            resetarFormulario,
+                                            setErroCadastro
+                                        );
+                                        mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                                    } catch (error) {
+                                        mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');
+                                    }
                                 }
                             }}
                         >
