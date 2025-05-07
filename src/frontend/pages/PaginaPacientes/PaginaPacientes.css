@@ -323,7 +323,7 @@
   display: flex;
   flex-direction: column;
   min-width: 250px;
-  margin-bottom: 0; /* Removido margin-bottom para alinhar os campos */
+  margin-bottom: 0; 
 }
 
 .form-group label {
@@ -342,7 +342,7 @@
   width: calc(100% - 24px);
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0; /* Removido margin-bottom de inputs e selects */
+  margin-bottom: 0; 
   height: auto;
 }
 
@@ -628,14 +628,14 @@
   .modal-formulario .form-group {
     flex: none;
     width: 100%;
-    margin-bottom: 0; /* Removido margin-bottom aqui também */
+    margin-bottom: 0; 
   }
 
   .modal-formulario .form-group input,
   .modal-formulario .form-group select {
     width: calc(100% - 24px);
     padding: 12px;
-    margin-bottom: 0; /* Removido margin-bottom aqui também */
+    margin-bottom: 0; 
     height: auto;
   }
 
@@ -770,7 +770,7 @@
   background-color: #4caf50;
 }
 
-/* Estilo para mensagens de erro de validação */
+/* Estilo para mensagens de erro de validação e ainda asism não funcionaa */
 .form-group .erro-mensagem {
   color: red;
   font-size: 0.8em;

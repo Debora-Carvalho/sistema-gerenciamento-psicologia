@@ -21,9 +21,9 @@ function PaginaPacientes() {
     const [mostrarPopup, setMostrarPopup] = useState(false);
     const [mensagemPopup, setMensagemPopup] = useState('');
     const [tipoPopup, setTipoPopup] = useState(''); // 'sucesso' ou 'erro'
-    const [confirmarExportacao, setConfirmarExportacao] = useState(false); // Novo estado para confirmação
-    const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false); // Novo estado para confirmação de exclusão
-    const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null); // ID do paciente a ser excluído
+    const [confirmarExportacao, setConfirmarExportacao] = useState(false); 
+    const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false); 
+    const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null); 
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
@@ -131,12 +131,12 @@ function PaginaPacientes() {
 
     const handleExcluirPaciente = (id) => {
         setPacienteIdParaExcluir(id); // Armazena o ID do paciente a ser excluído
-        setMostrarPopupExcluir(true); // Exibe o popup de confirmação de exclusão
+        setMostrarPopupExcluir(true); 
         setMenuAberto(null);
     };
 
     const confirmarExclusaoPaciente = async () => {
-        setMostrarPopupExcluir(false); // Fecha o popup de exclusão
+        setMostrarPopupExcluir(false); 
         if (pacienteIdParaExcluir) {
             try {
                 // Chama a função para excluir o paciente
@@ -145,14 +145,14 @@ function PaginaPacientes() {
             } catch (error) {
                 mostrarNotificacao('Erro ao excluir paciente. Tente novamente.', 'erro');
             } finally {
-                setPacienteIdParaExcluir(null); // Limpa o ID do paciente excluído
+                setPacienteIdParaExcluir(null); 
             }
         }
     };
 
     const cancelarExclusaoPaciente = () => {
-        setMostrarPopupExcluir(false); // Fecha o popup de exclusão
-        setPacienteIdParaExcluir(null); // Limpa o ID do paciente a ser excluído
+        setMostrarPopupExcluir(false); 
+        setPacienteIdParaExcluir(null); 
     };
 
     // Nova função para lidar com o clique no botão de exportar
@@ -162,10 +162,10 @@ function PaginaPacientes() {
 
     // Função para confirmar o download do PDF
     const confirmarDownloadPdf = async () => {
-        setConfirmarExportacao(false); // Fechar o popup de confirmação de exportação
+        setConfirmarExportacao(false); 
         try {
             await exportarPDF(pacientes, colunasVisiveis);
-            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso'); // Opcional: Mostrar notificação de sucesso
+            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso'); // Opcionnal: mostrar notificação de sucesso
         } catch (error) {
             mostrarNotificacao('Erro ao exportar PDF. Tente novamente.', 'erro');
         }
@@ -173,16 +173,16 @@ function PaginaPacientes() {
 
     // Função para cancelar o download do PDF
     const cancelarDownloadPdf = () => {
-        setConfirmarExportacao(false); // Fechar o popup de confirmação de exportação
+        setConfirmarExportacao(false); 
     };
 
     const formatarTelefone = (telefone) => {
         const cleaned = ('' + telefone).replace(/\D/g, '');
         const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
         if (match) {
-            return `${match[1]}${match[2]}${match[3]}`; // Retorna sem formatação
+            return `${match[1]}${match[2]}${match[3]}`; 
         }
-        return cleaned; // Retorna o número limpo, sem formatação se não corresponder ao padrão
+        return cleaned; 
     };
 
     const formatarTelefoneParaDisplay = (telefone) => {
@@ -574,7 +574,7 @@ function PaginaPacientes() {
 
                                 const pacienteParaSalvar = {
                                     ...novoPaciente,
-                                    telefone: novoPaciente.telefone, // Enviar telefone formatado para o backend
+                                    telefone: novoPaciente.telefone,
                                 };
 
                                 if (editandoIndex !== null) {
