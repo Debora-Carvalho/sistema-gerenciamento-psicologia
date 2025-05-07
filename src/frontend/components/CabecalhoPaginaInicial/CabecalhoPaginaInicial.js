@@ -25,17 +25,13 @@ function CabecalhoPaginaInicial() {
     }
 
     return (
-        <div className='container-cabecalho'>
-            {/* <div className='container-logo'>
-                Seren
-            </div> */}
-
-            <div className='container-cumprimentos'>
-                <p className='texto-cumprimentos'>{saudacao}, {usuario.username}</p>
+        <div className='container-cabecalho-inicio'>
+            <div className='container-cumprimentos-inicio'>
+                <p className='texto-cumprimentos-inicio'>{saudacao}, {usuario.username}</p>
             </div>
 
-            <div className='container-agendamentos'>
-                <p className='texto-agendamentos'>
+            <div className='container-agendamentos-inicio'>
+                <p className='texto-agendamentos-inicio'>
                     Faltam <span>{totalAgendamentos}</span> atendimentos
                 </p>
             </div>
