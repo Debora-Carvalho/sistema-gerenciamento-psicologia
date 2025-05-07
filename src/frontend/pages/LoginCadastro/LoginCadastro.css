@@ -62,13 +62,13 @@
 
 .first-column {
     background-color: #f5ac98;
-    width: 50%;
+    width: 40%;
     border-radius: 5px 10px 10px 5px;
 }
 
 .second-column {
     background-color: #ffe4dd;
-    width: 60%;
+    width: 70%;
     border-radius: 10px 5px 5px 10px;
 }
 
@@ -140,7 +140,6 @@
     background-color: #5c77ee;
     color: white;
     transition: background-color 0, 7s ease;
-
 }
 
 .btn-criar,
@@ -186,7 +185,15 @@
     width: 100%;
     padding: 8px;
     background: transparent;
+    font-size: 0.9rem;
+    padding: 10px;
 }
+
+.formulario-erro {
+  border: 3px solid #D10000 !important;
+}
+
+
 
 .checkbox-container {
     align-items: center;
@@ -206,13 +213,19 @@
 }
 
 .recuperar-senha:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .mensagem-erro-login {
-    color: red;
-    font-size: 14px;
-    margin: 0px;
+  color: red;
+  font-size: 14px;
+  margin: 0px;
+}
+
+.mensagem-sucesso{
+  color: green;
+  font-size: 14px;
+  margin: 0px;
 }
 
 /* IMAGENS */
@@ -305,11 +318,6 @@
     padding: 0 10px;
   }
 
-  .conteudo-cadastro-formulario input {
-    font-size: 0.9rem;
-    padding: 10px;
-  }
-
   .btn-cadastre-se, .btn-logar-se,
   .btn-entrar, .btn-criar {
     width: 100%;
@@ -352,11 +360,6 @@
 
   .titulo-logo {
     font-size: 1.3rem;
-  }
-
-  .conteudo-cadastro-formulario input {
-    font-size: 0.9rem;
-    padding: 10px;
   }
 
   .conteudo-login-campos,
