@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './PaginaInicial.css';
 import CabecalhoPaginaInicial from '../../components/CabecalhoPaginaInicial/CabecalhoPaginaInicial.js';
-import Menu from '../../components/Menu/Menu.js';
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores.js';
 import useDocumentTitle from '../../components/useDocumentTitle';
 import imgBtnAgendamentos from '../../assets/images/image-btn-home-agendamentos.png';
@@ -16,54 +16,62 @@ function PaginaInicial() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
 
-    return(
+    return (
         <div className='container-pagina-inicial'>
-            <br></br>
-            <CabecalhoPaginaInicial />
+            <div className='navbar'>
+                <MenuPrincipal />
+            </div>
+                
             <div className='container-conteudo-pagina-inicial'>
-                <div className='navbar'>
-                    <Menu />
+                <div className='pagina-inicial-cabecalho'>
+                    <CabecalhoPaginaInicial />
                 </div>
-                <div className='container-conteudo-cards-pagina-inicial'>
-                    <div className='cards-indicadores'>
-                        <CardsIndicadores />
-                    </div>
 
-                    <div className='container-botoes-calendario'>
-                        <div className='cards-botoes-funcionalidades'>
-                            <div className='card'>
-                                <img src={imgBtnPacientes} alt='Ilustração'/>
-                                <a className='btn-pacientes' href='/pacientes'>
-                                    <p>Pacientes</p>
-                                </a>
-                            </div>
+                <div className='pagina-inicial-cards-indicadores'>
+                    <CardsIndicadores />
+                </div>
 
-                            <div className='card'>
-                                <img src={imgBtnAnotacoes} alt='Ilustração'/>
-                                <a className='btn-anotacoes' href='#'>
-                                    <p>Anotações</p>
-                                </a>
-                            </div>
-
-                            <div className='card'>
-                                <img src={imgBtnAgendamentos} alt='Ilustração'/>
-                                <a className='btn-agendamentos' href='#'>
-                                    <p>Agendamentos</p>
-                                </a>
-                            </div>
-
-                            <div className='card'>
-                                <img src={imgBtnPagamentos} alt='Ilustração'/>
-                                <a className='btn-pagamentos' href='#'>
-                                    <p>Pagamentos</p>
-                                </a>
-                            </div>
+                <div className='container-botoes-calendario'>
+                    <div className='cards-botoes-funcionalidades'>
+                        <div className='card-inicio-funcionalidade'>
+                            <img src={imgBtnPacientes} alt='Ilustração'/>
+                            <a className='btn-pacientes' href='/pacientes'>
+                                <p>Pacientes</p>
+                            </a>
                         </div>
-                        
-                        <div className='card-calendario'>
-                            <Calendario />
-                        </div>                       
+
+                        <div className='card-inicio-funcionalidade'>
+                            <img src={imgBtnAnotacoes} alt='Ilustração'/>
+                            <a className='btn-anotacoes' href='#'>
+                                <p>Anotações</p>
+                            </a>
+                        </div>
+
+                        <div className='card-inicio-funcionalidade'>
+                            <img src={imgBtnAgendamentos} alt='Ilustração'/>
+                            <a className='btn-agendamentos' href='#'>
+                                <p>Agendamentos</p>
+                            </a>
+                        </div>
+
+                        <div className='card-inicio-funcionalidade'>
+                            <img src={imgBtnPagamentos} alt='Ilustração'/>
+                            <a className='btn-pagamentos' href='#'>
+                                <p>Pagamentos</p>
+                            </a>
+                        </div>
                     </div>
+                    
+                    <div className='card-calendario-inicio'>
+                        <Calendario />
+                    </div>  
+
+                    <div className='card-calendario-responsivo'>
+                        <img src={imgBtnPagamentos} alt='Ilustração'/>
+                        <a className='btn-abrir-calendario-responsivo' href='#'>
+                            <p>Abrir calendário</p>
+                        </a>
+                    </div>                                        
                 </div>
             </div>
         </div>
