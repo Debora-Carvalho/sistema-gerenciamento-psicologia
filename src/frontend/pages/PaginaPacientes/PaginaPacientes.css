@@ -31,19 +31,6 @@
   overflow-x: hidden;
 }
 
-.menu-lateral.menu-mobile-visivel {
-  left: 0;
-}
-
-.menu-hamburguer {
-  display: none;
-  font-size: 24px;
-  color: var(--primary-color);
-  cursor: pointer;
-  margin-right: 20px;
-  z-index: 30;
-}
-
 .conteudo-principal {
   flex: 1;
   margin-left: 250px;
@@ -54,10 +41,6 @@
   flex-direction: column;
   transition: margin-left 0.3s ease-in-out;
   overflow-x: hidden;
-}
-
-.conteudo-principal.menu-mobile-visivel {
-  margin-left: 0;
 }
 
 .top-bar {
@@ -196,16 +179,6 @@
   overflow-x: auto;
 }
 
-.lista-pacientes .botoes-mobile {
-  display: none;
-  gap: 8px;
-  margin-top: 15px;
-  width: 100%;
-  justify-content: space-around;
-  margin-bottom: 10px;
-  position: relative;
-}
-
 .lista-pacientes .tabela-pacientes {
   width: 100%;
   background-color: #ffe5e5;
@@ -323,7 +296,7 @@
   display: flex;
   flex-direction: column;
   min-width: 250px;
-  margin-bottom: 0; 
+  margin-bottom: 0;
 }
 
 .form-group label {
@@ -342,7 +315,7 @@
   width: calc(100% - 24px);
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-bottom: 0; 
+  margin-bottom: 0;
   height: auto;
 }
 
@@ -436,219 +409,15 @@
   accent-color: var(--primary-color);
 }
 
-.filtros-colunas-mobile {
-  display: none;
-  position: fixed;
-  top: 80px;
-  left: 20px;
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 12px 16px;
-  z-index: 1000;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 300px;
-  font-family: var(--font-family-principal);
-  animation: slideIn 0.3s ease-in-out;
-}
-
-.filtros-colunas-mobile label {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #333;
-  cursor: pointer;
-  padding: 8px 0;
-  transition: color 0.2s;
-}
-
 @keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes slideIn {
-  from {
-    transform: translateX(-100%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-@media (max-width: 768px) {
-  .pagina-container {
-    flex-direction: column;
-  }
-
-  .conteudo-principal {
-    margin-left: 0;
-    padding: 20px;
-  }
-
-  .menu-lateral {
-    left: -250px;
-  }
-
-  .menu-hamburguer {
-    display: block;
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 30;
-    background: none;
-    border: none;
-    padding: 8px;
-  }
-
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 20px;
-  }
-
-  .container-pesquisa {
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  .usuario-info {
-    display: none;
-  }
-
-  .titulo-acoes-container {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-bottom: 15px;
-  }
-
-  .botoes-desktop {
-    display: none;
-  }
-
-  .lista-pacientes .botoes-mobile {
-    display: flex;
-    margin-bottom: 15px;
-    position: relative;
-  }
-
-  .lista-pacientes .botoes-mobile .btn-pdf {
-    margin-right: auto;
-  }
-
-  .lista-pacientes .tabela-pacientes th:not(:nth-child(1)),
-  .lista-pacientes .tabela-pacientes td:not(:nth-child(1)) {
-    display: none;
-  }
-
-  .lista-pacientes .tabela-pacientes th:nth-child(1),
-  .lista-pacientes .tabela-pacientes td:nth-child(1) {
-    display: table-cell;
-    width: 100%;
-  }
-
-  .lista-pacientes .tabela-pacientes td {
-    padding: 12px 8px;
-    font-size: 14px;
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
-  }
-
-  .acoes {
-    justify-self: end;
-  }
-
-  .btn.filtro.pequeno.ativo {
-    background-color: var(--primary-color);
-    color: white;
-  }
-
-  .filtros-colunas {
-    display: none;
-  }
-
-  .filtros-colunas-mobile {
-    display: block;
-    position: fixed;
-    top: 80px;
-    left: 20px;
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 12px 16px;
-    z-index: 1000;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 300px;
-    font-family: var(--font-family-principal);
-    animation: slideIn 0.3s ease-in-out;
-  }
-
-  .filtros-colunas-mobile label {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #333;
-    cursor: pointer;
-    padding: 8px 0;
-    transition: color 0.2s;
-  }
-
-  .modal-formulario {
-    padding: 20px;
-    gap: 20px;
-    top: 0;
-    left: 0;
-    transform: none;
-    width: 100%;
-    height: auto;
-    overflow-y: auto;
-    border-radius: 0;
-  }
-
-  .modal-formulario h3 {
-    font-size: 1.2em;
-  }
-
-  .modal-formulario .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .modal-formulario .form-group {
-    flex: none;
-    width: 100%;
-    margin-bottom: 0; 
-  }
-
-  .modal-formulario .form-group input,
-  .modal-formulario .form-group select {
-    width: calc(100% - 24px);
-    padding: 12px;
-    margin-bottom: 0; 
-    height: auto;
-  }
-
-  .modal-formulario .form-row.buttons {
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .modal-formulario .form-row.buttons button {
-    width: 100%;
-    text-align: center;
-    height: auto;
-    flex: 0 0 auto;
   }
 }
 
@@ -677,6 +446,7 @@
   from {
     transform: translateX(100%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -686,6 +456,7 @@
   from {
     opacity: 1;
   }
+
   to {
     opacity: 0;
   }
@@ -770,7 +541,7 @@
   background-color: #4caf50;
 }
 
-/* Estilo para mensagens de erro de validação e ainda asism não funcionaa */
+/* Estilo para mensagens de erro de validação */
 .form-group .erro-mensagem {
   color: red;
   font-size: 0.8em;

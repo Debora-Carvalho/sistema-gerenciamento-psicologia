@@ -37,7 +37,6 @@ function PaginaPacientes() {
         dataNascimento: ''
     });
     const [editandoIndex, setEditandoIndex] = useState(null);
-    const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
     const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
     const [mostrarFiltrosVisuais, setMostrarFiltrosVisuais] = useState(false);
     const [colunasVisiveis, setColunasVisiveis] = useState({
@@ -74,13 +73,10 @@ function PaginaPacientes() {
         setMensagemPopup(mensagem);
         setTipoPopup(tipo);
         setMostrarPopup(true);
-        //esconde depois de uns segundos, coloquei 10 apra testar
         setTimeout(() => {
             setMostrarPopup(false);
         }, 10000);
     };
-
-
 
     useEffect(() => {
         const handleClickOutsideFiltro = (event) => {
@@ -121,16 +117,12 @@ function PaginaPacientes() {
         setMenuAberto(null);
     };
 
-    const toggleMenuMobile = () => {
-        setMenuMobileVisivel(!menuMobileVisivel);
-    };
-
     const alternarColuna = (campo) => {
         setColunasVisiveis(prev => ({ ...prev, [campo]: !prev[campo] }));
     };
 
     const handleExcluirPaciente = (id) => {
-        setPacienteIdParaExcluir(id); // Armazena o ID do paciente a ser excluído
+        setPacienteIdParaExcluir(id);
         setMostrarPopupExcluir(true); 
         setMenuAberto(null);
     };
@@ -139,7 +131,6 @@ function PaginaPacientes() {
         setMostrarPopupExcluir(false); 
         if (pacienteIdParaExcluir) {
             try {
-                // Chama a função para excluir o paciente
                 await excluirPaciente(pacienteIdParaExcluir, setPacientes);
                 mostrarNotificacao('Paciente excluído com sucesso!', 'sucesso');
             } catch (error) {
@@ -155,23 +146,20 @@ function PaginaPacientes() {
         setPacienteIdParaExcluir(null); 
     };
 
-    // Nova função para lidar com o clique no botão de exportar
     const handleExportarPdfClick = () => {
-        setConfirmarExportacao(true); // Mostrar o popup de confirmação de exportação
+        setConfirmarExportacao(true);
     };
 
-    // Função para confirmar o download do PDF
     const confirmarDownloadPdf = async () => {
         setConfirmarExportacao(false); 
         try {
             await exportarPDF(pacientes, colunasVisiveis);
-            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso'); // Opcionnal: mostrar notificação de sucesso
+            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso');
         } catch (error) {
             mostrarNotificacao('Erro ao exportar PDF. Tente novamente.', 'erro');
         }
     };
 
-    // Função para cancelar o download do PDF
     const cancelarDownloadPdf = () => {
         setConfirmarExportacao(false); 
     };
@@ -206,7 +194,6 @@ function PaginaPacientes() {
     };
 
     const validarEmail = (email) => {
-        // Expressão regular para validar email
         const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
         return regex.test(email);
     };
@@ -226,7 +213,6 @@ function PaginaPacientes() {
         if (idade > 18) {
             return true;
         } else if (idade === 18) {
-            // Verifica o mês e dia
             const mesAtual = hoje.getMonth();
             const diaAtual = hoje.getDate();
             const mesNasc = dataNasc.getMonth();
@@ -243,16 +229,13 @@ function PaginaPacientes() {
         resetarFormulario();
     };
 
-
     return (
         <div className="pagina-container">
-            {/* Popup de notificação */}
             {mostrarPopup && (
                 <div className={`popup-notificacao ${tipoPopup}`}>
                     {mensagemPopup}
                 </div>
             )}
-            {/* Popup de confirmação para exportar PDF */}
             {confirmarExportacao && (
                 <div className="modal-confirmacao">
                     <p>Deseja realmente exportar a lista de pacientes para PDF?</p>
@@ -262,7 +245,6 @@ function PaginaPacientes() {
                     </div>
                 </div>
             )}
-            {/* Popup de confirmação para excluir paciente */}
             {mostrarPopupExcluir && (
                 <div className="modal-confirmacao">
                     <p>Deseja realmente excluir este paciente?</p>
@@ -272,15 +254,8 @@ function PaginaPacientes() {
                     </div>
                 </div>
             )}
-            <div className={`menu-lateral ${menuMobileVisivel ? 'menu-mobile-visivel' : ''}`}>
-                {/* <div className="logo-seren">Seren</div>
-        <Menu /> */}
-            </div>
             <div className="conteudo-principal">
                 <header className="top-bar">
-                    <button className="menu-hamburguer" onClick={toggleMenuMobile}>
-                        <HiMenu />
-                    </button>
                     <div className="container-pesquisa">
                         <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
                         <input
@@ -353,36 +328,6 @@ function PaginaPacientes() {
                     </div>
                 </div>
                 <div className="lista-pacientes">
-                    <div className="botoes-mobile">
-
-                        <button onClick={handleExportarPdfClick} className="btn-pdf">
-                            <BsFileEarmarkPdf />
-                        </button>
-                        <button className="btn adicionar cinza pequeno" onClick={() => {
-                            setNovoPaciente({
-                                nome: '',
-                                profissao: '',
-                                genero: '',
-                                estadoCivil: '',
-                                telefone: '',
-                                email: '',
-                                preferenciaContato: '',
-                                dataNascimento: ''
-                            });
-                            setEditandoIndex(null);
-                            setMostrarFormulario(true);
-                            setErroCadastro('');
-                        }}>
-                            <AiOutlineUserAdd />
-                        </button>
-                    </div>
-                    {mostrarFiltrosVisuais && (
-                        <div className="filtros-colunas-mobile" onClick={(e) => e.stopPropagation()}>
-                            <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
-                            <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
-                            <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
-                        </div>
-                    )}
                     <table className="tabela-pacientes">
                         <thead>
                             <tr>
@@ -422,7 +367,6 @@ function PaginaPacientes() {
                                     </td>
                                 </tr>
                             )}
-                            {/* Adicionando duas linhas vazias */}
                             <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
                             <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
                         </tbody>
@@ -570,7 +514,6 @@ function PaginaPacientes() {
                                 if (hasErrors) {
                                     return;
                                 }
-
 
                                 const pacienteParaSalvar = {
                                     ...novoPaciente,
