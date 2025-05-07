@@ -14,10 +14,9 @@ import '../../components/Menu/Menu.css';
 
 import Menu from '../../components/Menu/Menu';
 import eventosPadrao from "../../components/ComponentsCalendario/eventosPadrao";
-import EventModal from "../../components/ComponentsCalendario/EventModal";
-import Adicionar from '../../components/ComponentsCalendario/Adicionar';
+
 import CustomTollbar from '../../components/ComponentsCalendario/CustomTollbar';
-import FiltroAtividades from '../../components/ComponentsCalendario/FiltroAtividades';
+
 import useAgendamentos from "../../hooks/useAgendamentos";
 
 moment.locale('pt-br');
@@ -91,34 +90,9 @@ function Calendario() {
 
 
     const handleEventClick = (evento) => setEventoSelecionado(evento);
-    const handleEventClose = () => setEventoSelecionado(null);
+    
 
-    const handleAdicionar = (novoEvento) => {
-        const novo = { ...novoEvento, id: eventos.length + 1 };
-        const atualizados = [...eventos, novo];
-        setEventos(atualizados);
-        setEventosFiltrados(atualizados);
-    };
-
-    const handleEventDelete = (eventId) => {
-        const atualizados = eventos.filter((event) => event.id !== eventId);
-        setEventos(atualizados);
-        setEventosFiltrados(atualizados);
-        setEventoSelecionado(null);
-    };
-
-    const handleEventUpdate = (updatedEvent) => {
-        const atualizados = eventos.map((event) =>
-            event.id === updatedEvent.id ? updatedEvent : event
-        );
-        setEventos(atualizados);
-        setEventosFiltrados(atualizados);
-        setEventoSelecionado(null);
-    };
-
-    const handleSelecionarAtividades = (atividadesSelecionadas) => {
-        setEventosFiltrados(atividadesSelecionadas);
-    };
+    
 
     const handleNavigate = (newDate) => setDate(newDate);
     const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -141,6 +115,16 @@ function Calendario() {
                     eventPropGetter={eventStyle}
                     components={{ toolbar: CustomTollbar }}
                     className="calendar"
+                    messages={{
+                        date: 'Data',
+                        time: 'Hora',
+                        event: 'Agendamento',
+                        allDay: 'Dia inteiro',
+                        noEventsInRange: 'Não há eventos para este período',
+                        showMore: function showMore(total) {
+                        return '+' + total + ' agendamentos';
+                        }
+                        }}
                 />
             </div>
 

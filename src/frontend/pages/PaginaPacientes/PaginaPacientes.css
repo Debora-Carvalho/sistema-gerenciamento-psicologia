@@ -5,6 +5,7 @@
   flex-direction: row;
   min-height: 100vh;
   font-family: var(--font-family-principal);
+  overflow-x: hidden;
 }
 
 .logo-seren {
@@ -27,6 +28,7 @@
   flex-direction: column;
   margin-left: 25px;
   transition: left 0.3s ease-in-out;
+  overflow-x: hidden;
 }
 
 .menu-lateral.menu-mobile-visivel {
@@ -51,6 +53,7 @@
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s ease-in-out;
+  overflow-x: hidden;
 }
 
 .conteudo-principal.menu-mobile-visivel {
@@ -135,7 +138,7 @@
 
 .titulo-pacientes {
   color: var(--primary-color);
-  font-size: 40px;
+  font-size: 32px;
   font-weight: bold;
   font-family: var(--font-family-principal);
   margin-bottom: 0;
@@ -170,9 +173,27 @@
   color: white;
 }
 
+.btn-pdf {
+  border-radius: 20px;
+  padding: 15px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #e6e6e6;
+  color: #333;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+}
+
+.btn-pdf:hover {
+  background-color: #d4d4d4;
+}
+
 .lista-pacientes {
-  flex: 1;
+  flex: 12;
   background-color: #f9d6dd0c;
+  overflow-x: auto;
 }
 
 .lista-pacientes .botoes-mobile {
@@ -193,12 +214,14 @@
   overflow: hidden;
   font-family: var(--font-family-principal);
   font-size: 20px;
+  min-width: 600px;
 }
 
 .lista-pacientes .tabela-pacientes th,
 .lista-pacientes .tabela-pacientes td {
   padding: 25px;
   text-align: left;
+  white-space: nowrap;
 }
 
 .lista-pacientes .tabela-pacientes th {
@@ -265,21 +288,23 @@
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fff9f9;
-  padding: 45px 45px;
+  padding: 20px;
   border-radius: 12px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   z-index: 101;
-  width: 1000px;
-  max-width: 100%;
+  width: 90%;
+  max-width: 800px;
   font-family: var(--font-family-principal);
   display: flex;
   flex-direction: column;
-  gap: 55px;
+  gap: 20px;
+  overflow-y: auto;
+  max-height: 90vh;
 }
 
 .modal-formulario h3 {
-  margin-bottom: 20px;
-  font-size: 25px;
+  margin-bottom: 15px;
+  font-size: 24px;
   color: black;
   width: 100%;
   text-align: center;
@@ -287,40 +312,42 @@
 
 .form-row {
   display: flex;
-  gap: 20px;
+  gap: 15px;
   width: 100%;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
 .form-group {
   flex: 1;
   display: flex;
   flex-direction: column;
+  min-width: 250px;
+  margin-bottom: 0; /* Removido margin-bottom para alinhar os campos */
 }
 
-.form-group input {
-  padding: 25px;
+.form-group label {
+  margin-bottom: 8px;
+  font-size: 0.9em;
+  color: #555;
+}
+
+.form-group input,
+.form-group select {
+  padding: 12px;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-family: var(--font-family-principal);
-  font-size: 1em;
-  width: 100%;
+  font-size: 0.9em;
+  width: calc(100% - 24px);
   box-sizing: border-box;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0; /* Removido margin-bottom de inputs e selects */
+  height: auto;
 }
 
 .form-group input::placeholder {
   color: #777;
-}
-
-.form-group select {
-  padding: 25px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-family: var(--font-family-principal);
-  font-size: 1em;
-  width: 100%;
-  box-sizing: border-box;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .form-group select option {
@@ -331,27 +358,32 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 15px;
   gap: 10px;
+  flex-wrap: nowrap;
 }
 
 .form-row.buttons button {
-  padding: 12px 20px;
+  padding: 10px 15px;
   border: none;
   border-radius: 20px;
-  font-size: 14px;
+  font-size: 0.9em;
   cursor: pointer;
   color: white;
   font-family: var(--font-family-principal);
   transition: background-color 0.2s ease;
+  min-width: 100px;
+  text-align: center;
+  height: auto;
+  flex: 0 0 auto;
 }
 
 .form-row.buttons button:first-child {
-  background-color: #0056b3;
+  background-color: #808080;
 }
 
 .form-row.buttons button:first-child:hover {
-  background-color: #5a6268;
+  background-color: #696969;
 }
 
 .form-row.buttons button:last-child {
@@ -359,7 +391,7 @@
 }
 
 .form-row.buttons button:last-child:hover {
-  background-color: #0056b3;
+  background-color: #004080;
 }
 
 .container-filtro {
@@ -405,7 +437,31 @@
 }
 
 .filtros-colunas-mobile {
-  display: none !important;
+  display: none;
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px 16px;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 300px;
+  font-family: var(--font-family-principal);
+  animation: slideIn 0.3s ease-in-out;
+}
+
+.filtros-colunas-mobile label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #333;
+  cursor: pointer;
+  padding: 8px 0;
+  transition: color 0.2s;
 }
 
 @keyframes fadeIn {
@@ -416,6 +472,15 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
   }
 }
 
@@ -472,15 +537,20 @@
   .lista-pacientes .botoes-mobile {
     display: flex;
     margin-bottom: 15px;
+    position: relative;
   }
 
-  .lista-pacientes .tabela-pacientes th:not(:first-child),
-  .lista-pacientes .tabela-pacientes td:not(:first-child) {
+  .lista-pacientes .botoes-mobile .btn-pdf {
+    margin-right: auto;
+  }
+
+  .lista-pacientes .tabela-pacientes th:not(:nth-child(1)),
+  .lista-pacientes .tabela-pacientes td:not(:nth-child(1)) {
     display: none;
   }
 
-  .lista-pacientes .tabela-pacientes th:first-child,
-  .lista-pacientes .tabela-pacientes td:first-child {
+  .lista-pacientes .tabela-pacientes th:nth-child(1),
+  .lista-pacientes .tabela-pacientes td:nth-child(1) {
     display: table-cell;
     width: 100%;
   }
@@ -503,10 +573,82 @@
   }
 
   .filtros-colunas {
-    right: auto;
+    display: none;
+  }
+
+  .filtros-colunas-mobile {
+    display: block;
+    position: fixed;
+    top: 80px;
+    left: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px 16px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 300px;
+    font-family: var(--font-family-principal);
+    animation: slideIn 0.3s ease-in-out;
+  }
+
+  .filtros-colunas-mobile label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    padding: 8px 0;
+    transition: color 0.2s;
+  }
+
+  .modal-formulario {
+    padding: 20px;
+    gap: 20px;
+    top: 0;
     left: 0;
-    width: 180px;
-    top: calc(100% + 5px);
+    transform: none;
+    width: 100%;
+    height: auto;
+    overflow-y: auto;
+    border-radius: 0;
+  }
+
+  .modal-formulario h3 {
+    font-size: 1.2em;
+  }
+
+  .modal-formulario .form-row {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .modal-formulario .form-group {
+    flex: none;
+    width: 100%;
+    margin-bottom: 0; /* Removido margin-bottom aqui também */
+  }
+
+  .modal-formulario .form-group input,
+  .modal-formulario .form-group select {
+    width: calc(100% - 24px);
+    padding: 12px;
+    margin-bottom: 0; /* Removido margin-bottom aqui também */
+    height: auto;
+  }
+
+  .modal-formulario .form-row.buttons {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .modal-formulario .form-row.buttons button {
+    width: 100%;
+    text-align: center;
+    height: auto;
+    flex: 0 0 auto;
   }
 }
 
@@ -548,13 +690,14 @@
     opacity: 0;
   }
 }
+
 .modal-confirmacao {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: rgba(0, 0, 0, 0.8);
-  color: white;
+  background-color: #fcf2f4e7;
+  color: rgb(5, 5, 5);
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -574,6 +717,11 @@
   gap: 15px;
 }
 
+.btn-excluir-blue {
+  background-color: #01429E;
+  color: white;
+}
+
 .botoes-confirmacao button {
   padding: 10px 20px;
   border: none;
@@ -583,12 +731,12 @@
 }
 
 .botoes-confirmacao button.salvar {
-  background-color: #4caf50;
+  background-color: #01429E;
   color: white;
 }
 
 .botoes-confirmacao button.salvar:hover {
-  background-color: #45a049;
+  background-color: #01429E;
 }
 
 .botoes-confirmacao button.cinza {
@@ -620,4 +768,12 @@
 
 .popup-notificacao.sucesso {
   background-color: #4caf50;
+}
+
+/* Estilo para mensagens de erro de validação */
+.form-group .erro-mensagem {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+  display: block;
 }

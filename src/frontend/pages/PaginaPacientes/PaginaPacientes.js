@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
-import Menu from '../../components/Menu/Menu';
 import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
@@ -16,16 +15,39 @@ import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
-
     const { usuario } = useUsuarios();
     const { pacientes, setPacientes } = usePacientes();
     const navigate = useNavigate();
-
-
     const [mostrarPopup, setMostrarPopup] = useState(false);
     const [mensagemPopup, setMensagemPopup] = useState('');
     const [tipoPopup, setTipoPopup] = useState(''); // 'sucesso' ou 'erro'
     const [confirmarExportacao, setConfirmarExportacao] = useState(false); // Novo estado para confirmação
+    const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false); // Novo estado para confirmação de exclusão
+    const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null); // ID do paciente a ser excluído
+    const [filtro, setFiltro] = useState('');
+    const [mostrarFormulario, setMostrarFormulario] = useState(false);
+    const [novoPaciente, setNovoPaciente] = useState({
+        nome: '',
+        profissao: '',
+        genero: '',
+        estadoCivil: '',
+        telefone: '',
+        email: '',
+        preferenciaContato: '',
+        dataNascimento: ''
+    });
+    const [editandoIndex, setEditandoIndex] = useState(null);
+    const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
+    const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
+    const [mostrarFiltrosVisuais, setMostrarFiltrosVisuais] = useState(false);
+    const [colunasVisiveis, setColunasVisiveis] = useState({
+        nome: true,
+        data: true,
+        idade: true
+    });
+    const [erroCadastro, setErroCadastro] = useState('');
+    const [menuAberto, setMenuAberto] = useState(null);
+    const modoEdicao = editandoIndex !== null;
 
     const handleAbrirDetalhesPaciente = (pacienteId) => {
         localStorage.setItem("pacienteID", pacienteId);
@@ -52,36 +74,13 @@ function PaginaPacientes() {
         setMensagemPopup(mensagem);
         setTipoPopup(tipo);
         setMostrarPopup(true);
-
         //esconde depois de uns segundos, coloquei 10 apra testar
         setTimeout(() => {
             setMostrarPopup(false);
         }, 10000);
     };
 
-    const [filtro, setFiltro] = useState('');
-    const [mostrarFormulario, setMostrarFormulario] = useState(false);
-    const [novoPaciente, setNovoPaciente] = useState({
-        nome: '',
-        profissao: '',
-        genero: '',
-        estadoCivil: '',
-        telefone: '',
-        email: '',
-        preferenciaContato: '',
-        dataNascimento: ''
-    });
-    const [editandoIndex, setEditandoIndex] = useState(null);
-    const [menuMobileVisivel, setMenuMobileVisivel] = useState(false);
-    const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
-    const [mostrarFiltrosVisuais, setMostrarFiltrosVisuais] = useState(false);
-    const [colunasVisiveis, setColunasVisiveis] = useState({
-        nome: true,
-        data: true,
-        idade: true
-    });
-    const [erroCadastro, setErroCadastro] = useState('');
-    const [menuAberto, setMenuAberto] = useState(null);
+
 
     useEffect(() => {
         const handleClickOutsideFiltro = (event) => {
@@ -89,7 +88,6 @@ function PaginaPacientes() {
                 setMostrarFiltrosVisuais(false);
             }
         };
-
         document.addEventListener('click', handleClickOutsideFiltro);
         return () => {
             document.removeEventListener('click', handleClickOutsideFiltro);
@@ -132,18 +130,39 @@ function PaginaPacientes() {
     };
 
     const handleExcluirPaciente = (id) => {
-        excluirPaciente(id, setPacientes);
+        setPacienteIdParaExcluir(id); // Armazena o ID do paciente a ser excluído
+        setMostrarPopupExcluir(true); // Exibe o popup de confirmação de exclusão
         setMenuAberto(null);
+    };
+
+    const confirmarExclusaoPaciente = async () => {
+        setMostrarPopupExcluir(false); // Fecha o popup de exclusão
+        if (pacienteIdParaExcluir) {
+            try {
+                // Chama a função para excluir o paciente
+                await excluirPaciente(pacienteIdParaExcluir, setPacientes);
+                mostrarNotificacao('Paciente excluído com sucesso!', 'sucesso');
+            } catch (error) {
+                mostrarNotificacao('Erro ao excluir paciente. Tente novamente.', 'erro');
+            } finally {
+                setPacienteIdParaExcluir(null); // Limpa o ID do paciente excluído
+            }
+        }
+    };
+
+    const cancelarExclusaoPaciente = () => {
+        setMostrarPopupExcluir(false); // Fecha o popup de exclusão
+        setPacienteIdParaExcluir(null); // Limpa o ID do paciente a ser excluído
     };
 
     // Nova função para lidar com o clique no botão de exportar
     const handleExportarPdfClick = () => {
-        setConfirmarExportacao(true); // Mostrar o popup de confirmação
+        setConfirmarExportacao(true); // Mostrar o popup de confirmação de exportação
     };
 
     // Função para confirmar o download do PDF
     const confirmarDownloadPdf = async () => {
-        setConfirmarExportacao(false); // Fechar o popup de confirmação
+        setConfirmarExportacao(false); // Fechar o popup de confirmação de exportação
         try {
             await exportarPDF(pacientes, colunasVisiveis);
             mostrarNotificacao('PDF exportado com sucesso!', 'sucesso'); // Opcional: Mostrar notificação de sucesso
@@ -154,8 +173,76 @@ function PaginaPacientes() {
 
     // Função para cancelar o download do PDF
     const cancelarDownloadPdf = () => {
-        setConfirmarExportacao(false); // Fechar o popup de confirmação
+        setConfirmarExportacao(false); // Fechar o popup de confirmação de exportação
     };
+
+    const formatarTelefone = (telefone) => {
+        const cleaned = ('' + telefone).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+        if (match) {
+            return `${match[1]}${match[2]}${match[3]}`; // Retorna sem formatação
+        }
+        return cleaned; // Retorna o número limpo, sem formatação se não corresponder ao padrão
+    };
+
+    const formatarTelefoneParaDisplay = (telefone) => {
+        const cleaned = ('' + telefone).replace(/\D/g, '');
+        const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+        if (match) {
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
+        }
+        return telefone;
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        let newValue = value;
+
+        if (name === 'telefone') {
+            newValue = formatarTelefone(value);
+        }
+
+        setNovoPaciente({ ...novoPaciente, [name]: newValue });
+    };
+
+    const validarEmail = (email) => {
+        // Expressão regular para validar email
+        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        return regex.test(email);
+    };
+
+    const validarNomeProfissao = (texto) => {
+        const regex = /^[a-zA-Z\s]+$/;
+        return regex.test(texto);
+    };
+
+    const validarDataNascimento = (dataNascimento) => {
+        if (!dataNascimento) return false;
+
+        const dataNasc = new Date(dataNascimento);
+        const hoje = new Date();
+        const idade = hoje.getFullYear() - dataNasc.getFullYear();
+
+        if (idade > 18) {
+            return true;
+        } else if (idade === 18) {
+            // Verifica o mês e dia
+            const mesAtual = hoje.getMonth();
+            const diaAtual = hoje.getDate();
+            const mesNasc = dataNasc.getMonth();
+            const diaNasc = dataNasc.getDate();
+
+            if (mesAtual > mesNasc || (mesAtual === mesNasc && diaAtual >= diaNasc)) {
+                return true;
+            }
+        }
+        return false;
+    };
+
+    const handleCancelarCadastro = () => {
+        resetarFormulario();
+    };
+
 
     return (
         <div className="pagina-container">
@@ -165,7 +252,6 @@ function PaginaPacientes() {
                     {mensagemPopup}
                 </div>
             )}
-
             {/* Popup de confirmação para exportar PDF */}
             {confirmarExportacao && (
                 <div className="modal-confirmacao">
@@ -176,12 +262,20 @@ function PaginaPacientes() {
                     </div>
                 </div>
             )}
-
+            {/* Popup de confirmação para excluir paciente */}
+            {mostrarPopupExcluir && (
+                <div className="modal-confirmacao">
+                    <p>Deseja realmente excluir este paciente?</p>
+                    <div className="botoes-confirmacao">
+                        <button onClick={confirmarExclusaoPaciente} className="btn-excluir-blue">Sim</button>
+                        <button onClick={cancelarExclusaoPaciente} className="btn cinza">Não</button>
+                    </div>
+                </div>
+            )}
             <div className={`menu-lateral ${menuMobileVisivel ? 'menu-mobile-visivel' : ''}`}>
-                <div className="logo-seren">Seren</div>
-                <Menu />
+                {/* <div className="logo-seren">Seren</div>
+        <Menu /> */}
             </div>
-
             <div className="conteudo-principal">
                 <header className="top-bar">
                     <button className="menu-hamburguer" onClick={toggleMenuMobile}>
@@ -215,7 +309,6 @@ function PaginaPacientes() {
                         )}
                     </div>
                 </header>
-
                 <div className="titulo-acoes-container">
                     <h2 className="titulo-pacientes">Pacientes</h2>
                     <div className="botoes-desktop">
@@ -237,7 +330,7 @@ function PaginaPacientes() {
                                 </div>
                             )}
                         </div>
-                        <button onClick={handleExportarPdfClick}>
+                        <button onClick={handleExportarPdfClick} className="btn-pdf">
                             <BsFileEarmarkPdf /> Exportar PDF
                         </button>
                         <button className="btn adicionar cinza" onClick={() => {
@@ -259,20 +352,11 @@ function PaginaPacientes() {
                         </button>
                     </div>
                 </div>
-
                 <div className="lista-pacientes">
                     <div className="botoes-mobile">
-                        <button
-                            className={`btn filtro cinza pequeno ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
-                            }}
-                        >
-                            <FiFilter />
-                        </button>
-                        <button onClick={handleExportarPdfClick}>
-                            <BsFileEarmarkPdf /> Exportar PDF
+
+                        <button onClick={handleExportarPdfClick} className="btn-pdf">
+                            <BsFileEarmarkPdf />
                         </button>
                         <button className="btn adicionar cinza pequeno" onClick={() => {
                             setNovoPaciente({
@@ -292,7 +376,6 @@ function PaginaPacientes() {
                             <AiOutlineUserAdd />
                         </button>
                     </div>
-
                     {mostrarFiltrosVisuais && (
                         <div className="filtros-colunas-mobile" onClick={(e) => e.stopPropagation()}>
                             <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
@@ -300,7 +383,6 @@ function PaginaPacientes() {
                             <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
                         </div>
                     )}
-
                     <table className="tabela-pacientes">
                         <thead>
                             <tr>
@@ -340,39 +422,67 @@ function PaginaPacientes() {
                                     </td>
                                 </tr>
                             )}
+                            {/* Adicionando duas linhas vazias */}
+                            <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
+                            <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
                         </tbody>
                     </table>
                 </div>
             </div>
-
             {mostrarFormulario && (
                 <div className="modal-formulario">
-                    <h3>{editandoIndex !== null ? 'Editar Paciente' : 'Adicionar novo paciente'}</h3>
-                    {erroCadastro && <p style={{ color: 'red' }}>{erroCadastro}</p>}
+                    <h3>{modoEdicao ? 'Editar paciente' : 'Adicionar novo paciente'}</h3>
+                    {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
+
                     <div className="form-row">
                         <div className="form-group">
-                            <input type="text" placeholder="Nome" value={novoPaciente.nome}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, nome: e.target.value })} />
+                            <label htmlFor="nome">Nome</label>
+                            <input
+                                type="text"
+                                id="nome"
+                                name="nome"
+                                placeholder="Nome completo"
+                                value={novoPaciente.nome}
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className="form-group">
-                            <input type="text" placeholder="Profissão" value={novoPaciente.profissao}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, profissao: e.target.value })} />
+                            <label htmlFor="genero">Profissão</label>
+                            <input
+                                type="text"
+                                placeholder="Profissão"
+                                value={novoPaciente.profissao}
+                                onChange={(e) =>
+                                    setNovoPaciente({ ...novoPaciente, profissao: e.target.value })
+                                }
+                            />
                         </div>
                     </div>
+
                     <div className="form-row">
                         <div className="form-group">
-                            <select value={novoPaciente.genero}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, genero: e.target.value })}>
-                                <option value="">Gênero</option>
+                            <label htmlFor="genero">Gênero</label>
+                            <select
+                                id="genero"
+                                name="genero"
+                                value={novoPaciente.genero}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Selecione</option>
                                 <option value="Feminino">Feminino</option>
                                 <option value="Masculino">Masculino</option>
                                 <option value="Outro">Outro</option>
                             </select>
                         </div>
                         <div className="form-group">
-                            <select value={novoPaciente.estadoCivil}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, estadoCivil: e.target.value })}>
-                                <option value="">Estado Civil</option>
+                            <label htmlFor="estadoCivil">Estado Civil</label>
+                            <select
+                                id="estadoCivil"
+                                name="estadoCivil"
+                                value={novoPaciente.estadoCivil}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Selecione</option>
                                 <option value="Solteiro(a)">Solteiro(a)</option>
                                 <option value="Casado(a)">Casado(a)</option>
                                 <option value="Divorciado(a)">Divorciado(a)</option>
@@ -380,43 +490,97 @@ function PaginaPacientes() {
                             </select>
                         </div>
                     </div>
+
                     <div className="form-row">
                         <div className="form-group">
-                            <input type="tel" placeholder="Telefone" value={novoPaciente.telefone}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, telefone: e.target.value })} />
+                            <label htmlFor="telefone">Telefone</label>
+                            <input
+                                type="tel"
+                                id="telefone"
+                                name="telefone"
+                                placeholder="(XX) XXXXX-XXXX"
+                                value={formatarTelefoneParaDisplay(novoPaciente.telefone)}
+                                onChange={handleInputChange}
+                            />
                         </div>
                         <div className="form-group">
-                            <input type="email" placeholder="E-mail" value={novoPaciente.email}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, email: e.target.value })} />
+                            <label htmlFor="email">E-mail</label>
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                placeholder="seuemail.@provedor.com"
+                                value={novoPaciente.email}
+                                onChange={handleInputChange}
+                            />
                         </div>
                     </div>
+
                     <div className="form-row">
                         <div className="form-group">
-                            <select value={novoPaciente.preferenciaContato}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, preferenciaContato: e.target.value })}>
-                                <option value="">Preferência de Contato</option>
+                            <label htmlFor="preferenciaContato">Preferência de Contato</label>
+                            <select
+                                id="preferenciaContato"
+                                name="preferenciaContato"
+                                value={novoPaciente.preferenciaContato}
+                                onChange={handleInputChange}
+                            >
+                                <option value="">Selecione</option>
                                 <option value="Telefone">Telefone</option>
                                 <option value="E-mail">E-mail</option>
                                 <option value="WhatsApp">WhatsApp</option>
                             </select>
                         </div>
                         <div className="form-group">
-                            <input type="date" placeholder="Data de Nascimento" value={novoPaciente.dataNascimento}
-                                onChange={e => setNovoPaciente({ ...novoPaciente, dataNascimento: e.target.value })} />Data de Nascimento
+                            <label htmlFor="dataNascimento">Data de Nascimento</label>
+                            <input
+                                type="date"
+                                id="dataNascimento"
+                                name="dataNascimento"
+                                value={novoPaciente.dataNascimento}
+                                onChange={handleInputChange}
+                            />
                         </div>
                     </div>
+
                     <div className="form-row buttons">
-                        <button onClick={() => {
-                            setMostrarFormulario(false);
-                            setErroCadastro('');
-                        }}>Sair</button>
+                        <button onClick={handleCancelarCadastro}>Cancelar</button>
                         <button
                             className="btn salvar"
                             onClick={async () => {
+                                let hasErrors = false;
+                                let errorMessage = '';
+
+                                if (!novoPaciente.nome.trim() || !novoPaciente.telefone.trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
+                                    hasErrors = true;
+                                    errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
+                                } else if (!validarNomeProfissao(novoPaciente.nome)) {
+                                    hasErrors = true;
+                                    errorMessage = "Nome não deve conter números ou caracteres especiais.";
+                                } else if (!validarEmail(novoPaciente.email)) {
+                                    hasErrors = true;
+                                    errorMessage = "E-mail inválido.";
+                                } else if (!validarDataNascimento(novoPaciente.dataNascimento)) {
+                                    hasErrors = true;
+                                    errorMessage = "O paciente deve ter pelo menos 18 anos.";
+                                }
+
+                                setErroCadastro(errorMessage);
+
+                                if (hasErrors) {
+                                    return;
+                                }
+
+
+                                const pacienteParaSalvar = {
+                                    ...novoPaciente,
+                                    telefone: novoPaciente.telefone, // Enviar telefone formatado para o backend
+                                };
+
                                 if (editandoIndex !== null) {
                                     const sucesso = await atualizarPaciente(
                                         setErroCadastro,
-                                        novoPaciente,
+                                        pacienteParaSalvar,
                                         editandoIndex,
                                         resetarFormulario,
                                         pacientes,
@@ -424,14 +588,20 @@ function PaginaPacientes() {
                                     );
                                     if (sucesso) {
                                         mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
-                                        window.location.reload();
                                     } else {
                                         mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
                                     }
                                 } else {
                                     try {
+                                        const pacienteExistente = pacientes.find(p =>
+                                            p.email === novoPaciente.email || p.telefone === novoPaciente.telefone
+                                        );
+                                        if (pacienteExistente) {
+                                            setErroCadastro("Paciente com esses dados já está registrado.");
+                                            return;
+                                        }
                                         await cadastrarPaciente(
-                                            novoPaciente,
+                                            pacienteParaSalvar,
                                             pacientes,
                                             editandoIndex,
                                             setPacientes,
@@ -439,13 +609,14 @@ function PaginaPacientes() {
                                             setErroCadastro
                                         );
                                         mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+
                                     } catch (error) {
                                         mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');
                                     }
                                 }
                             }}
                         >
-                            {editandoIndex !== null ? 'Salvar alterações' : 'Cadastrar'}
+                            {modoEdicao ? 'Salvar alterações' : 'Cadastrar'}
                         </button>
                     </div>
                 </div>

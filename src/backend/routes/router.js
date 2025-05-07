@@ -11,8 +11,7 @@ import PaginaPacientes from "../../frontend/pages/PaginaPacientes/PaginaPaciente
 import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.js";
 import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
 import Calendario from '../../frontend/components/Calendario/Calendario';
-import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx'
-
+import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx';
 
 
 const AppRoutes = () => {
@@ -30,9 +29,8 @@ const AppRoutes = () => {
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/agendamentos" element={<Agendamento />} />
+                    
                 </Route>
-
-
             </Routes>
         </BrowserRouter>
     );
