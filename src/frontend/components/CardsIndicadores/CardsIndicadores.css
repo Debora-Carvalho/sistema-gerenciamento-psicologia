@@ -1,40 +1,77 @@
 @import '../../styles/variaveis.css';
 
-.container-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 2fr) 1fr;
-    width: 100%;
+.container-cards-indicadores {
+    display: flex;
+    width: 80vw;
     height: 12vh;
+    padding: 0 20px;
     background-color: var(--neutral-color-100);
     border-radius: 20px;
     box-shadow: 0px 10px 16px -6px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    align-items: center;
+    justify-content: space-evenly;
 }
 
-.container-cards p {
+.card-indicadores {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    line-height: 20px;
+    border: none !important;
+    flex: 1;
+}
+
+.seta-card {
+    cursor: pointer;
+}
+
+.card-indicadores .numeroIndicador {
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.card-indicadores .texto-descritivo {
     font-family: var(--font-family-principal);
     color: #000000;
     font-size: var(--font-size-paragrafo-desktop);
 }
 
-.card {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    line-height: 40px;
-}
-
-.linha-separacao {
-    border-left: 1px solid rgb(209, 206, 206);
-    border-right: 1px solid rgb(209, 206, 206);
-}
-
-.card .numeroIndicador {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.card .icon-seta {
+.card-indicadores .icon-seta {
     font-size: 48px;
     color: var(--primary-color);
 }
+
+.seta-card {
+    cursor: pointer;
+    flex: 0 0 50px;
+}
+
+.card-indicadores .icon-seta {
+    font-size: 48px;
+    color: var(--primary-color);
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .container-cards-indicadores {
+        height: 15vh;
+        justify-content: space-between;
+        padding: 0 10px;
+    }
+
+    .card-indicadores {
+        flex: none;
+        width: 70vw;
+    }
+
+    .seta-card {
+        flex: 0 0 30px;
+    }
+
+    .card-indicadores .icon-seta {
+        font-size: 36px;
+    }
+}
+
