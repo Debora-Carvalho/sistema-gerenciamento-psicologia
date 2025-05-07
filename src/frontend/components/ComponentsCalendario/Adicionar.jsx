@@ -52,6 +52,7 @@ function Adicionar({ onAdicionar }) {
                     tipo: '',
                     nomePaciente: ''
                 });
+                window.location.reload();
             }
         } else {
             alert('Por favor, preencha todos os campos.');

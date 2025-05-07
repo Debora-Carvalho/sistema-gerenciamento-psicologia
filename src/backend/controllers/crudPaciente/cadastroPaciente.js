@@ -27,10 +27,10 @@ async function cadastroPacienteHandler(req, res) {
             profissao,
             genero,
             estadoCivil,
-            telefone,
+            telefone: parseInt(telefone),
             email,
             preferenciaContato,
-            dataNascimento,
+            dataNascimento: new Date(dataNascimento),
             id_usuario: userID
         };
 
