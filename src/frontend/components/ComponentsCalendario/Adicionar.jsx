@@ -11,6 +11,7 @@ function Adicionar({ onAdicionar }) {
         desc: '',
         color: '#3174ad',
         tipo: '',
+        nomePaciente: ''
     });
     const [expanded, setExpanded] = useState(false);
     const { adicionarAgendamento } = useCriarAgendamentos();
@@ -38,17 +39,18 @@ function Adicionar({ onAdicionar }) {
                 return;
             }
 
-            const userID = localStorage.getItem("userID"); 
-            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.desc, novoEvento.color, novoEvento.tipo);
+            const userID = localStorage.getItem("userID");
+            const agendamentoId = await adicionarAgendamento(userID, novoEvento.title, novoEvento.start, novoEvento.end, novoEvento.desc, novoEvento.color, novoEvento.tipo, novoEvento.nomePaciente);
 
-            if (agendamentoId) { 
+            if (agendamentoId) {
                 setNovoEvento({
                     titulo: '',
                     dataInicio: '',
                     dataFim: '',
                     desc: '',
-                    color: '#3174ad', 
-                    tipo: ''
+                    color: '#3174ad',
+                    tipo: '',
+                    nomePaciente: ''
                 });
             }
         } else {
@@ -65,17 +67,21 @@ function Adicionar({ onAdicionar }) {
                     <Form.Label>Título do Evento</Form.Label>
                     <Form.Control type="text" placeholder="Digite o Título" name="title" value={novoEvento.title} onChange={handleChange} />
                 </Form.Group>
-                
-                        <Form.Group controlId="formBasicStart">
-                            <Form.Label>Início</Form.Label>
-                            <Form.Control type="datetime-local" name="start" value={novoEvento.start} onChange={handleChange} />
-                        </Form.Group>
-                    
-                        <Form.Group controlId="formBasicEnd">
-                            <Form.Label>Término</Form.Label>
-                            <Form.Control type="datetime-local" name="end" value={novoEvento.end} onChange={handleChange} />
-                        </Form.Group>
-                    
+                <Form.Group controlId='formBasicTitle'>
+                    <Form.Label>Nome do Paciente</Form.Label>
+                    <Form.Control type="text" placeholder="Digite o nome do Paciente" name="nomePaciente" value={novoEvento.nomePaciente} onChange={handleChange} />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicStart">
+                    <Form.Label>Início</Form.Label>
+                    <Form.Control type="datetime-local" name="start" value={novoEvento.start} onChange={handleChange} />
+                </Form.Group>
+
+                <Form.Group controlId="formBasicEnd">
+                    <Form.Label>Término</Form.Label>
+                    <Form.Control type="datetime-local" name="end" value={novoEvento.end} onChange={handleChange} />
+                </Form.Group>
+
                 <Collapse in={expanded}>
                     <div>
                         <div>
@@ -100,7 +106,7 @@ function Adicionar({ onAdicionar }) {
                         </Row>
                     </div>
                 </Collapse>
-                
+
                 <button
                     type="button"
                     className="adicionar-evento-plus"

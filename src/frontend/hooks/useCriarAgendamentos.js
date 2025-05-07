@@ -1,7 +1,7 @@
 import BASE_URL from './configRota';
 
 export default function useAdicionarAgendamento() {
-    const adicionarAgendamento = async (userID, titulo, dataInicio, dataFim, desc, color = "#3174ad", tipo) => {
+    const adicionarAgendamento = async (userID, titulo, dataInicio, dataFim, desc, color = "#3174ad", tipo, nomePaciente) => {
 
         try {
             const response = await fetch(`${BASE_URL}/criarAgendamentos`, {
@@ -16,7 +16,8 @@ export default function useAdicionarAgendamento() {
                     dataFim,
                     desc,
                     color,
-                    tipo
+                    tipo,
+                    nomePaciente
                 }),
             });
 
