@@ -3,9 +3,10 @@ import "../../pages/PaginaPacientesDetalhes/PaginaPacientesDetalhes.css";
 import useDocumentTitle from "../../components/useDocumentTitle";
 import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js";
 import ChecklistPagamentos from "../../components/ChecklistPagamentos/ChecklistPagamentos.js";
-import Menu from "../../components/Menu/Menu.js";
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import { PiNotePencilBold } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
+import { FaWhatsapp } from "react-icons/fa";
 import usePacienteDetalhes from "../../hooks/pacientes/usePacienteDetalhes.js";
 import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
@@ -69,309 +70,319 @@ function PaginaPacientesDetalhes() {
     console.log(novoPaciente)
     return (
         <div className="container-pacientes-detalhes">
-            <CabecalhoUsuarioLogado />
+            <div className='navbar'>
+                <MenuPrincipal />
+            </div>
+
             <div className="container-conteudo-pacientes-detalhes">
-                <div className="navbar">
-                    <Menu />
+                <div className='pagina-paciente-detalhes-cabecalho'>
+                    <CabecalhoUsuarioLogado />
                 </div>
-                <div className="container-conteudo-cards-pacientes-detalhes">
-                    <div className="cards-paciente-pagamentos">
-                        <div className="card-paciente">
-                            <div className="card-paciente__cabecalho">
-                                {!mostrarFormulario && (
-                                    <p className="nome-paciente">
-                                        {paciente ? paciente.nome : "Carregando..."}
-                                    </p>
-                                )}
-                                <div>
-                                    <div className="acao-paciente">
-                                        {mostrarFormulario ? (
+
+                <div className="cards-paciente-pagamentos">
+                    <div className="card-paciente">
+                        <div className="card-paciente__cabecalho">
+                            {!mostrarFormulario && (
+                                <p className="nome-paciente">
+                                    {paciente ? paciente.nome : "Carregando..."}
+                                </p>
+                            )}
+                            <div>
+                                <div className="acao-paciente">
+                                    {mostrarFormulario ? (
+                                        <div className="cabecalho-modal-edicao">
+                                            <h3 className="titulo-editar">Editar Paciente</h3>
                                             <button
                                                 className="btn-excluir-paciente"
                                                 onClick={() => setPopupExcluir(true)}
                                             >
-                                                <FaRegTrashCan className="icon-exclusao" />
+                                                <FaRegTrashCan className="icon-exclusao" title="Excluir o registro desse paciente"/>
                                             </button>
-                                        ) : (
-                                            <button className="btn-editar-paciente" onClick={() => { setMostrarFormulario(true); editarPaciente(paciente._id); }}>
-                                                <PiNotePencilBold className="icon-edicao" />
-                                            </button>
-                                        )}
-                                    </div>
-
-                                    {mostrarFormulario && (
-                                        <div className="modal-formulario-pacientes">
-                                            <h3 className="titulo-editar"> Editar Paciente</h3>
-                                            {erroCadastro && (
-                                                <p style={{ color: "red" }}>{erroCadastro}</p>
-                                            )}{" "}
-                                            {/* Mensagem de erro */}
-                                            <div className="form-group-pacientes">
-                                                <input
-                                                    type="text"
-                                                    placeholder="Nome"
-                                                    value={novoPaciente.nome}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            nome: e.target.value,
-                                                        })
-                                                    }
-                                                />
-
-                                                <input
-                                                    type="text"
-                                                    placeholder="profissao"
-                                                    value={novoPaciente.profissao}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            profissao: e.target.value,
-                                                        })
-                                                    }
-                                                />
-
-                                                <select
-                                                    value={novoPaciente.genero}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            genero: e.target.value,
-                                                        })
-                                                    }
-                                                >
-                                                    <option value="">Gênero</option>
-                                                    <option value="Feminino">Feminino</option>
-                                                    <option value="Masculino">Masculino</option>
-                                                    <option value="Outro">Outro</option>
-                                                </select>
-
-                                                <select
-                                                    value={novoPaciente.estadoCivil}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            estadoCivil: e.target.value,
-                                                        })
-                                                    }
-                                                >
-                                                    <option value="">Estado Civil</option>
-                                                    <option value="Solteiro(a)">Solteiro(a)</option>
-                                                    <option value="Casado(a)">Casado(a)</option>
-                                                    <option value="Divorciado(a)">Divorciado(a)</option>
-                                                    <option value="Viúvo(a)">Viúvo(a)</option>
-                                                </select>
-
-                                                <input
-                                                    type="tel"
-                                                    placeholder="Telefone"
-                                                    value={novoPaciente.telefone}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            telefone: e.target.value,
-                                                        })
-                                                    }
-                                                />
-
-                                                <input
-                                                    type="email"
-                                                    placeholder="E-mail"
-                                                    value={novoPaciente.email}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            email: e.target.value,
-                                                        })
-                                                    }
-                                                />
-
-                                                <select
-                                                    value={novoPaciente.preferenciaContato}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            preferenciaContato: e.target.value,
-                                                        })
-                                                    }
-                                                >
-                                                    <option value="">Preferência de Contato</option>
-                                                    <option value="Telefone">Telefone</option>
-                                                    <option value="E-mail">E-mail</option>
-                                                    <option value="WhatsApp">WhatsApp</option>
-                                                </select>
-
-                                                <input
-                                                    type="date"
-                                                    placeholder="Data de Nascimento"
-                                                    value={novoPaciente.dataNascimento}
-                                                    onChange={(e) =>
-                                                        setNovoPaciente({
-                                                            ...novoPaciente,
-                                                            dataNascimento: e.target.value,
-                                                        })
-                                                    }
-                                                />
-                                            </div>
-                                            <div className="form-row buttons">
-                                                <button
-                                                    onClick={() => {
-                                                        setMostrarFormulario(false);
-                                                        setErroCadastro("");
-                                                    }}
-                                                >
-                                                    Sair
-                                                </button>
-                                                <button className="btn salvar" onClick={() => {
-                                                    atualizarPaciente(setErroCadastro, novoPaciente, editandoIndex, resetarFormulario);
-                                                    setPopupAberto(true);
-                                                }}>
-                                                    Salvar alterações
-                                                </button>
-                                            </div>
                                         </div>
+                                    ) : (
+                                        <button 
+                                            className="btn-editar-paciente" 
+                                            onClick={() => { setMostrarFormulario(true); editarPaciente(paciente._id); }}>
+                                            <PiNotePencilBold className="icon-edicao" title="Editar o registro desse paciente"/>
+                                        </button>
                                     )}
                                 </div>
-                            </div>
 
-                            {popupAberto && (
-                                <div className="popup-overlay">
-                                    <div className="popup-box">
-                                        <h3>Informações de paciente salvas!</h3>
-                                        <p>Você alterou informações deste paciente com sucesso!</p>
-                                        <button
-                                            className="btn-popup"
-                                            onClick={() =>
-                                                (window.location.href = "/pacientes-detalhes")
-                                            }
-                                        >
-                                            Ok, entendi!
-                                        </button>
-                                    </div>
-                                </div>
-                            )}
+                                {mostrarFormulario && (
+                                    <div className="modal-formulario-pacientes">
+                                        {erroCadastro && (
+                                            <p style={{ color: "red" }}>{erroCadastro}</p>
+                                        )}{" "}
+                                        {/* Mensagem de erro */}
+                                        <div className="form-group-pacientes">
+                                            <input
+                                                type="text"
+                                                placeholder="Nome"
+                                                title="Nome completo do paciente"
+                                                value={novoPaciente.nome}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        nome: e.target.value,
+                                                    })
+                                                }
+                                            />
 
-                            {popupExcluir && (
-                                <div className="popup-overlay">
-                                    <div className="popup-box">
-                                        <h3>Deseja excluir este paciente?</h3>
-                                        <p>Você não poderá reverter esta ação.</p>
-                                        <div className="popup-buttons">
-                                            <button
-                                                className="btn-nao"
-                                                onClick={() => setPopupExcluir(false)}
+                                            <input
+                                                type="text"
+                                                placeholder="profissao"
+                                                title="Alterar profissão do paciente"
+                                                value={novoPaciente.profissao}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        profissao: e.target.value,
+                                                    })
+                                                }
+                                            />
+
+                                            <select
+                                                value={novoPaciente.genero}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        genero: e.target.value,
+                                                    })
+                                                }
                                             >
-                                                Não, cancelar
-                                            </button>
+                                                <option value="">Gênero</option>
+                                                <option value="Feminino">Feminino</option>
+                                                <option value="Masculino">Masculino</option>
+                                                <option value="Outro">Outro</option>
+                                            </select>
+
+                                            <select
+                                                value={novoPaciente.estadoCivil}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        estadoCivil: e.target.value,
+                                                    })
+                                                }
+                                            >
+                                                <option value="">Estado Civil</option>
+                                                <option value="Solteiro(a)">Solteiro(a)</option>
+                                                <option value="Casado(a)">Casado(a)</option>
+                                                <option value="Divorciado(a)">Divorciado(a)</option>
+                                                <option value="Viúvo(a)">Viúvo(a)</option>
+                                            </select>
+
+                                            <input
+                                                type="tel"
+                                                placeholder="Telefone"
+                                                title="Digite apenas números no formato: 551191234567"
+                                                value={novoPaciente.telefone}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        telefone: e.target.value,
+                                                    })
+                                                }
+                                            />
+
+                                            <input
+                                                type="email"
+                                                placeholder="E-mail"
+                                                title="Alterar email do paciente"
+                                                value={novoPaciente.email}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        email: e.target.value,
+                                                    })
+                                                }
+                                            />
+
+                                            <select
+                                                value={novoPaciente.preferenciaContato}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        preferenciaContato: e.target.value,
+                                                    })
+                                                }
+                                            >
+                                                <option value="">Preferência de Contato</option>
+                                                <option value="Telefone">Telefone</option>
+                                                <option value="E-mail">E-mail</option>
+                                                <option value="WhatsApp">WhatsApp</option>
+                                            </select>
+
+                                            <input
+                                                type="date"
+                                                placeholder="Data de Nascimento"
+                                                title="Alterar data de nascimento"
+                                                value={novoPaciente.dataNascimento}
+                                                onChange={(e) =>
+                                                    setNovoPaciente({
+                                                        ...novoPaciente,
+                                                        dataNascimento: e.target.value,
+                                                    })
+                                                }
+                                            />
+                                        </div>
+                                        <div className="form-row buttons">
                                             <button
-                                                className="btn-sim"
+                                                className="btn-editar-cancelar"
                                                 onClick={() => {
-                                                    excluirPaciente();
-                                                    setPopupExcluir(false);
-                                                    setPopupSucesso(true);
+                                                    setMostrarFormulario(false);
+                                                    setErroCadastro("");
                                                 }}
                                             >
-                                                Sim, excluir
+                                                Cancelar
+                                            </button>
+
+                                            <button className="btn salvar" onClick={() => {
+                                                atualizarPaciente(setErroCadastro, novoPaciente, editandoIndex, resetarFormulario);
+                                                setPopupAberto(true);
+                                            }}>
+                                                Salvar alterações
                                             </button>
                                         </div>
                                     </div>
-                                </div>
-                            )}
+                                )}
+                            </div>
+                        </div>
 
-                            {popupSucesso && (
-                                <div className="popup-overlay">
-                                    <div className="popup-box">
-                                        <h3>Dados excluídos com sucesso!</h3>
+                        {popupAberto && (
+                            <div className="popup-overlay">
+                                <div className="popup-box">
+                                    <h3>Informações de paciente salvas!</h3>
+                                    <p>Você alterou informações deste paciente com sucesso!</p>
+                                    <button
+                                        className="btn-popup"
+                                        onClick={() =>
+                                            (window.location.href = "/pacientes-detalhes")
+                                        }
+                                    >
+                                        Ok, entendi!
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+                        {popupExcluir && (
+                            <div className="popup-overlay">
+                                <div className="popup-box">
+                                    <h3>Deseja excluir este paciente?</h3>
+                                    <p>Você não poderá reverter esta ação.</p>
+                                    <div className="popup-buttons">
                                         <button
-                                            className="btn-popup"
-                                            onClick={() =>
-                                                (window.location.href = "/pacientes")
-                                            }
+                                            className="btn-nao"
+                                            onClick={() => setPopupExcluir(false)}
                                         >
-                                            Ok
+                                            Não, cancelar
+                                        </button>
+                                        <button
+                                            className="btn-sim"
+                                            onClick={() => {
+                                                excluirPaciente();
+                                                setPopupExcluir(false);
+                                                setPopupSucesso(true);
+                                            }}
+                                        >
+                                            Sim, excluir
                                         </button>
                                     </div>
                                 </div>
-                            )}
-
-
-                            {!mostrarFormulario && (
-                                paciente ? (
-                                    <div className="card-paciente__infos">
-                                        <div>
-                                            <p className="paciente-atributo">
-                                                Idade: <span>{calcularIdade(paciente.dataNascimento)}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Gênero: <span>{paciente.genero}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Estado civil: <span>{paciente.estadoCivil}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Profissão: <span>{paciente.profissao}</span>
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p className="paciente-atributo">
-                                                Data de nascimento: <span>{paciente.dataNascimento}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Telefone: <span>{paciente.telefone}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Email: <span>{paciente.email}</span>
-                                            </p>
-                                            <p className="paciente-atributo">
-                                                Preferência de contato: <span>{paciente.preferenciaContato}</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                ) : (
-                                    <div className="card-paciente__infos">
-                                        <div>
-                                            <p className="paciente-atributo">
-                                                <span>carregando</span>
-                                            </p>
-                                        </div>
-                                    </div>
-                                )
-                            )}
-
-                            {!mostrarFormulario && (
-                                <div className="card-paciente__botoes">
-                                    <a className="btn-historico-saude" href="#">
-                                        <p>Histórico de saúde</p>
-                                    </a>
-                                    <a className="btn-plano-tratamento" href="#">
-                                        <p>Plano de tratamento</p>
-                                    </a>
-                                    <a
-                                        className="btn-plano-tratamento"
-                                        href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        <p>WhatsApp</p>
-                                    </a>
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="card-pagamentos">
-                            <h3>Pagamentos</h3>
-                            <div className="card-pagamentos-checklist">
-                                <ChecklistPagamentos className="checklist" />
                             </div>
+                        )}
+
+                        {popupSucesso && (
+                            <div className="popup-overlay">
+                                <div className="popup-box">
+                                    <h3>Dados excluídos com sucesso!</h3>
+                                    <button
+                                        className="btn-popup"
+                                        onClick={() =>
+                                            (window.location.href = "/pacientes")
+                                        }
+                                    >
+                                        Ok
+                                    </button>
+                                </div>
+                            </div>
+                        )}
+
+
+                        {!mostrarFormulario && (
+                            paciente ? (
+                                <div className="card-paciente__infos">
+                                    <div>
+                                        <p className="paciente-atributo">
+                                            Idade: <span>{calcularIdade(paciente.dataNascimento)} anos</span> 
+                                        </p>
+
+                                        <p className="paciente-atributo">
+                                            Estado civil: <span>{paciente.estadoCivil}</span>
+                                        </p>
+
+                                        <p className="paciente-atributo container-btn-direcionar-whatsapp">
+                                            Telefone: <span>{paciente.telefone}</span>
+                                                <a
+                                                    className="btn-direcionar-whatsapp"
+                                                    href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <FaWhatsapp className="icon-whatsapp-telefone" title="Ao clicar no ícone você será redirecionado(a) &#10;para a conversa de Whatsapp com esse paciente"/>
+                                                </a>
+                                        </p>
+
+                                        <p className="paciente-atributo">
+                                            Preferência de contato: <span>{paciente.preferenciaContato}</span>
+                                        </p>
+                                    </div>
+
+                                    <div>
+                                        <p className="paciente-atributo">
+                                            Gênero: <span>{paciente.genero}</span>
+                                        </p>
+
+                                        <p className="paciente-atributo">
+                                            Profissão: <span>{paciente.profissao}</span>
+                                        </p>
+                                        
+                                        <p className="paciente-atributo">
+                                            Email: <span>{paciente.email}</span>
+                                        </p>
+
+                                        <p className="paciente-atributo">
+                                            Data de nascimento: <span>{paciente.dataNascimento}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ) : (
+                                <div className="card-paciente__infos">
+                                    <div>
+                                        <p className="paciente-atributo">
+                                            <span>carregando</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            )
+                        )}
+                    </div>
+
+                    <div className="card-pagamentos">
+                        <h3>Pagamentos</h3>
+                        <div className="card-pagamentos-checklist">
+                            <ChecklistPagamentos className="checklist" />
                         </div>
                     </div>
-                    <div className="cards-anotacoes">
-                        <div className="container-anotacoes-salvas">
-                            <h1>Registros de sessões</h1>
-                        </div>
-                        <div className="container-nova-anotacao">
-                            <h3>Adicionar anotação</h3>
-                        </div>
+                </div>
+
+                <div className="cards-anotacoes">
+                    <div className="container-anotacoes-salvas">
+                        <h1>Registros de sessões</h1>
+                    </div>
+                    <div className="container-nova-anotacao">
+                        <h3>Adicionar anotação</h3>
                     </div>
                 </div>
             </div>
