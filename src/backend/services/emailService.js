@@ -34,7 +34,7 @@ async function sendRecoveryEmail(to, code) {
     });
 }
 
-async function sendAppointmentNotificationToUser(to, paciente, date, time) {
+async function sendAppointmentNotificationToUser(to, nomePaciente, dataTexto, horarioTexto, linkSessao) {
     await transporter.sendMail({
         from: "seren.atendimento@gmail.com",
         to,
@@ -44,13 +44,13 @@ async function sendAppointmentNotificationToUser(to, paciente, date, time) {
             <div style="text-align: center;">
             <img src="https://raw.githubusercontent.com/Debora-Carvalho/sistema-gerenciamento-psicologia/refs/heads/master/src/frontend/assets/images/image-btn-home-pacientes.png" alt="Logo Seren" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
-            h2 style="color: #4A90E2;">Novo Agendamento</h2>
+            <h2 style="color: #4A90E2;">Novo Agendamento</h2>
             <p>Olá!</p>
-            <p>Um novo agendamento foi realizado por <strong>${patientName}</strong>.</p>
-            <p><strong>Data:</strong>${date}<br />
-            <strong>Horário:${time} </strong></p>
+            <p>Um novo agendamento foi realizado por <strong>${nomePaciente}</strong>.</p>
+            <p><strong>Data:</strong>${dataTexto} <br />
+            <strong>Horário:</strong> ${horarioTexto}</p>
             <p>Link da sessão:</p>
-            <p><a href="${sessionLink}" target="_blank">${sessionLink}</a></p>
+            <p><a href="${linkSessao}" target="_blank">${linkSessao}</a></p>
             <br />
             <p style="color: #777;">Atenciosamente,<br>Equipe Seren</p>
         </div>
@@ -58,7 +58,7 @@ async function sendAppointmentNotificationToUser(to, paciente, date, time) {
     });
 }
 
-async function sendAppointmentConfirmationToPatient(to, patientName, date, time, sessionLink) {
+async function sendAppointmentConfirmationToPatient(to, nomePaciente, dataTexto, horarioTexto, linkSessao) {
     await transporter.sendMail({
         from: "seren.atendimento@gmail.com",
         to,
@@ -69,13 +69,13 @@ async function sendAppointmentConfirmationToPatient(to, patientName, date, time,
             <img src="https://raw.githubusercontent.com/Debora-Carvalho/sistema-gerenciamento-psicologia/refs/heads/master/src/frontend/assets/images/image-btn-home-pacientes.png" alt="Logo Seren" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #4A90E2;">Agendamento Confirmado</h2>
-            <p>Olá ${patientName},</p>
+            <p>Olá ${nomePaciente},</p>
             <p>Seu agendamento foi confirmado com sucesso na plataforma <strong>Seren</strong>.</p>
-            <p><strong>Data:</strong> ${date}<br />
-            <strong>Horário:</strong> ${time}</p>
+            <p><strong>Data:</strong> ${dataTexto}<br />
+            <strong>Horário:</strong> ${horarioTexto}</p>
             <p>Você pode acessar a sessão no horário marcado pelo link abaixo:</p>
             <p style="text-align: center; margin: 20px 0;">
-            <a href="${sessionLink}" style="background-color: #4A90E2; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">Entrar na Sessão</a>
+            <a href="${linkSessao}" style="background-color: #4A90E2; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px;">Entrar na Sessão</a>
             </p>
             <p>Se precisar reagendar ou cancelar, entre em contato com a profissional.</p>
             <br />
