@@ -43,7 +43,7 @@ module.exports = connectToDatabase;
 //   }
 // })
 
-// // função apenas para testar a conexão, caso necessário dê cd em src, depois em database e escreva node mongodb.js para ver o funcionamento! 
+// // função apenas para testar a conexão, caso necessário dê cd em src, depois em database e escreva node mongodb.js para ver o funcionamento!
 
 // async function run() {
 //   try {
