@@ -21,9 +21,9 @@ function PaginaPacientes() {
     const [mostrarPopup, setMostrarPopup] = useState(false);
     const [mensagemPopup, setMensagemPopup] = useState('');
     const [tipoPopup, setTipoPopup] = useState(''); // 'sucesso' ou 'erro'
-    const [confirmarExportacao, setConfirmarExportacao] = useState(false); 
-    const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false); 
-    const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null); 
+    const [confirmarExportacao, setConfirmarExportacao] = useState(false);
+    const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false);
+    const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null);
     const [filtro, setFiltro] = useState('');
     const [mostrarFormulario, setMostrarFormulario] = useState(false);
     const [novoPaciente, setNovoPaciente] = useState({
@@ -123,12 +123,12 @@ function PaginaPacientes() {
 
     const handleExcluirPaciente = (id) => {
         setPacienteIdParaExcluir(id);
-        setMostrarPopupExcluir(true); 
+        setMostrarPopupExcluir(true);
         setMenuAberto(null);
     };
 
     const confirmarExclusaoPaciente = async () => {
-        setMostrarPopupExcluir(false); 
+        setMostrarPopupExcluir(false);
         if (pacienteIdParaExcluir) {
             try {
                 await excluirPaciente(pacienteIdParaExcluir, setPacientes);
@@ -136,14 +136,14 @@ function PaginaPacientes() {
             } catch (error) {
                 mostrarNotificacao('Erro ao excluir paciente. Tente novamente.', 'erro');
             } finally {
-                setPacienteIdParaExcluir(null); 
+                setPacienteIdParaExcluir(null);
             }
         }
     };
 
     const cancelarExclusaoPaciente = () => {
-        setMostrarPopupExcluir(false); 
-        setPacienteIdParaExcluir(null); 
+        setMostrarPopupExcluir(false);
+        setPacienteIdParaExcluir(null);
     };
 
     const handleExportarPdfClick = () => {
@@ -151,7 +151,7 @@ function PaginaPacientes() {
     };
 
     const confirmarDownloadPdf = async () => {
-        setConfirmarExportacao(false); 
+        setConfirmarExportacao(false);
         try {
             await exportarPDF(pacientes, colunasVisiveis);
             mostrarNotificacao('PDF exportado com sucesso!', 'sucesso');
@@ -161,16 +161,16 @@ function PaginaPacientes() {
     };
 
     const cancelarDownloadPdf = () => {
-        setConfirmarExportacao(false); 
+        setConfirmarExportacao(false);
     };
 
     const formatarTelefone = (telefone) => {
         const cleaned = ('' + telefone).replace(/\D/g, '');
         const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
         if (match) {
-            return `${match[1]}${match[2]}${match[3]}`; 
+            return `${match[1]}${match[2]}${match[3]}`;
         }
-        return cleaned; 
+        return cleaned;
     };
 
     const formatarTelefoneParaDisplay = (telefone) => {
@@ -375,7 +375,10 @@ function PaginaPacientes() {
             </div>
             {mostrarFormulario && (
                 <div className="modal-formulario">
-                    <h3>{modoEdicao ? 'Editar paciente' : 'Adicionar novo paciente'}</h3>
+                    <h3 style={{ color: modoEdicao ? 'inherit' : '#004080' }}>
+                        {modoEdicao ? 'Editar paciente' : 'Adicionar novo paciente'}
+                    </h3>
+
                     {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
 
                     <div className="form-row">

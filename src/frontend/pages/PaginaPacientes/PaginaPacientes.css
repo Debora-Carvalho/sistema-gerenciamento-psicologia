@@ -548,3 +548,13 @@
   margin-top: 5px;
   display: block;
 }
+.h3{
+  color: #004080;
+}
+.p{
+  color:red;
+}
+
+.erro-cadastro{
+  color: red;
+}
