@@ -1,7 +1,7 @@
 @import "../../styles/variaveis.css";
 
 .pagina-inicial-cabecalho-responsivo {
-    display: none;
+  display: none;
 }
 
 .pagina-container {
@@ -566,19 +566,19 @@
 }
 
 /* Estilos para dispositivos móveis
-  --------------------------------------------------------------------------
+  --------------------------------------------------------------------------
 */
 @media (max-width: 767px) {
-    .pagina-container .navbar {
-        display: none;
-    }
-    
-    .pagina-inicial-cabecalho-responsivo {
-        display: flex;
-        flex-direction: column;
-    }
+  .pagina-container .navbar {
+    display: none;
+  }
 
-    body {
+  .pagina-inicial-cabecalho-responsivo {
+    display: flex;
+    flex-direction: column;
+  }
+
+  body {
     font-size: 12px;
     line-height: 1.4;
   }
@@ -586,8 +586,6 @@
   .pagina-container {
     padding: 10px;
   }
-
-  
 
   .conteudo-principal {
     margin-left: 0;
@@ -646,21 +644,32 @@
   }
 
   .botoes-desktop {
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
+    justify-content: flex-end;
   }
 
   .botoes-desktop button {
-    font-size: 12px;
-    padding: 10px 15px;
+    font-size: 10px;
+    padding: 8px 12px;
     border-radius: 10px;
     gap: 5px;
+    min-width: 40px; /* Defina uma largura mínima */
+    height: 40px; /* Defina uma altura mínima */
+    display: flex; /* Garante que o conteúdo (ícone) esteja centralizado */
+    align-items: center;
+    justify-content: center;
   }
 
   .btn-pdf {
-    font-size: 5px;
-    padding: 6px 11px;
+    font-size: 10px;
+    padding: 8px 12px;
     border-radius: 10px;
+    min-width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .lista-pacientes {
@@ -674,7 +683,7 @@
 
   .lista-pacientes .tabela-pacientes th,
   .lista-pacientes .tabela-pacientes td {
-    padding: 12px 8px; 
+    padding: 12px 8px;
   }
 
   .modal-formulario {
@@ -708,7 +717,8 @@
   }
 
   .form-row.buttons {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: center;
     gap: 10px;
     margin-top: 10px;
   }
@@ -717,6 +727,11 @@
     font-size: 12px;
     padding: 10px 15px;
     border-radius: 20px;
+    width: 48%;
+  }
+
+  .form-row.buttons button:first-child {
+    margin-right: 4px;
   }
 
   .modal-confirmacao {
@@ -735,25 +750,39 @@
 
   /* Ajuste específico para o menu popup em mobile e desktop */
   .menu-popup {
-    font-size: 0.8em; 
-    min-width: 100px; 
+    font-size: 0.8em;
+    min-width: 100px;
   }
 
   .menu-popup button {
-    padding: 1px 4px;      
-    font-size: 9px;        
-    min-width: auto;       
-    width: 50PX;           
-    white-space: nowrap;   
+    padding: 1px 4px;
+    font-size: 9px;
+    min-width: auto;
+    width: 50PX;
+    white-space: nowrap;
   }
-  
 }
+
 @media (max-width: 768px) {
   .lista-pacientes .tabela-pacientes {
-    font-size: 12px; /* fonte menor ainda para mobile */
+    font-size: 11px;
   }
 }
+
 .lista-pacientes .tabela-pacientes td {
   font-size: 10px;
 }
 
+@media (max-width: 767px) {
+  .tabela-pacientes tbody tr:last-child,
+  .tabela-pacientes tbody tr:nth-last-child(2) {
+    height: 20px;
+    border-color: white;
+  }
+}
+
+@media (min-width: 768px) {
+  .tabela-pacientes tbody td {
+    font-size: 15px !important;
+  }
+}
