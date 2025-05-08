@@ -107,14 +107,14 @@ function PaginaPacientesDetalhes() {
                                                 className="btn-excluir-paciente"
                                                 onClick={() => setPopupExcluir(true)}
                                             >
-                                                <FaRegTrashCan className="icon-exclusao" title="Excluir o registro desse paciente"/>
+                                                <FaRegTrashCan className="icon-exclusao" title="Excluir o registro desse paciente" />
                                             </button>
                                         </div>
                                     ) : (
-                                        <button 
-                                            className="btn-editar-paciente" 
+                                        <button
+                                            className="btn-editar-paciente"
                                             onClick={() => { setMostrarFormulario(true); editarPaciente(paciente._id); }}>
-                                            <PiNotePencilBold className="icon-edicao" title="Editar o registro desse paciente"/>
+                                            <PiNotePencilBold className="icon-edicao" title="Editar o registro desse paciente" />
                                         </button>
                                     )}
                                 </div>
@@ -334,7 +334,7 @@ function PaginaPacientesDetalhes() {
                                 <div className="card-paciente__infos">
                                     <div>
                                         <p className="paciente-atributo">
-                                            Idade: <span>{calcularIdade(paciente.dataNascimento)} anos</span> 
+                                            Idade: <span>{calcularIdade(paciente.dataNascimento)} anos</span>
                                         </p>
 
                                         <p className="paciente-atributo">
@@ -342,21 +342,23 @@ function PaginaPacientesDetalhes() {
                                         </p>
 
                                         <p className="paciente-atributo container-btn-direcionar-whatsapp">
-                                            Telefone: 
-                                                <span>
-                                                    {paciente.telefone.replace(
+                                            Telefone:
+                                            <span>
+                                                {typeof paciente.telefone === 'string'
+                                                    ? paciente.telefone.replace(
                                                         /^(\+?55)?(\d{2})(\d{5})(\d{4})$/,
                                                         '+55 ($2) $3-$4'
-                                                    )}
-                                                </span>
-                                                <a
-                                                    className="btn-direcionar-whatsapp"
-                                                    href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    <FaWhatsapp className="icon-whatsapp-telefone" title="Ao clicar no ícone você será redirecionado(a) &#10;para a conversa de Whatsapp com esse paciente"/>
-                                                </a>
+                                                    )
+                                                    : 'Telefone não disponível'}
+                                            </span>
+                                            <a
+                                                className="btn-direcionar-whatsapp"
+                                                href={`https://wa.me/${paciente?.telefone}`}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                            >
+                                                <FaWhatsapp className="icon-whatsapp-telefone" title="Ao clicar no ícone você será redirecionado(a) &#10;para a conversa de Whatsapp com esse paciente" />
+                                            </a>
                                         </p>
 
                                         <p className="paciente-atributo">
@@ -378,13 +380,13 @@ function PaginaPacientesDetalhes() {
                                         </p>
 
                                         <p className="paciente-atributo">
-                                            Data de nascimento: 
-                                                <span>
-                                                    {new Date(paciente.dataNascimento)
+                                            Data de nascimento:
+                                            <span>
+                                                {new Date(paciente.dataNascimento)
                                                     .toLocaleDateString('pt-BR', {
-                                                    timeZone: 'UTC',
+                                                        timeZone: 'UTC',
                                                     })}
-                                                </span>
+                                            </span>
                                         </p>
                                     </div>
                                 </div>
