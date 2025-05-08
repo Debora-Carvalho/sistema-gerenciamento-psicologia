@@ -12,6 +12,17 @@ import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 
+function formatarTelefone(valor) {
+    if (!valor) return '';
+
+    const numeros = valor.replace(/\D/g, '');
+
+    if (numeros.length <= 2) return `+${numeros}`;
+    if (numeros.length <= 4) return `+${numeros.slice(0, 2)} (${numeros.slice(2)}`;
+    if (numeros.length <= 9) return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4)}`;
+    return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4, 9)}-${numeros.slice(9, 13)}`;
+}
+
 function PaginaPacientesDetalhes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
     console.log("pacienteID do localStorage:", localStorage.getItem("pacienteID"));
@@ -175,15 +186,23 @@ function PaginaPacientesDetalhes() {
                                             <input
                                                 type="tel"
                                                 placeholder="Telefone"
-                                                title="Digite apenas números no formato: 551191234567"
-                                                value={novoPaciente.telefone}
-                                                onChange={(e) =>
-                                                    setNovoPaciente({
-                                                        ...novoPaciente,
-                                                        telefone: e.target.value,
-                                                    })
-                                                }
+                                                title="Digite apenas números com o DDD, no formato: 5511987654321"
+                                                value={formatarTelefone(novoPaciente.telefone)}
+                                                onChange={(e) => {
+                                                    const validarNumTelefone = e.target.value.replace(/\D/g, '');
+                                                    if (validarNumTelefone.length <= 13) {
+                                                        setNovoPaciente({
+                                                            ...novoPaciente,
+                                                            telefone: validarNumTelefone
+                                                        });
+                                                    }
+                                                }}
                                             />
+                                            {novoPaciente.telefone.length > 0 && novoPaciente.telefone.length !== 13 && (
+                                                <span style={{ color: 'red', fontSize: '0.8rem' }}>
+                                                    O telefone deve conter exatamente 13 números, no formato: 5511987654321.
+                                                </span>
+                                            )}
 
                                             <input
                                                 type="email"
@@ -323,7 +342,13 @@ function PaginaPacientesDetalhes() {
                                         </p>
 
                                         <p className="paciente-atributo container-btn-direcionar-whatsapp">
-                                            Telefone: <span>{paciente.telefone}</span>
+                                            Telefone: 
+                                                <span>
+                                                    {paciente.telefone.replace(
+                                                        /^(\+?55)?(\d{2})(\d{5})(\d{4})$/,
+                                                        '+55 ($2) $3-$4'
+                                                    )}
+                                                </span>
                                                 <a
                                                     className="btn-direcionar-whatsapp"
                                                     href={`https://api.whatsapp.com/send?phone=${paciente?.telefone}`}
@@ -347,13 +372,19 @@ function PaginaPacientesDetalhes() {
                                         <p className="paciente-atributo">
                                             Profissão: <span>{paciente.profissao}</span>
                                         </p>
-                                        
+
                                         <p className="paciente-atributo">
                                             Email: <span>{paciente.email}</span>
                                         </p>
 
                                         <p className="paciente-atributo">
-                                            Data de nascimento: <span>{paciente.dataNascimento}</span>
+                                            Data de nascimento: 
+                                                <span>
+                                                    {new Date(paciente.dataNascimento)
+                                                    .toLocaleDateString('pt-BR', {
+                                                    timeZone: 'UTC',
+                                                    })}
+                                                </span>
                                         </p>
                                     </div>
                                 </div>
