@@ -186,7 +186,7 @@
   border-collapse: collapse;
   overflow: hidden;
   font-family: var(--font-family-principal);
-  font-size: 20px;
+  font-size: 18px;
   min-width: 600px;
 }
 
@@ -205,7 +205,7 @@
 
 .lista-pacientes .tabela-pacientes td {
   border-top: 1px solid #a19f9f;
-  font-size: 18px;
+  font-size: 15px;
 }
 
 .acoes-td {
@@ -541,64 +541,206 @@
   background-color: #4caf50;
 }
 
-/* Estilo para mensagens de erro de validação */
+/* Estilo para mensagens de erro de validação caramba é vermelho */
 .form-group .erro-mensagem {
   color: red;
   font-size: 0.8em;
   margin-top: 5px;
   display: block;
 }
-.h3{
+
+.h3 {
   color: #004080;
 }
-.p{
-  color:red;
-}
 
-.erro-cadastro{
+.p {
   color: red;
 }
-/* Estilos personalizados para dispositivos móveis */
+
+.erro-cadastro {
+  color: red;
+}
+
+/* Estilos para dispositivos móveis
+  --------------------------------------------------------------------------
+*/
 @media (max-width: 767px) {
-  .titulo-pacientes {
-    font-size: 20px;
-    text-align: center;
+  body {
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .pagina-container {
+    padding: 10px;
+  }
+
+  
+
+  .conteudo-principal {
+    margin-left: 0;
+    padding: 20px;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .container-pesquisa {
+    width: 100%;
   }
 
   .campo-pesquisa {
-    width: 100%;
+    font-size: 12px;
+    padding: 8px 10px 8px 30px;
+  }
+
+  .icone-lupa {
     font-size: 14px;
-    padding: 10px;
+    left: 10px;
+  }
+
+  .texto-pesquisa {
+    font-size: 12px;
+    left: 30px;
+  }
+
+  .usuario-info {
+    gap: 8px;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+  }
+
+  .info-texto {
+    font-size: 12px;
+  }
+
+  .titulo-acoes-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+    margin-bottom: 6px;
+  }
+
+  .titulo-pacientes {
+    font-size: 20px;
+    margin-bottom: 10px;
   }
 
   .botoes-desktop {
     flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
+    gap: 10px;
   }
 
-  .tabela-pacientes {
-    font-size: 14px;
-    overflow-x: auto;
+  .botoes-desktop button {
+    font-size: 12px;
+    padding: 10px 15px;
+    border-radius: 10px;
+    gap: 5px;
+  }
+
+  .btn-pdf {
+    font-size: 5px;
+    padding: 6px 11px;
+    border-radius: 10px;
+  }
+
+  .lista-pacientes {
+    margin-top: 10px;
+  }
+
+  .lista-pacientes .tabela-pacientes {
+    font-size: 10px;
+    min-width: auto;
+  }
+
+  .lista-pacientes .tabela-pacientes th,
+  .lista-pacientes .tabela-pacientes td {
+    padding: 12px 8px; 
+  }
+
+  .modal-formulario {
+    padding: 10px;
+  }
+
+  .modal-formulario h3 {
+    font-size: 15px;
+    margin-bottom: 10px;
   }
 
   .form-row {
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
 
   .form-group {
     width: 100%;
   }
 
-  .modal-formulario > div,
-  .modal-confirmacao > div {
-    width: 90%;
-    padding: 16px;
+  .form-group label {
+    font-size: 0.8em;
+    margin-bottom: 5px;
   }
 
-  .botoes-confirmacao {
+  .form-group input,
+  .form-group select {
+    font-size: 0.8em;
+    padding: 10px;
+    border-radius: 6px;
+  }
+
+  .form-row.buttons {
     flex-direction: column;
     gap: 10px;
+    margin-top: 10px;
+  }
+
+  .form-row.buttons button {
+    font-size: 12px;
+    padding: 10px 15px;
+    border-radius: 20px;
+  }
+
+  .modal-confirmacao {
+    padding: 10px;
+  }
+
+  .modal-confirmacao p {
+    font-size: 1em;
+    margin-bottom: 15px;
+  }
+
+  .botoes-confirmacao button {
+    font-size: 0.9em;
+    padding: 8px 15px;
+  }
+
+  /* Ajuste específico para o menu popup em mobile e desktop */
+  .menu-popup {
+    font-size: 0.8em; 
+    min-width: 100px; 
+  }
+
+  .menu-popup button {
+    padding: 1px 4px;      
+    font-size: 9px;        
+    min-width: auto;       
+    width: 50PX;           
+    white-space: nowrap;   
+  }
+  
+}
+@media (max-width: 768px) {
+  .lista-pacientes .tabela-pacientes {
+    font-size: 12px; /* fonte menor ainda para mobile */
   }
 }
+.lista-pacientes .tabela-pacientes td {
+  font-size: 10px;
+}
+
