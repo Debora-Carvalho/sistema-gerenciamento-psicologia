@@ -48,7 +48,7 @@ const EventModal = ({evento, onClose, onDelete, onUpdate}) =>{
     const handleDelete = () =>{
         deleteAgendamento(evento.id, onDelete);
     }
-    const handleUpdate = () => {
+    const handleUpdate = async () => {
         const eventData = {
             titulo: editedEvent.title,
             dataInicio: editedEvent.start.toISOString(), 
@@ -57,11 +57,18 @@ const EventModal = ({evento, onClose, onDelete, onUpdate}) =>{
             color: editedEvent.color,
             tipo: editedEvent.tipo
         };
-        alterarAgendamento(editedEvent.id, eventData, () => {
-            onUpdate(eventData); 
-            onClose();        
+    
+        await new Promise((resolve) => {
+            alterarAgendamento(editedEvent.id, eventData, () => {
+                onUpdate({ ...editedEvent, ...eventData });
+                onClose();
+                resolve(); 
+            });
         });
+    
+        window.location.reload(); 
     };
+    
     
     const adjustDate = (date) =>{
         const adjustedDate = new Date(date);

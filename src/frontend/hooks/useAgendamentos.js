@@ -1,7 +1,8 @@
+import { useCallback } from "react";
 import BASE_URL from './configRota';
 
 export default function useAgendamentos() {
-    const buscarAgendamentos = async (userID) => {
+    const buscarAgendamentos = useCallback(async (userID) => {
         try {
             const response = await fetch(`${BASE_URL}/buscarAgendamentos`, {
                 method: "POST",
@@ -34,7 +35,7 @@ export default function useAgendamentos() {
                 error: "Erro na comunicação com o servidor.",
             };
         }
-    };
+    }, []);
 
     return { buscarAgendamentos };
 }
