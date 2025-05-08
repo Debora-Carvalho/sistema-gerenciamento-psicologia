@@ -15,13 +15,14 @@ import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 function formatarTelefone(valor) {
     if (!valor) return '';
 
-    const numeros = valor.replace(/\D/g, '');
+    const numeros = String(valor).replace(/\D/g, '');
 
     if (numeros.length <= 2) return `+${numeros}`;
     if (numeros.length <= 4) return `+${numeros.slice(0, 2)} (${numeros.slice(2)}`;
     if (numeros.length <= 9) return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4)}`;
     return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4, 9)}-${numeros.slice(9, 13)}`;
 }
+
 
 function PaginaPacientesDetalhes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
