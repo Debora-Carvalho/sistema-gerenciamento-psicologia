@@ -37,14 +37,12 @@ function Calendario() {
 
     useEffect(() => {
         const userID = localStorage.getItem("userID");
-
-        if (!userID) {
-            return;
-        }
-
+        
+        if (!userID) return;
+    
         buscarAgendamentos(userID).then(({ agendamentos }) => {
             if (!Array.isArray(agendamentos)) return;
-
+    
             const eventosFormatados = agendamentos.map((ag, idx) => ({
                 id: ag._id || idx,
                 title: ag.titulo,
@@ -54,14 +52,12 @@ function Calendario() {
                 color: ag.color || "#3174ad",
                 ...ag,
             }));
-
+    
             eventosRef.current = eventosFormatados;
             setEventos(eventosFormatados);
-            setEventosFiltrados((prev) =>
-                prev.length === 0 ? eventosFormatados : prev
-            );
+            setEventosFiltrados(eventosFormatados);
         });
-    }, [buscarAgendamentos]);
+    }, []);
 
     const eventStyle = (event) => ({
         style: {
