@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaUser, FaLock } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
@@ -27,6 +27,14 @@ function LoginCadastro() {
   const { realizarLogin } = useLogin();
 
   useDocumentTitle("Login e Cadastro | Seren");
+
+  useEffect(() => {
+    const emailSalvo = localStorage.getItem("emailSalvo");
+    if (emailSalvo) {
+      setEmail(emailSalvo);
+      setLembreDeMim(true);
+    }
+  }, []);
 
   const validarCadastro = () => {
     if (!username || !telephone || !email || !senha || !confirmaSenha) return "Preencha todos os campos.";
@@ -74,6 +82,12 @@ function LoginCadastro() {
       setMensagemSucesso("");
 
       if (erro) return;
+
+      if (lembreDeMim) {
+        localStorage.setItem("emailSalvo", email);
+      } else {
+        localStorage.removeItem("emailSalvo");
+      }
 
       await realizarLogin(
         { email, senha, lembreDeMim },
@@ -134,11 +148,11 @@ function LoginCadastro() {
                     className={`conteudo-cadastro-formulario ${mensagemErroLogin ? "formulario-erro" : ""}`}>
                     <MdEmail />
                     <input
-                      type="email"
+                     type="email"
                       placeholder="E-mail"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                    />
+                     />
                   </div>
                   <div
                     className={`conteudo-cadastro-formulario ${mensagemErroLogin ? "formulario-erro" : ""}`}>

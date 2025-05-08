@@ -275,7 +275,7 @@
   
 
 /* RESPONSIVIDADE */
-/* Tablets e telas médias */
+
 @media (max-width: 768px) {
   .container-lc {
     flex-direction: column;

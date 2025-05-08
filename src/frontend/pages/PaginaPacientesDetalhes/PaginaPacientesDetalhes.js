@@ -82,14 +82,14 @@ function PaginaPacientesDetalhes() {
     console.log(novoPaciente)
     return (
         <div className="container-pacientes-detalhes">
-            <div className='navbar'>
+            {/* <div className='navbar'>
                 <MenuPrincipal />
-            </div>
+            </div> */}
 
             <div className="container-conteudo-pacientes-detalhes">
-                <div className='pagina-paciente-detalhes-cabecalho'>
+                {/* <div className='pagina-paciente-detalhes-cabecalho'>
                     <CabecalhoUsuarioLogado />
-                </div>
+                </div> */}
 
                 <div className="cards-paciente-pagamentos">
                     <div className="card-paciente">
@@ -403,12 +403,12 @@ function PaginaPacientesDetalhes() {
                         )}
                     </div>
 
-                    <div className="card-pagamentos">
+                    {/* <div className="card-pagamentos">
                         <h3>Pagamentos</h3>
                         <div className="card-pagamentos-checklist">
                             <ChecklistPagamentos className="checklist" />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className="cards-anotacoes">
