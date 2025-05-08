@@ -4,7 +4,7 @@ import BASE_URL from './configRota';
 export default function useRecuperarSenha() {
     const navigate = useNavigate();
 
-    const enviarCodigo = async (email, setMensagemErro, setDesabilitado) => {
+    const enviarCodigo = async (email, setMensagemErro, setDesabilitado, onSucesso) => {
         try {
             const resposta = await fetch(`${BASE_URL}/recuperarSenha`, {
                 method: 'POST',
@@ -20,10 +20,8 @@ export default function useRecuperarSenha() {
                 setMensagemErro(data.error || 'Erro ao enviar o e-mail. Tente novamente.');
                 return;
             }
-
             setMensagemErro('');
-            alert('Código de recuperação enviado para seu e-mail!');
-            navigate('/recuperar-senha/codigo', { state: { email } });
+            onSucesso?.(); // executa o pop-up de sucesso
 
         } catch (err) {
             console.error(err);

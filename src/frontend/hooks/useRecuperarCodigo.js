@@ -4,7 +4,7 @@ import BASE_URL from './configRota';
 export default function useRecuperarCodigo() {
     const navigate = useNavigate();
 
-    const verificarCodigo = async ({ email, codigo }, setMensagemErro) => {
+    const verificarCodigo = async ({ email, codigo }, setMensagemErro, onSucesso) => {
         try {
             const response = await fetch(`${BASE_URL}/recuperarCodigo`, {
                 method: 'POST',
@@ -17,8 +17,7 @@ export default function useRecuperarCodigo() {
             const data = await response.json();
 
             if (response.ok) {
-                alert("Código válido!");
-                navigate('/recuperar-senha/nova-senha', { state: { email } });
+                onSucesso?.(); // executa o pop-up de sucesso
             } else {
                 setMensagemErro(data.error || 'Erro desconhecido');
             }

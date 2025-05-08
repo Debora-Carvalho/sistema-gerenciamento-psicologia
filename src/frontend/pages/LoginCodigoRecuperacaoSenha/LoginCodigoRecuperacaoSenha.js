@@ -4,6 +4,7 @@ import imgHomemVerifiqueEmail from '../../assets/images/image-homem-verifiqueema
 import { useLocation, useNavigate } from 'react-router-dom';
 import useRecuperarCodigo from '../../hooks/useRecuperarCodigo';
 import useRecuperarSenha from '../../hooks/useRecuperarSenha';
+import PopupPadrao from '../../components/PopupPadrao/PopupPadrao.js';
 
 function LoginCodigoRecuperacaoSenha() {
     const [codigo, setCodigo] = useState('');
@@ -14,6 +15,8 @@ function LoginCodigoRecuperacaoSenha() {
     const [desabilitado, setDesabilitado] = useState(false);
     const codigoCorreto = '123456'; // valor para simulacao do código enviado por email
     const { verificarCodigo } = useRecuperarCodigo();
+    const [popupReenvioAberto, setPopupReenvioAberto] = useState(false);
+    const [popupCodigoValidoAberto, setPopupCodigoValidoAberto] = useState(false);
     const { enviarCodigo } = useRecuperarSenha();
     
  
@@ -33,8 +36,13 @@ function LoginCodigoRecuperacaoSenha() {
     
     const reenviarCodigo = async () => {
         setDesabilitado(true);
-        enviarCodigo(email, setMensagemErro, setDesabilitado);
-      };
+        enviarCodigo(
+            email,
+            setMensagemErro,
+            setDesabilitado,
+            () => setPopupReenvioAberto(true) // exibir o popup
+        );
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -43,7 +51,11 @@ function LoginCodigoRecuperacaoSenha() {
         
         if (!erro) {
             console.log('codigo válido, prosseguir com envio...');
-            verificarCodigo({ email, codigo }, setMensagemErro);
+            verificarCodigo(
+                { email, codigo },
+                setMensagemErro,
+                () => setPopupCodigoValidoAberto(true) // abrir o popup quando for sucesso
+            );
         }
     };
             
@@ -71,12 +83,12 @@ function LoginCodigoRecuperacaoSenha() {
                             {mensagemErro && (
                                 <p className='mensagem-erro'>{mensagemErro}</p>
                             )}
+
+                            <button id='btn-verificar-codigo' className='btn-verificar-codigo' type='submit'>
+                                Verificar
+                            </button>
                         </div>
                     </div>
-
-                    <button id='btn-verificar-codigo' className='btn-verificar-codigo' type='submit'>
-                        Verificar
-                    </button>
                 </form>
 
                 <p className='texto-explicativo'>
@@ -86,7 +98,26 @@ function LoginCodigoRecuperacaoSenha() {
                     </span>
                 </p>
             </div>
-            
+
+            <PopupPadrao
+                aberto={popupReenvioAberto}
+                titulo="Código Reenviado!"
+                mensagem="Um novo código foi enviado para seu e-mail, verifique a caixa de entrada."
+                textoBotao="Continuar"
+                onBotaoClick={() => setPopupReenvioAberto(false)}
+            />
+
+            <PopupPadrao
+                aberto={popupCodigoValidoAberto}
+                titulo="Código Verificado!"
+                mensagem="Vamos prosseguir para definir sua nova senha."
+                textoBotao="Continuar"
+                onBotaoClick={() => {
+                    setPopupCodigoValidoAberto(false);
+                    navigate('/recuperar-senha/nova-senha', { state: { email } });
+                }}
+            />
+
             <img
                 src={imgHomemVerifiqueEmail}
                 className='imagem-principal'
