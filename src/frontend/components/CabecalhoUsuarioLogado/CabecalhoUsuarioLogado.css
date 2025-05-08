@@ -1,29 +1,25 @@
 @import '../../styles/variaveis.css';
 
-.container-cabecalho {
-    display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
-    margin: 0;
-    padding: 0 40px;
-    height: 7.5vh;
+.container-cabecalho-usuario-logado {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    top: 0;
+    padding: 0;
+    width: 75vw;
+    height: 12.5vh;
     align-items: center;
+    justify-content: space-between;
     text-align: start;
 }
 
-.container-cabecalho p {
+.container-cabecalho-usuario-logado p {
     font-family: var(--font-family-principal);
     color: #000000;
     font-size: var(--font-size-paragrafo-desktop);
 }
 
-.container-logo  {
-    font-family: var(--font-family-logo);
-    color: var(--primary-color);
-    font-size: var(--font-size-logo-desktop);
-    font-weight: var(--font-weight-logo);
-}
-
-.container-barra-pesquisa {
+.container-barra-pesquisa-usuario-logado {
     display: flex;
     align-items: center;
     width: 100%;
@@ -34,13 +30,13 @@
     border: 1px solid transparent;
 }
   
-.container-barra-pesquisa .icon-lupa {
+.container-barra-pesquisa-usuario-logado .icon-lupa {
     font-size: 32px;
     color: #868383;
     margin-left: 10px;
 }
   
-.container-barra-pesquisa input {
+.container-barra-pesquisa-usuario-logado input {
     background: transparent;
     border: none;
     padding: 0px 100px 0 12px;

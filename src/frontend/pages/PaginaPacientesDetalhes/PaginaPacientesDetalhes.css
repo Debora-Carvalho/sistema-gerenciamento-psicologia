@@ -1,26 +1,25 @@
 @import '../../styles/variaveis.css';
 
 .container-pacientes-detalhes {
-    font-family: var(--font-family-principal);
     display: flex;
-    flex-direction: column;
-    max-width: 100vw;
-    max-height: 100vh;
+    flex-direction: row;
+    max-width: 100vw !important;
+    max-height: 100vh !important;
     width: 100%; 
-    height: 100%; 
+    height: 100%;  
+    top: 0;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 .container-conteudo-pacientes-detalhes {
     display: flex;
-    flex-direction: row;
-    padding: 40px;
-    gap: 40px;
-}
-
-.container-conteudo-cards-pacientes-detalhes {
-    width: calc(100vw - 221px);
+    flex-direction: column;
+    width: 80%;
+    justify-content: start;
+    padding: 30px 0;
+    gap: 10px;
 }
 
 .cards-paciente-pagamentos {
@@ -51,7 +50,8 @@
 }
 
 .card-paciente .nome-paciente {
-    font-size: 24px;
+    font-size: 32px;
+    font-weight: 600;
 }
 
 .card-paciente .card-paciente__cabecalho .icon-edicao {
@@ -59,9 +59,22 @@
     color: var(--primary-color);
 }
 
+.container-btn-direcionar-whatsapp {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-direcionar-whatsapp .icon-whatsapp-telefone {
+    font-size: 24px;
+    color: var(--primary-color);
+    cursor: pointer;
+}
+
 .card-paciente .card-paciente__cabecalho .icon-exclusao {
     font-size: 25px;
-    color: rgb(197, 39, 39);
+    color: rgb(243, 45, 45);
 }
 
 .card-paciente .btn-editar-paciente {
@@ -71,11 +84,9 @@
 }
 
 .card-paciente .btn-excluir-paciente{
-    border: none;
     background-color: transparent;
+    border: none;
     cursor: pointer;
-    left: 600px;
-    position: relative;
 }
 
 .card-paciente .card-paciente__infos {
@@ -84,7 +95,7 @@
     text-align: start;
 }
 
- .card-paciente__botoes {
+.card-paciente__botoes {
     display: grid;
     grid-template-columns: 1fr 1fr;
     text-align: start;
@@ -93,26 +104,12 @@
     justify-content: space-between;
 }
 
-.btn-historico-saude, .btn-plano-tratamento {
-    display: block;
-    align-items: center;
-    background-color: var(--primary-color);
-    color: var(--neutral-color-100);
-    font-family: var(--font-family-principal);
-    font-size: 16px;
-    font-weight: 500;
-    text-align: center;
-    text-decoration: none;
-    width: 216px;  
-    height: 45px;  
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    transition: 0.5s;
+.paciente-atributo {
+    font-weight: 600;
 }
 
-.btn-historico-saude:hover, .btn-plano-tratamento:hover {
-    background-color: var(--primary-color-btn-hover);    
+.paciente-atributo span {
+    font-weight: normal;
 }
 
 /* CARD : CHECK-LIST DE PAGAMENTOS*/
@@ -137,22 +134,22 @@
 
 /* CARD EDITAR INFORMAÇÕES */
 
-.modal-formulario-pacientes{
+.modal-formulario-pacientes {
     font-family: var(--font-family-principal);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .form-group-pacientes{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    gap: 20px;
+    gap: 10px;
     z-index: 20;
 }
 
-.form-group-pacientes input, .form-group-pacientes select{
+.form-group-pacientes input, .form-group-pacientes select {
     padding: 10px;
     border-radius: 8px;
     border: 1px solid #ccc;
@@ -164,8 +161,18 @@
     min-width: 200px; 
 }
 
-.titulo-editar{
-    text-align: center;
+.cabecalho-modal-edicao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    gap: 16px;
+}
+
+.titulo-editar {
+    font-size: 32px;
+    font-weight: 600;
+    margin: 0;
 }
 
 .popup-buttons{
@@ -189,12 +196,12 @@
 
 .popup-buttons .btn-sim{
     background-color: var(--primary-color);
-    color: white;
+    color: #fff;
+    transition: 0.5s;
 }
 
 .popup-buttons .btn-sim:hover{
-    background-color: rgb(111, 111, 255);
-    transition: 0.5s;
+    background-color: var(--primary-color-btn-hover);
 }
 
 .popup-buttons .btn-nao{
@@ -206,3 +213,164 @@
 .popup-buttons .btn-nao:hover{
     background-color: rgb(161, 161, 161);
 }
+
+.btn-editar-cancelar {
+    background-color: rgb(243, 45, 45) !important;
+    color: #fff;
+}
+
+.btn-editar-cancelar:hover {
+    background-color: rgb(128, 10, 10) !important;
+}
+
+/* RESPONSIVIDADE */
+
+@media screen and (max-width: 480px) {
+    .container-pacientes-detalhes {
+      flex-direction: column;
+      padding: 16px;
+    }
+  
+    .container-conteudo-pacientes-detalhes {
+      width: 100%;
+      align-items: center;
+      padding: 0;
+    }
+  
+    .card-paciente {
+      width: 100%;
+      padding: 20px;
+      text-align: center;
+    }
+  
+    .card-paciente .card-paciente__cabecalho {
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+  
+    .card-paciente .nome-paciente {
+      font-size: 18px;
+    }
+  
+    .card-paciente .icon-edicao {
+      font-size: 20px;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+  
+    .card-paciente .card-paciente__infos {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 1rem;
+    }
+  
+    .card-paciente__botoes {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+  
+    .card-paciente__botoes button {
+      width: 100%;
+    }
+  
+    .card-pagamentos {
+      width: 100%;
+      margin-top: 20px;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    .container-pacientes-detalhes {
+      flex-direction: column;
+      padding: 20px;
+    }
+  
+    .container-conteudo-pacientes-detalhes {
+      width: 100%;
+      padding: 0;
+      align-items: center;
+    }
+  
+    .card-paciente {
+      width: 100%;
+    }
+  
+    .card-paciente__botoes {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+  
+    .card-paciente__botoes button {
+      width: 45%;
+    }
+  
+    .card-pagamentos {
+      width: 100%;
+      margin-top: 20px;
+    }
+
+    .container-pacientes-detalhes .navbar {
+      display: none;
+  }
+
+
+  }
+   
+
+   /* @media screen and (min-width: 769px) and (max-width: 1024px) {
+    .container-pacientes-detalhes {
+      flex-direction: column;
+      padding: 30px;
+    }
+  
+    .container-conteudo-pacientes-detalhes {
+      width: 100%;
+    }
+  
+    .cards-paciente-pagamentos {
+      flex-direction: column;
+      align-items: center;
+      gap: 30px;
+    }
+  
+    .card-paciente,
+    .card-pagamentos {
+      width: 90%;
+    }
+  
+    .card-paciente__botoes {
+      justify-content: space-between;
+    }
+  } 
+  
+
+  @media screen and (min-width: 1025px) {
+    .container-pacientes-detalhes {
+      flex-direction: row;
+      padding: 30px;
+    }
+  
+    .container-conteudo-pacientes-detalhes {
+      width: 80%;
+      padding: 30px 0;
+    }
+  
+    .cards-paciente-pagamentos {
+      flex-direction: row;
+      gap: 40px;
+    }
+  
+    .card-paciente {
+      width: 60%;
+    }
+  
+    .card-pagamentos {
+      width: 30%;
+    }
+  } 
+    */
