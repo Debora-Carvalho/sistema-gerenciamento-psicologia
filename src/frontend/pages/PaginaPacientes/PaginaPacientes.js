@@ -453,7 +453,7 @@ function PaginaPacientes() {
                                 type="tel"
                                 id="telefone"
                                 name="telefone"
-                                placeholder="(XX) XXXXX-XXXX"
+                                placeholder="+XX (XX) XXXXX-XXXX"
                                 value={formatarTelefoneParaDisplay(novoPaciente.telefone)}
                                 onChange={handleInputChange}
                             />
@@ -505,8 +505,8 @@ function PaginaPacientes() {
                             onClick={async () => {
                                 let hasErrors = false;
                                 let errorMessage = '';
-
-                                if (!novoPaciente.nome.trim() || !novoPaciente.telefone.trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
+                                
+                                if (!novoPaciente.nome.trim() || !String(novoPaciente.telefone).trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
                                     hasErrors = true;
                                     errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
                                 } else if (!validarNomeProfissao(novoPaciente.nome)) {
