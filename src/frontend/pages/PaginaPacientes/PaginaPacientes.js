@@ -4,7 +4,6 @@ import './PaginaPacientes.css';
 import { FiFilter, FiSearch } from "react-icons/fi";
 import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
 import { AiOutlineUserAdd } from "react-icons/ai";
-import { HiMenu } from "react-icons/hi";
 import useUsuarios from '../../hooks/useUsuarios';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
 import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';

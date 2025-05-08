@@ -558,3 +558,47 @@
 .erro-cadastro{
   color: red;
 }
+/* Estilos personalizados para dispositivos móveis */
+@media (max-width: 767px) {
+  .titulo-pacientes {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .campo-pesquisa {
+    width: 100%;
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .botoes-desktop {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .tabela-pacientes {
+    font-size: 14px;
+    overflow-x: auto;
+  }
+
+  .form-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .form-group {
+    width: 100%;
+  }
+
+  .modal-formulario > div,
+  .modal-confirmacao > div {
+    width: 90%;
+    padding: 16px;
+  }
+
+  .botoes-confirmacao {
+    flex-direction: column;
+    gap: 10px;
+  }
+}
