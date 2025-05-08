@@ -11,6 +11,8 @@ import { excluirPaciente } from '../../hooks/pacientes/usePacienteExcluir';
 import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
+import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 
 function PaginaPacientes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
@@ -230,6 +232,9 @@ function PaginaPacientes() {
 
     return (
         <div className="pagina-container">
+            <div className='navbar'>
+                <MenuPrincipal />
+            </div>
             {mostrarPopup && (
                 <div className={`popup-notificacao ${tipoPopup}`}>
                     {mensagemPopup}
@@ -254,6 +259,10 @@ function PaginaPacientes() {
                 </div>
             )}
             <div className="conteudo-principal">
+                <div style={{ alignItems: 'center' }} className='pagina-inicial-cabecalho-responsivo'>
+                    <CabecalhoResponsivo />
+                </div>
+
                 <header className="top-bar">
                     <div className="container-pesquisa">
                         <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />

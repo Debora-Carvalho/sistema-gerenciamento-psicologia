@@ -1,5 +1,9 @@
 @import "../../styles/variaveis.css";
 
+.pagina-inicial-cabecalho-responsivo {
+    display: none;
+}
+
 .pagina-container {
   display: flex;
   flex-direction: row;
@@ -565,7 +569,16 @@
   --------------------------------------------------------------------------
 */
 @media (max-width: 767px) {
-  body {
+    .pagina-container .navbar {
+        display: none;
+    }
+    
+    .pagina-inicial-cabecalho-responsivo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    body {
     font-size: 12px;
     line-height: 1.4;
   }
