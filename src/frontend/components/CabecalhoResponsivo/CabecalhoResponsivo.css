@@ -1,0 +1,49 @@
+@import '../../styles/variaveis.css';
+
+.container-cabecalho-responsivo {
+    display: flex;
+    flex-direction: row;
+    width: 100vw !important;
+    max-height: 8vh !important;
+    height: 100%;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-bottom: 0.5rem;
+    top: 0;
+    padding: 2rem;
+}
+
+.container-cabecalho-responsivo p {
+    font-family: var(--font-family-principal);
+    color: #000000;
+    font-size: var(--font-size-paragrafo-desktop);
+}
+
+.container-cabecalho-responsivo-perfil {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+}
+
+.container-cabecalho-responsivo-perfil .cabecalho-responsivo-foto-perfil {
+    background-color: #868383;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-left: 30px;
+}
+
+.container-cabecalho-responsivo-perfil .cabecalho-responsivo-infos-usuario p {
+    font-family: var(--font-family-principal);
+    color: var(--neutral-color-900);
+    font-size: 14px;
+    line-height: 1.5px;
+    text-align: start;
+}
+
+.container-cabecalho-responsivo-perfil .cabecalho-responsivo-infos-usuario .cabecalho-responsivo-nome-usuario {
+    font-weight: bold;
+}

@@ -1,42 +1,41 @@
 @import '../../styles/variaveis.css';
 
-.container-cabecalho {
+.container-cabecalho-inicio {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0 40px;
-    width: 100vw;
-    height: 7.5vh;
+    margin-bottom: 5px;
+    top: 0;
+    padding: 0;
+    width: 80vw;
+    height: 12.5vh;
     align-items: center;
+    justify-content: space-between;
     text-align: start;
 }
 
-.container-cabecalho p {
+.container-cabecalho-inicio p {
     font-family: var(--font-family-principal);
     color: #000000;
     font-size: var(--font-size-paragrafo-desktop);
 }
 
-.container-logo  {
-    font-family: var(--font-family-logo);
-    color: var(--primary-color);
-    font-size: var(--font-size-logo-desktop);
-    font-weight: var(--font-weight-logo);
+.container-cumprimentos-inicio {
+    display: flex;
+    width: max-content;
 }
 
-.container-cumprimentos .texto-cumprimentos {
+.container-cumprimentos-inicio .texto-cumprimentos-inicio {
     font-size: 40px;
     font-weight: 200;
 }
 
-.container-agendamentos .texto-agendamentos {
+.container-agendamentos-inicio .texto-agendamentos-inicio {
     font-size: 25px;
     font-weight: 300;
     color: var(--primary-color);
     text-align: end;
 }
 
-.container-agendamentos .texto-agendamentos span {
+.container-agendamentos-inicio .texto-agendamentos-inicio span {
     font-weight: bold;
 }

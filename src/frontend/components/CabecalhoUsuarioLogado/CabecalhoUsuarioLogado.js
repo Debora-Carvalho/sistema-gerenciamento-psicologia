@@ -11,12 +11,8 @@ function CabecalhoUsuarioLogado() {
     }
 
     return (
-        <div className='container-cabecalho'>
-            <div className='container-logo'>
-                Seren
-            </div>
-
-            <div className="container-barra-pesquisa">
+        <div className='container-cabecalho-usuario-logado'>
+            <div className="container-barra-pesquisa-usuario-logado">
                 <RiSearchLine className="icon-lupa" alt="Ícone de lupa" />
                 <input
                     id="pesquisa-input"
