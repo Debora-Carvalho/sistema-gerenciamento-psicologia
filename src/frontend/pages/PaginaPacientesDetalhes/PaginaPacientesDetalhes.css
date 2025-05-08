@@ -314,10 +314,15 @@
       margin-top: 20px;
     }
 
+    .container-pacientes-detalhes .navbar {
+      display: none;
+  }
+
+
   }
    
 
-   @media screen and (min-width: 769px) and (max-width: 1024px) {
+   /* @media screen and (min-width: 769px) and (max-width: 1024px) {
     .container-pacientes-detalhes {
       flex-direction: column;
       padding: 30px;
@@ -368,4 +373,4 @@
       width: 30%;
     }
   } 
-   
+    */
