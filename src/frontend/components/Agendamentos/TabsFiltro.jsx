@@ -6,7 +6,7 @@ function TabsFiltro() {
     <div className="tabs-filtro">
       <button className="ativo">Hoje</button>
       <button>Próximos dias</button>
-      <button>Concluídos</button>
+      <button onClick={() => (window.location.href = "/agendamentos-concluidos")}>Concluídos</button>
       <button>Cancelados</button>
     </div>
   );
