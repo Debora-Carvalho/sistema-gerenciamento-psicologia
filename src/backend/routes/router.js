@@ -13,6 +13,7 @@ import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalend
 import Calendario from '../../frontend/components/Calendario/Calendario';
 import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx';
 import CriarAgendamentos  from '../../frontend/pages/CriarAgendamentos/CriarAgendamentos.js'
+import Editar  from '../../frontend/components/EditarAgendamentos/Editar.js'
 
 
 const AppRoutes = () => {
@@ -30,6 +31,7 @@ const AppRoutes = () => {
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/agendar" element={<CriarAgendamentos />} />
+                    <Route path="/editar" element={<Editar />} />
                     
                     
                     
