@@ -36,14 +36,43 @@ function LoginCadastro() {
     }
   }, []);
 
-  const validarCadastro = () => {
-    if (!username || !telephone || !email || !senha || !confirmaSenha) return "Preencha todos os campos.";
-    if (!/\S+@\S+\.\S+/.test(email)) return "E-mail inválido.";
-    if (!/^\(?\d{2}\)?\s?\d{4,5}-?\d{4}$/.test(telephone)) return "Número de celular inválido.";
-    if (senha !== confirmaSenha) return "Senhas não correspondem!";
-    if (/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/) return "A senha deve ter no mínimo 8 caracteres";
-    return "";
-  };
+const validarCadastro = () => {
+  if (!username || !telephone || !email || !senha || !confirmaSenha) {
+    return "Preencha todos os campos.";
+  }
+  
+  if (!/\S+@\S+\.\S+/.test(email)) {
+    return "E-mail inválido.";
+  }
+
+  const regexTelefone = /^\+55 \(\d{2}\) \d{5}-\d{4}$/;
+    if (!regexTelefone.test(telephone)) {
+      return "Telefone deve estar no formato correto.";
+    }
+
+  if (senha !== confirmaSenha) {
+    return "Senhas não correspondem!";
+  }
+ 
+  const regexSenha = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  if (!regexSenha.test(senha)) {
+    return "Senha deve ter 8 digítos, especial, maiúscula e número.";
+  }
+  return ""; 
+};
+
+  const formatarTelefone = (telefone) => {
+      const numeros = telefone.replace(/\D/g, '');
+
+      if (numeros.length <= 2) return `+${numeros}`;
+      if (numeros.length <= 4) return `+${numeros.slice(0, 2)} (${numeros.slice(2)}`;
+      if (numeros.length <= 9) return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4)}`;
+      if (numeros.length <= 13) return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4, 9)}-${numeros.slice(9)}`;
+
+      return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4, 9)}-${numeros.slice(9, 13)}`;
+    };
+
+    
 
   const validarLogin = () => {
     if (!email || !senha) {
@@ -65,7 +94,8 @@ function LoginCadastro() {
       setMensagemErroLogin("");
 
       if (!erro) {
-        const userData = { email, senha, username, telephone };
+        const telefoneLimpo = Number(telephone.replace(/\D/g, ''));
+        const userData = { email, senha, username, telephone: telefoneLimpo };
         realizarCadastro(userData, setMensagemErroCadastro);
         setUsername("");
         setTelephone("");
@@ -182,13 +212,13 @@ function LoginCadastro() {
                     <Link to="/recuperar-senha">Esqueceu sua senha?</Link>
                   </div>
                 </div>
-                <img className="img-login"
-                  src={imgMulherLogin}
-                  alt="Mulher com notebook"
-                />
               </motion.form>
             )}
           </AnimatePresence>
+            <img className="img-login"
+              src={imgMulherLogin}
+              alt="Mulher com notebook"
+            />
         </div>
       </div>
 
@@ -213,6 +243,10 @@ function LoginCadastro() {
         </div>
 
         <div className="second-column">
+            <img className="img-cadastro"
+              src={imgMulherCadastro}
+              alt="Mulher com notebook"
+            />
           <AnimatePresence mode="wait">
             {modoCadastro && (
               <motion.form
@@ -246,7 +280,7 @@ function LoginCadastro() {
                       type="tel"
                       placeholder="Celular"
                       value={telephone}
-                      onChange={(e) => setTelephone(e.target.value)}
+                      onChange={(e) => setTelephone(formatarTelefone(e.target.value))}
                     />
                   </div>
                   <div className={`conteudo-cadastro-formulario ${mensagemErroCadastro ? "formulario-erro" : ""}`}>
@@ -280,10 +314,6 @@ function LoginCadastro() {
                   <button className="btn-criar" type="submit">
                     Criar conta
                   </button>
-                  <img className="img-cadastro"
-                    src={imgMulherCadastro}
-                    alt="Mulher com notebook"
-                  />
                 </div>
               </motion.form>
             )}
