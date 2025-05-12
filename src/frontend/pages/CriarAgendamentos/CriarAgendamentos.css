@@ -48,6 +48,20 @@ h1 {
     border-radius: 10px;
     background-color: var(--neutral-color-100);
     font-size: 16px;
+    width: 100%; /* Garante que todos os campos ocupem toda a largura disponível */
+}
+
+.input-icon {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%; /* Garante que o container também ocupe 100% */
+}
+
+.input-icon svg {
+    color: var(--primary-color);
+    font-size: 18px;
 }
 
 .buttons {
