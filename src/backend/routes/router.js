@@ -12,6 +12,7 @@ import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhe
 import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
 import Calendario from '../../frontend/components/Calendario/Calendario';
 import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx';
+import CriarAgendamentos  from '../../frontend/pages/CriarAgendamentos/CriarAgendamentos.js'
 
 
 const AppRoutes = () => {
@@ -28,7 +29,9 @@ const AppRoutes = () => {
                     <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
-                    <Route path="/agendamentos" element={<Agendamento />} />
+                    <Route path="/agendar" element={<CriarAgendamentos />} />
+                    
+                    
                     
                 </Route>
             </Routes>
