@@ -23,6 +23,7 @@ function LoginCadastro() {
   const [mensagemErroLogin, setMensagemErroLogin] = useState("");
   const [mensagemErroCadastro, setMensagemErroCadastro] = useState("");
   const [mensagemSucesso, setMensagemSucesso] = useState("");
+  const [mensagemSucessoCadastro, setMensagemSucessoCadastro] = useState("");
   const { realizarCadastro } = useCadastro();
   const { realizarLogin } = useLogin();
 
@@ -92,11 +93,12 @@ const validarCadastro = () => {
       const erro = validarCadastro();
       setMensagemErroCadastro(erro);
       setMensagemErroLogin("");
+      setMensagemSucessoCadastro("");
 
       if (!erro) {
         const telefoneLimpo = Number(telephone.replace(/\D/g, ''));
         const userData = { email, senha, username, telephone: telefoneLimpo };
-        realizarCadastro(userData, setMensagemErroCadastro);
+        realizarCadastro(userData, setMensagemErroCadastro, setMensagemSucessoCadastro);
         setUsername("");
         setTelephone("");
         setEmail("");
@@ -260,6 +262,9 @@ const validarCadastro = () => {
               >
                 <div className="conteudo-cadastro">
                   <h1 className="titulo">Crie sua conta</h1>
+                  {mensagemSucessoCadastro && (
+                    <p className="mensagem-sucesso">{mensagemSucessoCadastro}</p>
+                  )}
                   {mensagemErroCadastro && (
                     <p className="mensagem-erro-login">
                       {mensagemErroCadastro}
