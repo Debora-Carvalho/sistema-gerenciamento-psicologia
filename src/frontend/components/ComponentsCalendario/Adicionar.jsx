@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Row, Col, Collapse } from 'react-bootstrap';
 
-import useCriarAgendamentos from "../../hooks/useCriarAgendamentos";
+import useCriarAgendamentos from "../../hooks/agendamentos/useCriarAgendamentos";
 
 function Adicionar({ onAdicionar }) {
   const [novoEvento, setNovoEvento] = useState({

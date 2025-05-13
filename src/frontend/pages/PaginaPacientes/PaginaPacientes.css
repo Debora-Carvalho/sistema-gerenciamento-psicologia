@@ -52,6 +52,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 30px;
+  gap: 5px;
 }
 
 .container-pesquisa {
@@ -749,11 +750,11 @@
   
 }
 @media (max-width: 768px) {
-  .lista-pacientes .tabela-pacientes {
-    font-size: 12px; /* fonte menor ainda para mobile */
+  .lista-pacientes .tabela-pacientes td {
+    font-size: 10px; /* fonte menor ainda para mobile */
   }
 }
-.lista-pacientes .tabela-pacientes td {
+/* .lista-pacientes .tabela-pacientes td {
   font-size: 10px;
-}
+} */
 

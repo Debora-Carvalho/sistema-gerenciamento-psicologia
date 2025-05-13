@@ -1,5 +1,5 @@
 import { useCallback } from "react";
-import BASE_URL from './configRota';
+import BASE_URL from '../configRota';
 
 export default function useAgendamentos() {
     const buscarAgendamentos = useCallback(async (userID) => {

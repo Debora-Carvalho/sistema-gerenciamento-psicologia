@@ -1,4 +1,4 @@
-import BASE_URL from './configRota';
+import BASE_URL from '../configRota';
 
 export default function useAdicionarAgendamento() {
   const adicionarAgendamento = async (userID, titulo, dataInicio, dataFim, desc, color = "#3174ad", tipo, nomePaciente, linkSessao) => {

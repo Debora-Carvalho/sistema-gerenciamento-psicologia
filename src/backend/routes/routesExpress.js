@@ -6,10 +6,10 @@ const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
 const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
 // const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
-const { buscarAgendamentosHandler } = require('../controllers/buscarAgendamentos');
-const { adicionarAgendamentoHandler } = require('../controllers/adicionarAgendamento');
-const { excluirAgendamentoHandler } = require('../controllers/excluirAgendamento');
-const { alterarAgendamentoHandler } = require('../controllers/alterarAgendamento');
+const { buscarAgendamentosHandler } = require('../controllers/crudAgendamento/buscarAgendamentos');
+const { adicionarAgendamentoHandler } = require('../controllers/crudAgendamento/adicionarAgendamento');
+const { excluirAgendamentoHandler } = require('../controllers/crudAgendamento/excluirAgendamento');
+const { alterarAgendamentoHandler } = require('../controllers/crudAgendamento/alterarAgendamento');
 
 // Exemplo de rotas Express:
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');

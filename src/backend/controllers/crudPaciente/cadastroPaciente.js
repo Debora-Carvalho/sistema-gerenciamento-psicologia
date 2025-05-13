@@ -18,8 +18,7 @@ async function cadastroPacienteHandler(req, res) {
         const pacienteExistente = await db.collection("Paciente").findOne({ email });
 
         if (pacienteExistente) {
-            res.writeHead(400);
-            return res.status(400).json({ error: "Paciente já possui conta!" });
+            return res.status(400).json({ success: false, error: "Paciente já possui conta!" });
         }
 
         const novoPaciente = {

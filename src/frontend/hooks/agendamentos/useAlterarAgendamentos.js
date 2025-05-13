@@ -1,4 +1,4 @@
-import BASE_URL from './configRota';
+import BASE_URL from '../configRota';
 
 export default function useAlterarAgendamento() {
     const alterarAgendamento = async (agendamentoId, novosDados, onUpdate) => {

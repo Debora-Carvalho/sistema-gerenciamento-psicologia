@@ -6,8 +6,8 @@ import {
   Collapse
 } from 'react-bootstrap';
 import './Components-Calendario-css.css';
-import useDeleteAgendamento from "../../hooks/useExcluirAgendamentos";
-import useAlterarAgendamento from "../../hooks/useAlterarAgendamentos";
+import useDeleteAgendamento from "../../hooks/agendamentos/useExcluirAgendamentos";
+import useAlterarAgendamento from "../../hooks/agendamentos/useAlterarAgendamentos";
 
 const EventModal = ({evento, onClose, onDelete, onUpdate}) =>{
     const [editedEvent, setEditedEvent] = useState({

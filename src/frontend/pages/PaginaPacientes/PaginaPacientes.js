@@ -13,7 +13,7 @@ import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
-import useAgendamentos from '../../hooks/useAgendamentos';
+import useAgendamentos from '../../hooks/agendamentos/useAgendamentos';
 
 function PaginaPacientes() {
   console.log("UserID do localStorage:", localStorage.getItem("userID"));
@@ -602,7 +602,7 @@ function PaginaPacientes() {
                       setErroCadastro("Paciente com esses dados já está registrado.");
                       return;
                     }
-                    await cadastrarPaciente(
+                    const resultado = await cadastrarPaciente(
                       pacienteParaSalvar,
                       pacientes,
                       editandoIndex,
@@ -610,7 +610,11 @@ function PaginaPacientes() {
                       resetarFormulario,
                       setErroCadastro
                     );
-                    mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                    if(resultado){
+                      mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                    } else {
+                      mostrarNotificacao('Erro no cadastro.', 'erro');
+                    }
 
                   } catch (error) {
                     mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');

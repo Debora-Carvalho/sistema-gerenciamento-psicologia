@@ -18,7 +18,7 @@ async function sendRecoveryEmail(to, code) {
             <div style="text-align: center;">
             <img src="https://raw.githubusercontent.com/Debora-Carvalho/sistema-gerenciamento-psicologia/refs/heads/master/src/frontend/assets/images/image-btn-home-pacientes.png" alt="Logo Seren" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
-            h2 style="color: #4A90E2;">Recuperação de Senha</h2>
+            <h2 style="color: #4A90E2;">Recuperação de Senha</h2>
             <p>Olá!</p>
             <p>Recebemos uma solicitação para redefinir sua senha na plataforma <strong>Seren</strong>.</p>
             <p>Use o código abaixo para prosseguir com a redefinição:</p>

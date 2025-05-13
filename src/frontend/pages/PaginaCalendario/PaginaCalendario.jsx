@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import moment from "moment";
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
-import useAlterarAgendamento from "../../hooks/useAlterarAgendamentos";
+import useAlterarAgendamento from "../../hooks/agendamentos/useAlterarAgendamentos";
 
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -21,7 +21,7 @@ import FiltroAtividades from '../../components/ComponentsCalendario/FiltroAtivid
 
 import CustomTollbar from '../../components/ComponentsCalendario/CustomTollbar';
 
-import useAgendamentos from "../../hooks/useAgendamentos";
+import useAgendamentos from "../../hooks/agendamentos/useAgendamentos";
 
 moment.locale('pt-br');
 const localizer = momentLocalizer(moment);
