@@ -56,7 +56,7 @@ h1 {
     display: flex;
     align-items: center;
     gap: 10px;
-    width: 100%; /* Garante que o container também ocupe 100% */
+    width: 90%; /* Garante que o container também ocupe 100% */
 }
 
 .input-icon svg {
@@ -98,4 +98,93 @@ button.cancelar:hover {
 
 button.salvar:hover {
     background-color: var(--primary-color-btn-hover);
+}
+
+/* Estilos existentes... */
+/* Estilos para a mensagem de erro (sem alterações) */
+.mensagem-erro {
+    color: var(--error-color, red);
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+/* Estilos para o overlay dos popups (mantemos para o popup de confirmação) */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Estilos para o popup de confirmação (sem alterações de posicionamento) */
+.popup-confirmacao {
+    background-color: var(--neutral-color-100, white);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.popup-confirmacao p {
+    margin-bottom: 15px;
+    color: var(--neutral-color-900);
+}
+
+.popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.popup-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.popup-buttons .confirmar {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+}
+
+.popup-buttons .voltar {
+    background-color:  #6c757d;
+    color: white;
+}
+
+/* Estilos para o popup de sucesso - POSICIONAMENTO E ANIMAÇÃO */
+.popup-sucesso-container {
+    position: fixed;
+    top: 20px; 
+    right: 20px; 
+    z-index: 1001; 
+    opacity: 0; 
+    transform: translateX(30px); 
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.popup-sucesso-container.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.popup-sucesso {
+    background-color: var(--success-color, #4CAF50); /* Verde para mantermos o mesmo das demais telas*/
+    color: var(--neutral-color-100, white); 
+    padding: 15px 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+}
+
+.popup-sucesso p {
+    margin: 0; 
 }

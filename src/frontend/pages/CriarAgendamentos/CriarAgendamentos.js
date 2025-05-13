@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CriarAgendamentos.css';
 import { ObjectId } from 'bson';
 import LinksSessao from '../../components/CriarAgendamentos/LinksSessao';
-
-import { FaUser, FaCalendarAlt, FaClock, FaPalette, FaVideo } from 'react-icons/fa';
+import { FaUser, FaCalendarAlt, FaClock, FaPalette, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
 import { MdTitle } from 'react-icons/md';
 
 const CriarAgendamentos = () => {
@@ -20,6 +19,10 @@ const CriarAgendamentos = () => {
         linkSessao: '',
         nomePaciente: ''
     });
+    const [erro, setErro] = useState('');
+    const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
+    const [exibirPopupSucesso, setExibirPopupSucesso] = useState(false);
+    const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
     const plataformas = ['Google Meet', 'Teams', 'Zoom', 'Outros'];
 
@@ -28,11 +31,35 @@ const CriarAgendamentos = () => {
             ...agendamento,
             [e.target.name]: e.target.value
         });
+        setErro('');
+    };
+
+    const verificarCampos = () => {
+        if (!agendamento.titulo || !agendamento.nomePaciente || !agendamento.DataInicio) {
+            setErro('Por favor, preencha todos os campos obrigatórios.');
+            return false;
+        }
+        return true;
     };
 
     const handleSalvar = () => {
+        if (verificarCampos()) {
+            setExibirPopupConfirmacao(true);
+        }
+    };
+
+    const confirmarSalvar = () => {
         console.log("Agendamento salvo:", agendamento);
-        // salvar no back
+        // Aqui é com vcs do back kkk
+        setExibirPopupConfirmacao(false);
+        setMostrarSucesso(true);
+        setTimeout(() => {
+            setMostrarSucesso(false);
+        }, 10000);
+    };
+
+    const cancelarSalvar = () => {
+        setExibirPopupConfirmacao(false);
     };
 
     const handleCancelar = () => {
@@ -49,6 +76,7 @@ const CriarAgendamentos = () => {
             linkSessao: '',
             nomePaciente: ''
         });
+        setErro('');
     };
 
     return (
@@ -66,18 +94,35 @@ const CriarAgendamentos = () => {
             <div className="agendamento-form">
                 <div className="input-icon campo-longo">
                     <MdTitle />
-                    <input type="text" name="titulo" placeholder="Título" value={agendamento.titulo} onChange={handleChange} />
+                    <input
+                        type="text"
+                        name="titulo"
+                        placeholder="Título"
+                        value={agendamento.titulo}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="input-icon campo-longo">
                     <FaUser />
-                    <input type="text" name="nomePaciente" placeholder="Paciente" value={agendamento.nomePaciente} onChange={handleChange} />
+                    <input
+                        type="text"
+                        name="nomePaciente"
+                        placeholder="Paciente"
+                        value={agendamento.nomePaciente}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <label>Data:</label>
                 <div className="input-icon campo-longo">
                     <FaCalendarAlt />
-                    <input type="date" name="DataInicio" value={agendamento.DataInicio} onChange={handleChange} />
+                    <input
+                        type="date"
+                        name="DataInicio"
+                        value={agendamento.DataInicio}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <label>Horário de Início:</label>
@@ -92,11 +137,14 @@ const CriarAgendamentos = () => {
                     <input type="time" name="dataFim" onChange={handleChange} />
                 </div>
 
-                <LinksSessao
-                    plataforma={agendamento.tipo}
-                    linkSessao={agendamento.linkSessao}
-                    onLinkChange={(link) => setAgendamento({ ...agendamento, linkSessao: link })}
-                />
+                <div className="input-icon campo-longo">
+                    <FaExternalLinkAlt />
+                    <LinksSessao
+                        plataforma={agendamento.tipo}
+                        linkSessao={agendamento.linkSessao}
+                        onLinkChange={(link) => setAgendamento({ ...agendamento, linkSessao: link })}
+                    />
+                </div>
 
                 <div className="input-icon">
                     <FaVideo />
@@ -117,14 +165,36 @@ const CriarAgendamentos = () => {
                         <option value="#00ff00">Verde</option>
                     </select>
                 </div>
+
+                {erro && <p className="mensagem-erro">{erro}</p>}
             </div>
 
             <div className="buttons">
                 <button className="cancelar" onClick={handleCancelar}>Cancelar</button>
                 <button className="salvar" onClick={handleSalvar}>Salvar</button>
             </div>
+
+            {exibirPopupConfirmacao && (
+                <div className="popup-overlay">
+                    <div className="popup-confirmacao">
+                        <p>Deseja realmente salvar este agendamento?</p>
+                        <div className="popup-buttons">
+                            <button className="confirmar" onClick={confirmarSalvar}>Confirmar</button>
+                            <button className="voltar" onClick={cancelarSalvar}>Voltar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {mostrarSucesso && (
+                <div className="popup-sucesso-container show">
+                    <div className="popup-sucesso">
+                        <p>Paciente foi agendado com sucesso!</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
-
 export default CriarAgendamentos;
+//Anahí me perdoa ^^
