@@ -12,7 +12,7 @@ import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
-import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
+import ResponsividadePacientes from '../../components/ResponsividadePacientes/ResponsividadePacientes.js';
 import useAgendamentos from '../../hooks/useAgendamentos';
 
 function PaginaPacientes() {
@@ -22,7 +22,7 @@ function PaginaPacientes() {
   const navigate = useNavigate();
   const [mostrarPopup, setMostrarPopup] = useState(false);
   const [mensagemPopup, setMensagemPopup] = useState('');
-  const [tipoPopup, setTipoPopup] = useState(''); // 'sucesso' ou 'erro'
+  const [tipoPopup, setTipoPopup] = useState('');
   const [confirmarExportacao, setConfirmarExportacao] = useState(false);
   const [mostrarPopupExcluir, setMostrarPopupExcluir] = useState(false);
   const [pacienteIdParaExcluir, setPacienteIdParaExcluir] = useState(null);
@@ -49,6 +49,17 @@ function PaginaPacientes() {
   const [erroCadastro, setErroCadastro] = useState('');
   const [menuAberto, setMenuAberto] = useState(null);
   const modoEdicao = editandoIndex !== null;
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIsMobile();
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
 
   const handleAbrirDetalhesPaciente = (pacienteId) => {
     localStorage.setItem("pacienteID", pacienteId);
@@ -283,133 +294,135 @@ function PaginaPacientes() {
         </div>
       )}
       <div className="conteudo-principal">
-        <div style={{ alignItems: 'center' }} className='pagina-inicial-cabecalho-responsivo'>
-          <CabecalhoResponsivo />
-        </div>
-
-        <header className="top-bar">
-          <div className="container-pesquisa">
-            <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
-            <input
-              type="text"
-              className="campo-pesquisa"
-              value={filtro}
-              onChange={e => setFiltro(e.target.value)}
-              onFocus={() => setCampoPesquisaFocado(true)}
-              onBlur={() => setCampoPesquisaFocado(false)}
-            />
-            {!campoPesquisaFocado && !filtro && (
-              <span className="texto-pesquisa">Pesquisar paciente</span>
-            )}
-          </div>
-          <div className="usuario-info">
-            <div className="avatar" />
-            {usuario ? (
-              <div className="info-texto">
-                <strong>{usuario.username}</strong>
-                <span>{usuario.email}</span>
+        {isMobile ? (
+          <ResponsividadePacientes />
+        ) : (
+          <>
+            <header className="top-bar">
+              <div className="container-pesquisa">
+                <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
+                <input
+                  type="text"
+                  className="campo-pesquisa"
+                  value={filtro}
+                  onChange={e => setFiltro(e.target.value)}
+                  onFocus={() => setCampoPesquisaFocado(true)}
+                  onBlur={() => setCampoPesquisaFocado(false)}
+                />
+                {!campoPesquisaFocado && !filtro && (
+                  <span className="texto-pesquisa">Pesquisar paciente</span>
+                )}
               </div>
-            ) : (
-              <div className="info-texto">
-                <strong>Carregando...</strong>
+              <div className="usuario-info">
+                <div className="avatar" />
+                {usuario ? (
+                  <div className="info-texto">
+                    <strong>{usuario.username}</strong>
+                    <span>{usuario.email}</span>
+                  </div>
+                ) : (
+                  <div className="info-texto">
+                    <strong>Carregando...</strong>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </header>
-        <div className="titulo-acoes-container">
-          <h2 className="titulo-pacientes">Pacientes</h2>
-          <div className="botoes-desktop">
-            <div className="container-filtro">
-              <button
-                className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
-                }}
-              >
-                <FiFilter /> Filtros
-              </button>
-              {mostrarFiltrosVisuais && (
-                <div className="filtros-colunas" onClick={(e) => e.stopPropagation()}>
-                  <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
-                  <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
-                  <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
+            </header>
+            <div className="titulo-acoes-container">
+              <h2 className="titulo-pacientes">Pacientes</h2>
+              <div className="botoes-desktop">
+                <div className="container-filtro">
+                  <button
+                    className={`btn filtro cinza ${mostrarFiltrosVisuais ? 'ativo' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setMostrarFiltrosVisuais(!mostrarFiltrosVisuais);
+                    }}
+                  >
+                    <FiFilter /> Filtros
+                  </button>
+                  {mostrarFiltrosVisuais && (
+                    <div className="filtros-colunas" onClick={(e) => e.stopPropagation()}>
+                      <label><input type="checkbox" checked={colunasVisiveis.nome} onChange={() => alternarColuna('nome')} /> Nome</label>
+                      <label><input type="checkbox" checked={colunasVisiveis.data} onChange={() => alternarColuna('data')} /> Data da sessão</label>
+                      <label><input type="checkbox" checked={colunasVisiveis.idade} onChange={() => alternarColuna('idade')} /> Idade</label>
+                    </div>
+                  )}
                 </div>
-              )}
+                <button onClick={handleExportarPdfClick} className="btn-pdf">
+                  <BsFileEarmarkPdf /> Exportar PDF
+                </button>
+                <button className="btn adicionar cinza" onClick={() => {
+                  setNovoPaciente({
+                    nome: '',
+                    profissao: '',
+                    genero: '',
+                    estadoCivil: '',
+                    telefone: '',
+                    email: '',
+                    preferenciaContato: '',
+                    dataNascimento: ''
+                  });
+                  setEditandoIndex(null);
+                  setMostrarFormulario(true);
+                  setErroCadastro('');
+                }}>
+                  <AiOutlineUserAdd /> Adicionar paciente
+                </button>
+              </div>
             </div>
-            <button onClick={handleExportarPdfClick} className="btn-pdf">
-              <BsFileEarmarkPdf /> Exportar PDF
-            </button>
-            <button className="btn adicionar cinza" onClick={() => {
-              setNovoPaciente({
-                nome: '',
-                profissao: '',
-                genero: '',
-                estadoCivil: '',
-                telefone: '',
-                email: '',
-                preferenciaContato: '',
-                dataNascimento: ''
-              });
-              setEditandoIndex(null);
-              setMostrarFormulario(true);
-              setErroCadastro('');
-            }}>
-              <AiOutlineUserAdd /> Adicionar paciente
-            </button>
-          </div>
-        </div>
-        <div className="lista-pacientes">
-          <table className="tabela-pacientes">
-            <thead>
-              <tr>
-                {colunasVisiveis.nome && <th>Nome</th>}
-                {colunasVisiveis.data && <th>Data da sessão</th>}
-                {colunasVisiveis.idade && <th>Idade</th>}
-                <th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              {pacientesFiltrados.length > 0 ? (
-                pacientesFiltrados.map((paciente) => (
-                  <tr key={paciente._id} onClick={() => handleAbrirDetalhesPaciente(paciente._id)}>
-                    {colunasVisiveis.nome && <td>{paciente.nome || 'N/A'}</td>}
-                    {colunasVisiveis.data && (
-                      <td>
-                        {datasPorPaciente[paciente._id]
-                          ? new Date(datasPorPaciente[paciente._id]).toLocaleDateString('pt-BR')
-                          : 'N/A'}
-                      </td>
-                    )}
-                    {colunasVisiveis.idade && <td>{paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'}</td>}
-                    <td className="acoes-td" onClick={(e) => e.stopPropagation()}>
-                      <div
-                        className={`acoes ${menuAberto === paciente._id ? 'ativo' : ''}`}
-                        onClick={() => setMenuAberto(menuAberto === paciente._id ? null : paciente._id)}
-                      >
-                        <BsThreeDots />
-                        {menuAberto === paciente._id && (
-                          <div className="menu-popup">
-                            <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
-                            <button onClick={() => handleExcluirPaciente(paciente._id)}>Excluir</button>
-                          </div>
-                        )}
-                      </div>
-                    </td>
+            <div className="lista-pacientes">
+              <table className="tabela-pacientes">
+                <thead>
+                  <tr>
+                    {colunasVisiveis.nome && <th>Nome</th>}
+                    {colunasVisiveis.data && <th>Data da sessão</th>}
+                    {colunasVisiveis.idade && <th>Idade</th>}
+                    <th>Ações</th>
                   </tr>
-                ))
-              ) : (
-                <tr>
-                  <td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}>
-                    Nenhum paciente encontrado
-                  </td>
-                </tr>
-              )}
-              <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
-              <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
-            </tbody>
-          </table>
-        </div>
+                </thead>
+                <tbody>
+                  {pacientesFiltrados.length > 0 ? (
+                    pacientesFiltrados.map((paciente) => (
+                      <tr key={paciente._id} onClick={() => handleAbrirDetalhesPaciente(paciente._id)}>
+                        {colunasVisiveis.nome && <td>{paciente.nome || 'N/A'}</td>}
+                        {colunasVisiveis.data && (
+                          <td>
+                            {datasPorPaciente[paciente._id]
+                              ? new Date(datasPorPaciente[paciente._id]).toLocaleDateString('pt-BR')
+                              : 'N/A'}
+                          </td>
+                        )}
+                        {colunasVisiveis.idade && <td>{paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'}</td>}
+                        <td className="acoes-td" onClick={(e) => e.stopPropagation()}>
+                          <div
+                            className={`acoes ${menuAberto === paciente._id ? 'ativo' : ''}`}
+                            onClick={() => setMenuAberto(menuAberto === paciente._id ? null : paciente._id)}
+                          >
+                            <BsThreeDots />
+                            {menuAberto === paciente._id && (
+                              <div className="menu-popup">
+                                <button onClick={() => editarPaciente(paciente._id)}>Editar</button>
+                                <button onClick={() => handleExcluirPaciente(paciente._id)}>Excluir</button>
+                              </div>
+                            )}
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  ) : (
+                    <tr>
+                      <td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}>
+                        Nenhum paciente encontrado
+                      </td>
+                    </tr>
+                  )}
+                  <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
+                  <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
       </div>
       {mostrarFormulario && (
         <div className="modal-formulario">

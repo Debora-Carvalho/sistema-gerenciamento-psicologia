@@ -1,0 +1,218 @@
+@import "../../styles/variaveis.css";
+/* ResponsividadePacientes.css */
+
+.pagina-container {
+    display: flex;
+    min-height: 100vh;
+    background-color: #fef4f6;
+    font-family: Arial, sans-serif;
+}
+
+.menu-lateral {
+    width: 60px;
+    padding: 10px;
+}
+
+.icone-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 10px;
+}
+
+.hamburguer {
+    width: 30px;
+    height: 4px;
+    background-color: #002b8a;
+    border-radius: 2px;
+}
+
+.conteudo-principal {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 16px;
+}
+
+.cabecalho {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.input-pesquisa {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    padding: 10px 16px;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 16px;
+}
+
+.icone-pesquisa {
+    margin-right: 8px;
+    color: #999;
+}
+
+.input-pesquisa input {
+    border: none;
+    outline: none;
+    width: 100%;
+    font-size: 16px;
+}
+
+.usuario-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.foto-usuario {
+    width: 40px;
+    height: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+}
+
+.usuario-info p {
+    margin: 0;
+    font-size: 14px;
+}
+
+.usuario-info strong {
+    font-size: 16px;
+}
+
+.titulo-area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 20px 0 10px;
+}
+
+.titulo-area h2 {
+    color: #002b8a;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.icones-filtros {
+    display: flex;
+    gap: 8px;
+}
+
+.icones-filtros button {
+    background: #f0f0f0;
+    border: none;
+    padding: 6px;
+    border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.lista-pacientes {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.paciente-card {
+    background-color: #fce6ea;
+    border-radius: 10px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+
+.info-paciente p {
+    margin: 2px 0;
+    font-size: 14px;
+}
+
+.info-paciente strong {
+    display: block;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.acoes-paciente {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 120px;
+    margin-top: 10px;
+}
+
+.acoes-paciente button {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border: none;
+    font-size: 14px;
+    background: none;
+    cursor: pointer;
+}
+
+.editar {
+    color: #002b8a;
+}
+
+.excluir {
+    color: #000;
+}
+
+.ver-mais-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.ver-mais {
+    border: 2px solid #002b8a;
+    background: none;
+    padding: 10px 30px;
+    border-radius: 30px;
+    font-size: 16px;
+    color: #002b8a;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.ver-mais:hover {
+    background-color: #002b8a;
+    color: white;
+}
+
+/* Responsividade */
+
+@media (max-width: 768px) {
+    .acoes-paciente {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .usuario-info {
+        margin-top: 10px;
+        flex-direction: row;
+        justify-content: flex-end;
+    }
+
+    .titulo-area {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .paciente-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
