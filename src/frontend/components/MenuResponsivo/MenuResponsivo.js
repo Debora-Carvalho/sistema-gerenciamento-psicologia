@@ -39,7 +39,7 @@ function MenuResponsivo() {
                         className="container-menu-responsivo-aberto"
                     >
 
-                        <div className='container-logo-menu-responsivo'>
+                        <div className='container-logo-menu-responsivo' onClick={() => navigate("/pagina-inicial")}>
                             Seren
                         </div>
 
