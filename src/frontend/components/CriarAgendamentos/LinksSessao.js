@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+/*import React, { useEffect } from 'react';
 import './LinksSessao.css';
 
 const LinksSessao = ({ plataforma, linkSessao, onLinkChange }) => {
@@ -60,3 +60,4 @@ const LinksSessao = ({ plataforma, linkSessao, onLinkChange }) => {
 };
 
 export default LinksSessao;
+*/

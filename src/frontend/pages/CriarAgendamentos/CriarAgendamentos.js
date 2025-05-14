@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './CriarAgendamentos.css';
+/*import LinksSessao from '../../components/CriarAgendamentos/LinksSessao';*/
 import { ObjectId } from 'bson';
-import LinksSessao from '../../components/CriarAgendamentos/LinksSessao';
-import { FaUser, FaCalendarAlt, FaClock, FaPalette, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaUser, FaCalendarAlt, FaPalette, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
 import { MdTitle } from 'react-icons/md';
 
 const CriarAgendamentos = () => {
@@ -23,8 +23,10 @@ const CriarAgendamentos = () => {
     const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
     const [exibirPopupSucesso, setExibirPopupSucesso] = useState(false);
     const [mostrarSucesso, setMostrarSucesso] = useState(false);
+    const [mostrarSeletorCor, setMostrarSeletorCor] = useState(false);
 
     const plataformas = ['Google Meet', 'Teams', 'Zoom', 'Outros'];
+    const coresPadrao = ['#000000', '#01429E', '#ff0000', '#00ff00', '#FFA500', '#800080', '#FFC0CB', '#A52A2A'];
 
     const handleChange = (e) => {
         setAgendamento({
@@ -32,6 +34,14 @@ const CriarAgendamentos = () => {
             [e.target.name]: e.target.value
         });
         setErro('');
+    };
+
+    const selecionarCor = (cor) => {
+        setAgendamento({
+            ...agendamento,
+            color: cor
+        });
+        setMostrarSeletorCor(false); 
     };
 
     const verificarCampos = () => {
@@ -50,7 +60,6 @@ const CriarAgendamentos = () => {
 
     const confirmarSalvar = () => {
         console.log("Agendamento salvo:", agendamento);
-        // Aqui é com vcs do back kkk
         setExibirPopupConfirmacao(false);
         setMostrarSucesso(true);
         setTimeout(() => {
@@ -114,35 +123,36 @@ const CriarAgendamentos = () => {
                     />
                 </div>
 
-                <label>Data:</label>
+                <label>Data e início da Sessão:</label>
                 <div className="input-icon campo-longo">
                     <FaCalendarAlt />
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="DataInicio"
                         value={agendamento.DataInicio}
                         onChange={handleChange}
                     />
                 </div>
 
-                <label>Horário de Início:</label>
+                <label>Data e término da Sessão:</label>
                 <div className="input-icon campo-longo">
-                    <FaClock />
-                    <input type="time" name="DataInicio" onChange={handleChange} />
-                </div>
-
-                <label>Horário de Término:</label>
-                <div className="input-icon campo-longo">
-                    <FaClock />
-                    <input type="time" name="dataFim" onChange={handleChange} />
+                    <FaCalendarAlt />
+                    <input
+                        type="datetime-local"
+                        name="dataFim"
+                        value={agendamento.dataFim}
+                        onChange={handleChange}
+                    />
                 </div>
 
                 <div className="input-icon campo-longo">
                     <FaExternalLinkAlt />
-                    <LinksSessao
-                        plataforma={agendamento.tipo}
-                        linkSessao={agendamento.linkSessao}
-                        onLinkChange={(link) => setAgendamento({ ...agendamento, linkSessao: link })}
+                    <input
+                        type="text"
+                        name="linkSessao"
+                        placeholder="Link da sessão"
+                        value={agendamento.linkSessao}
+                        onChange={handleChange}
                     />
                 </div>
 
@@ -156,14 +166,32 @@ const CriarAgendamentos = () => {
                     </select>
                 </div>
 
-                <div className="input-icon">
+                <div className="input-icon seletor-cor-container">
                     <FaPalette />
-                    <select name="color" value={agendamento.color} onChange={handleChange}>
-                        <option value="#000000">Cor</option>
-                        <option value="#01429E">Azul</option>
-                        <option value="#ff0000">Vermelho</option>
-                        <option value="#00ff00">Verde</option>
-                    </select>
+                    <div
+                        className="cor-selecionada"
+                        style={{ backgroundColor: agendamento.color }}
+                        onClick={() => setMostrarSeletorCor(!mostrarSeletorCor)}
+                    ></div>
+                    {mostrarSeletorCor && (
+                        <div className="seletor-cor">
+                            <input
+                                type="color"
+                                value={agendamento.color}
+                                onChange={(e) => selecionarCor(e.target.value)}
+                            />
+                            <div className="cores-padrao">
+                                {coresPadrao.map((cor, index) => (
+                                    <div
+                                        key={index}
+                                        className="opcao-cor"
+                                        style={{ backgroundColor: cor }}
+                                        onClick={() => selecionarCor(cor)}
+                                    ></div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
                 </div>
 
                 {erro && <p className="mensagem-erro">{erro}</p>}
@@ -197,4 +225,4 @@ const CriarAgendamentos = () => {
     );
 };
 export default CriarAgendamentos;
-//Anahí me perdoa ^^
+//Anahí me perdoa
