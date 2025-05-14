@@ -661,7 +661,7 @@ function PaginaPacientes() {
                 }
               }}
             >
-              {modoEdicao ? 'Salvar alterações' : 'Cadastrar'}
+              {modoEdicao? 'Salvar alterações' : 'Cadastrar'}
             </button>
           </div>
         </div>
