@@ -5,7 +5,7 @@ import TabsFiltro from "../../components/Agendamentos/TabsFiltro";
 import Menu from "../../components/Menu/Menu";
 import CardAgendamentosConcluidos from "../../components/AgendamentosConcluidos/CardAgendamentosConcluidos";
 
-function AgendamentosConcluidos() {
+function AgendamentosCancelados() {
   const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [usuario, setUsuario] = useState({
@@ -98,4 +98,4 @@ function AgendamentosConcluidos() {
   );
 }
 
-export default AgendamentosConcluidos;
+export default AgendamentosCancelados;

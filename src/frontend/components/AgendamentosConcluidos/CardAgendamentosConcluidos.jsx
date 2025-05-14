@@ -7,7 +7,6 @@ function CardAgendamentosConcluidos({ data, hora, nome, periodo }) {
 
   return (
     < div className="card-agendamento-concluido">
-        <div className="data">{data} </div>
       <div className="hora">{hora}</div>
       <div className="conteudo-agendamento">
         <p className="periodo">{periodo}</p>

@@ -86,7 +86,10 @@
     margin-top: 1rem;
     justify-content: flex-end; /* Alinha os itens à direita */
     align-items: center; /* Centraliza verticalmente */
-    width: 100%; /* Ocupa toda a largura disponível */
+    width: 60%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
 }
 
 .tabs-filtro button {

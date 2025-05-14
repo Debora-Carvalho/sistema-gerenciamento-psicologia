@@ -13,8 +13,8 @@
 }
 
 .titulo {
-  font-size: 2rem;
-  font-weight: var(--font-weight-titulo);
+  font-size: 3rem;
+  font-weight: bold;
   color: var(--primary-color);
 }
 
@@ -33,6 +33,7 @@
   margin-top: 0.5rem;
   color: var(--primary-color);
   font-weight: bold;
+  text-decoration: none;
 }
 
 .lista-agendamentos {

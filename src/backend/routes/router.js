@@ -13,7 +13,7 @@ import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalend
 import Calendario from '../../frontend/components/Calendario/Calendario';
 import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx';
 import AgendamentosConcluidos from '../../frontend/pages/PaginaAgendamentosConcluidos/PaginaAgendamentosConcluidos.js'
-
+import AgendamentosCancelados from '../../frontend/pages/PaginaAgendamentosCancelados/PaginaAgendamentosCancelados.js'
 
 const AppRoutes = () => {
     return (
@@ -31,6 +31,7 @@ const AppRoutes = () => {
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/agendamentos" element={<Agendamento />} />
                     <Route path="/agendamentos-concluidos" element={<AgendamentosConcluidos/>} />
+                    <Route path="/agendamentos-cancelados" element={<AgendamentosCancelados/>} />
                 </Route>
             </Routes>
         </BrowserRouter>
