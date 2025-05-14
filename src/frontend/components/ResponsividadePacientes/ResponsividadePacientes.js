@@ -1,10 +1,84 @@
 import React, { useState, useEffect } from "react";
 import "./ResponsividadePacientes.css";
-import { FaTrashAlt, FaEdit, FaFilter, FaFileExport, FaPlusCircle } from "react-icons/fa";
-import { FiSearch } from "react-icons/fi";
+import { FaTrashAlt, FaEdit, FaFilter, FaFileExport, FaUserPlus, FaSearch } from "react-icons/fa";
 import jsPDF from 'jspdf';
-import 'jspdf-autotable'; // Importa a extensão autoTable
-//import 'jspdf/dist/jspdf.debug.js';  // Não é necessário importar o debug em produção
+import 'jspdf-autotable';
+
+const calcularIdade = (dataNascimento) => {
+    const hoje = new Date();
+    const nascimento = new Date(dataNascimento);
+    let idade = hoje.getFullYear() - nascimento.getFullYear();
+    const m = hoje.getMonth() - nascimento.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
+        idade--;
+    }
+    return idade;
+};
+
+export const exportarPDF = async (pacientes, colunasVisiveis) => {
+    try {
+        const doc = new jsPDF();
+
+        doc.setFontSize(18);
+        doc.text('Lista de Pacientes', 105, 15, null, null, 'center');
+
+        doc.setFontSize(10);
+        const dataEmissao = new Date().toLocaleDateString('pt-BR');
+        doc.text(`Emitido em: ${dataEmissao}`, 105, 22, null, null, 'center');
+
+        const headers = [];
+        const columnStyles = {};
+
+        if (colunasVisiveis.nome) {
+            headers.push('Nome');
+            columnStyles[headers.length - 1] = { cellWidth: 60 };
+        }
+
+        if (colunasVisiveis.data) {
+            headers.push('Data da Sessão');
+            columnStyles[headers.length - 1] = { cellWidth: 40 };
+        }
+
+        if (colunasVisiveis.idade) {
+            headers.push('Idade');
+            columnStyles[headers.length - 1] = { cellWidth: 20 };
+        }
+
+        const data = pacientes.map(paciente => {
+            const row = [];
+
+            if (colunasVisiveis.nome) {
+                row.push(paciente.nome || 'N/A');
+            }
+
+            if (colunasVisiveis.data) {
+                row.push(paciente.data ? new Date(paciente.data).toLocaleDateString('pt-BR') : 'N/A');
+            }
+
+            if (colunasVisiveis.idade) {
+                row.push(paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A');
+            }
+
+            return row;
+        });
+
+        doc.autoTable({
+            head: [headers],
+            body: data,
+            startY: 30,
+            styles: { fontSize: 10 },
+            columnStyles: columnStyles,
+            margin: { left: 10 }
+        });
+
+        doc.save('lista_pacientes.pdf');
+
+        return true;
+    } catch (error) {
+        console.error('Erro ao exportar PDF:', error);
+        throw error;
+    }
+};
 
 const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) => {
     const [filtroSelecionado, setFiltroSelecionado] = useState(null);
@@ -24,24 +98,68 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
         dataNascimento: ''
     });
     const [erroCadastro, setErroCadastro] = useState('');
+    const [colunasVisiveis, setColunasVisiveis] = useState({
+        nome: true,
+        data: true,
+        idade: true,
+    });
+    const [filtroTexto, setFiltroTexto] = useState('');
+    const [pacientesFiltrados, setPacientesFiltrados] = useState(pacientes);
 
-    const handleFiltrarNome = () => {
-        setFiltroSelecionado('nome');
-        onFiltrar('nome');
+    // Atualiza a lista de pacientes filtrados
+    useEffect(() => {
+        const resultadoFiltro = aplicarFiltro(pacientes);
+        setPacientesFiltrados(resultadoFiltro);
+    }, [pacientes, filtroSelecionado, filtroTexto]);
+
+    const handleFiltrar = (tipoFiltro) => {
+        setFiltroSelecionado(tipoFiltro);
+        onFiltrar(tipoFiltro, filtroTexto);
     };
+
+    const aplicarFiltro = (pacientes) => {
+        if (!filtroSelecionado || !filtroTexto) {
+            return pacientes;
+        }
+
+        const filtroTextoLower = filtroTexto.toLowerCase();
+
+        switch (filtroSelecionado) {
+            case 'nome':
+                return pacientes.filter(paciente => paciente.nome.toLowerCase().includes(filtroTextoLower));
+            case 'dataSessao':
+                return pacientes.filter(paciente => paciente.dataSessao && paciente.dataSessao.toLowerCase().includes(filtroTextoLower));
+            case 'idade':
+                return pacientes.filter(paciente => {
+                    const idadePaciente = paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : null;
+                    return idadePaciente !== null && idadePaciente.toString().includes(filtroTextoLower);
+                });
+            default:
+                return pacientes;
+        }
+    }
 
 
     const handleExportar = () => {
         setMostrarConfirmacaoExportar(true);
     };
 
-    const confirmarExportacao = () => {
-        setMensagemExportacao('Documento exportado com sucesso!');
-        setTimeout(() => {
-            setMensagemExportacao('');
-        }, 10000);
+    const confirmarExportacao = async () => {
         setMostrarConfirmacaoExportar(false);
-        gerarPDF(); // Chama a função para gerar o PDF
+        try {
+            const sucesso = await exportarPDF(pacientes, colunasVisiveis);
+            if (sucesso) {
+                setMensagemExportacao('Documento exportado com sucesso!');
+            }
+        } catch (error) {
+            console.error("Falha ao exportar:", error);
+            setMensagemExportacao('Erro ao exportar o documento.');
+        } finally {
+            setTimeout(() => {
+                setMensagemExportacao('');
+            }, 3000);
+        }
+
     };
 
     const cancelarExportacao = () => {
@@ -89,9 +207,9 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
             return;
         }
         console.log('Paciente Salvo:', novoPaciente);
-        // Aqui você colocaria a lógica para salvar o novo paciente
+        
         setMostrarFormularioCadastro(false);
-        setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' }); // Limpa o formulário
+        setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
     };
 
     const handleCancelarCadastro = () => {
@@ -161,38 +279,27 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
         return false;
     };
 
-    const gerarPDF = () => {
-        const doc = new jsPDF();
-        const tableColumn = ["Nome", "Data da Sessão", "Idade", "Profissão", "Gênero", "Estado Civil", "Telefone", "Email", "Preferência de Contato", "Data de Nascimento"];
-        const tableRows = [];
-
-        pacientes.forEach(paciente => {
-            const pacienteData = [
-                paciente.nome,
-                paciente.dataSessao,
-                paciente.idade,
-                paciente.profissao,
-                paciente.genero,
-                paciente.estadoCivil,
-                formatarTelefoneParaDisplay(paciente.telefone),
-                paciente.email,
-                paciente.preferenciaContato,
-                paciente.dataNascimento
-            ];
-            tableRows.push(pacienteData);
-        });
-
-        doc.autoTable(tableColumn, tableRows, { startY: 10 });
-        doc.save("pacientes.pdf");
-    };
+    useEffect(() => {
+        if (mensagemExportacao) {
+            const timer = setTimeout(() => {
+                setMensagemExportacao('');
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [mensagemExportacao]);
 
     return (
         <div className="pagina-container">
             <main className="conteudo-principal">
                 <div className="cabecalho">
                     <div className="input-pesquisa">
-                        <FiSearch className="icone-pesquisa" />
-                        <input type="text" placeholder="Pesquisar paciente" />
+                        <FaSearch className="icone-pesquisa" />
+                        <input
+                            type="text"
+                            placeholder="Pesquisar paciente"
+                            value={filtroTexto}
+                            onChange={(e) => setFiltroTexto(e.target.value)}
+                        />
                     </div>
                     <div className="usuario-info">
                         <div className="foto-usuario"></div>
@@ -206,25 +313,25 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
                 <div className="titulo-area">
                     <h2>Pacientes</h2>
                     <div className="icones-filtros">
-                        <button onClick={handleFiltrarNome}>
+                        <button className="botao-filtro" onClick={() => handleFiltrar('nome')} title="Filtrar por nome">
                             <FaFilter />
                         </button>
-                        <button onClick={handleExportar} title="Exportar para PDF">
+                        <button title="Exportar para PDF" onClick={handleExportar}>
                             <FaFileExport />
                         </button>
                         <button onClick={handleAdicionarPaciente} title="Adicionar Paciente">
-                            <FaPlusCircle />
+                            <FaUserPlus />
                         </button>
                     </div>
                 </div>
 
                 <div className="lista-pacientes">
-                    {(pacientes || []).map((paciente, i) => (
+                    {pacientesFiltrados.map((paciente, i) => (
                         <div key={i} className="paciente-card">
                             <div className="info-paciente">
-                                <p><strong>Nome</strong> {paciente.nome}</p>
-                                <p><strong>Data da sessão</strong> {paciente.dataSessao}</p>
-                                <p><strong>Idade</strong> {paciente.idade} anos</p>
+                                <p><strong>Nome:</strong> {paciente.nome}</p>
+                                <p><strong>Data da sessão:</strong> {paciente.dataSessao || 'N/A'}</p>
+                                <p><strong>Idade:</strong> {paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'} anos</p>
                             </div>
                             <div className="acoes-paciente">
                                 <button className="editar" onClick={() => onEditar(paciente)}>
@@ -370,7 +477,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
                     </div>
                 )}
                 {mensagemExportacao && (
-                    <div className="mensagem-exportacao">
+                    <div className={`mensagem-exportacao ${mensagemExportacao.startsWith('Erro') ? 'erro' : ''}`}>
                         {mensagemExportacao}
                     </div>
                 )}
@@ -380,3 +487,6 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
 };
 
 export default ResponsividadePacientes;
+
+
+//AMANDA SUA BURRA: AJusta o filtro;Espaço vazio; botões e garante que a foto do user tá aparecendo. pfv.
