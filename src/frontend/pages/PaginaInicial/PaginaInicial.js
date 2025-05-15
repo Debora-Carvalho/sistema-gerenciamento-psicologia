@@ -50,7 +50,7 @@ function PaginaInicial() {
     };
 
     if (carregando) {
-        return <TelaDeCarregamento mensagem="" />;
+        return <TelaDeCarregamento mensagem="Carregando listagem de pacientes..." />;
     }
 
     return (
