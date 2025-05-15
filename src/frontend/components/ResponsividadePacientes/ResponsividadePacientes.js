@@ -136,6 +136,8 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
     });
     const [filtroTexto, setFiltroTexto] = useState('');
     const [pacientesFiltrados, setPacientesFiltrados] = useState(pacientes);
+    const [pacienteParaEdicao, setPacienteParaEdicao] = useState(null);
+
 
     // Atualiza a lista de pacientes filtrados sempre que os pacientes ou o filtro mudam
     useEffect(() => {
@@ -181,7 +183,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
             if (formato === 'texto') {
                 exportarParaTexto(pacientes, colunasVisiveis);
                 setMensagemExportacao('Documento de texto exportado com sucesso!');
-             }
+            }
         } catch (error) {
             console.error("Falha ao exportar:", error);
             setMensagemExportacao('Erro ao exportar o documento.');
@@ -195,6 +197,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
     const cancelarExportacao = () => {
         setMostrarConfirmacaoExportar(false);
     };
+
 
     const handleAdicionarPaciente = () => {
         setMostrarFormularioCadastro(true);
@@ -211,6 +214,24 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
             dataNascimento: ''
         });
         setErroCadastro('');
+        setPacienteParaEdicao(null); // Limpa o paciente para edição
+    };
+
+    const handleEditar = (paciente) => {
+        setPacienteParaEdicao(paciente);
+        setNovoPaciente({
+            nome: paciente.nome,
+            dataSessao: paciente.dataSessao,
+            idade: paciente.idade,
+            profissao: paciente.profissao,
+            genero: paciente.genero,
+            estadoCivil: paciente.estadoCivil,
+            telefone: paciente.telefone,
+            email: paciente.email,
+            preferenciaContato: paciente.preferenciaContato,
+            dataNascimento: paciente.dataNascimento
+        });
+        setMostrarFormularioCadastro(true);
     };
 
     const handleSalvarPaciente = () => {
@@ -236,16 +257,22 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
         if (hasErrors) {
             return;
         }
-        console.log('Paciente Salvo:', novoPaciente);
-        onAdicionarPaciente(novoPaciente);
+        if (pacienteParaEdicao) {
+            onEditar({ ...novoPaciente, id: pacienteParaEdicao.id });
+        } else {
+            onAdicionarPaciente({ ...novoPaciente, id: Date.now() });
+        }
+
         setMostrarFormularioCadastro(false);
         setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
+        setPacienteParaEdicao(null);
     };
 
     const handleCancelarCadastro = () => {
         setMostrarFormularioCadastro(false);
         setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
         setErroCadastro('');
+        setPacienteParaEdicao(null);
     };
 
     const formatarTelefone = (telefone) => {
@@ -318,6 +345,27 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
         }
     }, [mensagemExportacao]);
 
+    const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
+    const [mostrarConfirmacaoExclusao, setMostrarConfirmacaoExclusao] = useState(false);
+
+    const confirmarExclusao = () => {
+        if (pacienteParaExcluir) {
+            onExcluir(pacienteParaExcluir);
+        }
+        setMostrarConfirmacaoExclusao(false);
+        setPacienteParaExcluir(null);
+    };
+
+    const cancelarExclusao = () => {
+        setMostrarConfirmacaoExclusao(false);
+        setPacienteParaExcluir(null);
+    };
+
+    const handleExcluir = (paciente) => {
+        setPacienteParaExcluir(paciente);
+        setMostrarConfirmacaoExclusao(true);
+    };
+
     return (
         <div className="pagina-container">
             <main className="conteudo-principal">
@@ -364,9 +412,9 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
                                 <p><strong>Idade:</strong> {paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'} anos</p>
                             </div>
                             <div className="acoes-paciente">
-                                <button className="editar" onClick={() => onEditar(paciente)}>
+                                <button className="editar" onClick={() => handleEditar(paciente)}>
                                     <FaEdit /> Editar</button>
-                                <button className="excluir" onClick={() => onExcluir(paciente)}>
+                                <button className="excluir" onClick={() => handleExcluir(paciente)}>
                                     <FaTrashAlt /> Excluir
                                 </button>
                             </div>
@@ -387,10 +435,19 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
                         </div>
                     </div>
                 )}
+                {mostrarConfirmacaoExclusao && (
+                    <div className="popup-confirmacao">
+                        <p>Deseja realmente excluir este paciente?</p>
+                        <div className="botoes-popup">
+                            <button className="btn-confirmar" onClick={confirmarExclusao}>Sim</button>
+                            <button className="btn-cancelar" onClick={cancelarExclusao}>Não</button>
+                        </div>
+                    </div>
+                )}
 
                 {mostrarFormularioCadastro && (
                     <div className="popup-formulario">
-                        <h3>Adicionar Novo Paciente</h3>
+                        <h3>{pacienteParaEdicao ? 'Editar Paciente' : 'Adicionar Novo Paciente'}</h3>
                         {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
                         <div className="formulario-cadastro-container">
                             <div className="form-group">
@@ -498,8 +555,41 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, on
     );
 };
 
-export default ResponsividadePacientes;
+const PacientesPage = () => {
+    const [pacientes, setPacientes] = useState([
+        { id: 1, nome: 'João da Silva', dataSessao: '2024-01-15', dataNascimento: '1990-05-20', email: 'joao@email.com', telefone: '11999998888' },
+        { id: 2, nome: 'Maria Souza', dataSessao: '2024-01-20', dataNascimento: '1985-10-10', email: 'maria@email.com', telefone: '21988887777' },
+    ]);
 
+    const handleAdicionarPaciente = (novoPaciente) => {
+        setPacientes([...pacientes, novoPaciente]);
+    };
+
+    const handleEditarPaciente = (pacienteEditado) => {
+        setPacientes(pacientes.map(p => p.id === pacienteEditado.id ? pacienteEditado : p));
+    };
+
+    const handleExcluirPaciente = (pacienteParaExcluir) => {
+        setPacientes(pacientes.filter(p => p.id !== pacienteParaExcluir.id));
+    };
+
+    const handleFiltrarPacientes = (tipoFiltro, filtroTexto) => {
+        // Implemente a lógica de filtragem aqui, se necessário
+        console.log('Filtrando por:', tipoFiltro, 'com o texto:', filtroTexto);
+    };
+
+    return (
+        <ResponsividadePacientes
+            pacientes={pacientes}
+            onAdicionarPaciente={handleAdicionarPaciente}
+            onEditar={handleEditarPaciente}
+            onExcluir={handleExcluirPaciente}
+            onFiltrar={handleFiltrarPacientes}
+        />
+    );
+};
+
+export default ResponsividadePacientes;
 
 
 
