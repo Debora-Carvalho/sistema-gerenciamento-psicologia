@@ -15,6 +15,37 @@ const calcularIdade = (dataNascimento) => {
     return idade;
 };
 
+// Função modificada para exportar para texto
+const exportarParaTexto = (pacientes, colunasVisiveis) => {
+    let texto = "Lista de Pacientes\n\n";
+
+    const headers = [];
+    if (colunasVisiveis.nome) headers.push("Nome");
+    if (colunasVisiveis.data) headers.push("Data da Sessão");
+    if (colunasVisiveis.idade) headers.push("Idade");
+
+    texto += headers.join("\t") + "\n"; // Separar colunas por tabulação
+
+    pacientes.forEach(paciente => {
+        const row = [];
+        if (colunasVisiveis.nome) row.push(paciente.nome || 'N/A');
+        if (colunasVisiveis.data) row.push(paciente.data ? new Date(paciente.data).toLocaleDateString('pt-BR') : 'N/A');
+        if (colunasVisiveis.idade) row.push(paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A');
+        texto += row.join("\t") + "\n";
+    });
+
+    // Cria um Blob com o texto e inicia o download
+    const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = 'lista_pacientes.txt';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+};
+
 export const exportarPDF = async (pacientes, colunasVisiveis) => {
     try {
         const doc = new jsPDF();
@@ -80,7 +111,7 @@ export const exportarPDF = async (pacientes, colunasVisiveis) => {
     }
 };
 
-const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) => {
+const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, onAdicionarPaciente }) => {
     const [filtroSelecionado, setFiltroSelecionado] = useState(null);
     const [mostrarConfirmacaoExportar, setMostrarConfirmacaoExportar] = useState(false);
     const [mostrarFormularioCadastro, setMostrarFormularioCadastro] = useState(false);
@@ -106,7 +137,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
     const [filtroTexto, setFiltroTexto] = useState('');
     const [pacientesFiltrados, setPacientesFiltrados] = useState(pacientes);
 
-    // Atualiza a lista de pacientes filtrados
+    // Atualiza a lista de pacientes filtrados sempre que os pacientes ou o filtro mudam
     useEffect(() => {
         const resultadoFiltro = aplicarFiltro(pacientes);
         setPacientesFiltrados(resultadoFiltro);
@@ -140,17 +171,17 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
     }
 
 
-    const handleExportar = () => {
-        setMostrarConfirmacaoExportar(true);
+    const handleExportar = (formato) => {
+        setMostrarConfirmacaoExportar(true, formato); // Passa o formato
     };
 
-    const confirmarExportacao = async () => {
+    const confirmarExportacao = async (formato) => {
         setMostrarConfirmacaoExportar(false);
         try {
-            const sucesso = await exportarPDF(pacientes, colunasVisiveis);
-            if (sucesso) {
-                setMensagemExportacao('Documento exportado com sucesso!');
-            }
+            if (formato === 'texto') {
+                exportarParaTexto(pacientes, colunasVisiveis);
+                setMensagemExportacao('Documento de texto exportado com sucesso!');
+             }
         } catch (error) {
             console.error("Falha ao exportar:", error);
             setMensagemExportacao('Erro ao exportar o documento.');
@@ -159,7 +190,6 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
                 setMensagemExportacao('');
             }, 3000);
         }
-
     };
 
     const cancelarExportacao = () => {
@@ -207,7 +237,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
             return;
         }
         console.log('Paciente Salvo:', novoPaciente);
-        
+        onAdicionarPaciente(novoPaciente);
         setMostrarFormularioCadastro(false);
         setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
     };
@@ -316,7 +346,7 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
                         <button className="botao-filtro" onClick={() => handleFiltrar('nome')} title="Filtrar por nome">
                             <FaFilter />
                         </button>
-                        <button title="Exportar para PDF" onClick={handleExportar}>
+                        <button title="Exportar para Texto" onClick={() => handleExportar('texto')}>
                             <FaFileExport />
                         </button>
                         <button onClick={handleAdicionarPaciente} title="Adicionar Paciente">
@@ -350,9 +380,9 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
 
                 {mostrarConfirmacaoExportar && (
                     <div className="popup-confirmacao">
-                        <p>Deseja realmente exportar a lista de pacientes para PDF?</p>
+                        <p>Deseja realmente exportar a lista de pacientes?</p>
                         <div className="botoes-popup">
-                            <button className="btn-confirmar" onClick={confirmarExportacao}>Sim</button>
+                            <button className="btn-confirmar" onClick={() => confirmarExportacao('texto')}>Sim</button>
                             <button className="btn-cancelar" onClick={cancelarExportacao}>Não</button>
                         </div>
                     </div>
@@ -379,24 +409,6 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
                                     value={novoPaciente.profissao}
                                     name="profissao"
                                     onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Data da Sessão:</label>
-                                <input
-                                    type="text"
-                                    value={novoPaciente.dataSessao}
-                                    name="dataSessao"
-                                    onChange={(e) => setNovoPaciente({ ...novoPaciente, dataSessao: e.target.value })}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Idade:</label>
-                                <input
-                                    type="text"
-                                    value={novoPaciente.idade}
-                                    name="idade"
-                                    onChange={(e) => setNovoPaciente({ ...novoPaciente, idade: e.target.value })}
                                 />
                             </div>
                             <div className="form-group">
@@ -487,6 +499,8 @@ const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar }) 
 };
 
 export default ResponsividadePacientes;
+
+
 
 
 //AMANDA SUA BURRA: AJusta o filtro;Espaço vazio; botões e garante que a foto do user tá aparecendo. pfv.
