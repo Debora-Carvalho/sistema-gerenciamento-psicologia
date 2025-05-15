@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useUsuarios from '../../hooks/useUsuarios';
 import './PaginaInicial.css';
 import CabecalhoPaginaInicial from '../../components/CabecalhoPaginaInicial/CabecalhoPaginaInicial.js';
@@ -12,12 +13,15 @@ import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
 import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.svg';
 import Calendario from '../../components/Calendario/Calendario.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
+import TelaDeCarregamento from '../../components/CarregamentoTela/TelaDeCarregamento.js';
 
 function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
 
     const [saudacao, setSaudacao] = useState('');
     const { usuario } = useUsuarios();
+    const [carregando, setCarregando] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (usuario) {
@@ -33,18 +37,28 @@ function PaginaInicial() {
     }, [usuario]); // Agora a saudação só vai atualizada quando o usuário carregar.
 
     if (!usuario) {
-        return <div>Carregando usuário...</div>;
+        return <TelaDeCarregamento mensagem="Carregando tela inicial de usuário..." />;
     }
 
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
+    const irParaPacientes = () => {
+        setCarregando(true);
+        setTimeout(() => {
+            navigate('/pacientes');
+        }, 400); // tempo do carregamento antes de navegar para pacientes
+    };
+
+    if (carregando) {
+        return <TelaDeCarregamento mensagem="" />;
+    }
 
     return (
         <div className='container-pagina-inicial'>
             <div className='navbar'>
                 <MenuPrincipal />
             </div>
-                
+
             <div className='container-conteudo-pagina-inicial'>
                 <div className='pagina-inicial-cabecalho'>
                     <CabecalhoPaginaInicial />
@@ -63,45 +77,45 @@ function PaginaInicial() {
 
                 <div className='container-botoes-calendario'>
                     <div className='cards-botoes-funcionalidades'>
-                        <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnPacientes} alt='Ilustração'/>
-                            <a className='btn-pacientes' href='/pacientes'>
+                        <div className='card-inicio-funcionalidade' onClick={irParaPacientes} style={{ cursor: 'pointer' }}>
+                            <img src={imgBtnPacientes} alt='Ilustração' />
+                            <a className='btn-pacientes' href='#'>
                                 <p>Pacientes</p>
                             </a>
                         </div>
 
                         <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnAnotacoes} alt='Ilustração'/>
+                            <img src={imgBtnAnotacoes} alt='Ilustração' />
                             <a className='btn-anotacoes' href='#'>
                                 <p>Anotações</p>
                             </a>
                         </div>
 
                         <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnAgendamentos} alt='Ilustração'/>
+                            <img src={imgBtnAgendamentos} alt='Ilustração' />
                             <a className='btn-agendamentos' href='#'>
                                 <p>Agendamentos</p>
                             </a>
                         </div>
 
                         <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnPagamentos} alt='Ilustração'/>
+                            <img src={imgBtnPagamentos} alt='Ilustração' />
                             <a className='btn-pagamentos' href='#'>
                                 <p>Pagamentos</p>
                             </a>
                         </div>
                     </div>
-                    
+
                     <div className='card-calendario-inicio'>
                         <Calendario />
-                    </div>  
+                    </div>
 
                     <div className='card-calendario-responsivo'>
-                        <img src={imgBtnCalendario} alt='Ilustração'/>
+                        <img src={imgBtnCalendario} alt='Ilustração' />
                         <a className='btn-abrir-calendario-responsivo' href='/calendario'>
                             <p>Abrir calendário</p>
                         </a>
-                    </div>                                        
+                    </div>
                 </div>
             </div>
         </div>

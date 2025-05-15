@@ -74,8 +74,6 @@ function LoginCadastro() {
         return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(4, 9)}-${numeros.slice(9, 13)}`;
     };
 
-
-
     const validarLogin = () => {
         if (!email || !senha) {
             return "Preencha todos os campos!";
@@ -99,7 +97,9 @@ function LoginCadastro() {
             if (!erro) {
                 const telefoneLimpo = Number(telephone.replace(/\D/g, ''));
                 const userData = { email, senha, username, telephone: telefoneLimpo };
-                realizarCadastro(userData, setMensagemErroCadastro, setMensagemSucessoCadastro);
+                setCarregando(true)
+                await realizarCadastro(userData, setMensagemErroCadastro, setMensagemSucessoCadastro); //Dexei como await pois se não o carregamento ativa e desativa ao mesmo tempo
+                setCarregando(false)
                 setUsername("");
                 setTelephone("");
                 setEmail("");
