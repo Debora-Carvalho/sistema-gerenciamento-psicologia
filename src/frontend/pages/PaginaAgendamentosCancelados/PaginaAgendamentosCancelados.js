@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import "../PaginaAgendamentosConcluidos/PaginaAgendamentosConcluidos.css";
 import TabsFiltro from "../../components/Agendamentos/TabsFiltro";
-import Menu from "../../components/Menu/Menu";
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CardAgendamentosConcluidos from "../../components/AgendamentosConcluidos/CardAgendamentosConcluidos";
 
-function AgendamentosCancelados() {
+function AgendamentosConcluidos() {
   const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [usuario, setUsuario] = useState({
@@ -14,11 +14,11 @@ function AgendamentosCancelados() {
   });
 
   const agendamentos = [
-    { hora: "09:00", nome: "Maria Aparecida Fernandes Gonzalez", periodo: "09:00 - 09:30", data: "2025-04-28" },
-    { hora: "10:00", nome: "Francisco de Oliveira Queiroz", periodo: "10:00 - 10:30", data: "2025-04-28" },
-    { hora: "13:30", nome: "Paola Braga Souza", periodo: "13:30 - 14:00", data: "2025-04-28" },
-    { hora: "14:30", nome: "Jessica Viana Amorim", periodo: "13:30 - 14:00", data: "2025-05-02" },
-    { hora: "15:30", nome: "Justino Silva Ferreira", periodo: "13:30 - 14:00", data: "2025-05-02" },
+    { hora: "09:00", nome: "Maria Aparecida Fernandes Gonzalez", periodo: "09:00 - 09:30", data: "2025-04-28", link: "Link da sessão"},
+    { hora: "10:00", nome: "Francisco de Oliveira Queiroz", periodo: "10:00 - 10:30", data: "2025-04-28", link: "Link da sessão"},
+    { hora: "13:30", nome: "Paola Braga Souza", periodo: "13:30 - 14:00", data: "2025-04-28" , link: "Link da sessão"},
+    { hora: "14:30", nome: "Jessica Viana Amorim", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
+    { hora: "15:30", nome: "Justino Silva Ferreira", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
   ];
 
 
@@ -36,7 +36,7 @@ function AgendamentosCancelados() {
 
   return (
     <div className="pagina-container">
-      <Menu />
+      <MenuPrincipal />
       <div className="conteudo-principal">
         <header className="top-bar">
           <div className="container-pesquisa">
@@ -98,4 +98,4 @@ function AgendamentosCancelados() {
   );
 }
 
-export default AgendamentosCancelados;
+export default AgendamentosConcluidos;

@@ -162,10 +162,11 @@
       padding: 8px;
   }
 }
+
 .pagina-container{
   background-color: var(--background-color-tela);
 }
-/* arrumar para que o o fundo atrás do menu fique da mesma cor da tela... ??*/
+
 .conteudo-principal {
   flex: 1;
   margin-left: 0px;
@@ -175,6 +176,7 @@
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s ease-in-out;
+  height: 100vh; /*permite que a tela role, menos o menu*/
 }
 
 .conteudo-principal.menu-mobile-visivel {

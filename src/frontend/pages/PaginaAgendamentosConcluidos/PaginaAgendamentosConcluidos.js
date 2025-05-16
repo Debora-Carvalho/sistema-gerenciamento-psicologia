@@ -31,7 +31,7 @@ function AgendamentosConcluidos() {
 
 
   const datasOrdenadas = Object.keys(agendamentosPorData).sort(
-    (a, b) => new Date(a) - new Date(b)
+    (a, b) => new Date(b) - new Date(a)
   );
 
   return (
@@ -79,6 +79,7 @@ function AgendamentosConcluidos() {
           <a className="link-bloquear-agenda" href="#">Bloquear agenda</a>
           </div>
         </div>
+        <div className="conteudo-info-agendamento"> 
           {datasOrdenadas.map((data) => (
             <div key={data}>
               <div className="data-agendamento">
@@ -91,6 +92,7 @@ function AgendamentosConcluidos() {
               </div>
             </div>
           ))}
+          </div>
         </div>
         <button className="btn-ver-mais">Ver mais</button>
       </div>

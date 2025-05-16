@@ -140,6 +140,7 @@
     border-bottom: 1px solid #eee;
     font-size: 0.95rem;
     cursor: pointer;
+    border-radius: 0.5rem;
   }
   
   .dropdown button:last-child {
@@ -147,10 +148,11 @@
   }
   
   .dropdown button:hover {
-    background-color: #f2f2f2;
+   background-color: var(--primary-color);
+   transition: 0.4s;
+   color: white;
   }
   
-
     /* Responsividade */
     @media (max-width: 600px) {
       .card-agendamento {

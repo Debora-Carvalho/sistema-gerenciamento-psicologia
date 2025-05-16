@@ -5,6 +5,10 @@
   margin-top: 40px;
 }
 
+.btn-novo-agendamento{
+  padding: 1rem;
+  width: 11rem;
+} 
 
 .conteudo-filtros {
   display: flex;
@@ -15,6 +19,11 @@
 .cabecalho-concluidos {
   display: flex;
   gap: 10rem;
+}
+
+.conteudo-info-agendamento{
+  height: 100%;
+  margin: 0;
 }
 
 .btn-funcoes {
