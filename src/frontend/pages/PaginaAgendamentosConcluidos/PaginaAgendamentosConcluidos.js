@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import "../PaginaAgendamentosConcluidos/PaginaAgendamentosConcluidos.css";
 import TabsFiltro from "../../components/Agendamentos/TabsFiltro";
-import Menu from "../../components/Menu/Menu";
+import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CardAgendamentosConcluidos from "../../components/AgendamentosConcluidos/CardAgendamentosConcluidos";
 
 function AgendamentosConcluidos() {
@@ -36,7 +36,7 @@ function AgendamentosConcluidos() {
 
   return (
     <div className="pagina-container">
-      <Menu />
+      <MenuPrincipal />
       <div className="conteudo-principal">
         <header className="top-bar">
           <div className="container-pesquisa">
