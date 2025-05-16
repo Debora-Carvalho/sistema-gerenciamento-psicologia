@@ -39,7 +39,7 @@ export const atualizarPaciente = async (setErroCadastro, novoPaciente, editandoI
   } else {
     // Versão simplificada que atualiza os dados com apenas o novoPaciente
     try {
-      const response = await fetch("http://localhost:4000/editarPaciente", {
+      const response = await fetch(`${BASE_URL}/editarPaciente`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
