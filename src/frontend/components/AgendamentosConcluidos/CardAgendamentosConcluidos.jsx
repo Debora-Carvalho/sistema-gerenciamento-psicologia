@@ -1,15 +1,26 @@
-import React, { useState } from 'react';
-import '../Agendamentos/Componentes-agendamento.css'; 
-import OpcoesDropdownConcluidos from './OpcoesDropdownConcluidos';
+import React, { useState } from "react";
+import "../Agendamentos/Componentes-agendamento.css";
+import OpcoesDropdownConcluidos from "./OpcoesDropdownConcluidos";
+import { IoLocationOutline } from "react-icons/io5";
+import { MdAccessTime } from "react-icons/md";
 
-function CardAgendamentosConcluidos({ data, hora, nome, periodo }) {
+function CardAgendamentosConcluidos({ hora, nome, periodo, link }) {
   const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
 
   return (
-    < div className="card-agendamento-concluido">
+    <div className="card-agendamento-concluido">
       <div className="hora">{hora}</div>
       <div className="conteudo-agendamento">
-        <p className="periodo">{periodo}</p>
+        <div className="info-agendamento"> 
+        <p className="periodo">
+          <MdAccessTime className="icon-time" />
+          <a>{periodo}</a>
+        </p>
+        <p className="link">
+         <IoLocationOutline className="icon-location" />
+          <a>{link}</a>
+        </p>
+        </div>
         <p className="nome">{nome}</p>
       </div>
       <div className="dropdown-container">

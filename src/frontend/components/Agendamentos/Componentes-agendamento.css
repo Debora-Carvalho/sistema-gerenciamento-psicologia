@@ -17,27 +17,36 @@
   }
   
   .hora {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: bold;
     color: var(--primary-color);
     min-width: 80px;
   }
-  
+
+  .info-agendamento{
+   display: flex;
+   flex-direction: column;
+   font-weight: bold;
+   color: #666;
+   margin-bottom: 0.25rem;
+   gap: 5px;
+  }
+
+  .icon-location, .icon-time{
+    font-size: 25px;
+  }
+
   .conteudo-agendamento {
     flex: 1;
     margin-left: 1rem;
-  }
-  
-  .periodo {
-    font-weight: bold;
-    color: #666;
-    margin-bottom: 0.25rem;
+    font-size: 1.1rem;
   }
   
   .nome {
-    font-size: 1rem;
-    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
     color: #222;
+    margin-left: 15rem;
+    margin: 0;
   }
   
   .link-atendimento {
