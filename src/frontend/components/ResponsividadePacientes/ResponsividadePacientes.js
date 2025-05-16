@@ -1,596 +1,197 @@
-import React, { useState, useEffect } from "react";
-import "./ResponsividadePacientes.css";
-import { FaTrashAlt, FaEdit, FaFilter, FaFileExport, FaUserPlus, FaSearch } from "react-icons/fa";
-import jsPDF from 'jspdf';
-import 'jspdf-autotable';
+import React from 'react';
+import './ResponsividadePacientes.css';
+// Using inline SVG components instead of lucide-react
+// since you mentioned you prefer not to use hooks or other elements
 
-const calcularIdade = (dataNascimento) => {
-    const hoje = new Date();
-    const nascimento = new Date(dataNascimento);
-    let idade = hoje.getFullYear() - nascimento.getFullYear();
-    const m = hoje.getMonth() - nascimento.getMonth();
-    if (m < 0 || (m === 0 && hoje.getDate() < nascimento.getDate())) {
-        idade--;
-    }
-    return idade;
-};
+interface Patient {
+    id: string;
+    nome: string;
+    dataSessao: string;
+    idade: string;
+}
 
-// Função modificada para exportar para texto
-const exportarParaTexto = (pacientes, colunasVisiveis) => {
-    let texto = "Lista de Pacientes\n\n";
+interface ResponsividadePacientesState {
+    searchTerm: string;
+    patients: Patient[];
+    visiblePatients: number;
+}
 
-    const headers = [];
-    if (colunasVisiveis.nome) headers.push("Nome");
-    if (colunasVisiveis.data) headers.push("Data da Sessão");
-    if (colunasVisiveis.idade) headers.push("Idade");
-
-    texto += headers.join("\t") + "\n"; // Separar colunas por tabulação
-
-    pacientes.forEach(paciente => {
-        const row = [];
-        if (colunasVisiveis.nome) row.push(paciente.nome || 'N/A');
-        if (colunasVisiveis.data) row.push(paciente.data ? new Date(paciente.data).toLocaleDateString('pt-BR') : 'N/A');
-        if (colunasVisiveis.idade) row.push(paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A');
-        texto += row.join("\t") + "\n";
-    });
-
-    // Cria um Blob com o texto e inicia o download
-    const blob = new Blob([texto], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = 'lista_pacientes.txt';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-};
-
-export const exportarPDF = async (pacientes, colunasVisiveis) => {
-    try {
-        const doc = new jsPDF();
-
-        doc.setFontSize(18);
-        doc.text('Lista de Pacientes', 105, 15, null, null, 'center');
-
-        doc.setFontSize(10);
-        const dataEmissao = new Date().toLocaleDateString('pt-BR');
-        doc.text(`Emitido em: ${dataEmissao}`, 105, 22, null, null, 'center');
-
-        const headers = [];
-        const columnStyles = {};
-
-        if (colunasVisiveis.nome) {
-            headers.push('Nome');
-            columnStyles[headers.length - 1] = { cellWidth: 60 };
-        }
-
-        if (colunasVisiveis.data) {
-            headers.push('Data da Sessão');
-            columnStyles[headers.length - 1] = { cellWidth: 40 };
-        }
-
-        if (colunasVisiveis.idade) {
-            headers.push('Idade');
-            columnStyles[headers.length - 1] = { cellWidth: 20 };
-        }
-
-        const data = pacientes.map(paciente => {
-            const row = [];
-
-            if (colunasVisiveis.nome) {
-                row.push(paciente.nome || 'N/A');
-            }
-
-            if (colunasVisiveis.data) {
-                row.push(paciente.data ? new Date(paciente.data).toLocaleDateString('pt-BR') : 'N/A');
-            }
-
-            if (colunasVisiveis.idade) {
-                row.push(paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A');
-            }
-
-            return row;
-        });
-
-        doc.autoTable({
-            head: [headers],
-            body: data,
-            startY: 30,
-            styles: { fontSize: 10 },
-            columnStyles: columnStyles,
-            margin: { left: 10 }
-        });
-
-        doc.save('lista_pacientes.pdf');
-
-        return true;
-    } catch (error) {
-        console.error('Erro ao exportar PDF:', error);
-        throw error;
-    }
-};
-
-const ResponsividadePacientes = ({ pacientes, onEditar, onExcluir, onFiltrar, onAdicionarPaciente }) => {
-    const [filtroSelecionado, setFiltroSelecionado] = useState(null);
-    const [mostrarConfirmacaoExportar, setMostrarConfirmacaoExportar] = useState(false);
-    const [mostrarFormularioCadastro, setMostrarFormularioCadastro] = useState(false);
-    const [mensagemExportacao, setMensagemExportacao] = useState('');
-    const [novoPaciente, setNovoPaciente] = useState({
-        nome: '',
-        dataSessao: '',
-        idade: '',
-        profissao: '',
-        genero: '',
-        estadoCivil: '',
-        telefone: '',
-        email: '',
-        preferenciaContato: '',
-        dataNascimento: ''
-    });
-    const [erroCadastro, setErroCadastro] = useState('');
-    const [colunasVisiveis, setColunasVisiveis] = useState({
-        nome: true,
-        data: true,
-        idade: true,
-    });
-    const [filtroTexto, setFiltroTexto] = useState('');
-    const [pacientesFiltrados, setPacientesFiltrados] = useState(pacientes);
-    const [pacienteParaEdicao, setPacienteParaEdicao] = useState(null);
-
-
-    // Atualiza a lista de pacientes filtrados sempre que os pacientes ou o filtro mudam
-    useEffect(() => {
-        const resultadoFiltro = aplicarFiltro(pacientes);
-        setPacientesFiltrados(resultadoFiltro);
-    }, [pacientes, filtroSelecionado, filtroTexto]);
-
-    const handleFiltrar = (tipoFiltro) => {
-        setFiltroSelecionado(tipoFiltro);
-        onFiltrar(tipoFiltro, filtroTexto);
-    };
-
-    const aplicarFiltro = (pacientes) => {
-        if (!filtroSelecionado || !filtroTexto) {
-            return pacientes;
-        }
-
-        const filtroTextoLower = filtroTexto.toLowerCase();
-
-        switch (filtroSelecionado) {
-            case 'nome':
-                return pacientes.filter(paciente => paciente.nome.toLowerCase().includes(filtroTextoLower));
-            case 'dataSessao':
-                return pacientes.filter(paciente => paciente.dataSessao && paciente.dataSessao.toLowerCase().includes(filtroTextoLower));
-            case 'idade':
-                return pacientes.filter(paciente => {
-                    const idadePaciente = paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : null;
-                    return idadePaciente !== null && idadePaciente.toString().includes(filtroTextoLower);
-                });
-            default:
-                return pacientes;
-        }
+class ResponsividadePacientes extends React.Component<{}, ResponsividadePacientesState> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            searchTerm: '',
+            patients: [
+                { id: "1", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "2", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "3", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "4", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "5", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "6", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+                { id: "7", nome: "Andréa Oliveira Justina", dataSessao: "27/09/2025", idade: "42 anos" },
+            ],
+            visiblePatients: 7
+        };
     }
 
-
-    const handleExportar = (formato) => {
-        setMostrarConfirmacaoExportar(true, formato); // Passa o formato
-    };
-
-    const confirmarExportacao = async (formato) => {
-        setMostrarConfirmacaoExportar(false);
-        try {
-            if (formato === 'texto') {
-                exportarParaTexto(pacientes, colunasVisiveis);
-                setMensagemExportacao('Documento de texto exportado com sucesso!');
-            }
-        } catch (error) {
-            console.error("Falha ao exportar:", error);
-            setMensagemExportacao('Erro ao exportar o documento.');
-        } finally {
-            setTimeout(() => {
-                setMensagemExportacao('');
-            }, 3000);
-        }
-    };
-
-    const cancelarExportacao = () => {
-        setMostrarConfirmacaoExportar(false);
-    };
-
-
-    const handleAdicionarPaciente = () => {
-        setMostrarFormularioCadastro(true);
-        setNovoPaciente({
-            nome: '',
-            dataSessao: '',
-            idade: '',
-            profissao: '',
-            genero: '',
-            estadoCivil: '',
-            telefone: '',
-            email: '',
-            preferenciaContato: '',
-            dataNascimento: ''
-        });
-        setErroCadastro('');
-        setPacienteParaEdicao(null); // Limpa o paciente para edição
-    };
-
-    const handleEditar = (paciente) => {
-        setPacienteParaEdicao(paciente);
-        setNovoPaciente({
-            nome: paciente.nome,
-            dataSessao: paciente.dataSessao,
-            idade: paciente.idade,
-            profissao: paciente.profissao,
-            genero: paciente.genero,
-            estadoCivil: paciente.estadoCivil,
-            telefone: paciente.telefone,
-            email: paciente.email,
-            preferenciaContato: paciente.preferenciaContato,
-            dataNascimento: paciente.dataNascimento
-        });
-        setMostrarFormularioCadastro(true);
-    };
-
-    const handleSalvarPaciente = () => {
-        let hasErrors = false;
-        let errorMessage = '';
-
-        if (!novoPaciente.nome.trim() || !novoPaciente.telefone.trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
-            hasErrors = true;
-            errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
-        } else if (!validarNomeProfissao(novoPaciente.nome)) {
-            hasErrors = true;
-            errorMessage = "Nome não deve conter números ou caracteres especiais.";
-        } else if (!validarEmail(novoPaciente.email)) {
-            hasErrors = true;
-            errorMessage = "E-mail inválido.";
-        } else if (!validarDataNascimento(novoPaciente.dataNascimento)) {
-            hasErrors = true;
-            errorMessage = "O paciente deve ter pelo menos 18 anos.";
-        }
-
-        setErroCadastro(errorMessage);
-
-        if (hasErrors) {
-            return;
-        }
-        if (pacienteParaEdicao) {
-            onEditar({ ...novoPaciente, id: pacienteParaEdicao.id });
-        } else {
-            onAdicionarPaciente({ ...novoPaciente, id: Date.now() });
-        }
-
-        setMostrarFormularioCadastro(false);
-        setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
-        setPacienteParaEdicao(null);
-    };
-
-    const handleCancelarCadastro = () => {
-        setMostrarFormularioCadastro(false);
-        setNovoPaciente({ nome: '', dataSessao: '', idade: '', profissao: '', genero: '', estadoCivil: '', telefone: '', email: '', preferenciaContato: '', dataNascimento: '' });
-        setErroCadastro('');
-        setPacienteParaEdicao(null);
-    };
-
-    const formatarTelefone = (telefone) => {
-        const cleaned = ('' + telefone).replace(/\D/g, '');
-        const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-        if (match) {
-            return `${match[1]}${match[2]}${match[3]}`;
-        }
-        return cleaned;
-    };
-
-    const formatarTelefoneParaDisplay = (telefone) => {
-        const cleaned = ('' + telefone).replace(/\D/g, '');
-        const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-        if (match) {
-            return `(${match[1]}) ${match[2]}-${match[3]}`;
-        }
-        return telefone;
+    handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({ searchTerm: event.target.value });
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        let newValue = value;
+    handleEdit = (id: string) => {
+        console.log("Editar paciente:", id);
+    }
 
-        if (name === 'telefone') {
-            newValue = formatarTelefone(value);
-        }
+    handleDelete = (id: string) => {
+        this.setState({
+            patients: this.state.patients.filter(patient => patient.id !== id)
+        });
+    }
 
-        setNovoPaciente({ ...novoPaciente, [name]: newValue });
-    };
+    handleLoadMore = () => {
+        this.setState({ visiblePatients: this.state.visiblePatients + 5 });
+    }
 
-    const validarEmail = (email) => {
-        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        return regex.test(email);
-    };
+    render() {
+        const { searchTerm, patients, visiblePatients } = this.state;
 
-    const validarNomeProfissao = (texto) => {
-        const regex = /^[a-zA-Z\s]+$/;
-        return regex.test(texto);
-    };
+        const filteredPatients = searchTerm
+            ? patients.filter(patient =>
+                patient.nome.toLowerCase().includes(searchTerm.toLowerCase()))
+            : patients;
 
-    const validarDataNascimento = (dataNascimento) => {
-        if (!dataNascimento) return false;
+        const displayedPatients = filteredPatients.slice(0, visiblePatients);
 
-        const dataNasc = new Date(dataNascimento);
-        const hoje = new Date();
-        const idade = hoje.getFullYear() - dataNasc.getFullYear();
+        return (
+            <div className="patient-page">
+                {/* Header */}
+                <div className="patient-header">
+                    <button className="menu-button">
+                        {/* Menu icon */}
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1E40AF" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="12" x2="20" y2="12"></line>
+                            <line x1="4" y1="18" x2="20" y2="18"></line>
+                        </svg>
+                    </button>
 
-        if (idade > 18) {
-            return true;
-        } else if (idade === 18) {
-            const mesAtual = hoje.getMonth();
-            const diaAtual = hoje.getDate();
-            const mesNasc = dataNasc.getMonth();
-            const diaNasc = dataNasc.getDate();
-
-            if (mesAtual > mesNasc || (mesAtual === mesNasc && diaAtual >= diaNasc)) {
-                return true;
-            }
-        }
-        return false;
-    };
-
-    useEffect(() => {
-        if (mensagemExportacao) {
-            const timer = setTimeout(() => {
-                setMensagemExportacao('');
-            }, 3000);
-            return () => clearTimeout(timer);
-        }
-    }, [mensagemExportacao]);
-
-    const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
-    const [mostrarConfirmacaoExclusao, setMostrarConfirmacaoExclusao] = useState(false);
-
-    const confirmarExclusao = () => {
-        if (pacienteParaExcluir) {
-            onExcluir(pacienteParaExcluir);
-        }
-        setMostrarConfirmacaoExclusao(false);
-        setPacienteParaExcluir(null);
-    };
-
-    const cancelarExclusao = () => {
-        setMostrarConfirmacaoExclusao(false);
-        setPacienteParaExcluir(null);
-    };
-
-    const handleExcluir = (paciente) => {
-        setPacienteParaExcluir(paciente);
-        setMostrarConfirmacaoExclusao(true);
-    };
-
-    return (
-        <div className="pagina-container">
-            <main className="conteudo-principal">
-                <div className="cabecalho">
-                    <div className="input-pesquisa">
-                        <FaSearch className="icone-pesquisa" />
-                        <input
-                            type="text"
-                            placeholder="Pesquisar paciente"
-                            value={filtroTexto}
-                            onChange={(e) => setFiltroTexto(e.target.value)}
-                        />
-                    </div>
-                    <div className="usuario-info">
-                        <div className="foto-usuario"></div>
-                        <div>
-                            <strong>Ianara Holanda</strong>
-                            <p>email@email.com</p>
+                    <div className="user-profile">
+                        <div className="user-avatar">
+                            {/* User icon */}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <div className="user-info">
+                            <div className="user-name">Ianara Holanda</div>
+                            <div className="user-email">email@email.com</div>
                         </div>
                     </div>
                 </div>
 
-                <div className="titulo-area">
-                    <h2>Pacientes</h2>
-                    <div className="icones-filtros">
-                        <button className="botao-filtro" onClick={() => handleFiltrar('nome')} title="Filtrar por nome">
-                            <FaFilter />
+                {/* Search Bar */}
+                <div className="search-container">
+                    <div className="search-icon">
+                        {/* Search icon */}
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </div>
+                    <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Pesquisar paciente"
+                        value={searchTerm}
+                        onChange={this.handleSearch}
+                    />
+                </div>
+
+                {/* Patient List Header */}
+                <div className="patient-list-header">
+                    <h1 className="patient-title">Pacientes</h1>
+                    <div className="filter-buttons">
+                        <button className="filter-button">
+                            {/* Filter icon */}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+                            </svg>
                         </button>
-                        <button title="Exportar para Texto" onClick={() => handleExportar('texto')}>
-                            <FaFileExport />
-                        </button>
-                        <button onClick={handleAdicionarPaciente} title="Adicionar Paciente">
-                            <FaUserPlus />
+                        <button className="filter-button">
+                            {/* User icon */}
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
                         </button>
                     </div>
                 </div>
 
-                <div className="lista-pacientes">
-                    {pacientesFiltrados.map((paciente, i) => (
-                        <div key={i} className="paciente-card">
-                            <div className="info-paciente">
-                                <p><strong>Nome:</strong> {paciente.nome}</p>
-                                <p><strong>Data da sessão:</strong> {paciente.dataSessao || 'N/A'}</p>
-                                <p><strong>Idade:</strong> {paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'} anos</p>
-                            </div>
-                            <div className="acoes-paciente">
-                                <button className="editar" onClick={() => handleEditar(paciente)}>
-                                    <FaEdit /> Editar</button>
-                                <button className="excluir" onClick={() => handleExcluir(paciente)}>
-                                    <FaTrashAlt /> Excluir
-                                </button>
+                {/* Patient List */}
+                <div className="patient-list">
+                    {displayedPatients.map((patient) => (
+                        <div key={patient.id} className="patient-card">
+                            <div className="patient-info">
+                                <div className="info-row">
+                                    <div className="info-label">Nome</div>
+                                    <div className="info-value">{patient.nome}</div>
+                                </div>
+                                <div className="info-row">
+                                    <div className="info-label">Data da sessão</div>
+                                    <div className="info-value">{patient.dataSessao}</div>
+                                </div>
+                                <div className="info-row">
+                                    <div className="info-label">Idade</div>
+                                    <div className="info-value">{patient.idade}</div>
+                                </div>
+
+                                <div className="action-buttons">
+                                    <button
+                                        onClick={() => this.handleEdit(patient.id)}
+                                        className="action-button"
+                                    >
+                                        {/* Edit icon */}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                        </svg>
+                                        <span>Editar</span>
+                                    </button>
+
+                                    <button
+                                        onClick={() => this.handleDelete(patient.id)}
+                                        className="action-button"
+                                    >
+                                        {/* Delete icon */}
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                            <polyline points="3 6 5 6 21 6"></polyline>
+                                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                                        </svg>
+                                        <span>Excluir</span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     ))}
                 </div>
 
-                <div className="ver-mais-container">
-                    <button className="ver-mais">Ver mais</button>
-                </div>
-
-                {mostrarConfirmacaoExportar && (
-                    <div className="popup-confirmacao">
-                        <p>Deseja realmente exportar a lista de pacientes?</p>
-                        <div className="botoes-popup">
-                            <button className="btn-confirmar" onClick={() => confirmarExportacao('texto')}>Sim</button>
-                            <button className="btn-cancelar" onClick={cancelarExportacao}>Não</button>
-                        </div>
+                {visiblePatients < filteredPatients.length && (
+                    <div className="load-more">
+                        <button
+                            onClick={this.handleLoadMore}
+                            className="load-more-button"
+                        >
+                            Ver mais
+                        </button>
                     </div>
                 )}
-                {mostrarConfirmacaoExclusao && (
-                    <div className="popup-confirmacao">
-                        <p>Deseja realmente excluir este paciente?</p>
-                        <div className="botoes-popup">
-                            <button className="btn-confirmar" onClick={confirmarExclusao}>Sim</button>
-                            <button className="btn-cancelar" onClick={cancelarExclusao}>Não</button>
-                        </div>
-                    </div>
-                )}
-
-                {mostrarFormularioCadastro && (
-                    <div className="popup-formulario">
-                        <h3>{pacienteParaEdicao ? 'Editar Paciente' : 'Adicionar Novo Paciente'}</h3>
-                        {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
-                        <div className="formulario-cadastro-container">
-                            <div className="form-group">
-                                <label>Nome:</label>
-                                <input
-                                    type="text"
-                                    value={novoPaciente.nome}
-                                    name="nome"
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Profissão:</label>
-                                <input
-                                    type="text"
-                                    value={novoPaciente.profissao}
-                                    name="profissao"
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Gênero:</label>
-                                <select
-                                    name="genero"
-                                    value={novoPaciente.genero}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="">Selecione</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Outro">Outro</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Estado Civil:</label>
-                                <select
-                                    name="estadoCivil"
-                                    value={novoPaciente.estadoCivil}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="">Selecione</option>
-                                    <option value="Solteiro(a)">Solteiro(a)</option>
-                                    <option value="Casado(a)">Casado(a)</option>
-                                    <option value="Divorciado(a)">Divorciado(a)</option>
-                                    <option value="Viúvo(a)">Viúvo(a)</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label>Telefone:</label>
-                                <input
-                                    type="tel"
-                                    name="telefone"
-                                    placeholder="(XX) XXXXX-XXXX"
-                                    value={formatarTelefoneParaDisplay(novoPaciente.telefone)}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>E-mail:</label>
-                                <input
-                                    type="email"
-                                    name="email"
-                                    placeholder="seuemail.@provedor.com"
-                                    value={novoPaciente.email}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <label>Preferência de Contato:</label>
-                                <select
-                                    name="preferenciaContato"
-                                    value={novoPaciente.preferenciaContato}
-                                    onChange={handleInputChange}
-                                >
-                                    <option value="">Selecione</option>
-                                    <option value="Telefone">Telefone</option>
-                                    <option value="E-mail">E-mail</option>
-                                    <option value="WhatsApp">WhatsApp</option>
-                                </select>
-                            </div>
-                            <div className="form-group">
-                                <label htmlFor="dataNascimento">Data de Nascimento</label>
-                                <input
-                                    type="date"
-                                    id="dataNascimento"
-                                    name="dataNascimento"
-                                    value={novoPaciente.dataNascimento}
-                                    onChange={handleInputChange}
-                                />
-                            </div>
-                        </div>
-                        <div className="botoes-popup botoes-formulario-cadastro">
-                            <button className="btn-confirmar" onClick={handleSalvarPaciente}>Salvar</button>
-                            <button className="btn-cancelar" onClick={handleCancelarCadastro}>Cancelar</button>
-                        </div>
-                    </div>
-                )}
-                {mensagemExportacao && (
-                    <div className={`mensagem-exportacao ${mensagemExportacao.startsWith('Erro') ? 'erro' : ''}`}>
-                        {mensagemExportacao}
-                    </div>
-                )}
-            </main>
-        </div>
-    );
-};
-
-const PacientesPage = () => {
-    const [pacientes, setPacientes] = useState([
-        { id: 1, nome: 'João da Silva', dataSessao: '2024-01-15', dataNascimento: '1990-05-20', email: 'joao@email.com', telefone: '11999998888' },
-        { id: 2, nome: 'Maria Souza', dataSessao: '2024-01-20', dataNascimento: '1985-10-10', email: 'maria@email.com', telefone: '21988887777' },
-    ]);
-
-    const handleAdicionarPaciente = (novoPaciente) => {
-        setPacientes([...pacientes, novoPaciente]);
-    };
-
-    const handleEditarPaciente = (pacienteEditado) => {
-        setPacientes(pacientes.map(p => p.id === pacienteEditado.id ? pacienteEditado : p));
-    };
-
-    const handleExcluirPaciente = (pacienteParaExcluir) => {
-        setPacientes(pacientes.filter(p => p.id !== pacienteParaExcluir.id));
-    };
-
-    const handleFiltrarPacientes = (tipoFiltro, filtroTexto) => {
-        // Implemente a lógica de filtragem aqui, se necessário
-        console.log('Filtrando por:', tipoFiltro, 'com o texto:', filtroTexto);
-    };
-
-    return (
-        <ResponsividadePacientes
-            pacientes={pacientes}
-            onAdicionarPaciente={handleAdicionarPaciente}
-            onEditar={handleEditarPaciente}
-            onExcluir={handleExcluirPaciente}
-            onFiltrar={handleFiltrarPacientes}
-        />
-    );
-};
+            </div>
+        );
+    }
+}
 
 export default ResponsividadePacientes;
-
 
 
 //AMANDA SUA BURRA: AJusta o filtro;Espaço vazio; botões e garante que a foto do user tá aparecendo. pfv.
