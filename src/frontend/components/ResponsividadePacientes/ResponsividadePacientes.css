@@ -2,26 +2,36 @@
     min-height: 100vh;
     background-color: white;
     font-family: system-ui, -apple-system, sans-serif;
+    position: relative;
 }
 
+/* Header Styles */
 .patient-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 16px;
     background-color: white;
+    border-bottom: 1px solid #E5E7EB;
 }
 
 .menu-button {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 4px;
+    padding: 8px;
+    border-radius: 50%;
+    transition: background-color 0.2s;
+}
+
+.menu-button:hover {
+    background-color: #F3F4F6;
 }
 
 .user-profile {
     display: flex;
     align-items: center;
+    gap: 8px;
 }
 
 .user-avatar {
@@ -32,7 +42,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 8px;
 }
 
 .user-info {
@@ -42,13 +51,15 @@
 .user-name {
     font-weight: 500;
     color: #1F2937;
+    font-size: 0.875rem;
 }
 
 .user-email {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: #6B7280;
 }
 
+/* Search Bar */
 .search-container {
     position: relative;
     margin: 16px;
@@ -59,6 +70,7 @@
     top: 50%;
     left: 12px;
     transform: translateY(-50%);
+    color: #9CA3AF;
 }
 
 .search-input {
@@ -69,20 +81,27 @@
     border-radius: 6px;
     font-size: 1rem;
     outline: none;
+    transition: background-color 0.2s;
 }
 
+.search-input:focus {
+    background-color: #E5E7EB;
+}
+
+/* Patient List Header */
 .patient-list-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 0 16px;
-    margin-bottom: 16px;
+    margin: 24px 0 16px;
 }
 
 .patient-title {
     font-size: 1.5rem;
     font-weight: 700;
     color: #1E40AF;
+    margin: 0;
 }
 
 .filter-buttons {
@@ -100,17 +119,29 @@
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
+.filter-button:hover {
+    background-color: #D1D5DB;
+}
+
+.filter-button span {
+    display: none;
+}
+
+/* Patient List */
 .patient-list {
     padding: 0 16px;
+    margin-bottom: 24px;
 }
 
 .patient-card {
     background-color: #FCE7F3;
-    border-radius: 6px;
+    border-radius: 8px;
     padding: 16px;
     margin-bottom: 12px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .patient-info {
@@ -120,23 +151,25 @@
 .info-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 4px;
+    margin-bottom: 8px;
 }
 
 .info-label {
     font-weight: 500;
     color: #4B5563;
+    font-size: 0.875rem;
 }
 
 .info-value {
     color: #6B7280;
+    font-size: 0.875rem;
 }
 
 .action-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 16px;
-    margin-top: 8px;
+    margin-top: 12px;
 }
 
 .action-button {
@@ -147,12 +180,20 @@
     color: #6B7280;
     cursor: pointer;
     font-size: 0.875rem;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+}
+
+.action-button:hover {
+    background-color: rgba(0, 0, 0, 0.05);
 }
 
 .action-button span {
-    margin-left: 4px;
+    margin-left: 6px;
 }
 
+/* Load More Button */
 .load-more {
     display: flex;
     justify-content: center;
@@ -167,4 +208,232 @@
     border-radius: 9999px;
     padding: 12px 32px;
     cursor: pointer;
+    transition: all 0.2s;
+}
+
+.load-more-button:hover {
+    background-color: #EFF6FF;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 24px;
+    border-radius: 8px;
+    width: 90%;
+    max-width: 500px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #1E40AF;
+}
+
+.close-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #6B7280;
+    padding: 4px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-button:hover {
+    background-color: #F3F4F6;
+}
+
+.modal-body {
+    margin-bottom: 24px;
+}
+
+.modal-body p {
+    color: #4B5563;
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+/* Form Styles - Atualizado para selects */
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4B5563;
+    font-size: 0.875rem;
+}
+
+/* Estilo unificado para inputs e selects */
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s;
+    height: 40px; /* Altura fixa */
+    box-sizing: border-box;
+}
+
+/* Estilo específico para selects */
+.form-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 36px;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: #1E40AF;
+}
+
+/* Mensagens de erro */
+.error-message {
+    color: #EF4444;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+}
+
+/* Botões do formulário */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+}
+
+.cancel-button {
+    padding: 10px 16px;
+    background-color: #E5E7EB;
+    color: #374151;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: background-color 0.2s;
+}
+
+.cancel-button:hover {
+    background-color: #D1D5DB;
+}
+
+.save-button {
+    padding: 10px 16px;
+    background-color: #1E40AF;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s;
+}
+
+.save-button:hover {
+    background-color: #1E3A8A;
+}
+
+/* Responsividade */
+@media (min-width: 480px) {
+    .filter-button {
+        border-radius: 9999px;
+        width: auto;
+        padding: 8px 16px;
+    }
+    
+    .filter-button span {
+        display: inline;
+        margin-left: 8px;
+        font-size: 0.875rem;
+    }
+
+    .user-name {
+        font-size: 1rem;
+    }
+
+    .user-email {
+        font-size: 0.875rem;
+    }
+
+    .modal-header h2 {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+    }
+}
+/* Estilos para o filtro */
+.filter-container {
+    position: relative;
+    display: inline-block;
+}
+
+.filter-options {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    z-index: 100;
+    padding: 8px;
+    min-width: 120px;
+}
+
+.filter-option {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 0.875rem;
+}
+
+.filter-option:hover {
+    background-color: #F3F4F6;
+}
+
+.filter-active {
+    background-color: #E5E7EB;
+    font-weight: 500;
 }
