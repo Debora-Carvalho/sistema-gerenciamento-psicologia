@@ -1,6 +1,6 @@
 const { ObjectId } = require("mongodb");
-const connectToDatabase = require("../config/mongodb");
-const { sendAppointmentNotificationToUser, sendAppointmentConfirmationToPatient } = require("../services/emailService");
+const connectToDatabase = require("../../config/mongodb");
+const { sendAppointmentNotificationToUser, sendAppointmentConfirmationToPatient } = require("../../services/emailService");
 
 async function adicionarAgendamentoHandler(req, res) {
   try {

@@ -92,6 +92,28 @@ function PaginaPacientesDetalhes() {
     setMostrarFormulario(true);
   };
 
+  function formatarTelefoneInternacional(numero) {
+    if (!numero) return "Telefone não disponível";
+
+    const cleaned = String(numero).replace(/\D/g, '');
+
+
+    if (cleaned.length < 11) return "Telefone não disponível";
+
+    const ddi = cleaned.slice(0, 2);
+    const ddd = cleaned.slice(2, 4);
+    const numeroLocal = cleaned.slice(4);
+
+    if (numeroLocal.length === 9) {
+      return `+${ddi} (${ddd}) ${numeroLocal.slice(0, 5)}-${numeroLocal.slice(5)}`;
+    } else if (numeroLocal.length === 8) {
+      return `+${ddi} (${ddd}) ${numeroLocal.slice(0, 4)}-${numeroLocal.slice(4)}`;
+    } else {
+      return `+${ddi} (${ddd}) ${numeroLocal}`;
+    }
+  }
+
+
   console.log(novoPaciente);
   return (
     <div className="container-pacientes-detalhes">
@@ -100,37 +122,37 @@ function PaginaPacientesDetalhes() {
       </div>
 
       <div className="container-conteudo-pacientes-detalhes">
-      <div style={{ alignItems: 'center' }} className='pagina-inicial-cabecalho-responsivo'>
-                    <CabecalhoResponsivo />
-                </div>
+        <div style={{ alignItems: 'center' }} className='pagina-inicial-cabecalho-responsivo'>
+          <CabecalhoResponsivo />
+        </div>
 
-                <header className="top-bar">
-                    <div className="container-pesquisa">
-                        <FiSearch className={`icone-lupa ${campoPesquisaFocado }`} />
-                        <input
-                            type="text"
-                            className="campo-pesquisa"
-                            onFocus={() => setCampoPesquisaFocado(true)}
-                            onBlur={() => setCampoPesquisaFocado(false)}
-                        />
-                        {!campoPesquisaFocado &&  (
-                            <span className="texto-pesquisa">Pesquisar paciente</span>
-                        )}
-                    </div>
-                    <div className="usuario-info">
-                        <div className="avatar" />
-                        {usuario ? (
-                            <div className="info-texto">
-                                <strong>{usuario.username}</strong>
-                                <span>{usuario.email}</span>
-                            </div>
-                        ) : (
-                            <div className="info-texto">
-                                <strong>Carregando...</strong>
-                            </div>
-                        )}
-                    </div>
-                </header>
+        <header className="top-bar">
+          <div className="container-pesquisa">
+            <FiSearch className={`icone-lupa ${campoPesquisaFocado}`} />
+            <input
+              type="text"
+              className="campo-pesquisa"
+              onFocus={() => setCampoPesquisaFocado(true)}
+              onBlur={() => setCampoPesquisaFocado(false)}
+            />
+            {!campoPesquisaFocado && (
+              <span className="texto-pesquisa">Pesquisar paciente</span>
+            )}
+          </div>
+          <div className="usuario-info">
+            <div className="avatar" />
+            {usuario ? (
+              <div className="info-texto">
+                <strong>{usuario.username}</strong>
+                <span>{usuario.email}</span>
+              </div>
+            ) : (
+              <div className="info-texto">
+                <strong>Carregando...</strong>
+              </div>
+            )}
+          </div>
+        </header>
 
         <div className="cards-paciente-pagamentos">
           <div className="card-paciente">
@@ -407,13 +429,14 @@ function PaginaPacientesDetalhes() {
                     <p className="paciente-atributo container-btn-direcionar-whatsapp">
                       Telefone:
                       <span>
-                        {typeof paciente.telefone === "string"
-                          ? paciente.telefone.replace(
-                              /^(\+?55)?(\d{2})(\d{5})(\d{4})$/,
-                              "+55 ($2) $3-$4"
-                            )
-                          : "Telefone não disponível"}
+                        <span>
+                          {paciente.telefone && /^\+?\d{11,15}$/.test(paciente.telefone)
+                            ? formatarTelefoneInternacional(paciente.telefone)
+                            : "Telefone não disponível"}
+                        </span>
+
                       </span>
+
                       <a
                         className="btn-direcionar-whatsapp"
                         href={`https://wa.me/${paciente?.telefone}`}

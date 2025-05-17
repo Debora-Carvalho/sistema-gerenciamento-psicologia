@@ -1,4 +1,4 @@
-import BASE_URL from './configRota';
+import BASE_URL from '../configRota';
 export default function useDeleteAgendamento() {
     const deleteAgendamento = async (agendamentoId, onDelete) => {
 

@@ -74,7 +74,8 @@
     text-decoration: none;
     text-align: center;
     width: 220px;  
-    height: 35.09px;  
+    height: 35.09px; 
+    padding: 5px; 
     border: none;
     border-radius: 10px;
     cursor: pointer;

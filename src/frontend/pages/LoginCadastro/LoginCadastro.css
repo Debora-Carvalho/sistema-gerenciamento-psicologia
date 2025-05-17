@@ -52,12 +52,14 @@
 
 .first-column,
 .second-column {
+    position: relative;
     height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center; 
+    overflow: hidden;
 }
 
 .first-column {
@@ -230,9 +232,9 @@
 
 /* IMAGENS */
   .img-login {
-    position: fixed;
-    top: 69vh;           
-    right: 71vw;        
+    position: absolute;         
+    left: 0;        
+    bottom: 0;
     width: 20vw;         
     max-width: 300px;   
     max-height: 50vh;    
@@ -241,9 +243,9 @@
   }
   
   .img-cadastro {
-    position: fixed;
-    top: 68vh;
-    left: 70vw;
+    position: absolute;
+    right: 0;
+    bottom: 0;
     width: 20vw;
     max-width: 300px;
     max-height: 50vh;
@@ -252,9 +254,9 @@
   }
   
   .img-planta-cadastro {
-    position: fixed;
-    bottom: 11vh;
-    right: 10vw;
+    position: absolute;
+    bottom: 0;
+    right: 0;
     width: 10vw;
     max-width: 80px;
     max-height: 30vh;
@@ -263,9 +265,9 @@
   }
   
   .img-planta-login {
-    position: fixed;
-    bottom: 11vh;
-    left: 9.5vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 10vw;
     max-width: 80px;
     max-height: 30vh;

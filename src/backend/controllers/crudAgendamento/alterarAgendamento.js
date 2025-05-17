@@ -1,5 +1,5 @@
 const { ObjectId } = require("mongodb");
-const connectToDatabase = require("../config/mongodb");
+const connectToDatabase = require("../../config/mongodb");
 
 async function alterarAgendamentoHandler(req, res) {
     try {

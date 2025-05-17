@@ -2,7 +2,7 @@ import BASE_URL from './configRota';
 
 export default function useCadastro() {
 
-    const realizarCadastro = async (userData, setMensagemErro) => {
+    const realizarCadastro = async (userData, setMensagemErro, setMensagemSucesso) => {
         try {
             const response = await fetch(`${BASE_URL}/cadastroUsuario`, {
                 method: "POST",
@@ -15,7 +15,7 @@ export default function useCadastro() {
             const data = await response.json();
 
             if (response.ok && data.success) {
-                setMensagemErro("Cadastro concluído! Acessando login...");
+                setMensagemSucesso("Cadastro concluído! Acessando login...");
                 setTimeout(() => window.location.reload(), 1500);
             } else {
                 setMensagemErro(data.error || "Erro ao cadastrar!");

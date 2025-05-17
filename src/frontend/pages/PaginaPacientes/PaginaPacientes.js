@@ -13,7 +13,7 @@ import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
-import useAgendamentos from '../../hooks/useAgendamentos';
+import useAgendamentos from '../../hooks/agendamentos/useAgendamentos';
 
 function PaginaPacientes() {
   console.log("UserID do localStorage:", localStorage.getItem("userID"));
@@ -166,34 +166,42 @@ function PaginaPacientes() {
     setConfirmarExportacao(false);
   };
 
-  const formatarTelefone = (telefone) => {
-    const cleaned = ('' + telefone).replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+  // const formatarTelefone = (telefone) => {
+  //   const cleaned = ('' + telefone).replace(/\D/g, '');
+  //   const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+  //   if (match) {
+  //     return `${match[1]}${match[2]}${match[3]}`;
+  //   }
+  //   return cleaned;
+  // };
+
+  const formatarTelefoneParaDisplay = (telefone) => {
+    const cleaned = String(telefone).replace(/\D/g, '');
+    const match = cleaned.match(/^(\d{2})(\d{2})(\d{5})(\d{4})$/);
     if (match) {
-      return `${match[1]}${match[2]}${match[3]}`;
+      return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}`;
     }
     return cleaned;
   };
 
-  const formatarTelefoneParaDisplay = (telefone) => {
-    const cleaned = ('' + telefone).replace(/\D/g, '');
-    const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-    if (match) {
-      return `(${match[1]}) ${match[2]}-${match[3]}`;
-    }
-    return telefone;
-  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    let newValue = value;
 
     if (name === 'telefone') {
-      newValue = formatarTelefone(value);
+      const somenteNumeros = value.replace(/\D/g, '');
+      setNovoPaciente(prev => ({ ...prev, telefone: somenteNumeros }));
+    } else {
+      setNovoPaciente(prev => ({ ...prev, [name]: value }));
     }
 
-    setNovoPaciente({ ...novoPaciente, [name]: newValue });
   };
+
+  const validarTelefone = (telefone) => {
+    const regex = /^(\d{2})(\d{2})(\d{4,5})(\d{4})$/;
+    return regex.test(telefone);
+  };
+
 
   const validarEmail = (email) => {
     const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
@@ -483,7 +491,7 @@ function PaginaPacientes() {
                 type="tel"
                 id="telefone"
                 name="telefone"
-                placeholder="(XX) XXXXX-XXXX"
+                placeholder="(XX) XX XXXXX-XXXX"
                 value={formatarTelefoneParaDisplay(novoPaciente.telefone)}
                 onChange={handleInputChange}
               />
@@ -536,7 +544,7 @@ function PaginaPacientes() {
                 let hasErrors = false;
                 let errorMessage = '';
 
-                if (!novoPaciente.nome.trim() || !novoPaciente.telefone.trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
+                if (!novoPaciente.nome.trim() || !String(novoPaciente.telefone).trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
                   hasErrors = true;
                   errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
                 } else if (!validarNomeProfissao(novoPaciente.nome)) {
@@ -548,6 +556,9 @@ function PaginaPacientes() {
                 } else if (!validarDataNascimento(novoPaciente.dataNascimento)) {
                   hasErrors = true;
                   errorMessage = "O paciente deve ter pelo menos 18 anos.";
+                } else if (!validarTelefone(novoPaciente.telefone)) {
+                  hasErrors = true;
+                  errorMessage = "Telefone inválido. Inclua o DDI (ex: +55).";
                 }
 
                 setErroCadastro(errorMessage);
@@ -558,7 +569,8 @@ function PaginaPacientes() {
 
                 const pacienteParaSalvar = {
                   ...novoPaciente,
-                  telefone: novoPaciente.telefone,
+                  telefone: novoPaciente.telefone ? Number(novoPaciente.telefone) : null,
+                  _id: novoPaciente._id
                 };
 
                 if (editandoIndex !== null) {
@@ -572,6 +584,12 @@ function PaginaPacientes() {
                   );
                   if (sucesso) {
                     mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
+                      const idPacienteAtualizado = pacienteParaSalvar._id || localStorage.getItem("pacienteID");
+
+                      if (idPacienteAtualizado) {
+                        localStorage.setItem("pacienteID", idPacienteAtualizado);
+                      }
+
                   } else {
                     mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
                   }
@@ -584,7 +602,7 @@ function PaginaPacientes() {
                       setErroCadastro("Paciente com esses dados já está registrado.");
                       return;
                     }
-                    await cadastrarPaciente(
+                    const resultado = await cadastrarPaciente(
                       pacienteParaSalvar,
                       pacientes,
                       editandoIndex,
@@ -592,7 +610,11 @@ function PaginaPacientes() {
                       resetarFormulario,
                       setErroCadastro
                     );
-                    mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                    if(resultado){
+                      mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                    } else {
+                      mostrarNotificacao('Erro no cadastro.', 'erro');
+                    }
 
                   } catch (error) {
                     mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');
