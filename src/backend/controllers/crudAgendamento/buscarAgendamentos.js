@@ -11,7 +11,7 @@ async function buscarAgendamentosHandler(req, res) {
 
         const db = await connectToDatabase();
 
-        const agendamentos = await db.collection("Agendamento").find({ userID: new ObjectId(userID) }).toArray();
+        const agendamentos = await db.collection("Agendamento").find({ id_usuario: new ObjectId(userID) }).toArray();
 
         if (!agendamentos || agendamentos.length === 0) {
             return res.status(404).json({ error: "Nenhum agendamento encontrado" });

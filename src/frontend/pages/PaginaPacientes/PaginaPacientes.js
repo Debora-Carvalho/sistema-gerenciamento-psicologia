@@ -528,10 +528,19 @@ function PaginaPacientes() {
               <label htmlFor="dataNascimento">Data de Nascimento</label>
               <input
                 type="date"
-                id="dataNascimento"
-                name="dataNascimento"
-                value={novoPaciente.dataNascimento}
-                onChange={handleInputChange}
+                placeholder="Data de Nascimento"
+                title="Alterar data de nascimento"
+                value={
+                  novoPaciente.dataNascimento
+                    ? new Date(novoPaciente.dataNascimento).toISOString().split("T")[0]
+                    : ""
+                }
+                onChange={(e) =>
+                  setNovoPaciente({
+                    ...novoPaciente,
+                    dataNascimento: e.target.value,
+                  })
+                }
               />
             </div>
           </div>
@@ -584,11 +593,11 @@ function PaginaPacientes() {
                   );
                   if (sucesso) {
                     mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
-                      const idPacienteAtualizado = pacienteParaSalvar._id || localStorage.getItem("pacienteID");
+                    const idPacienteAtualizado = pacienteParaSalvar._id || localStorage.getItem("pacienteID");
 
-                      if (idPacienteAtualizado) {
-                        localStorage.setItem("pacienteID", idPacienteAtualizado);
-                      }
+                    if (idPacienteAtualizado) {
+                      localStorage.setItem("pacienteID", idPacienteAtualizado);
+                    }
 
                   } else {
                     mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
@@ -610,7 +619,7 @@ function PaginaPacientes() {
                       resetarFormulario,
                       setErroCadastro
                     );
-                    if(resultado){
+                    if (resultado) {
                       mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
                     } else {
                       mostrarNotificacao('Erro no cadastro.', 'erro');
