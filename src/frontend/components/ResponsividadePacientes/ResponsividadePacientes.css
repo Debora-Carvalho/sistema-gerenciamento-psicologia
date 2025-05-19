@@ -1,11 +1,10 @@
 .patient-page {
     min-height: 100vh;
-    background-color: white;
-    font-family: system-ui, -apple-system, sans-serif;
+    background-color: white; /* Mantido para a página geral */
+    font-family: 'Inter', sans-serif;
     position: relative;
 }
 
-/* Header Styles */
 .patient-header {
     display: flex;
     justify-content: space-between;
@@ -59,7 +58,6 @@
     color: #6B7280;
 }
 
-/* Search Bar */
 .search-container {
     position: relative;
     margin: 16px;
@@ -88,7 +86,6 @@
     background-color: #E5E7EB;
 }
 
-/* Patient List Header */
 .patient-list-header {
     display: flex;
     justify-content: space-between;
@@ -130,7 +127,6 @@
     display: none;
 }
 
-/* Patient List */
 .patient-list {
     padding: 0 16px;
     margin-bottom: 24px;
@@ -193,7 +189,6 @@
     margin-left: 6px;
 }
 
-/* Load More Button */
 .load-more {
     display: flex;
     justify-content: center;
@@ -215,7 +210,6 @@
     background-color: #EFF6FF;
 }
 
-/* Modal Styles */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -230,7 +224,7 @@
 }
 
 .modal-content {
-    background-color: white;
+    background-color: white; /* Fundo branco do modal */
     padding: 24px;
     border-radius: 8px;
     width: 90%;
@@ -278,7 +272,6 @@
     font-size: 0.875rem;
 }
 
-/* Form Styles - Atualizado para selects */
 .form-group {
     margin-bottom: 16px;
 }
@@ -291,7 +284,6 @@
     font-size: 0.875rem;
 }
 
-/* Estilo unificado para inputs e selects */
 .form-group input,
 .form-group select {
     width: 100%;
@@ -302,11 +294,10 @@
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s;
-    height: 40px; /* Altura fixa */
+    height: 40px;
     box-sizing: border-box;
 }
 
-/* Estilo específico para selects */
 .form-group select {
     appearance: none;
     background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
@@ -321,7 +312,6 @@
     border-color: #1E40AF;
 }
 
-/* Mensagens de erro */
 .error-message {
     color: #EF4444;
     font-size: 0.75rem;
@@ -329,7 +319,6 @@
     display: block;
 }
 
-/* Botões do formulário */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -372,14 +361,13 @@
     background-color: #1E3A8A;
 }
 
-/* Responsividade */
 @media (min-width: 480px) {
     .filter-button {
         border-radius: 9999px;
         width: auto;
         padding: 8px 16px;
     }
-    
+
     .filter-button span {
         display: inline;
         margin-left: 8px;
@@ -404,7 +392,7 @@
         flex-direction: column;
     }
 }
-/* Estilos para o filtro */
+
 .filter-container {
     position: relative;
     display: inline-block;
@@ -436,4 +424,44 @@
 .filter-active {
     background-color: #E5E7EB;
     font-weight: 500;
+}
+/* Estilos para os alertas */
+.alerts-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.alert-success {
+    padding: 15px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    animation: slideIn 0.3s ease-out, fadeOut 0.5s ease-in 4.5s forwards;
+    opacity: 1;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
