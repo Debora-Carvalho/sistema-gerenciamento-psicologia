@@ -1,0 +1,42 @@
+.overlay {
+    /* igual aos outros */
+}
+
+.form-box {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 20px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.form-box h3 {
+    margin-top: 0;
+    color: #0047b3;
+}
+
+.form-box input,
+.form-box select {
+    width: 100%;
+    margin: 0.4rem 0;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+.erro {
+    display: block;
+    margin-bottom: 0.8rem;
+    color: #e63946;
+    /* vermelho */
+    font-size: 0.92rem;
+    text-align: center;
+}
+
+
+
+.btn-row {
+    /* mesmo estilo */
+}

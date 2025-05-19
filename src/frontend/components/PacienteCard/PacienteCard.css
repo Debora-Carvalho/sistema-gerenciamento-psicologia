@@ -1,0 +1,41 @@
+.paciente-card {
+    background: #fdebed;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 0.75rem 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.paciente-info p {
+    margin: 0.25rem 0;
+    font-size: 0.9rem;
+}
+
+.paciente-info span {
+    display: block;
+    font-weight: 600;
+    color: #555;
+}
+
+.paciente-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.icon-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.delete {
+    color: #d00000;
+}
