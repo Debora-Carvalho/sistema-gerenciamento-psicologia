@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
@@ -8,13 +8,13 @@ import PacientesList from "../PacientesList/PacientesList";
 import PacientesActions from "../PacientesActions/PacientesActions";
 import FiltroDropdown from "../FiltroDropdown/FiltroDropdown";
 import ConfirmExport from "../ConfirmExport/ConfirmExport";
-import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";   // << novo
+import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import Form from "../PacientesFormulario/Form";
 
-export default function ResponsividadePacientes() {
+// Adicionando props: pacientes e setPacientes
+export default function ResponsividadePacientes({ pacientes, setPacientes }) {
     /* ------------ estado geral ------------ */
     const [search, setSearch] = useState("");
-    const [pacientes, setPacientes] = useState([]);
     const [visible, setVisible] = useState(4);
 
     /* ------------ pop‑ups ------------ */
@@ -27,24 +27,13 @@ export default function ResponsividadePacientes() {
     const [pacienteEmEdicao, setPacienteEmEdicao] = useState(null);
     const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
 
-    /* ------------ lista fake inicial ------------ */
-    useEffect(() => {
-        const fake = Array.from({ length: 12 }).map((_, i) => ({
-            id: i,
-            nome: "Andreia Oliveira Justina",
-            dataSessao: "27/09/2025",
-            idade: 42,
-        }));
-        setPacientes(fake);
-    }, []);
-
     /* ------------ filtragem + paginação ------------ */
     const filtrados = pacientes
         .filter((p) => p.nome.toLowerCase().includes(search.toLowerCase()))
         .slice(0, visible);
 
     /* ------------ salvar (novo ou editar) ------------ */
-    const salvarPaciente = (p) => {
+      const salvarPaciente = (p) => {
         if (pacienteEmEdicao) {
             setPacientes((prev) =>
                 prev.map((item) =>
@@ -102,7 +91,7 @@ export default function ResponsividadePacientes() {
                 onFilter={() => setShowFilter(true)}
                 onExport={() => setShowExportConfirm(true)}
                 onAddPaciente={() => {
-                    setPacienteEmEdicao(null);   // novo
+                    setPacienteEmEdicao(null);  // novo
                     setShowForm(true);
                 }}
             />
@@ -113,7 +102,7 @@ export default function ResponsividadePacientes() {
                     setPacienteEmEdicao(pac);    // edição
                     setShowForm(true);
                 }}
-                onDelete={pedirExclusao}       // abrir popup de exclusão
+                onDelete={pedirExclusao}         // abrir popup de exclusão
             />
 
             {visible < pacientes.length && (
@@ -157,3 +146,5 @@ export default function ResponsividadePacientes() {
         </main>
     );
 }
+
+

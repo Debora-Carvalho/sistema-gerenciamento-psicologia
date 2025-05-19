@@ -26,15 +26,17 @@
     border-radius: 8px;
 }
 
+/* ... estilos já existentes ... */
+
 .erro {
     display: block;
-    margin-bottom: 0.8rem;
+    margin-top: 0.5rem;
     color: #e63946;
-    /* vermelho */
-    font-size: 0.92rem;
+    /* vermelho suave */
+    font-size: 0.9rem;
+    font-weight: 500;
     text-align: center;
 }
-
 
 
 .btn-row {

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import './CriarAgendamentos.css';
-/*import LinksSessao from '../../components/CriarAgendamentos/LinksSessao';*/
 import { ObjectId } from 'bson';
 import { FaUser, FaCalendarAlt, FaPalette, FaVideo, FaExternalLinkAlt } from 'react-icons/fa';
-import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import { MdTitle } from 'react-icons/md';
+import MenuResponsivo from '../../components/MenuResponsivo/MenuResponsivo';
 
 const CriarAgendamentos = () => {
     const [agendamento, setAgendamento] = useState({
@@ -22,10 +21,8 @@ const CriarAgendamentos = () => {
     });
     const [erro, setErro] = useState('');
     const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
-    const [exibirPopupSucesso, setExibirPopupSucesso] = useState(false);
     const [mostrarSucesso, setMostrarSucesso] = useState(false);
     const [mostrarSeletorCor, setMostrarSeletorCor] = useState(false);
-    const [menuAberto, setMenuAberto] = useState(null);
 
     const plataformas = ['Google Meet', 'Teams', 'Zoom', 'Outros'];
     const coresPadrao = ['#000000', '#01429E', '#ff0000', '#00ff00', '#FFA500', '#800080', '#FFC0CB', '#A52A2A'];
@@ -43,7 +40,7 @@ const CriarAgendamentos = () => {
             ...agendamento,
             color: cor
         });
-        setMostrarSeletorCor(false); 
+        setMostrarSeletorCor(false);
     };
 
     const verificarCampos = () => {
@@ -73,8 +70,6 @@ const CriarAgendamentos = () => {
         setExibirPopupConfirmacao(false);
     };
 
-    
-
     const handleCancelar = () => {
         setAgendamento({
             id: new ObjectId().toString(),
@@ -94,6 +89,8 @@ const CriarAgendamentos = () => {
 
     return (
         <div className="agendamento-container">
+            <MenuResponsivo />
+            
             <div className="perfil">
                 <div className="avatar"></div>
                 <div className="info">
@@ -101,7 +98,6 @@ const CriarAgendamentos = () => {
                     <p>email@email.com</p>
                 </div>
             </div>
-
 
             <h1>Novo agendamento</h1>
 
@@ -229,5 +225,6 @@ const CriarAgendamentos = () => {
         </div>
     );
 };
+
 export default CriarAgendamentos;
 //Anahí me perdoa
