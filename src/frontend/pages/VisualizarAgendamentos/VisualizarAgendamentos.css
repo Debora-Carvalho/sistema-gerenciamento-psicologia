@@ -25,24 +25,31 @@
     display: none;
 }
 
-.agendamentos-componente-cards__hoje {
+.agendamentos-componente-cards__hoje, .agendamentos-componente-cards__proximos {
     max-height: calc(100vh - 400px);
     overflow-y: auto;
     scroll-behavior: smooth;
     padding-right: 10px;
 }
 
-.agendamentos-componente-cards__hoje::-webkit-scrollbar {
+.agendamentos-componente-cards__hoje::-webkit-scrollbar, 
+.agendamentos-componente-cards__proximos::-webkit-scrollbar {
     width: 8px;
 }
 
-.agendamentos-componente-cards__hoje::-webkit-scrollbar-thumb {
+.agendamentos-componente-cards__hoje::-webkit-scrollbar-thumb, 
+.agendamentos-componente-cards__proximos::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 4px;
 }
 
-.agendamentos-componente-cards__hoje::-webkit-scrollbar-track {
+.agendamentos-componente-cards__hoje::-webkit-scrollbar-track, 
+.agendamentos-componente-cards__proximos::-webkit-scrollbar-track {
     background: transparent;
+}
+
+.componente-cards__proximos-data {
+    font-size: 1.7rem;
 }
 
 .btn-ver-mais {
@@ -61,9 +68,7 @@
 .btn-ver-mais:hover {
     background-color: var(--primary-color);
     color: var(--neutral-color-100);
-    margin-top: 0.8rem;
 }
-
 
 /* Responsivo */
 @media (max-width: 768px) {

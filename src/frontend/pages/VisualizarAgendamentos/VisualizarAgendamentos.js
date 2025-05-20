@@ -10,8 +10,16 @@ import CardInfoAgendamento from '../../components/Agendamentos/CardInfoAgendamen
 function VisualizarAgendamentos() {
     useDocumentTitle("Agendamentos | Seren"); // mudando o Title da pagina
 
+    const [limiteCards, setLimiteCards] = useState(5);  //esse é o limite de cards exibidos de inicio na tela
+    const [filtro, setFiltro] = useState("hoje");
+
     const agendamentos = [
         { hora: '08:00', nome: 'Justino Silva Ferreira', periodo: '08:00 - 08:30' },
+        { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
+        { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
+        { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
+        { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
+        { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
         { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
         { hora: '18:30', nome: 'Francisco de Oliveira Queiroz', periodo: '18:30 - 19:20' },
         { hora: '18:30', nome: 'Francisco de Oliveira Queiroz', periodo: '18:30 - 19:20' },
@@ -34,33 +42,35 @@ function VisualizarAgendamentos() {
                 </div>
 
                 <div className='visualizar-agendamentos-componente-funcoes'>
-                    <ContainerFuncoesAgendamento />
+                    <ContainerFuncoesAgendamento filtro={filtro} setFiltro={setFiltro} />
                 </div>
 
                 <div className='visualizar-agendamentos-componente-cards'>
-                    <div className='agendamentos-componente-cards__hoje'>
-                        {agendamentos.map((agendamento, index) => (
-                            <CardInfoAgendamento
-                                key={index}
-                                hora={agendamento.hora}
-                                nome={agendamento.nome}
-                                periodo={agendamento.periodo}
-                            />
-                        ))}
-                    </div>
+                    {filtro === "hoje" && (
+                        <div className='agendamentos-componente-cards__hoje'>
+                            {agendamentos.slice(0, limiteCards).map((agendamento, index) => (
+                                <CardInfoAgendamento key={index} {...agendamento} />
+                            ))}
+                        </div>
+                    )}
 
-                    {/* <div className='agendamentos-componente-cards__proximos'>
-                        {agendamentos.map((agendamento, index) => (
-                            <CardInfoAgendamento
-                                key={index}
-                                hora={agendamento.hora}
-                                nome={agendamento.nome}
-                                periodo={agendamento.periodo}
-                            />
-                        ))}
-                    </div> */}
+                    {filtro === "proximos" && (
+                        <div className='agendamentos-componente-cards__proximos'>
+                            <p className='componente-cards__proximos-data'>14/06/2025</p>
+                            {agendamentos.slice(0, limiteCards).map((agendamento, index) => (
+                                <CardInfoAgendamento key={index} {...agendamento} />
+                            ))}
+                        </div>
+                    )}
 
-                    <button className='btn-ver-mais'>Ver mais</button>
+                    {/* o botao btn-ver-mais permite exibir mais cards na tela 
+                    (acrescenta 5 por vez ate acabar a listagem e o botao sumir) */}
+
+                    {limiteCards < agendamentos.length  && (
+                    <button className='btn-ver-mais' onClick={() => setLimiteCards(limiteCards + 5)}>
+                        Ver mais
+                    </button>
+                    )}
                 </div>
             </div>
         </div>

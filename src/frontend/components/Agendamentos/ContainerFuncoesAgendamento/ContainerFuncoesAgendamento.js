@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.css';
 import NavFiltroAgendamento from '../NavFiltroAgendamento/NavFiltroAgendamento.js';
 
-function ContainerFuncoesAgendamento() {  
+function ContainerFuncoesAgendamento({ filtro, setFiltro }) {  
     return (
         <div className='container-funcoes-visualizar-agendamento'>
             <h1 className='funcoes-visualizar-agendamento__titulo'>
@@ -10,7 +10,7 @@ function ContainerFuncoesAgendamento() {
             </h1>
 
             <div className='funcoes-visualizar-agendamento__filtro'>
-                <NavFiltroAgendamento />
+                <NavFiltroAgendamento filtro={filtro} setFiltro={setFiltro}/>
             </div>
 
             <div className='funcoes-visualizar-agendamento__botoes'>

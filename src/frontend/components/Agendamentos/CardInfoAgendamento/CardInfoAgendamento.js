@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../../Agendamentos/CardInfoAgendamento/CardInfoAgendamento.css';
 import CardDropdownAgendamento from '../../Agendamentos/CardInfoAgendamento/CardDropdownAgendamento.js';
 import { FaRegClock } from "react-icons/fa6";
-import { MdOutlineLocationOn } from "react-icons/md";
+import { GrLocation } from "react-icons/gr";
 
 function CardInfoAgendamento({ hora, nome, periodo }) {
     const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
@@ -13,6 +13,7 @@ function CardInfoAgendamento({ hora, nome, periodo }) {
                 <div className="info-agendamento__hora">
                     {hora}
                 </div>
+
                 <div className='card-info-agendamento__periodo-link'>
                     <p className="info-agendamento__periodo">
                         <FaRegClock className='info-agendamento__periodo__icon'/>
@@ -20,7 +21,7 @@ function CardInfoAgendamento({ hora, nome, periodo }) {
                     </p>
 
                     <a className="info-agendamento__link-atendimento" href="#">
-                        <MdOutlineLocationOn className='info-agendamento__link-atendimento__icon' />
+                        <GrLocation className='info-agendamento__link-atendimento__icon' />
                         Link da sessão
                     </a>
                 </div>

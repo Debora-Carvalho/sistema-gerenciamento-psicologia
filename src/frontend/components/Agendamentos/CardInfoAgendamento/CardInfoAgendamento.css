@@ -18,6 +18,17 @@
     font-weight: 500;
     color: var(--primary-color);
     min-width: 80px;
+    position: relative;
+}
+
+.info-agendamento__hora::before {
+    content: '';
+    height: 100%;
+    width: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 100px;
+    background-color: #ccc;
 }
 
 .container-conteudo-card-info-agendamento {
@@ -33,6 +44,7 @@
     flex-direction: column;
     align-items: start;
     justify-content: center;
+    margin-left: 1rem;
 }
 
 .card-info-agendamento__nome-iniciar {
@@ -40,7 +52,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    margin-left: 3rem;
+    margin-left: 4rem;
 }
 
 .info-agendamento__periodo, .info-agendamento__link-atendimento {
@@ -59,16 +71,17 @@
 }
 
 .info-agendamento__nome {
-    font-size: 1rem;
+    font-weight: 400;
+    font-size: 1.2rem;
     margin-bottom: 0.5rem;
     color: #222;
 }
 
 .info-agendamento__iniciar-atendimento {
-    text-decoration: none;
-    color: var(--primary-color);
     font-weight: 500;
     font-size: 1.5rem;
+    text-decoration: none;
+    color: var(--primary-color);
 }
 
 .container-dropdown-card-info-agendamento {
@@ -79,6 +92,7 @@
 .btn-card-info-agendamento-opcoes {
     background-color: transparent;
     color: var(--primary-color);
+    border-radius: 10px;
     border: 1px solid var(--primary-color);
     padding: 0.4rem 0.75rem;
     cursor: pointer;
