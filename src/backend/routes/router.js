@@ -12,6 +12,7 @@ import PaginaPacientesDetalhes from "../../frontend/pages/PaginaPacientesDetalhe
 import PaginaCalendario from '../../frontend/pages/PaginaCalendario/PaginaCalendario';
 import Calendario from '../../frontend/components/Calendario/Calendario';
 import Agendamento from '../../frontend/pages/PaginaAgendamento/Agendamentos.jsx';
+import PaginaConfiguracoes from "../../frontend/pages/PaginaConfiguracoes/PaginaConfiguracoes.js";
 
 
 const AppRoutes = () => {
@@ -29,6 +30,7 @@ const AppRoutes = () => {
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/agendamentos" element={<Agendamento />} />
+                    <Route path="/configuracoes" element={<PaginaConfiguracoes />} />
                     
                 </Route>
             </Routes>

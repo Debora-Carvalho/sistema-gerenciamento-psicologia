@@ -40,7 +40,7 @@ function PaginaInicial() {
         return <TelaDeCarregamento mensagem="Carregando tela inicial de usuário..." />;
     }
 
-    console.log("UserID do localStorage:", localStorage.getItem("userID"));
+    // console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
     const irParaPacientes = () => {
         setCarregando(true);
