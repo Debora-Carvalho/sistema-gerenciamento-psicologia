@@ -11,29 +11,29 @@ import ConfirmExport from "../ConfirmExport/ConfirmExport";
 import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import Form from "../PacientesFormulario/Form";
 
-// Adicionando props: pacientes e setPacientes
+// Adiciona props: pacientes e setPacientes
 export default function ResponsividadePacientes({ pacientes, setPacientes }) {
-    /* ------------ estado geral ------------ */
+    
     const [search, setSearch] = useState("");
     const [visible, setVisible] = useState(4);
 
-    /* ------------ pop‑ups ------------ */
+    /*  popups  */
     const [showFilter, setShowFilter] = useState(false);
     const [showExportConfirm, setShowExportConfirm] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [showForm, setShowForm] = useState(false);
 
-    /* ------------ auxiliares ------------ */
+    
     const [pacienteEmEdicao, setPacienteEmEdicao] = useState(null);
     const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
 
-    /* ------------ filtragem + paginação ------------ */
+    
     const filtrados = pacientes
         .filter((p) => p.nome.toLowerCase().includes(search.toLowerCase()))
         .slice(0, visible);
 
-    /* ------------ salvar (novo ou editar) ------------ */
-      const salvarPaciente = (p) => {
+
+    const salvarPaciente = (p) => {
         if (pacienteEmEdicao) {
             setPacientes((prev) =>
                 prev.map((item) =>
@@ -46,7 +46,7 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
         setPacienteEmEdicao(null);
     };
 
-    /* ------------ exportar PDF ------------ */
+    /* exportar PDF */
     const exportarPDF = () => {
         const doc = new jsPDF();
         doc.text("Pacientes", 14, 15);
@@ -63,13 +63,13 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
         setShowExportConfirm(false);
     };
 
-    /* ------------ excluir (abre popup) ------------ */
+    /*  excluir-popup)  */
     const pedirExclusao = (pac) => {
         setPacienteParaExcluir(pac);
         setShowDeleteConfirm(true);
     };
 
-    /* ------------ confirmar exclusão ------------ */
+    /*  confirmar exclusão outro popup */
     const excluirPaciente = () => {
         setPacientes((prev) => prev.filter((x) => x.id !== pacienteParaExcluir.id));
         setShowDeleteConfirm(false);
@@ -91,7 +91,7 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
                 onFilter={() => setShowFilter(true)}
                 onExport={() => setShowExportConfirm(true)}
                 onAddPaciente={() => {
-                    setPacienteEmEdicao(null);  // novo
+                    setPacienteEmEdicao(null);  
                     setShowForm(true);
                 }}
             />
@@ -99,10 +99,10 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
             <PacientesList
                 pacientes={filtrados}
                 onEdit={(pac) => {
-                    setPacienteEmEdicao(pac);    // edição
+                    setPacienteEmEdicao(pac);    
                     setShowForm(true);
                 }}
-                onDelete={pedirExclusao}         // abrir popup de exclusão
+                onDelete={pedirExclusao}        
             />
 
             {visible < pacientes.length && (
@@ -147,4 +147,4 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
     );
 }
 
-
+/* Erro no filtro que não abre e ao adicionar ou editar paciente. */
