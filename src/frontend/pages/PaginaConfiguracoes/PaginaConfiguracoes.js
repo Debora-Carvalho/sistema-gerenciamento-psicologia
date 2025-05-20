@@ -3,11 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal';
 import "./PaginaConfiguracoes.css"
 
+import useVLibras from '../../features/Vlibras/useVLibras';
 
 function PaginaConfiguracoes() {
+  const { ativado, toggleLibras } = useVLibras();
 
   return (
     <div className='container-pagina-configuracoes'>
+      
       <div className='navbar'>
         <MenuPrincipal />
       </div>
@@ -30,7 +33,10 @@ function PaginaConfiguracoes() {
               <p className='pA-configuracoes'>Acessibilidade</p>
               <div className='container-habilitar-configuracoes'>
                 <p className='pL-configuracoes'>Libras</p>
-                <button className='bt-habilitar'> Habilitar </button>
+                <button className='bt-habilitar' onClick={toggleLibras}>
+                  {ativado ? 'Desabilitar' : 'Habilitar'}
+                </button>
+
               </div>
             </div>
           </div>
