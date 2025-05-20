@@ -1,0 +1,145 @@
+@import '../../../styles/variaveis.css';
+
+/* CARD - VISUALIZAR AGENDAMENTO DE HOJE E PROXIMOS DIAS */
+.card-info-agendamento {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 1rem;
+    margin: 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+}
+
+.info-agendamento__hora {
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    min-width: 80px;
+}
+
+.container-conteudo-card-info-agendamento {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.card-info-agendamento__periodo-link {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+}
+
+.card-info-agendamento__nome-iniciar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 3rem;
+}
+
+.info-agendamento__periodo, .info-agendamento__link-atendimento {
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    gap: 20px;
+    color: #666;
+    margin-bottom: 0.25rem;
+    text-decoration: none;
+}
+
+.info-agendamento__periodo__icon, .info-agendamento__link-atendimento__icon {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+.info-agendamento__nome {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #222;
+}
+
+.info-agendamento__iniciar-atendimento {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.container-dropdown-card-info-agendamento {
+    position: relative;
+    margin-left: 1rem;
+}
+
+.btn-card-info-agendamento-opcoes {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+}
+
+/* OPÇÕES DROPDOWN - CARD - VISUALIZAR AGENDAMENTO DE HOJE E PROXIMOS DIAS */
+.container-dropdown-agendamento {
+    position: absolute;
+    top: 110%;
+    right: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+    width: max-content;
+}
+
+.btn-dropdown-agendamento {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    align-items: center;
+    justify-content: start;
+    background-color: #fff;
+    gap: 10px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-dropdown-agendamento:last-child {
+    border-bottom: none;
+}
+
+.btn-dropdown-agendamento:hover {
+    background-color: var(--secondary-color);
+}
+
+.btn-dropdown-agendamento__icon {
+    font-size: 1.7rem;
+}
+
+
+/* RESPONSIVIDADE - CARD - VISUALIZAR AGENDAMENTO DE HOJE E PROXIMOS DIAS*/
+@media (max-width: 600px) {
+    .card-info-agendamento {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .info-agendamento__hora {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .container-dropdown-card-info-agendamento {
+        align-self: flex-end;
+        margin-top: 0.5rem;
+    }
+}

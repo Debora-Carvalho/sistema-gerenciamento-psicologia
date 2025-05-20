@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
 import '../../Agendamentos/NavFiltroAgendamento/NavFiltroAgendamento.css';
+import { useNavigate } from 'react-router-dom';
 
 function NavFiltroAgendamento () {
-    const [active, setActive] = useState('perfil');
+    const [active, setActive] = useState('hoje');
+    const navigate = useNavigate();
     const handleClick = (section) => {
         setActive(section);
+        if (section === 'hoje') {
+            navigate("/"); 
+        } else if (section === 'proximos') {
+            navigate("/");
+        } else if (section === 'concluidos') {             // substituir pelo link da page de Agend. concluídos
+            navigate("/");                
+        } else if (section === 'cancelados') {            // substituir pelo link da page de Agend. cancelados
+            navigate("/");                
+        };
     };
 
     return (
