@@ -26,22 +26,13 @@ import calcularIdade from "../../hooks/pacientes/utilCalcularIdade";
 // }
 
 function formatarTelefone(valor) {
-    if (!valor) return "";
-
-    const numeros = String(valor).replace(/\D/g, "");
-
-    if (numeros.length <= 2) return `+${numeros}`;
-    if (numeros.length <= 4)
-        return `+${numeros.slice(0, 2)} (${numeros.slice(2)}`;
-    if (numeros.length <= 9)
-        return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(
-            4
-        )}`;
-    return `+${numeros.slice(0, 2)} (${numeros.slice(2, 4)}) ${numeros.slice(
-        4,
-        9
-    )}-${numeros.slice(9, 13)}`;
-}
+    const cleaned = String(valor).replace(/\D/g, '').slice(0, 11);
+    const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
+    if (match) {
+        return `(${match[1]}) ${match[2]}-${match[3]}`;
+    }
+    return cleaned;
+};
 
 function PaginaPacientesDetalhes() {
     console.log("UserID do localStorage:", localStorage.getItem("userID"));
@@ -112,16 +103,19 @@ function PaginaPacientesDetalhes() {
 
         if (cleaned.length < 11) return "Telefone não disponível";
 
-        const ddi = cleaned.slice(0, 2);
-        const ddd = cleaned.slice(2, 4);
-        const numeroLocal = cleaned.slice(4);
+        // const ddi = cleaned.slice(0, 2);
+        // const ddd = cleaned.slice(2, 4);
+        // const numeroLocal = cleaned.slice(4);
+
+        const ddd = cleaned.slice(0, 2);
+        const numeroLocal = cleaned.slice(2);
 
         if (numeroLocal.length === 9) {
-            return `+${ddi} (${ddd}) ${numeroLocal.slice(0, 5)}-${numeroLocal.slice(5)}`;
+            return `(${ddd}) ${numeroLocal.slice(0, 5)}-${numeroLocal.slice(5)}`;
         } else if (numeroLocal.length === 8) {
-            return `+${ddi} (${ddd}) ${numeroLocal.slice(0, 4)}-${numeroLocal.slice(4)}`;
+            return `(${ddd}) ${numeroLocal.slice(0, 4)}-${numeroLocal.slice(4)}`;
         } else {
-            return `+${ddi} (${ddd}) ${numeroLocal}`;
+            return `(${ddd}) ${numeroLocal}`;
         }
     }
 
@@ -267,8 +261,23 @@ function PaginaPacientesDetalhes() {
                                                 <option value="Divorciado(a)">Divorciado(a)</option>
                                                 <option value="Viúvo(a)">Viúvo(a)</option>
                                             </select>
-
                                             <input
+                                                type="tel"
+                                                id="telefone"
+                                                name="telefone"
+                                                placeholder="(XX) XXXXX-XXXX"
+                                                value={formatarTelefone(novoPaciente.telefone)}
+                                                onChange={(e) => {
+                                                    const validarNumTelefone = e.target.value.replace(/\D/g, '');
+                                                    if (validarNumTelefone.length <= 11) {
+                                                        setNovoPaciente({
+                                                            ...novoPaciente,
+                                                            telefone: validarNumTelefone,
+                                                        });
+                                                    }
+                                                }}
+                                            />
+                                            {/* <input
                                                 type="tel"
                                                 placeholder="Telefone"
                                                 title="Digite apenas números com o DDD, no formato: 5511987654321"
@@ -285,9 +294,9 @@ function PaginaPacientesDetalhes() {
                                                         });
                                                     }
                                                 }}
-                                            />
+                                            /> */}
                                             {novoPaciente.telefone.length > 0 &&
-                                                novoPaciente.telefone.length !== 13 && (
+                                                novoPaciente.telefone.length !== 11 && (
                                                     <span style={{ color: "red", fontSize: "0.8rem" }}>
                                                         O telefone deve conter exatamente 13 números, no
                                                         formato: 5511987654321.
@@ -450,7 +459,7 @@ function PaginaPacientesDetalhes() {
 
                                             <a
                                                 className="btn-direcionar-whatsapp"
-                                                href={`https://wa.me/${paciente?.telefone}`}
+                                                href={`https://wa.me/55${paciente?.telefone}`}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
                                             >

@@ -176,10 +176,10 @@ function PaginaPacientes() {
     // };
 
     const formatarTelefoneParaDisplay = (telefone) => {
-        const cleaned = String(telefone).replace(/\D/g, '');
-        const match = cleaned.match(/^(\d{2})(\d{2})(\d{5})(\d{4})$/);
+        const cleaned = String(telefone).replace(/\D/g, '').slice(0, 11);
+        const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
         if (match) {
-            return `+${match[1]} (${match[2]}) ${match[3]}-${match[4]}`;
+            return `(${match[1]}) ${match[2]}-${match[3]}`;
         }
         return cleaned;
     };
@@ -198,7 +198,7 @@ function PaginaPacientes() {
     };
 
     const validarTelefone = (telefone) => {
-        const regex = /^(\d{2})(\d{2})(\d{4,5})(\d{4})$/;
+        const regex = /^(\d{2})(\d{5})(\d{4})$/;
         return regex.test(telefone);
     };
 
@@ -491,9 +491,19 @@ function PaginaPacientes() {
                                 type="tel"
                                 id="telefone"
                                 name="telefone"
-                                placeholder="(XX) XX XXXXX-XXXX"
+                                placeholder="(XX) XXXXX-XXXX"
                                 value={formatarTelefoneParaDisplay(novoPaciente.telefone)}
-                                onChange={handleInputChange}
+                                onChange={(e) => {
+                                    const rawValue = e.target.value.replace(/\D/g, '');
+                                    if (rawValue.length <= 11) {
+                                        handleInputChange({
+                                            target: {
+                                                name: "telefone",
+                                                value: rawValue
+                                            }
+                                        });
+                                    }
+                                }}
                             />
                         </div>
                         <div className="form-group">
@@ -530,7 +540,11 @@ function PaginaPacientes() {
                                 type="date"
                                 placeholder="Data de Nascimento"
                                 title="Alterar data de nascimento"
-                                value={new Date(novoPaciente.dataNascimento).toISOString().split("T")[0]}
+                                value={
+                                    novoPaciente.dataNascimento
+                                        ? new Date(novoPaciente.dataNascimento).toISOString().split("T")[0]
+                                        : ''
+                                }
                                 onChange={(e) =>
                                     setNovoPaciente({
                                         ...novoPaciente,
