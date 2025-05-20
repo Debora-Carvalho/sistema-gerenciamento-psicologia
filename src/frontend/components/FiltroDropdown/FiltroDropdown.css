@@ -1,0 +1,50 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.dropdown {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    width: 250px;
+}
+
+.dropdown h3 {
+    margin-top: 0;
+    color: #0047b3;
+}
+
+.dropdown label {
+    display: block;
+    margin: 0.5rem 0;
+}
+
+.btn-row {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1rem;
+}
+
+.cancel,
+.confirm {
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+}
+
+.cancel {
+    background: #ccc;
+}
+
+.confirm {
+    background: #0047b3;
+    color: #fff;
+}

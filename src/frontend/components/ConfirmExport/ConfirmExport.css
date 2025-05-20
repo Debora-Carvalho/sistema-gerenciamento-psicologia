@@ -1,0 +1,27 @@
+.overlay {
+    /* mesmo estilo do anterior */
+}
+
+.confirm-box {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.confirm-box p {
+    margin: 0 0 1rem;
+}
+
+.btn-row {
+    /* mesmo do dropdown */
+}
+
+.cancel {
+    background: #ccc;
+}
+
+.confirm {
+    background: #0047b3;
+    color: #fff;
+}
