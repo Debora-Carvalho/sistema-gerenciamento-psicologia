@@ -2,8 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal';
 import "./PaginaConfiguracoes.css"
-function PaginaConfiguracoes() {
 
+
+function PaginaConfiguracoes() {
 
   return (
     <div className='container-pagina-configuracoes'>

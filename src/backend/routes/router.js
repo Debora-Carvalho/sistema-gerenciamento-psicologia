@@ -30,8 +30,7 @@ const AppRoutes = () => {
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/agendamentos" element={<Agendamento />} />
-                    <Route path="/configuracoes" element={<PaginaConfiguracoes />} />
-                    
+                    <Route path="/configuracoes" element={<PaginaConfiguracoes />} />                    
                 </Route>
             </Routes>
         </BrowserRouter>
