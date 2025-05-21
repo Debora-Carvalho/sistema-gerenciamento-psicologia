@@ -61,63 +61,63 @@ function PaginaPacientes() {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-    const handleAbrirDetalhesPaciente = (pacienteId) => {
-        localStorage.setItem("pacienteID", pacienteId);
-        navigate("/pacientes-detalhes");
+  const handleAbrirDetalhesPaciente = (pacienteId) => {
+    localStorage.setItem("pacienteID", pacienteId);
+    navigate("/pacientes-detalhes");
+  };
+
+  const resetarFormulario = () => {
+    setNovoPaciente({
+      nome: '',
+      profissao: '',
+      genero: '',
+      estadoCivil: '',
+      telefone: '',
+      email: '',
+      preferenciaContato: '',
+      dataNascimento: ''
+    });
+    setEditandoIndex(null);
+    setMostrarFormulario(false);
+    setErroCadastro('');
+  };
+
+  const mostrarNotificacao = (mensagem, tipo) => {
+    setMensagemPopup(mensagem);
+    setTipoPopup(tipo);
+    setMostrarPopup(true);
+    setTimeout(() => {
+      setMostrarPopup(false);
+    }, 10000);
+  };
+
+  useEffect(() => {
+    const handleClickOutsideFiltro = (event) => {
+      if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
+        setMostrarFiltrosVisuais(false);
+      }
     };
-
-    const resetarFormulario = () => {
-        setNovoPaciente({
-            nome: '',
-            profissao: '',
-            genero: '',
-            estadoCivil: '',
-            telefone: '',
-            email: '',
-            preferenciaContato: '',
-            dataNascimento: ''
-        });
-        setEditandoIndex(null);
-        setMostrarFormulario(false);
-        setErroCadastro('');
+    document.addEventListener('click', handleClickOutsideFiltro);
+    return () => {
+      document.removeEventListener('click', handleClickOutsideFiltro);
     };
+  }, [mostrarFiltrosVisuais]);
 
-    const mostrarNotificacao = (mensagem, tipo) => {
-        setMensagemPopup(mensagem);
-        setTipoPopup(tipo);
-        setMostrarPopup(true);
-        setTimeout(() => {
-            setMostrarPopup(false);
-        }, 10000);
+  useEffect(() => {
+    const handleClickOutsideAcoes = (e) => {
+      if (!e.target.closest('.acoes')) {
+        setMenuAberto(null);
+      }
     };
+    document.addEventListener('click', handleClickOutsideAcoes);
+    return () => document.removeEventListener('click', handleClickOutsideAcoes);
+  }, []);
 
-    useEffect(() => {
-        const handleClickOutsideFiltro = (event) => {
-            if (mostrarFiltrosVisuais && event.target.closest('.container-filtro') === null) {
-                setMostrarFiltrosVisuais(false);
-            }
-        };
-        document.addEventListener('click', handleClickOutsideFiltro);
-        return () => {
-            document.removeEventListener('click', handleClickOutsideFiltro);
-        };
-    }, [mostrarFiltrosVisuais]);
-
-    useEffect(() => {
-        const handleClickOutsideAcoes = (e) => {
-            if (!e.target.closest('.acoes')) {
-                setMenuAberto(null);
-            }
-        };
-        document.addEventListener('click', handleClickOutsideAcoes);
-        return () => document.removeEventListener('click', handleClickOutsideAcoes);
-    }, []);
-
-    const pacientesFiltrados = pacientes.filter(p =>
-        p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
-        (p.data && p.data.includes(filtro)) ||
-        (p.dataNascimento && calcularIdade(p.dataNascimento).toString().includes(filtro))
-    );
+  const pacientesFiltrados = pacientes.filter(p =>
+    p.nome.toLowerCase().includes(filtro.toLowerCase()) ||
+    (p.data && p.data.includes(filtro)) ||
+    (p.dataNascimento && calcularIdade(p.dataNascimento).toString().includes(filtro))
+  );
 
   const abrirPopupEdicao = (id) => {
     const index = pacientes.findIndex(p => p._id === id);
@@ -130,9 +130,9 @@ function PaginaPacientes() {
     setMenuAberto(null);
   };
 
-    const alternarColuna = (campo) => {
-        setColunasVisiveis(prev => ({ ...prev, [campo]: !prev[campo] }));
-    };
+  const alternarColuna = (campo) => {
+    setColunasVisiveis(prev => ({ ...prev, [campo]: !prev[campo] }));
+  };
 
   const confirmarExclusao = async (id) => {
     setPacienteIdParaExcluir(id);
@@ -140,51 +140,51 @@ function PaginaPacientes() {
     setMenuAberto(null);
   };
 
-    const confirmarExclusaoPaciente = async () => {
-        setMostrarPopupExcluir(false);
-        if (pacienteIdParaExcluir) {
-            try {
-                await excluirPaciente(pacienteIdParaExcluir, setPacientes);
-                mostrarNotificacao('Paciente excluído com sucesso!', 'sucesso');
-            } catch (error) {
-                mostrarNotificacao('Erro ao excluir paciente. Tente novamente.', 'erro');
-            } finally {
-                setPacienteIdParaExcluir(null);
-            }
-        }
-    };
-
-    const cancelarExclusaoPaciente = () => {
-        setMostrarPopupExcluir(false);
+  const confirmarExclusaoPaciente = async () => {
+    setMostrarPopupExcluir(false);
+    if (pacienteIdParaExcluir) {
+      try {
+        await excluirPaciente(pacienteIdParaExcluir, setPacientes);
+        mostrarNotificacao('Paciente excluído com sucesso!', 'sucesso');
+      } catch (error) {
+        mostrarNotificacao('Erro ao excluir paciente. Tente novamente.', 'erro');
+      } finally {
         setPacienteIdParaExcluir(null);
-    };
+      }
+    }
+  };
 
-    const handleExportarPdfClick = () => {
-        setConfirmarExportacao(true);
-    };
+  const cancelarExclusaoPaciente = () => {
+    setMostrarPopupExcluir(false);
+    setPacienteIdParaExcluir(null);
+  };
 
-    const confirmarDownloadPdf = async () => {
-        setConfirmarExportacao(false);
-        try {
-            await exportarPDF(pacientes, colunasVisiveis);
-            mostrarNotificacao('PDF exportado com sucesso!', 'sucesso');
-        } catch (error) {
-            mostrarNotificacao('Erro ao exportar PDF. Tente novamente.', 'erro');
-        }
-    };
+  const handleExportarPdfClick = () => {
+    setConfirmarExportacao(true);
+  };
 
-    const cancelarDownloadPdf = () => {
-        setConfirmarExportacao(false);
-    };
+  const confirmarDownloadPdf = async () => {
+    setConfirmarExportacao(false);
+    try {
+      await exportarPDF(pacientes, colunasVisiveis);
+      mostrarNotificacao('PDF exportado com sucesso!', 'sucesso');
+    } catch (error) {
+      mostrarNotificacao('Erro ao exportar PDF. Tente novamente.', 'erro');
+    }
+  };
 
-    // const formatarTelefone = (telefone) => {
-    //   const cleaned = ('' + telefone).replace(/\D/g, '');
-    //   const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
-    //   if (match) {
-    //     return `${match[1]}${match[2]}${match[3]}`;
-    //   }
-    //   return cleaned;
-    // };
+  const cancelarDownloadPdf = () => {
+    setConfirmarExportacao(false);
+  };
+
+  // const formatarTelefone = (telefone) => {
+  //   const cleaned = ('' + telefone).replace(/\D/g, '');
+  //   const match = cleaned.match(/^(\d{2})(\d{4,5})(\d{4})$/);
+  //   if (match) {
+  //     return `${match[1]}${match[2]}${match[3]}`;
+  //   }
+  //   return cleaned;
+  // };
 
     const formatarTelefoneParaDisplay = (telefone) => {
         const cleaned = String(telefone).replace(/\D/g, '').slice(0, 11);
@@ -196,17 +196,17 @@ function PaginaPacientes() {
     };
 
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
 
-        if (name === 'telefone') {
-            const somenteNumeros = value.replace(/\D/g, '');
-            setNovoPaciente(prev => ({ ...prev, telefone: somenteNumeros }));
-        } else {
-            setNovoPaciente(prev => ({ ...prev, [name]: value }));
-        }
+    if (name === 'telefone') {
+      const somenteNumeros = value.replace(/\D/g, '');
+      setNovoPaciente(prev => ({ ...prev, telefone: somenteNumeros }));
+    } else {
+      setNovoPaciente(prev => ({ ...prev, [name]: value }));
+    }
 
-    };
+  };
 
     const validarTelefone = (telefone) => {
         const regex = /^(\d{2})(\d{5})(\d{4})$/;
@@ -214,63 +214,63 @@ function PaginaPacientes() {
     };
 
 
-    const validarEmail = (email) => {
-        const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        return regex.test(email);
-    };
+  const validarEmail = (email) => {
+    const regex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+    return regex.test(email);
+  };
 
-    const validarNomeProfissao = (texto) => {
-        const regex = /^[a-zA-Z\s]+$/;
-        return regex.test(texto);
-    };
+  const validarNomeProfissao = (texto) => {
+    const regex = /^[a-zA-Z\s]+$/;
+    return regex.test(texto);
+  };
 
-    const validarDataNascimento = (dataNascimento) => {
-        if (!dataNascimento) return false;
+  const validarDataNascimento = (dataNascimento) => {
+    if (!dataNascimento) return false;
 
-        const dataNasc = new Date(dataNascimento);
-        const hoje = new Date();
-        const idade = hoje.getFullYear() - dataNasc.getFullYear();
+    const dataNasc = new Date(dataNascimento);
+    const hoje = new Date();
+    const idade = hoje.getFullYear() - dataNasc.getFullYear();
 
-        if (idade > 18) {
-            return true;
-        } else if (idade === 18) {
-            const mesAtual = hoje.getMonth();
-            const diaAtual = hoje.getDate();
-            const mesNasc = dataNasc.getMonth();
-            const diaNasc = dataNasc.getDate();
+    if (idade > 18) {
+      return true;
+    } else if (idade === 18) {
+      const mesAtual = hoje.getMonth();
+      const diaAtual = hoje.getDate();
+      const mesNasc = dataNasc.getMonth();
+      const diaNasc = dataNasc.getDate();
 
-            if (mesAtual > mesNasc || (mesAtual === mesNasc && diaAtual >= diaNasc)) {
-                return true;
-            }
-        }
-        return false;
-    };
+      if (mesAtual > mesNasc || (mesAtual === mesNasc && diaAtual >= diaNasc)) {
+        return true;
+      }
+    }
+    return false;
+  };
 
-    const handleCancelarCadastro = () => {
-        resetarFormulario();
-    };
+  const handleCancelarCadastro = () => {
+    resetarFormulario();
+  };
 
-    const datasPorPaciente = {};
+  const datasPorPaciente = {};
 
-    const { buscarAgendamentos } = useAgendamentos();
-    const [agendamentos, setAgendamentos] = useState([]);
+  const { buscarAgendamentos } = useAgendamentos();
+  const [agendamentos, setAgendamentos] = useState([]);
 
-    useEffect(() => {
-        const userID = localStorage.getItem("userID");
-        buscarAgendamentos(userID).then(({ agendamentos, success }) => {
-            if (success) {
-                setAgendamentos(agendamentos);
-            }
-        });
-    }, [buscarAgendamentos]);
-
-    agendamentos.forEach(agendamento => {
-        const id = agendamento.id_paciente;
-        const data = new Date(agendamento.dataInicio);
-        if (!datasPorPaciente[id] || data < new Date(datasPorPaciente[id])) {
-            datasPorPaciente[id] = agendamento.dataInicio;
-        }
+  useEffect(() => {
+    const userID = localStorage.getItem("userID");
+    buscarAgendamentos(userID).then(({ agendamentos, success }) => {
+      if (success) {
+        setAgendamentos(agendamentos);
+      }
     });
+  }, [buscarAgendamentos]);
+
+  agendamentos.forEach(agendamento => {
+    const id = agendamento.id_paciente;
+    const data = new Date(agendamento.dataInicio);
+    if (!datasPorPaciente[id] || data < new Date(datasPorPaciente[id])) {
+      datasPorPaciente[id] = agendamento.dataInicio;
+    }
+  });
 
   const listaDePacientes = pacientesFiltrados.map((paciente) => ({
     ...paciente,
@@ -489,64 +489,64 @@ function PaginaPacientes() {
             {modoEdicao ? 'Editar paciente' : 'Adicionar novo paciente'}
           </h3>
 
-                    {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
+          {erroCadastro && <p className="erro-cadastro">{erroCadastro}</p>}
 
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="nome">Nome</label>
-                            <input
-                                type="text"
-                                id="nome"
-                                name="nome"
-                                placeholder="Nome completo"
-                                value={novoPaciente.nome}
-                                onChange={handleInputChange}
-                            />
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="genero">Profissão</label>
-                            <input
-                                type="text"
-                                placeholder="Profissão"
-                                value={novoPaciente.profissao}
-                                onChange={(e) =>
-                                    setNovoPaciente({ ...novoPaciente, profissao: e.target.value })
-                                }
-                            />
-                        </div>
-                    </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="nome">Nome</label>
+              <input
+                type="text"
+                id="nome"
+                name="nome"
+                placeholder="Nome completo"
+                value={novoPaciente.nome}
+                onChange={handleInputChange}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="genero">Profissão</label>
+              <input
+                type="text"
+                placeholder="Profissão"
+                value={novoPaciente.profissao}
+                onChange={(e) =>
+                  setNovoPaciente({ ...novoPaciente, profissao: e.target.value })
+                }
+              />
+            </div>
+          </div>
 
-                    <div className="form-row">
-                        <div className="form-group">
-                            <label htmlFor="genero">Gênero</label>
-                            <select
-                                id="genero"
-                                name="genero"
-                                value={novoPaciente.genero}
-                                onChange={handleInputChange}
-                            >
-                                <option value="">Selecione</option>
-                                <option value="Feminino">Feminino</option>
-                                <option value="Masculino">Masculino</option>
-                                <option value="Outro">Outro</option>
-                            </select>
-                        </div>
-                        <div className="form-group">
-                            <label htmlFor="estadoCivil">Estado Civil</label>
-                            <select
-                                id="estadoCivil"
-                                name="estadoCivil"
-                                value={novoPaciente.estadoCivil}
-                                onChange={handleInputChange}
-                            >
-                                <option value="">Selecione</option>
-                                <option value="Solteiro(a)">Solteiro(a)</option>
-                                <option value="Casado(a)">Casado(a)</option>
-                                <option value="Divorciado(a)">Divorciado(a)</option>
-                                <option value="Viúvo(a)">Viúvo(a)</option>
-                            </select>
-                        </div>
-                    </div>
+          <div className="form-row">
+            <div className="form-group">
+              <label htmlFor="genero">Gênero</label>
+              <select
+                id="genero"
+                name="genero"
+                value={novoPaciente.genero}
+                onChange={handleInputChange}
+              >
+                <option value="">Selecione</option>
+                <option value="Feminino">Feminino</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Outro">Outro</option>
+              </select>
+            </div>
+            <div className="form-group">
+              <label htmlFor="estadoCivil">Estado Civil</label>
+              <select
+                id="estadoCivil"
+                name="estadoCivil"
+                value={novoPaciente.estadoCivil}
+                onChange={handleInputChange}
+              >
+                <option value="">Selecione</option>
+                <option value="Solteiro(a)">Solteiro(a)</option>
+                <option value="Casado(a)">Casado(a)</option>
+                <option value="Divorciado(a)">Divorciado(a)</option>
+                <option value="Viúvo(a)">Viúvo(a)</option>
+              </select>
+            </div>
+          </div>
 
                     <div className="form-row">
                         <div className="form-group">
@@ -619,99 +619,99 @@ function PaginaPacientes() {
                         </div>
                     </div>
 
-                    <div className="form-row buttons">
-                        <button onClick={handleCancelarCadastro}>Cancelar</button>
-                        <button
-                            className="btn salvar"
-                            onClick={async () => {
-                                let hasErrors = false;
-                                let errorMessage = '';
+          <div className="form-row buttons">
+            <button onClick={handleCancelarCadastro}>Cancelar</button>
+            <button
+              className="btn salvar"
+              onClick={async () => {
+                let hasErrors = false;
+                let errorMessage = '';
 
-                                if (!novoPaciente.nome.trim() || !String(novoPaciente.telefone).trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
-                                    hasErrors = true;
-                                    errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
-                                } else if (!validarNomeProfissao(novoPaciente.nome)) {
-                                    hasErrors = true;
-                                    errorMessage = "Nome não deve conter números ou caracteres especiais.";
-                                } else if (!validarEmail(novoPaciente.email)) {
-                                    hasErrors = true;
-                                    errorMessage = "E-mail inválido.";
-                                } else if (!validarDataNascimento(novoPaciente.dataNascimento)) {
-                                    hasErrors = true;
-                                    errorMessage = "O paciente deve ter pelo menos 18 anos.";
-                                } else if (!validarTelefone(novoPaciente.telefone)) {
-                                    hasErrors = true;
-                                    errorMessage = "Telefone inválido. Inclua o DDI (ex: +55).";
-                                }
+                if (!novoPaciente.nome.trim() || !String(novoPaciente.telefone).trim() || !novoPaciente.dataNascimento || !novoPaciente.email) {
+                  hasErrors = true;
+                  errorMessage = "Por favor, preencha todos os campos obrigatórios (Nome, Telefone, Data de Nascimento e E-mail).";
+                } else if (!validarNomeProfissao(novoPaciente.nome)) {
+                  hasErrors = true;
+                  errorMessage = "Nome não deve conter números ou caracteres especiais.";
+                } else if (!validarEmail(novoPaciente.email)) {
+                  hasErrors = true;
+                  errorMessage = "E-mail inválido.";
+                } else if (!validarDataNascimento(novoPaciente.dataNascimento)) {
+                  hasErrors = true;
+                  errorMessage = "O paciente deve ter pelo menos 18 anos.";
+                } else if (!validarTelefone(novoPaciente.telefone)) {
+                  hasErrors = true;
+                  errorMessage = "Telefone inválido. Inclua o DDI (ex: +55).";
+                }
 
-                                setErroCadastro(errorMessage);
+                setErroCadastro(errorMessage);
 
-                                if (hasErrors) {
-                                    return;
-                                }
+                if (hasErrors) {
+                  return;
+                }
 
-                                const pacienteParaSalvar = {
-                                    ...novoPaciente,
-                                    telefone: novoPaciente.telefone ? Number(novoPaciente.telefone) : null,
-                                    _id: novoPaciente._id
-                                };
+                const pacienteParaSalvar = {
+                  ...novoPaciente,
+                  telefone: novoPaciente.telefone ? Number(novoPaciente.telefone) : null,
+                  _id: novoPaciente._id
+                };
 
-                                if (editandoIndex !== null) {
-                                    const sucesso = await atualizarPaciente(
-                                        setErroCadastro,
-                                        pacienteParaSalvar,
-                                        editandoIndex,
-                                        resetarFormulario,
-                                        pacientes,
-                                        setPacientes
-                                    );
-                                    if (sucesso) {
-                                        mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
-                                        const idPacienteAtualizado = pacienteParaSalvar._id || localStorage.getItem("pacienteID");
+                if (editandoIndex !== null) {
+                  const sucesso = await atualizarPaciente(
+                    setErroCadastro,
+                    pacienteParaSalvar,
+                    editandoIndex,
+                    resetarFormulario,
+                    pacientes,
+                    setPacientes
+                  );
+                  if (sucesso) {
+                    mostrarNotificacao('Paciente atualizado com sucesso!', 'sucesso');
+                    const idPacienteAtualizado = pacienteParaSalvar._id || localStorage.getItem("pacienteID");
 
-                                        if (idPacienteAtualizado) {
-                                            localStorage.setItem("pacienteID", idPacienteAtualizado);
-                                        }
+                    if (idPacienteAtualizado) {
+                      localStorage.setItem("pacienteID", idPacienteAtualizado);
+                    }
 
-                                    } else {
-                                        mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
-                                    }
-                                } else {
-                                    try {
-                                        const pacienteExistente = pacientes.find(p =>
-                                            p.email === novoPaciente.email || p.telefone === novoPaciente.telefone
-                                        );
-                                        if (pacienteExistente) {
-                                            setErroCadastro("Paciente com esses dados já está registrado.");
-                                            return;
-                                        }
-                                        const resultado = await cadastrarPaciente(
-                                            pacienteParaSalvar,
-                                            pacientes,
-                                            editandoIndex,
-                                            setPacientes,
-                                            resetarFormulario,
-                                            setErroCadastro
-                                        );
-                                        if (resultado) {
-                                            mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
-                                        } else {
-                                            mostrarNotificacao('Erro no cadastro.', 'erro');
-                                        }
+                  } else {
+                    mostrarNotificacao('Erro ao atualizar paciente. Tente novamente.', 'erro');
+                  }
+                } else {
+                  try {
+                    const pacienteExistente = pacientes.find(p =>
+                      p.email === novoPaciente.email || p.telefone === novoPaciente.telefone
+                    );
+                    if (pacienteExistente) {
+                      setErroCadastro("Paciente com esses dados já está registrado.");
+                      return;
+                    }
+                    const resultado = await cadastrarPaciente(
+                      pacienteParaSalvar,
+                      pacientes,
+                      editandoIndex,
+                      setPacientes,
+                      resetarFormulario,
+                      setErroCadastro
+                    );
+                    if (resultado) {
+                      mostrarNotificacao('Paciente cadastrado com sucesso!', 'sucesso');
+                    } else {
+                      mostrarNotificacao('Erro no cadastro.', 'erro');
+                    }
 
-                                    } catch (error) {
-                                        mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');
-                                    }
-                                }
-                            }}
-                        >
-                            {modoEdicao ? 'Salvar alterações' : 'Cadastrar'}
-                        </button>
-                    </div>
-                </div>
-            )}
+                  } catch (error) {
+                    mostrarNotificacao('Erro no cadastro. Servidor pode estar fora.', 'erro');
+                  }
+                }
+              }}
+            >
+              {modoEdicao ? 'Salvar alterações' : 'Cadastrar'}
+            </button>
+          </div>
         </div>
-    );
+      )}
+    </div>
+  );
 }
 
 export default PaginaPacientes;

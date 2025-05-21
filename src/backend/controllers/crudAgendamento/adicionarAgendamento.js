@@ -14,6 +14,15 @@ async function adicionarAgendamentoHandler(req, res) {
 
     const db = await connectToDatabase();
 
+    const agendamentoDuplicado = await db.collection("Agendamento").findOne({
+      dataInicio: new Date(dataInicio),
+      dataFim: new Date(dataFim)
+    });
+
+    if (agendamentoDuplicado) {
+      return res.status(400).json({ error: "Já existe um agendamento neste horário." });
+    }
+
     const agendamentoAntigo = await db.collection("Agendamento").findOne({ titulo })
 
     if (agendamentoAntigo) {
@@ -27,7 +36,7 @@ async function adicionarAgendamentoHandler(req, res) {
       return res.status(400).json({ error: "Paciente não encontrado!" });
     }
     const novoAgendamento = {
-      userID: new ObjectId(userID),
+      id_usuario: new ObjectId(userID),
       id_paciente: new ObjectId(paciente._id),
       titulo,
       dataInicio: dataInicioObj,
