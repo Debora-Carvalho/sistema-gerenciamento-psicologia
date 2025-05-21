@@ -7,37 +7,18 @@ import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoR
 import ContainerFuncoesAgendamento from "../../components/Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.js";
 import CardInfoAgendamento from "../../components/Agendamentos/CardInfoAgendamento/CardInfoAgendamento.js";
 import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
+import { useLocation } from 'react-router-dom';
+import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome.js";
 
 function VisualizarAgendamentos() {
   useDocumentTitle("Agendamentos | Seren"); // mudando o Title da pagina
+  const location = useLocation();
+  const filtroInicial = location.state?.filtro || "hoje";
+  const [filtro, setFiltro] = useState(filtroInicial);
+  const [limiteCards, setLimiteCards] = useState(3); //esse é o limite de cards exibidos de inicio na tela
+  const [nomePacienteBusca, setNomePacienteBusca] = useState('');
+  const agendamentosFiltrados = useAgendamentosPorNome(nomePacienteBusca, filtro);
 
-  const [limiteCards, setLimiteCards] = useState(5); //esse é o limite de cards exibidos de inicio na tela
-  const [filtro, setFiltro] = useState("hoje");
-  const hoje = new Date().toLocaleDateString('pt-BR'); 
-  const agendamentos = useMapearAgendamentos();
-  
-const agendamentosHoje = agendamentos.filter((agendamento) => {
-  const dataAgendamento = new Date(agendamento.dataInicio).toLocaleDateString('pt-BR');
-  return (
-    dataAgendamento === hoje &&
-    agendamento.statusAgendamento?.toLowerCase() !== "concluído"
-  );
-});
-
-
-
-  // const agendamentos = [
-  //     { hora: '08:00', nome: 'Justino Silva Ferreira', periodo: '08:00 - 08:30' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '14:00', nome: 'Jessica Viana Amorim', periodo: '14:00 - 15:00' },
-  //     { hora: '18:30', nome: 'Francisco de Oliveira Queiroz', periodo: '18:30 - 19:20' },
-  //     { hora: '18:30', nome: 'Francisco de Oliveira Queiroz', periodo: '18:30 - 19:20' },
-  //     { hora: '18:30', nome: 'Francisco de Oliveira Queiroz', periodo: '18:30 - 19:20' },
-  // ];
 
   return (
     <div className="container-visualizar-agendamentos">
@@ -47,7 +28,9 @@ const agendamentosHoje = agendamentos.filter((agendamento) => {
 
       <div className="container-conteudo-visualizar-agendamentos">
         <div className="visualizar-agendamentos-cabecalho">
-          <CabecalhoUsuarioLogado />
+          <CabecalhoUsuarioLogado
+            nomePacienteBusca={nomePacienteBusca}
+            setNomePacienteBusca={setNomePacienteBusca} />
         </div>
 
         <div className="visualizar-agendamentos-cabecalho-responsivo">
@@ -59,35 +42,27 @@ const agendamentosHoje = agendamentos.filter((agendamento) => {
         </div>
 
         <div className="visualizar-agendamentos-componente-cards">
-          {filtro === "hoje" && (
-            <div className="agendamentos-componente-cards__hoje">
-              {agendamentosHoje.slice(0, limiteCards).map((agendamento) => (
-                <CardInfoAgendamento
-                  key={agendamento._id}
-                  id={agendamento._id}
-                  dataInicio={agendamento.dataInicio}
-                  dataFim={agendamento.dataFim}
-                  nomePaciente={agendamento.nomePaciente}
-                  linkSessao={agendamento.linkSessao}
-                  statusAgendamento={agendamento.statusAgendamento || ""}
-                />
-              ))}
-            </div>
+          
+          {agendamentosFiltrados.length === 0 && (
+            <p>Nenhum agendamento encontrado.</p>
           )}
 
-          {filtro === "proximos" && (
-            <div className="agendamentos-componente-cards__proximos">
-              <p className="componente-cards__proximos-data">14/06/2025</p>
-              {agendamentos.slice(0, limiteCards).map((agendamento, index) => (
-                <CardInfoAgendamento key={index} {...agendamento} />
-              ))}
-            </div>
-          )}
+          {agendamentosFiltrados.slice(0, limiteCards).map((agendamento) => (
+            <CardInfoAgendamento
+              key={agendamento._id}
+              id={agendamento._id}
+              dataInicio={agendamento.dataInicio}
+              dataFim={agendamento.dataFim}
+              nomePaciente={agendamento.nomePaciente}
+              linkSessao={agendamento.linkSessao}
+              statusAgendamento={agendamento.statusAgendamento || ""}
+              id_paciente={agendamento.id_paciente}
+            />
+          ))}
 
           {/* o botao btn-ver-mais permite exibir mais cards na tela 
                     (acrescenta 5 por vez ate acabar a listagem e o botao sumir) */}
-
-          {limiteCards < agendamentos.length && (
+          {limiteCards < agendamentosFiltrados.length && (
             <button
               className="btn-ver-mais"
               onClick={() => setLimiteCards(limiteCards + 5)}
