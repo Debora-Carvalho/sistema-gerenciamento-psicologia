@@ -93,7 +93,7 @@ function PaginaInicial() {
 
                         <div className='card-inicio-funcionalidade'>
                             <img src={imgBtnAgendamentos} alt='Ilustração'/>
-                            <a className='btn-agendamentos' href='/agendamentos'>
+                            <a className='btn-agendamentos' href='/visualizar-agendamentos'>
                                 <p>Agendamentos</p>
                             </a>
                         </div>

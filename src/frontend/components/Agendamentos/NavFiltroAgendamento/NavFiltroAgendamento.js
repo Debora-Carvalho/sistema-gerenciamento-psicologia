@@ -5,14 +5,14 @@ import { useNavigate } from 'react-router-dom';
 function NavFiltroAgendamento ({ filtro, setFiltro }) {
     const [active, setActive] = useState('hoje');
     const navigate = useNavigate();
-    // const handleClick = (section) => {
-    //     setActive(section);
-    //      if (section === 'concluidos') {             // substituir pelo link da page de Agend. concluídos
-    //         navigate("/");                
-    //     } else if (section === 'cancelados') {            // substituir pelo link da page de Agend. cancelados
-    //         navigate("/");                
-    //     };
-    // };
+    const handleClick = (section) => {
+        setActive(section);
+         if (section === 'concluidos') {             
+            navigate("/agendamentos-concluidos");                
+        } else if (section === 'cancelados') {
+            navigate("/agendamentos-cancelados");                
+        };
+    };
 
     return (
         <div className="container-nav-filtro-agendamento">
