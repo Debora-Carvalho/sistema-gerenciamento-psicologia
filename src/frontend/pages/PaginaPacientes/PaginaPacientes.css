@@ -168,11 +168,11 @@
     cursor: pointer;
     border: none;
     background-color: #8b1717;
-    color: #c51590; /* This color seems off, I'll adjust it to white for consistency */
+    color: #c51590; 
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 8px; /* Added gap for consistency */
+    gap: 8px; 
 }
 
 .btn-pdf:hover {
@@ -546,7 +546,7 @@
 .botoes-confirmacao button {
     padding: 10px 20px;
     border: none;
-    border-radius: 15px;
+    border-radius: 5px;
     cursor: pointer;
     font-size: 1em;
 }
@@ -554,6 +554,7 @@
 .botoes-confirmacao button.salvar {
     background-color: #01429E;
     color: white;
+    border-radius: 15px;
     
 }
 
