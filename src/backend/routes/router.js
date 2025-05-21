@@ -16,6 +16,7 @@ import AgendamentosConcluidos from '../../frontend/pages/PaginaAgendamentosConcl
 import AgendamentosCancelados from '../../frontend/pages/PaginaAgendamentosCancelados/PaginaAgendamentosCancelados.js'
 import CriarAgendamentos from '../../frontend/pages/CriarAgendamentos/CriarAgendamentos.js'
 import Editar from '../../frontend/components/EditarAgendamentos/Editar.js'
+import VisualizarAgendamentos from "../../frontend/pages/VisualizarAgendamentos/VisualizarAgendamentos.js";
 
 
 const AppRoutes = () => {
@@ -32,6 +33,7 @@ const AppRoutes = () => {
                     <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
+                    <Route path="/visualizar-agendamentos" element={<VisualizarAgendamentos />} />
                     <Route path="/agendar" element={<CriarAgendamentos />} />
                     <Route path="/editar" element={<Editar />} />
                     <Route path="/agendamentos" element={<Agendamento />} />

@@ -1,0 +1,49 @@
+@import '../../../styles/variaveis.css';
+
+.container-funcoes-visualizar-agendamento {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.funcoes-visualizar-agendamento__titulo {
+    font-family: var(--font-family-principal);
+    font-size: var(--font-size-titulo-desktop);
+    color: var(--primary-color);
+    font-weight: var(--font-weight-titulo);
+}
+
+.funcoes-visualizar-agendamento__botoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-criar-novo-agendamento, .btn-bloquear-agenda {
+    display: block;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: 0.3s;
+    white-space: nowrap; 
+}
+
+.btn-criar-novo-agendamento {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    border: none;
+}
+
+.btn-bloquear-agenda {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: none;
+}
