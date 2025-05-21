@@ -95,15 +95,6 @@
     text-align: start;
 }
 
-.card-paciente__botoes {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    text-align: start;
-    width: 100%;
-    margin-top: 3rem;
-    justify-content: space-between;
-}
-
 .paciente-atributo {
     font-weight: 600;
 }
@@ -224,7 +215,7 @@
 }
 
 /* BOTÕES HISTORICO DE SAUDE E ABORDAGEM */
-.btn-historico-saude, .btn-abordagem{
+/* .btn-historico-saude, .btn-abordagem{
   background-color: var(--primary-color);
   color: #fff;
   transition: 0.5s;
@@ -239,9 +230,36 @@
 .botoes-info-pacientes{
   flex-direction: row;
   display: flex;
-  gap:15rem;
   align-items: center;
   margin-right: 10rem;
+} */
+
+.card-paciente .card-paciente__botoes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  text-align: start;
+  width: 100%;
+  margin-top: 3rem;
+  justify-content: space-between;
+}
+
+.btn-historico-saude, .btn-plano-tratamento {
+  background-color: var(--primary-color);
+  color: #fff;
+  transition: 0.5s;
+  border-radius: 20px;
+  border: none;
+  padding: 10px;
+  width: 12rem;
+  font-size: 1rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  gap: 0.5rem
+}
+
+.btn-historico-saude:hover, .btn-plano-tratamento:hover {
+  background-color: var(--primary-color-btn-hover);    
 }
 
 /* RESPONSIVIDADE */

@@ -27,10 +27,10 @@ const AppRoutes = () => {
                 <Route path="/recuperar-senha" element={<EsqueciSenha />} />
                 <Route path="/recuperar-senha/codigo" element={<CodigoRecuperarSenha />} />
                 <Route path="/recuperar-senha/nova-senha" element={<NovaSenha />} />
+                <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/pagina-inicial" element={<PaginaInicial />} />
                     <Route path="/pacientes" element={<PaginaPacientes />} />
-                    <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                     <Route path="/calendario" element={<PaginaCalendario />} />
                     <Route path="/calendario1" element={<Calendario />} />
                     <Route path="/visualizar-agendamentos" element={<VisualizarAgendamentos />} />

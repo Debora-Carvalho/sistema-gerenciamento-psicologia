@@ -10,10 +10,12 @@ import { PiNotePencilBold } from "react-icons/pi";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaWhatsapp } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { LuActivity } from "react-icons/lu";
 import usePacienteDetalhes from "../../hooks/pacientes/usePacienteDetalhes.js";
 import { atualizarPaciente } from "../../hooks/pacientes/UsePacienteAtualizar";
 import { excluirPaciente } from "../../hooks/pacientes/usePacienteExcluir";
 import calcularIdade from "../../hooks/pacientes/utilCalcularIdade";
+import { BsClipboardPulse } from "react-icons/bs";
 
 // function formatarDataParaInput(data) {
 //     if (!data) return "";
@@ -435,82 +437,100 @@ function PaginaPacientesDetalhes() {
 
                         {!mostrarFormulario &&
                             (paciente ? (
-                                <div className="card-paciente__infos">
-                                    <div>
-                                        <p className="paciente-atributo">
-                                            Idade:{" "}
-                                            <span>{calcularIdade(paciente.dataNascimento)} anos</span>
-                                        </p>
+                                <>
+                                    <div className="card-paciente__infos">
+                                        <div>
+                                            <p className="paciente-atributo">
+                                                Idade:{" "}
+                                                <span>{calcularIdade(paciente.dataNascimento)} anos</span>
+                                            </p>
 
-                                        <p className="paciente-atributo">
-                                            Estado civil: <span>{paciente.estadoCivil}</span>
-                                        </p>
+                                            <p className="paciente-atributo">
+                                                Estado civil: <span>{paciente.estadoCivil}</span>
+                                            </p>
 
-                                        <p className="paciente-atributo container-btn-direcionar-whatsapp">
-                                            Telefone:
-                                            <span>
+                                            <p className="paciente-atributo container-btn-direcionar-whatsapp">
+                                                Telefone:
                                                 <span>
-                                                    {paciente.telefone && /^\+?\d{11,15}$/.test(paciente.telefone)
-                                                        ? formatarTelefoneInternacional(paciente.telefone)
-                                                        : "Telefone não disponível"}
+                                                    <span>
+                                                        {paciente.telefone && /^\+?\d{11,15}$/.test(paciente.telefone)
+                                                            ? formatarTelefoneInternacional(paciente.telefone)
+                                                            : "Telefone não disponível"}
+                                                    </span>
+
                                                 </span>
 
-                                            </span>
+                                                <a
+                                                    className="btn-direcionar-whatsapp"
+                                                    href={`https://wa.me/55${paciente?.telefone}`}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                >
+                                                    <FaWhatsapp
+                                                        className="icon-whatsapp-telefone"
+                                                        title="Ao clicar no ícone você será redirecionado(a) &#10;para a conversa de Whatsapp com esse paciente"
+                                                    />
+                                                </a>
+                                            </p>
 
-                                            <a
-                                                className="btn-direcionar-whatsapp"
-                                                href={`https://wa.me/55${paciente?.telefone}`}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                            >
-                                                <FaWhatsapp
-                                                    className="icon-whatsapp-telefone"
-                                                    title="Ao clicar no ícone você será redirecionado(a) &#10;para a conversa de Whatsapp com esse paciente"
-                                                />
-                                            </a>
-                                        </p>
+                                            <p className="paciente-atributo">
+                                                Preferência de contato:{" "}
+                                                <span>{paciente.preferenciaContato}</span>
+                                            </p>
+                                        </div>
 
-                                        <p className="paciente-atributo">
-                                            Preferência de contato:{" "}
-                                            <span>{paciente.preferenciaContato}</span>
-                                        </p>
+                                        <div>
+                                            <p className="paciente-atributo">
+                                                Gênero: <span>{paciente.genero}</span>
+                                            </p>
+
+                                            <p className="paciente-atributo">
+                                                Profissão: <span>{paciente.profissao}</span>
+                                            </p>
+
+                                            <p className="paciente-atributo">
+                                                Email: <span>{paciente.email}</span>
+                                            </p>
+
+                                            <p className="paciente-atributo">
+                                                Data de nascimento:
+                                                <span>
+                                                    {new Date(paciente.dataNascimento).toLocaleDateString(
+                                                        "pt-BR",
+                                                        {
+                                                            timeZone: "UTC",
+                                                        }
+                                                    )}
+                                                </span>
+                                            </p>
+                                        </div>
+
+                                        {/* <div className="botoes-info-pacientes">
+                                            <p>
+                                                <button className="btn-historico-saude"> Histórico de saúde</button>
+                                            </p>
+                                            <p>
+                                                <button className="btn-abordagem">Abordagem</button>
+                                            </p>
+                                        </div> */}
                                     </div>
 
-                                    <div>
-                                        <p className="paciente-atributo">
-                                            Gênero: <span>{paciente.genero}</span>
-                                        </p>
-
-                                        <p className="paciente-atributo">
-                                            Profissão: <span>{paciente.profissao}</span>
-                                        </p>
-
-                                        <p className="paciente-atributo">
-                                            Email: <span>{paciente.email}</span>
-                                        </p>
-
-                                        <p className="paciente-atributo">
-                                            Data de nascimento:
-                                            <span>
-                                                {new Date(paciente.dataNascimento).toLocaleDateString(
-                                                    "pt-BR",
-                                                    {
-                                                        timeZone: "UTC",
-                                                    }
-                                                )}
-                                            </span>
-                                        </p>
-
-                                     <div className="botoes-info-pacientes">
-                                        <p>
-                                           <button className="btn-historico-saude"> Histórico de saúde</button> 
-                                        </p>
-                                        <p> 
-                                            <button className="btn-abordagem">Abordagem</button>
-                                        </p>
+                                    <div className='card-paciente__botoes'>
+                                        <button className='btn-historico-saude' href='#' >
+                                            <LuActivity />
+                                            Histórico de saúde
+                                        </button>
+                                        <button className='btn-plano-tratamento' href='#'>
+                                            <BsClipboardPulse />
+                                             Abordagem
+                                        </button>
                                     </div>
-                                    </div>
-                                </div>
+                                    {/* <div className="modal-formulario">
+                                        <h3>Abor</h3>
+                                        </div> */}
+                                </>
+
+
                             ) : (
                                 <div className="card-paciente__infos">
                                     <div>
