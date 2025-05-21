@@ -19,6 +19,7 @@ export default function useAtualizarStatusAgendamento() {
 
       if (response.ok && data.success) {
         console.log("Status atualizado com sucesso.");
+        window.location.reload();
       } else {
         alert(data.error || "Erro ao atualizar status do agendamento.");
       }

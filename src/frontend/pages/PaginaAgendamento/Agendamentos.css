@@ -37,10 +37,13 @@
 }
 
 .lista-agendamentos {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow: auto;
+  height: 70vh;
+  max-height: 70vh;
 }
 
 .btn-ver-mais {
