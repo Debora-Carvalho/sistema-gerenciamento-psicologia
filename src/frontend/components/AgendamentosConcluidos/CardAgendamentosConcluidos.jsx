@@ -4,18 +4,24 @@ import OpcoesDropdownConcluidos from "./OpcoesDropdownConcluidos";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdAccessTime } from "react-icons/md";
 
-function CardAgendamentosConcluidos({ id, dataInicio, dataFim, nomePaciente, linkSessao }) {
+function CardAgendamentosConcluidos({
+  id,
+  dataInicio,
+  dataFim,
+  nomePaciente,
+  linkSessao,
+}) {
   const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
   const userID = localStorage.getItem("userID");
-  const dataI = new Date(dataInicio)
-  const dataF = new Date(dataFim)
-  const horaFim = dataF.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
+  const dataI = new Date(dataInicio);
+  const dataF = new Date(dataFim);
+  const horaFim = dataF.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
-  const horaInicio = dataI.toLocaleTimeString('pt-BR', {
-    hour: '2-digit',
-    minute: '2-digit',
+  const horaInicio = dataI.toLocaleTimeString("pt-BR", {
+    hour: "2-digit",
+    minute: "2-digit",
   });
   // const periodo = data.toLocaleDateString('pt-BR');
 
@@ -26,11 +32,20 @@ function CardAgendamentosConcluidos({ id, dataInicio, dataFim, nomePaciente, lin
         <div className="info-agendamento">
           <p className="periodo">
             <MdAccessTime className="icon-time" />
-            <a>{horaInicio}-{horaFim}</a>
+            <a>
+              {horaInicio}-{horaFim}
+            </a>
           </p>
-          <p className="link">
+          <p className="link-icon">
             <IoLocationOutline className="icon-location" />
-            <a>{linkSessao}</a>
+            <a
+              className="link-sessao"
+              href={linkSessao}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              link da sessão
+            </a>
           </p>
         </div>
         <p className="nome">{nomePaciente}</p>

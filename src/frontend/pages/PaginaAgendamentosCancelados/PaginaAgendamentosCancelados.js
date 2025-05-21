@@ -4,35 +4,41 @@ import "../PaginaAgendamentosConcluidos/PaginaAgendamentosConcluidos.css";
 import TabsFiltro from "../../components/Agendamentos/TabsFiltro";
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CardAgendamentosConcluidos from "../../components/AgendamentosConcluidos/CardAgendamentosConcluidos";
+import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
 
-function AgendamentosConcluidos() {
+function AgendamentosCancelados() {
   const [campoPesquisaFocado, setCampoPesquisaFocado] = useState(false);
   const [filtro, setFiltro] = useState("");
   const [usuario, setUsuario] = useState({
     username: "Nome do Usuário",
     email: "usuario@email.com",
   });
-
-  const agendamentos = [
-    { hora: "09:00", nome: "Maria Aparecida Fernandes Gonzalez", periodo: "09:00 - 09:30", data: "2025-04-28", link: "Link da sessão"},
-    { hora: "10:00", nome: "Francisco de Oliveira Queiroz", periodo: "10:00 - 10:30", data: "2025-04-28", link: "Link da sessão"},
-    { hora: "13:30", nome: "Paola Braga Souza", periodo: "13:30 - 14:00", data: "2025-04-28" , link: "Link da sessão"},
-    { hora: "14:30", nome: "Jessica Viana Amorim", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
-    { hora: "15:30", nome: "Justino Silva Ferreira", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
-  ];
-
-
-  const agendamentosPorData = agendamentos.reduce((acc, agendamento) => {
-    const { data } = agendamento;
-    if (!acc[data]) acc[data] = [];
-    acc[data].push(agendamento);
-    return acc;
-  }, {});
-
-
-  const datasOrdenadas = Object.keys(agendamentosPorData).sort(
-    (a, b) => new Date(a) - new Date(b)
+  const agendamentos = useMapearAgendamentos();
+  const agendamentosConcluidos = agendamentos.filter(
+    (agendamento) => agendamento.statusAgendamento === "Concluído"
   );
+
+
+  // const agendamentos = [
+  //   { hora: "09:00", nome: "Maria Aparecida Fernandes Gonzalez", periodo: "09:00 - 09:30", data: "2025-04-28", link: "Link da sessão"},
+  //   { hora: "10:00", nome: "Francisco de Oliveira Queiroz", periodo: "10:00 - 10:30", data: "2025-04-28", link: "Link da sessão"},
+  //   { hora: "13:30", nome: "Paola Braga Souza", periodo: "13:30 - 14:00", data: "2025-04-28" , link: "Link da sessão"},
+  //   { hora: "14:30", nome: "Jessica Viana Amorim", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
+  //   { hora: "15:30", nome: "Justino Silva Ferreira", periodo: "13:30 - 14:00", data: "2025-05-02", link: "Link da sessão" },
+  // ];
+
+
+  // const agendamentosPorData = agendamentos.reduce((acc, agendamento) => {
+  //   const { data } = agendamento;
+  //   if (!acc[data]) acc[data] = [];
+  //   acc[data].push(agendamento);
+  //   return acc;
+  // }, {});
+
+
+  // const datasOrdenadas = Object.keys(agendamentosPorData).sort(
+  //   (a, b) => new Date(b) - new Date(a)
+  // );
 
   return (
     <div className="pagina-container">
@@ -79,23 +85,36 @@ function AgendamentosConcluidos() {
           <a className="link-bloquear-agenda" href="#">Bloquear agenda</a>
           </div>
         </div>
-          {datasOrdenadas.map((data) => (
-            <div key={data}>
-              <div className="data-agendamento">
+        <div className="conteudo-info-agendamento"> 
+          {/* {datasOrdenadas.map((data) => (
+            <div key={data}> */}
+              {/* <div className="data-agendamento">
                 <strong>{new Date(data).toLocaleDateString()}</strong>
-              </div>
+              </div> */}
               <div className="lista-agendamentos">
-                {agendamentosPorData[data].map((agendamento, index) => (
+                {/* {agendamentosConcluidos.map((agendamento, index) => (
                   <CardAgendamentosConcluidos key={index} {...agendamento} />
-                ))}
+                ))} */}
+                <div className='data-agendamento'>
+                {agendamentosConcluidos.map((agendamento) => (
+                <CardAgendamentosConcluidos
+                key={agendamento._id}
+                id={agendamento._id}
+                dataInicio={agendamento.dataInicio}
+                dataFim={agendamento.dataFim}
+                nomePaciente={agendamento.nomePaciente}
+                linkSessao={agendamento.linkSessao}
+              />
+            ))}
               </div>
             </div>
-          ))}
+          {/* ))} */}
+          </div>
         </div>
         <button className="btn-ver-mais">Ver mais</button>
       </div>
-    </div>
+    // </div>
   );
 }
 
-export default AgendamentosConcluidos;
+export default AgendamentosCancelados;
