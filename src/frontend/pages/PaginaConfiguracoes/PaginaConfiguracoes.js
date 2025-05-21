@@ -1,16 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal';
-import "./PaginaConfiguracoes.css"
-
+import "./PaginaConfiguracoes.css";
+import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela';
 import useVLibras from '../../features/Vlibras/useVLibras';
+import useDeleteUsuario from '../../hooks/useExcluirUsuario';
 
 function PaginaConfiguracoes() {
   const { ativado, toggleLibras } = useVLibras();
+  const { leituraAtiva, toggleLeitura, lerSeNaoLido} = useLeitorDeTela();
+  const { deleteUsuario } = useDeleteUsuario();
+  const librasAtivo = ativado;
+
+  useEffect(() => {
+    if (leituraAtiva) {
+      lerSeNaoLido(
+        'Você está na página de configurações. Aqui você pode ativar leitura de tela, Libras ou excluir sua conta.'
+      );
+    }
+  }, [leituraAtiva, lerSeNaoLido]);
+
+  const handleExcluir = async () => {
+        const confirmacao = window.confirm(`Tem certeza que deseja excluir?`);
+        
+        if (confirmacao) {
+            await deleteUsuario();
+        }
+    };
 
   return (
     <div className='container-pagina-configuracoes'>
-      
       <div className='navbar'>
         <MenuPrincipal />
       </div>
@@ -26,33 +44,34 @@ function PaginaConfiguracoes() {
               <p className='pA-configuracoes'>Acessibilidade</p>
               <div className='container-habilitar-configuracoes'>
                 <p className='pL-configuracoes'>Leitura de Tela</p>
-                <button className='bt-habilitar'> Habilitar </button>
+                <button className='bt-habilitar' onClick={toggleLeitura}>
+                  {leituraAtiva ? 'Desabilitar' : 'Habilitar'}
+                </button>
               </div>
             </div>
+
             <div className='container-borda-configuracoes'>
               <p className='pA-configuracoes'>Acessibilidade</p>
               <div className='container-habilitar-configuracoes'>
                 <p className='pL-configuracoes'>Libras</p>
                 <button className='bt-habilitar' onClick={toggleLibras}>
-                  {ativado ? 'Desabilitar' : 'Habilitar'}
+                  {librasAtivo ? 'Desabilitar' : 'Habilitar'}
                 </button>
-
               </div>
             </div>
           </div>
 
           <div className='container-excluir-configuracoes'>
-            <p className='pA-configuracoes'> Excluir Conta</p>
+            <p className='pA-configuracoes'>Excluir Conta</p>
             <div className='container-habilitar-configuracoes'>
-              <p className='pL-configuracoes'> Excluir definitivamente minha conta </p>
-              <button className='bt-excluir'> Excluir Conta</button>
+              <p className='pL-configuracoes'>Excluir definitivamente minha conta</p>
+              <button className='bt-excluir' onClick={handleExcluir}>Excluir Conta</button>
             </div>
           </div>
         </div>
       </div>
-
     </div>
-  )
+  );
 }
 
-export default PaginaConfiguracoes
+export default PaginaConfiguracoes;
