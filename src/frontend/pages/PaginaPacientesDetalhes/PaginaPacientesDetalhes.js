@@ -500,6 +500,15 @@ function PaginaPacientesDetalhes() {
                                                 )}
                                             </span>
                                         </p>
+
+                                     <div className="botoes-info-pacientes">
+                                        <p>
+                                           <button className="btn-historico-saude"> Histórico de saúde</button> 
+                                        </p>
+                                        <p> 
+                                            <button className="btn-abordagem">Abordagem</button>
+                                        </p>
+                                    </div>
                                     </div>
                                 </div>
                             ) : (
