@@ -126,7 +126,7 @@
 
 .titulo-pacientes {
     color: var(--primary-color);
-    font-size: 32px;
+    font-size: 30px; /*Tb está padronizado igual a tela criar agendamentos #Amanda*/
     font-weight: bold;
     font-family: var(--font-family-principal);
     margin-bottom: 0;
@@ -144,8 +144,8 @@
     font-size: 16px;
     cursor: pointer;
     border: none;
-    background-color: #e6e6e6;
-    color: #333;
+    background-color: #ffffff;
+    color: #290dc9;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
@@ -153,7 +153,7 @@
 }
 
 .botoes-desktop button:hover {
-    background-color: #d4d4d4;
+    background-color: #ffd5d0;
 }
 
 .btn.filtro.ativo {
@@ -167,8 +167,8 @@
     font-size: 16px;
     cursor: pointer;
     border: none;
-    background-color: #e6e6e6;
-    color: #333;
+    background-color: #8b1717;
+    color: #c51590;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
@@ -345,7 +345,7 @@
 .form-row.buttons button {
     padding: 10px 15px;
     border: none;
-    border-radius: 20px;
+    border-radius: 25px;
     font-size: 0.9em;
     cursor: pointer;
     color: white;
@@ -362,7 +362,7 @@
 }
 
 .form-row.buttons button:first-child:hover {
-    background-color: #696969;
+    background-color: #afadad;
 }
 
 .form-row.buttons button:last-child {
@@ -370,7 +370,7 @@
 }
 
 .form-row.buttons button:last-child:hover {
-    background-color: #004080;
+    background-color: #006eff;
 }
 
 .container-filtro {
@@ -510,19 +510,21 @@
 .botoes-confirmacao button.salvar {
     background-color: #01429E;
     color: white;
+    border-radius: 25px;
 }
 
 .botoes-confirmacao button.salvar:hover {
-    background-color: #01429E;
+    background-color: #006eff;
 }
 
 .botoes-confirmacao button.cinza {
     background-color: #808080;
     color: white;
+    border-radius: 25px;
 }
 
 .botoes-confirmacao button.cinza:hover {
-    background-color: #696969;
+    background-color: #a19b9b;
 }
 
 .popup-notificacao {
@@ -566,199 +568,3 @@
 .erro-cadastro {
     color: red;
 }
-
-/* Estilos para dispositivos móveis
-  --------------------------------------------------------------------------
-*/
-/* @media (max-width: 767px) {
-    .pagina-container .navbar {
-        display: none;
-    }
-    
-    .pagina-inicial-cabecalho-responsivo {
-        display: flex;
-        flex-direction: column;
-    }
-
-    body {
-    font-size: 12px;
-    line-height: 1.4;
-  }
-
-  .pagina-container {
-    padding: 10px;
-  }
-
-  
-
-  .conteudo-principal {
-    margin-left: 0;
-    padding: 20px;
-  }
-
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-
-  .container-pesquisa {
-    width: 100%;
-  }
-
-  .campo-pesquisa {
-    font-size: 12px;
-    padding: 8px 10px 8px 30px;
-  }
-
-  .icone-lupa {
-    font-size: 14px;
-    left: 10px;
-  }
-
-  .texto-pesquisa {
-    font-size: 12px;
-    left: 30px;
-  }
-
-  .usuario-info {
-    gap: 8px;
-  }
-
-  .avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .info-texto {
-    font-size: 12px;
-  }
-
-  .titulo-acoes-container {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 5px;
-    margin-bottom: 6px;
-  }
-
-  .titulo-pacientes {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
-
-  .botoes-desktop {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .botoes-desktop button {
-    font-size: 12px;
-    padding: 10px 15px;
-    border-radius: 10px;
-    gap: 5px;
-  }
-
-  .btn-pdf {
-    font-size: 5px;
-    padding: 6px 11px;
-    border-radius: 10px;
-  }
-
-  .lista-pacientes {
-    margin-top: 10px;
-  }
-
-  .lista-pacientes .tabela-pacientes {
-    font-size: 10px;
-    min-width: auto;
-  }
-
-  .lista-pacientes .tabela-pacientes th,
-  .lista-pacientes .tabela-pacientes td {
-    padding: 12px 8px; 
-  }
-
-  .modal-formulario {
-    padding: 10px;
-  }
-
-  .modal-formulario h3 {
-    font-size: 15px;
-    margin-bottom: 10px;
-  }
-
-  .form-row {
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .form-group {
-    width: 100%;
-  }
-
-  .form-group label {
-    font-size: 0.8em;
-    margin-bottom: 5px;
-  }
-
-  .form-group input,
-  .form-group select {
-    font-size: 0.8em;
-    padding: 10px;
-    border-radius: 6px;
-  }
-
-  .form-row.buttons {
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .form-row.buttons button {
-    font-size: 12px;
-    padding: 10px 15px;
-    border-radius: 20px;
-  }
-
-  .modal-confirmacao {
-    padding: 10px;
-  }
-
-  .modal-confirmacao p {
-    font-size: 1em;
-    margin-bottom: 15px;
-  }
-
-  .botoes-confirmacao button {
-    font-size: 0.9em;
-    padding: 8px 15px;
-  }
-
-  /* Ajuste específico para o menu popup em mobile e desktop */
-
-
-/* .menu-popup {
-    font-size: 0.8em;
-    min-width: 100px;
-}
-
-.menu-popup button {
-    padding: 1px 4px;
-    font-size: 9px;
-    min-width: auto;
-    width: 50PX;
-    white-space: nowrap;
-}
-
-}
-
-@media (max-width: 768px) {
-    .lista-pacientes .tabela-pacientes td {
-        font-size: 10px;
-    }
-}
-
-.lista-pacientes .tabela-pacientes td {
-    font-size: 10px;
-} */

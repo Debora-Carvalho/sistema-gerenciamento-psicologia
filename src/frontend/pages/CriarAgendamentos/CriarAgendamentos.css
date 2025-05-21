@@ -51,7 +51,7 @@
 }
 
 h1 {
-    font-size: 40px;
+    font-size: 30px; /*troquei para 30px para ficar menor.. tentarei padronizar ocm agendamentos e pacientes. #Amanda*/
     color: var(--primary-color);
     font-weight: var(--font-weight-titulo);
     margin-bottom: 30px;
