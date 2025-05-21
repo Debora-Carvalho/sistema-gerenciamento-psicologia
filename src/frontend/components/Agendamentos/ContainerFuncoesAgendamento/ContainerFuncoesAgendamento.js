@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import '../../Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.css';
 import NavFiltroAgendamento from '../NavFiltroAgendamento/NavFiltroAgendamento.js';
+import { useNavigate } from 'react-router-dom';
 
-function ContainerFuncoesAgendamento({ filtro, setFiltro }) {  
+function ContainerFuncoesAgendamento({ filtro, setFiltro }) {
+    const navigate = useNavigate();
     return (
         <div className='container-funcoes-visualizar-agendamento'>
             <h1 className='funcoes-visualizar-agendamento__titulo'>
@@ -10,11 +12,11 @@ function ContainerFuncoesAgendamento({ filtro, setFiltro }) {
             </h1>
 
             <div className='funcoes-visualizar-agendamento__filtro'>
-                <NavFiltroAgendamento filtro={filtro} setFiltro={setFiltro}/>
+                <NavFiltroAgendamento filtro={filtro} setFiltro={setFiltro} />
             </div>
 
             <div className='funcoes-visualizar-agendamento__botoes'>
-                <button className='btn-criar-novo-agendamento'>
+                <button className='btn-criar-novo-agendamento' onClick={() => navigate("/agendar")}>
                     Novo agendamento
                 </button>
 
