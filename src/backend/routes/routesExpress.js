@@ -5,6 +5,8 @@ const { loginHandler } = require('../controllers/loginAutentica');
 const { cadastroUsuarioHandler } = require('../controllers/cadastroUsuario');
 const { recuperarSenhaHandler, solicitarCodigoSenhaHandler, redefinirSenhaHandler } = require('../controllers/recuperarSenha');
 const { buscarUsuarioHandler } = require('../controllers/buscarUsuarios');
+const {excluirUsuarioHandler} = require('../controllers/excluirUsuarios')
+
 // const { cadastroPacienteHandler } = require('../controllers/cadastroPaciente');
 const { buscarAgendamentosHandler } = require('../controllers/crudAgendamento/buscarAgendamentos');
 const { adicionarAgendamentoHandler } = require('../controllers/crudAgendamento/adicionarAgendamento');
@@ -25,6 +27,7 @@ router.get('/', indexBackend)
 //Crud usuario:
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
+router.post('/excluirUsuarios', excluirUsuarioHandler);
 
 router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);

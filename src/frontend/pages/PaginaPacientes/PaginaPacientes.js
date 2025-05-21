@@ -15,6 +15,7 @@ import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 import useAgendamentos from '../../hooks/agendamentos/useAgendamentos';
 import ResponsividadePacientes from '../../components/ResponsividadePacientes/ResponsividadePacientes.js';
+import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela.js';
 
 function PaginaPacientes() {
   const { usuario } = useUsuarios();
@@ -61,10 +62,20 @@ function PaginaPacientes() {
     return () => window.removeEventListener('resize', checkIsMobile);
   }, []);
 
-  const handleAbrirDetalhesPaciente = (pacienteId) => {
-    localStorage.setItem("pacienteID", pacienteId);
-    navigate("/pacientes-detalhes");
-  };
+    const handleAbrirDetalhesPaciente = (pacienteId) => {
+        localStorage.setItem("pacienteID", pacienteId);
+        navigate("/pacientes-detalhes");
+    };
+
+    const { leituraAtiva, lerSeNaoLido } = useLeitorDeTela();
+
+    useEffect(() => {
+    const textoDeLeitura = 'Bem-vindo à página pacientes. Você pode criar, alterar, visualizar, buscar e apagar pacientes.';
+
+    if (leituraAtiva) {
+      lerSeNaoLido(textoDeLeitura);
+    }
+  }, [leituraAtiva, lerSeNaoLido]); 
 
   const resetarFormulario = () => {
     setNovoPaciente({

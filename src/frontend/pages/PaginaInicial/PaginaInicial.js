@@ -14,6 +14,7 @@ import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.svg'
 import Calendario from '../../components/Calendario/Calendario.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 import TelaDeCarregamento from '../../components/CarregamentoTela/TelaDeCarregamento.js';
+import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela.js';
 
 function PaginaInicial() {
     useDocumentTitle("Página Inicial | Seren");// mudando o Title da pagina
@@ -22,6 +23,16 @@ function PaginaInicial() {
     const { usuario } = useUsuarios();
     const [carregando, setCarregando] = useState(false);
     const navigate = useNavigate();
+
+    const { leituraAtiva, lerSeNaoLido } = useLeitorDeTela();
+
+  useEffect(() => {
+    const textoDeLeitura = 'Bem-vindo à página inicial. Aqui estão as opções principais, pacientes, anotações, agendamentos e pagamentos. Também temos um calendário com seus agendamentos.';
+
+    if (leituraAtiva) {
+      lerSeNaoLido(textoDeLeitura);
+    }
+  }, [leituraAtiva, lerSeNaoLido]); 
 
     useEffect(() => {
         if (usuario) {
@@ -40,7 +51,7 @@ function PaginaInicial() {
         return <TelaDeCarregamento mensagem="Carregando tela inicial de usuário..." />;
     }
 
-    console.log("UserID do localStorage:", localStorage.getItem("userID"));
+    // console.log("UserID do localStorage:", localStorage.getItem("userID"));
 
     const irParaPacientes = () => {
         setCarregando(true);
