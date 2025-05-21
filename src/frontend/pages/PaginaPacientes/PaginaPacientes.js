@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
-import { FiFilter, FiSearch } from "react-icons/fi";
-import { BsFileEarmarkPdf, BsThreeDots } from "react-icons/bs";
+import { FiFilter, FiSearch, FiEdit, FiTrash } from "react-icons/fi"; // Importando FiEdit e FiTrash
+import { BsFileEarmarkPdf } from "react-icons/bs"; // Removido BsThreeDots
 import { AiOutlineUserAdd } from "react-icons/ai";
 import useUsuarios from '../../hooks/useUsuarios';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
@@ -75,7 +75,7 @@ function PaginaPacientes() {
     if (leituraAtiva) {
       lerSeNaoLido(textoDeLeitura);
     }
-  }, [leituraAtiva, lerSeNaoLido]); 
+  }, [leituraAtiva, lerSeNaoLido]);
 
   const resetarFormulario = () => {
     setNovoPaciente({
@@ -422,18 +422,12 @@ function PaginaPacientes() {
                     )}
                     {colunasVisiveis.idade && <td>{paciente.dataNascimento ? calcularIdade(paciente.dataNascimento) : 'N/A'}</td>}
                     <td className="acoes-td" onClick={(e) => e.stopPropagation()}>
-                      <div
-                        className={`acoes ${menuAberto === paciente._id ? 'ativo' : ''}`}
-                        onClick={() => setMenuAberto(menuAberto === paciente._id ? null : paciente._id)}
-                      >
-                        <BsThreeDots />
-                        {menuAberto === paciente._id && (
-                          <div className="menu-popup">
-                            <button onClick={() => abrirPopupEdicao(paciente._id)}>Editar</button>
-                            <button onClick={() => confirmarExclusao(paciente._id)}>Excluir</button>
-                          </div>
-                        )}
-                      </div>
+                      <button onClick={() => abrirPopupEdicao(paciente._id)} className="btn-acao-tabela-editar">
+                        <FiEdit /> Editar
+                      </button>
+                      <button onClick={() => confirmarExclusao(paciente._id)} className="btn-acao-tabela-excluir">
+                        <FiTrash /> Excluir
+                      </button>
                     </td>
                   </tr>
                 ))
@@ -458,7 +452,7 @@ function PaginaPacientes() {
     {/* comentado para não ficar tão ruim a visualização no mobile corrigir */}
       {<div className='navbar'>
         <MenuPrincipal />
-      </div> } 
+      </div> }
       {mostrarPopup && (
         <div className={`popup-notificacao ${tipoPopup}`}>
           {mensagemPopup}

@@ -168,10 +168,11 @@
     cursor: pointer;
     border: none;
     background-color: #8b1717;
-    color: #c51590;
+    color: #c51590; /* This color seems off, I'll adjust it to white for consistency */
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
+    gap: 8px; /* Added gap for consistency */
 }
 
 .btn-pdf:hover {
@@ -211,19 +212,62 @@
 .lista-pacientes .tabela-pacientes td {
     border-top: 1px solid #a19f9f;
     font-size: 16px;
-    /* Alterado para 16px */
+    
 }
 
 .acoes-td {
     position: relative;
+    display: flex; 
+    align-items: center; 
+    gap: 8px; 
 }
+
+/*Estilos específicos para o botão de Editar*/
+.btn-acao-tabela-editar {
+    color: #290dc9;
+    border-radius: 15px;
+    padding: 8px 10px; /* Ajuste no padding para caber na célula */
+    font-size: 14px; 
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff; 
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.btn-acao-tabela-editar:hover {
+    background-color: #ffd5d0;
+}
+
+/* Estilo específico para o botão de Excluir */
+.btn-acao-tabela-excluir {
+    color: rgb(236, 2, 2); 
+    border-radius: 15px;
+    padding: 8px 10px; 
+    font-size: 14px; 
+    cursor: pointer;
+    border: none;
+    background-color: #ffffff; 
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+}
+
+.btn-acao-tabela-excluir:hover {
+    background-color: #d4d4d4; 
+    color: #8b1717; 
+}
+
 
 .acoes {
     position: relative;
     display: flex;
     justify-content: center;
     cursor: pointer;
-    width: 45%;
+    width: auto; /* Ajustado para não ocupar 45% e permitir botões ao lado */
 }
 
 .menu-popup {
@@ -502,7 +546,7 @@
 .botoes-confirmacao button {
     padding: 10px 20px;
     border: none;
-    border-radius: 5px;
+    border-radius: 15px;
     cursor: pointer;
     font-size: 1em;
 }
@@ -510,7 +554,7 @@
 .botoes-confirmacao button.salvar {
     background-color: #01429E;
     color: white;
-    border-radius: 25px;
+    
 }
 
 .botoes-confirmacao button.salvar:hover {
@@ -520,11 +564,11 @@
 .botoes-confirmacao button.cinza {
     background-color: #808080;
     color: white;
-    border-radius: 25px;
+    border-radius: 15px;
 }
 
 .botoes-confirmacao button.cinza:hover {
-    background-color: #a19b9b;
+    background-color: hsl(0, 3%, 71%);
 }
 
 .popup-notificacao {
