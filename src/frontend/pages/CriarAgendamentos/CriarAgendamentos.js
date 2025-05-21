@@ -161,11 +161,11 @@ const CriarAgendamentos = () => {
             </div>
             <div className="agendamento-container">
                 {/* <MenuResponsivo /> */}
-                <div className='visualizar-agendamentos-cabecalho'>
+                <div className='visualizar-agendamentos-cabecalho-criar'>
                     <CabecalhoUsuarioLogado />
                 </div>
 
-                <div className='visualizar-agendamentos-cabecalho-responsivo'>
+                <div className='visualizar-agendamentos-cabecalho-responsivo-criar'>
                     <CabecalhoResponsivo />
                 </div>
 
