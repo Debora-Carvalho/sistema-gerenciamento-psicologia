@@ -6,16 +6,22 @@ import { AiOutlineQuestionCircle, AiOutlineMenu } from "react-icons/ai";
 import { IoIosMenu } from "react-icons/io";
 import { PiSignOutBold } from "react-icons/pi";
 import { useNavigate } from 'react-router-dom';
+import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela';
 
 function Menu() {
     const [active, setActive] = useState('perfil');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
+    const { resetarLeitura } = useLeitorDeTela();
     const handleClick = (section) => {
         setActive(section);
         setIsOpen(false); // fecha o menu no mobile quando a usuária clicar 
         if (section === 'sair') {
             localStorage.removeItem("userID");
+            localStorage.setItem("leituraAtiva", "false");
+            localStorage.setItem("Vlibras_ativado", "false");
+
+            resetarLeitura();
             navigate("/"); 
         }
     };

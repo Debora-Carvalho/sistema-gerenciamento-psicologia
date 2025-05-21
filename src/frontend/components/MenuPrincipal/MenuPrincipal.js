@@ -11,12 +11,17 @@ function MenuPrincipal() {
   const [active, setActive] = useState('perfil');
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+
   const handleClick = (section) => {
     setActive(section);
     setIsOpen(false);
     if (section === 'sair') {
       localStorage.removeItem("userID");
       navigate("/");
+    }
+
+    if(section === 'config'){
+      navigate('/configuracoes')
     }
   };
 
