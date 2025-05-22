@@ -25,7 +25,7 @@ export default function useAdicionarAgendamento() {
       const data = await response.json();
 
       if (response.ok && data.success) {
-        alert("Agendamento criado com sucesso!")
+        // alert("Agendamento criado com sucesso!")
         return data.agendamentoId;
       } else {
         alert(data.error || "Erro ao adicionar agendamento.");
