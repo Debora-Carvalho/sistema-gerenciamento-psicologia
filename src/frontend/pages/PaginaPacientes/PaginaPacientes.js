@@ -438,8 +438,7 @@ function PaginaPacientes() {
                   </td>
                 </tr>
               )}
-              <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
-              <tr><td colSpan={Object.values(colunasVisiveis).filter(Boolean).length + 1}></td></tr>
+              
             </tbody>
           </table>
         </div>
