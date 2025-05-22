@@ -15,9 +15,19 @@ function useLeitorDeTela() {
     synth.speak(utterance);
   };
 
+  const limparPaginasLidas = () => {
+    Object.keys(localStorage).forEach((key) => {
+      if (key.startsWith('paginaLida:')) {
+        localStorage.removeItem(key);
+      }
+    });
+  };
+
   const ativarLeitura = () => {
     setLeituraAtiva(true);
     localStorage.setItem('leituraAtiva', 'true');
+
+    limparPaginasLidas();
 
     const textoDeBoasVindas = 'A leitura de tela foi ativada. Você está na página de configurações.';
     falarTexto(textoDeBoasVindas);
@@ -33,9 +43,7 @@ function useLeitorDeTela() {
     if (leituraAtiva) {
       desativarLeitura();
     } else {
-      ativarLeitura(); 
-      const chavePagina = `paginaLida:${location.pathname}`;
-      localStorage.removeItem(chavePagina);  
+      ativarLeitura();
     }
   };
 
@@ -49,10 +57,9 @@ function useLeitorDeTela() {
     }
   };
 
- 
   const resetarPaginaLida = () => {
     const chavePagina = `paginaLida:${location.pathname}`;
-    localStorage.removeItem(chavePagina);  
+    localStorage.removeItem(chavePagina);
   };
 
   useEffect(() => {
@@ -67,7 +74,7 @@ function useLeitorDeTela() {
     toggleLeitura,
     falarTexto,
     lerSeNaoLido,
-    resetarPaginaLida,  
+    resetarPaginaLida,
   };
 }
 

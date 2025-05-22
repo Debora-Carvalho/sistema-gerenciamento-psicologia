@@ -15,9 +15,7 @@ export default function useDeleteUsuario() {
             const data = await response.json();
 
             if (response.ok && data.success) {
-                alert("Usuário excluído com sucesso!");
-                await localStorage.removeItem("userID")
-                window.location.reload();
+                localStorage.removeItem("userID")
             } else {
                 alert(data.error);
             }

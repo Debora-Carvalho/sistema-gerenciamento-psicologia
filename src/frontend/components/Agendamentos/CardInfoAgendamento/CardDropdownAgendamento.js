@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../../Agendamentos/CardInfoAgendamento/CardInfoAgendamento.css';
 import { RiEmotionLine } from "react-icons/ri";
 import { MdOutlineNotifications, MdOutlineEdit, MdOutlineFreeCancellation } from "react-icons/md";
 import TipoCancelamentoPopup from '../../CancelarAgendamentos/TipoCancelamentoPopup/TipoCancelamentoPopup.js';
+import { useNavigate } from 'react-router-dom';
 
-function CardDropdownAgendamento() {
+function CardDropdownAgendamento({ id_paciente }) {
+
     const [popupAberto, setPopupAberto] = useState(false);
+    const navigate = useNavigate();
 
     const abrirPopup = () => {
         setPopupAberto(true);
@@ -15,20 +18,25 @@ function CardDropdownAgendamento() {
         setPopupAberto(false);
     };
 
+    const handleVerPaciente = () => {
+        localStorage.setItem("pacienteID", id_paciente);
+        navigate(`/pacientes-detalhes/${id_paciente}`);
+    };
+
     return (
         <div className="container-dropdown-agendamento">
-            <button className='btn-dropdown-agendamento'>
-                <RiEmotionLine className='btn-dropdown-agendamento__icon'/>
+            <button className='btn-dropdown-agendamento' onClick={handleVerPaciente}>
+                <RiEmotionLine className='btn-dropdown-agendamento__icon' />
                 Ver paciente
             </button>
 
             <button className='btn-dropdown-agendamento'>
-                <MdOutlineNotifications className='btn-dropdown-agendamento__icon'/>
+                <MdOutlineNotifications className='btn-dropdown-agendamento__icon' />
                 Enviar notificação
             </button>
 
             <button className='btn-dropdown-agendamento'>
-                <MdOutlineEdit className='btn-dropdown-agendamento__icon'/>
+                <MdOutlineEdit className='btn-dropdown-agendamento__icon' />
                 Editar agendamento
             </button>
 
@@ -36,7 +44,7 @@ function CardDropdownAgendamento() {
                 className='btn-dropdown-agendamento'
                 onClick={abrirPopup}
             >
-                <MdOutlineFreeCancellation className='btn-dropdown-agendamento__icon'/>
+                <MdOutlineFreeCancellation className='btn-dropdown-agendamento__icon' />
                 Cancelar agendamento
             </button>
 

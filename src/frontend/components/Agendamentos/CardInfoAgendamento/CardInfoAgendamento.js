@@ -5,7 +5,7 @@ import useAgendamentoStatus from '../../../features/PaginaAgendamentos/useAgenda
 import { FaRegClock } from "react-icons/fa6";
 import { GrLocation } from "react-icons/gr";
 
-function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao, statusAgendamento  }) {
+function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao, statusAgendamento, id_paciente }) {
     const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
     const userID = localStorage.getItem("userID");
     const dataI = new Date(dataInicio)
@@ -93,7 +93,7 @@ function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao,
         >
           Opções
         </button>
-        {mostrarOpcoes && <CardDropdownAgendamento />}
+        {mostrarOpcoes && <CardDropdownAgendamento id_paciente={id_paciente} />}
       </div>
     </div>
   );

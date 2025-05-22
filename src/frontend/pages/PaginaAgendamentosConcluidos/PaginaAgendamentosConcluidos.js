@@ -7,29 +7,17 @@ import useMapearAgendamentos from "../../features/PaginaAgendamentos/useMapearAg
 import ContainerFuncoesAgendamento from "../../components/Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.js";
 import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js";
 import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
+import { useLocation } from 'react-router-dom';
+import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome.js";
 
 function AgendamentosConcluidos() {
-  const [filtro, setFiltro] = useState("");
-  const [limiteCards, setLimiteCards] = useState(5);  
-  const [usuario, setUsuario] = useState({
-    username: "Nome do Usuário",
-    email: "usuario@email.com",
-  });
-  const agendamentos = useMapearAgendamentos();
-  const agendamentosConcluidos = agendamentos.filter(
-    (agendamento) => agendamento.statusAgendamento === "concluído"
-  );
+  const location = useLocation();
+  const filtroInicial = location.state?.filtro || "";
+  const [filtro, setFiltro] = useState(filtroInicial);
+  const [limiteCards, setLimiteCards] = useState(3);
+  const [nomePacienteBusca, setNomePacienteBusca] = useState('');
+  const agendamentosFiltrados = useAgendamentosPorNome(nomePacienteBusca, filtro);
 
-  // const agendamentosPorData = agendamentos.reduce((acc, agendamento) => {
-  //   const { data } = agendamento;
-  //   if (!acc[data]) acc[data] = [];
-  //   acc[data].push(agendamento);
-  //   return acc;
-  // }, {});
-
-  // const datasOrdenadas = Object.keys(agendamentosPorData).sort(
-  //   (a, b) => new Date(b) - new Date(a)
-  // );
 
   return (
     <div className="container-visualizar-agendamentos">
@@ -39,7 +27,9 @@ function AgendamentosConcluidos() {
 
       <div className="container-conteudo-visualizar-agendamentos">
         <div className="visualizar-agendamentos-cabecalho">
-          <CabecalhoUsuarioLogado />
+          <CabecalhoUsuarioLogado
+            nomePacienteBusca={nomePacienteBusca}
+            setNomePacienteBusca={setNomePacienteBusca} />
         </div>
 
         <div className="visualizar-agendamentos-cabecalho-responsivo">
@@ -57,7 +47,10 @@ function AgendamentosConcluidos() {
         <div className="conteudo-info-agendamento">
           <div className="lista-agendamentos">
             <div className="data-agendamento">
-              {agendamentosConcluidos.map((agendamento) => (
+              {agendamentosFiltrados.length === 0 && (
+                <p>Nenhum agendamento encontrado.</p>
+              )}
+              {agendamentosFiltrados.slice(0, limiteCards).map((agendamento) => (
                 <CardAgendamentosConcluidos
                   key={agendamento._id}
                   id={agendamento._id}
@@ -67,18 +60,18 @@ function AgendamentosConcluidos() {
                   linkSessao={agendamento.linkSessao}
                 />
               ))}
+              {limiteCards < agendamentosFiltrados.length && (
+                <button
+                  className="btn-ver-mais"
+                  onClick={() => setLimiteCards(limiteCards + 5)}
+                >
+                  Ver mais
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {limiteCards < agendamentos.length && (
-        <button
-          className="btn-ver-mais"
-          onClick={() => setLimiteCards(limiteCards + 5)}
-        >
-          Ver mais
-        </button>
-      )}
     </div>
   );
 }
