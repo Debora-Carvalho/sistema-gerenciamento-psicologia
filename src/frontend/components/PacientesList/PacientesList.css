@@ -1,0 +1,12 @@
+.ver-mais {
+    width: calc(100% - 2rem);
+    margin: 1rem;
+    padding: 1rem 0;
+    border: 2px solid #0047b3;
+    background: transparent;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0047b3;
+    cursor: pointer;
+}

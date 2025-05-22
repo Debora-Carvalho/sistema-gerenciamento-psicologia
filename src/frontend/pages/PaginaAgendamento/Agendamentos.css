@@ -13,8 +13,8 @@
 }
 
 .titulo {
-  font-size: 2rem;
-  font-weight: var(--font-weight-titulo);
+  font-size: 3rem;
+  font-weight: bold;
   color: var(--primary-color);
 }
 
@@ -33,13 +33,17 @@
   margin-top: 0.5rem;
   color: var(--primary-color);
   font-weight: bold;
+  text-decoration: none;
 }
 
 .lista-agendamentos {
-  margin-top: 2rem;
+  /* margin-top: 2rem; */
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  overflow: auto;
+  height: 70vh;
+  max-height: 70vh;
 }
 
 .btn-ver-mais {
@@ -161,10 +165,11 @@
       padding: 8px;
   }
 }
+
 .pagina-container{
   background-color: var(--background-color-tela);
 }
-/* arrumar para que o o fundo atrás do menu fique da mesma cor da tela... ??*/
+
 .conteudo-principal {
   flex: 1;
   margin-left: 0px;
@@ -174,6 +179,7 @@
   display: flex;
   flex-direction: column;
   transition: margin-left 0.3s ease-in-out;
+  height: 100vh; /*permite que a tela role, menos o menu*/
 }
 
 .conteudo-principal.menu-mobile-visivel {

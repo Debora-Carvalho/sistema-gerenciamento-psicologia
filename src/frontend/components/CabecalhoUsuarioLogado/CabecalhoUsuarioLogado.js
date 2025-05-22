@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import './CabecalhoUsuarioLogado.css';
 import { RiSearchLine } from "react-icons/ri";
 import useUsuarios from '../../hooks/useUsuarios';
-function CabecalhoUsuarioLogado() {
+import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome";
+
+function CabecalhoUsuarioLogado({ nomePacienteBusca, setNomePacienteBusca }) {
     // const [usuario, setUsuario] = useState(null);
     const { usuario } = useUsuarios();
-
+    
     if (!usuario) {
         return <div>Carregando usuário...</div>;
     }
+
 
     return (
         <div className='container-cabecalho-usuario-logado'>
@@ -21,6 +24,8 @@ function CabecalhoUsuarioLogado() {
                     autoCapitalize="off"
                     spellCheck="false"
                     placeholder="Pesquisar paciente"
+                    value={nomePacienteBusca}
+                    onChange={(e) => setNomePacienteBusca(e.target.value)}
                 />
             </div>
 

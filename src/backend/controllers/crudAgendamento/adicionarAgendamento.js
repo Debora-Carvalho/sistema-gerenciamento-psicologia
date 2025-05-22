@@ -14,11 +14,20 @@ async function adicionarAgendamentoHandler(req, res) {
 
     const db = await connectToDatabase();
 
-    const agendamentoAntigo = await db.collection("Agendamento").findOne({ titulo })
+    const agendamentoDuplicado = await db.collection("Agendamento").findOne({
+      dataInicio: new Date(dataInicio),
+      dataFim: new Date(dataFim)
+    });
 
-    if (agendamentoAntigo) {
-      return res.status(400).json({ error: "Agendamento já realizado" });
+    if (agendamentoDuplicado) {
+      return res.status(400).json({ error: "Já existe um agendamento neste horário." });
     }
+    // Isa comentei por que agora o titulo é o nome do paciente entao ira se repetir blz veja o codigo de CriarAgendamento.js
+    // const agendamentoAntigo = await db.collection("Agendamento").findOne({ titulo })
+
+    // if (agendamentoAntigo) {
+    //   return res.status(400).json({ error: "Agendamento já realizado" });
+    // }
 
     const usuario = await db.collection("Usuario").findOne({ _id: new ObjectId(userID) })
     const paciente = await db.collection("Paciente").findOne({ nome: nomePaciente })
@@ -27,7 +36,7 @@ async function adicionarAgendamentoHandler(req, res) {
       return res.status(400).json({ error: "Paciente não encontrado!" });
     }
     const novoAgendamento = {
-      userID: new ObjectId(userID),
+      id_usuario: new ObjectId(userID),
       id_paciente: new ObjectId(paciente._id),
       titulo,
       dataInicio: dataInicioObj,

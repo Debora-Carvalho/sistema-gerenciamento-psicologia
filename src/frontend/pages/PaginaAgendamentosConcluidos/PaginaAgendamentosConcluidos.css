@@ -1,0 +1,35 @@
+.data-agendamento {
+  font-size: 1rem;
+  font-weight: var(--font-weight-logo);
+  color: var(--neutral-color-900);
+  margin-top: 40px;
+}
+
+.btn-novo-agendamento{
+  padding: 1rem;
+  width: 11rem;
+} 
+
+.conteudo-filtros {
+  display: flex;
+  align-items: flex-end;
+  gap: 10rem;
+}
+
+.cabecalho-concluidos {
+  display: flex;
+  gap: 10rem;
+}
+
+.conteudo-info-agendamento{
+  height: 100%;
+  margin: 0;
+}
+
+.btn-funcoes {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  top: 1.5rem;
+}

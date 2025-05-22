@@ -1,5 +1,5 @@
 import React from 'react';
-import './PopupPadrao.css'; 
+import './PopupPadrao.css';
 
 function PopupPadrao({ aberto, titulo, mensagem, textoBotao, onBotaoClick }) {
   if (!aberto) return null;

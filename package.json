@@ -19,6 +19,7 @@
     "@testing-library/user-event": "^13.5.0",
     "bcryptjs": "^3.0.2",
     "bootstrap": "^5.3.5",
+    "bson": "^6.10.3",
     "corn": "^0.0.1",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
@@ -41,7 +42,8 @@
     "react-router-dom": "^6.30.0",
     "react-scripts": "5.0.1",
     "react-toastify": "^11.0.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "xlsx": "^0.18.5"
   },
   "scripts": {
     "start": "concurrently \"react-scripts start\" \"cross-env PORT=4000 node src/backend/server.js\"",

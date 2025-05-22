@@ -1,0 +1,167 @@
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+.modal {
+    background-color: #ffffff;
+    width: 600px;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    animation: fadeIn 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+
+.modal h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formulario input,
+.formulario select {
+    padding: 10px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.formulario input:focus,
+.formulario select:focus {
+    border-color: #007bff;
+}
+
+
+.botoes {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.botoes button {
+    padding: 10px 18px;
+    font-size: 16px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+
+.botoes .cancelar {
+    background-color: #e0e0e0;
+    color: #333;
+}
+
+.botoes .cancelar:hover {
+    background-color: #ccc;
+}
+
+.botoes .salvar {
+    background-color: var(--primary-color); 
+    color: white;
+}
+
+.botoes .salvar:hover {
+    background-color: var(--primary-color); 
+}
+
+/* Animação suaves */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+/* Popup para confirmar */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+}
+
+.popup {
+    background-color: #ffffff;
+    padding: 20px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.popup p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.popup-botoes {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.popup-botoes .sim {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.popup-botoes .nao {
+    background-color: #ccc;
+    color: #333;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+
+.sucesso {
+    margin-top: 15px;
+    padding: 12px;
+    background-color: #d4edda;
+    color: #25853b;
+    border: 1px solid #c3e6cb;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
