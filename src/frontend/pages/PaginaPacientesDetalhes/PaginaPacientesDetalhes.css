@@ -215,24 +215,6 @@
 }
 
 /* BOTÕES HISTORICO DE SAUDE E ABORDAGEM */
-/* .btn-historico-saude, .btn-abordagem{
-  background-color: var(--primary-color);
-  color: #fff;
-  transition: 0.5s;
-  border-radius: 20px;
-  border: none;
-  padding: 10px;
-  width: 10rem;
-  font-size: 1rem;
-  justify-content: center;
-}
-
-.botoes-info-pacientes{
-  flex-direction: row;
-  display: flex;
-  align-items: center;
-  margin-right: 10rem;
-} */
 
 .card-paciente .card-paciente__botoes {
   display: grid;
@@ -260,6 +242,22 @@
 
 .btn-historico-saude:hover, .btn-plano-tratamento:hover {
   background-color: var(--primary-color-btn-hover);    
+}
+
+.title-abordagem, .title-saude{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.descricao-abordagem, .descricao-saude{
+ border-radius: 8px;
+  padding: 0.5rem;
+  position: relative;
+  resize: vertical;
+  min-height: 100px;
+  font-size: 1rem; 
+  line-height: 1.5;
 }
 
 /* RESPONSIVIDADE */

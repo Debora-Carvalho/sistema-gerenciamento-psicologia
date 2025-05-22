@@ -261,7 +261,7 @@
     background-color: #f0f0f0;
 }
 
-.modal-formulario {
+.modal-formulario, .modal-abordagem, .modal-saude{
     position: fixed;
     top: 50%;
     left: 50%;
