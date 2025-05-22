@@ -5,7 +5,7 @@ import { MdOutlineNotifications, MdOutlineEdit, MdOutlineFreeCancellation } from
 import TipoCancelamentoPopup from '../../CancelarAgendamentos/TipoCancelamentoPopup/TipoCancelamentoPopup.js';
 import { useNavigate } from 'react-router-dom';
 
-function CardDropdownAgendamento({ id_paciente }) {
+function CardDropdownAgendamento({ id_paciente, agendamento }) {
 
     const [popupAberto, setPopupAberto] = useState(false);
     const navigate = useNavigate();
@@ -16,6 +16,9 @@ function CardDropdownAgendamento({ id_paciente }) {
 
     const fecharPopup = () => {
         setPopupAberto(false);
+    };
+    const handleEditarAgendamento = () => {
+        navigate(`/editar`, { state: { agendamento } });
     };
 
     const handleVerPaciente = () => {
@@ -35,7 +38,7 @@ function CardDropdownAgendamento({ id_paciente }) {
                 Enviar notificação
             </button>
 
-            <button className='btn-dropdown-agendamento'>
+            <button className='btn-dropdown-agendamento' onClick={handleEditarAgendamento}>
                 <MdOutlineEdit className='btn-dropdown-agendamento__icon' />
                 Editar agendamento
             </button>
