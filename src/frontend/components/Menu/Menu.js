@@ -12,15 +12,15 @@ function Menu() {
     const [active, setActive] = useState('perfil');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
-    const { resetarLeitura } = useLeitorDeTela();
+    const { resetarLeitura, desativarLeitura } = useLeitorDeTela();
     const handleClick = (section) => {
         setActive(section);
-        setIsOpen(false); // fecha o menu no mobile quando a usuária clicar 
+        setIsOpen(false); 
         if (section === 'sair') {
             localStorage.removeItem("userID");
             localStorage.setItem("leituraAtiva", "false");
             localStorage.setItem("Vlibras_ativado", "false");
-
+            desativarLeitura(); 
             resetarLeitura();
             navigate("/"); 
         }
