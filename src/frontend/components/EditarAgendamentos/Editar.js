@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import './Editar.css';
 
-const Editar = ({ isOpen, onClose }) => {
+const Editar = () => {
     const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
     const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
-    if (!isOpen) return null;
+    // if (!isOpen) return null;
 
     const confirmarEdicao = () => {
         setMostrarConfirmacao(false);
         setMostrarSucesso(true);
         setTimeout(() => {
             setMostrarSucesso(false);
-            onClose(); // fecha modal depois do sucesso
+            // onClose(); // fecha modal depois do sucesso
         }, 2000); // mensagem some em 2 segundos
     };
 
@@ -40,7 +40,7 @@ const Editar = ({ isOpen, onClose }) => {
                 </div>
 
                 <div className="botoes">
-                    <button className="cancelar" onClick={onClose}>Cancelar</button>
+                    {/* <button className="cancelar" onClick={onClose}>Cancelar</button> */}
                     <button className="salvar" onClick={() => setMostrarConfirmacao(true)}>Salvar</button>
                 </div>
 

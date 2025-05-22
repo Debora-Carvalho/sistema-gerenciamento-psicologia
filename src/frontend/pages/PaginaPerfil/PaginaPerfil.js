@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
 import './PaginaPerfil.css';
 import useDocumentTitle from '../../components/useDocumentTitle';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
-import ContainerFuncoesAgendamento from '../../components/Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.js';
-import CardInfoAgendamento from '../../components/Agendamentos/CardInfoAgendamento/CardInfoAgendamento.js';
+import PerfilDados from '../../components/PerfilUsuario/PerfilDados.js'
 
 function PaginaPerfil() {
     useDocumentTitle("Perfil | Seren"); // mudando o Title da pagina
@@ -30,50 +28,7 @@ function PaginaPerfil() {
                 </div>
 
                 <div className='container-opcoes-perfil'>
-                    <div className='container-informacoes-perfil'>
-                        <div className='container-borda-perfil'>
-                            <p className='pA-perfil'>Nome</p>
-                            <div className='container-editar-perfil'>
-                                <p className='pL-perfil'>Leitura de Tela</p>
-                                <button className='bt-editar'>
-                                    <label>Editar</label>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='container-informacoes-perfil'>
-                        <div className='container-borda-perfil'>
-                            <p className='pA-perfil'>Nome</p>
-                            <div className='container-editar-perfil'>
-                                <p className='pL-perfil'>Leitura de Tela</p>
-                                <button className='bt-editar'>
-                                    <label>Editar</label>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='container-informacoes-perfil'>
-                        <div className='container-borda-perfil'>
-                            <p className='pA-perfil'>Nome</p>
-                            <div className='container-editar-perfil'>
-                                <p className='pL-perfil'>Leitura de Tela</p>
-                                <button className='bt-editar'>
-                                    <label>Editar</label>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className='container-informacoes-perfil'>
-                        <div className='container-borda-perfil'>
-                            <p className='pA-perfil'>Nome</p>
-                            <div className='container-editar-perfil'>
-                                <p className='pL-perfil'>Leitura de Tela</p>
-                                <button className='bt-editar'>
-                                    <label>Editar</label>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <PerfilDados />
                 </div>
             </div>
         </div>

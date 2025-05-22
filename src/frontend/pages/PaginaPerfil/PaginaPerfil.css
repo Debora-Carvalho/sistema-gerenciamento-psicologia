@@ -1,5 +1,61 @@
 @import url('../../styles/variaveis.css');
 
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-com-icone input {
+    padding-right: 2.5rem;
+    width: 100%;
+}
+
+.input-com-icone .olho {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.container-foto-perfil {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 20px auto;
+}
+
+.imagem-perfil {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    position: relative;
+}
+
+.foto-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.overlay-icone {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 6px;
+    font-size: 14px;
+}
+
+
 .container-pagina-perfil {
     display: flex;
     /* height: 100vh;
@@ -48,7 +104,7 @@
     color: var(--primary-color);
     font-family: var(--font-family-principal);
     font-weight: bolder;
-
+    margin-bottom: 2px;
 }
 
 .container-opcoes-perfil {
@@ -133,7 +189,7 @@
         width: 100vw;
     } */
 
-    .container-centro-perfil {  
+    .container-centro-perfil {
         min-height: 100vh;
         padding: 40px;
         align-items: center;
@@ -167,7 +223,8 @@
     .bt-editar {
         display: flex;
     }
-/* 
+
+    /* 
     .bt-excluir {
         display: flex;
     } */
