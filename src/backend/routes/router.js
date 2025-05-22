@@ -43,7 +43,7 @@ const AppRoutes = () => {
           <Route path="/configuracoes" element={<PaginaConfiguracoes />} />
           <Route path="/agendamentos-concluidos" element={<AgendamentosConcluidos />} />
           <Route path="/agendamentos-cancelados" element={<AgendamentosCancelados />} />
-          <Route path="/Perfil" element={<PaginaPerfil />} />
+          <Route path="/perfil" element={<PaginaPerfil />} />
         </Route>
       </Routes>
     </BrowserRouter>

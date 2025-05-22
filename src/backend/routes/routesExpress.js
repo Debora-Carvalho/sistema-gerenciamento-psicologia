@@ -14,13 +14,14 @@ const { excluirAgendamentoHandler } = require('../controllers/crudAgendamento/ex
 const { alterarAgendamentoHandler } = require('../controllers/crudAgendamento/alterarAgendamento');
 const {adicionarStatusAgendamentoHandler} = require('../controllers/crudAgendamento/adicionarStatusAgendamento');
 
-// Exemplo de rotas Express:
 const { cadastroPacienteHandler } = require('../controllers/crudPaciente/cadastroPaciente');
 const { buscarPacientesHandler } = require('../controllers/crudPaciente/buscarPacinetes');
 const { excluirPacienteHandler } = require('../controllers/crudPaciente/excluirPaciente');
 const { editarPacienteHandler } = require('../controllers/crudPaciente/editarPaciente')
 const { buscarPacienteHandler } = require('../controllers/crudPaciente/buscarPacinete');
 const {indexBackend} = require('../controllers/indexBackend');
+const { UpdateUsuarioHandler } = require('../controllers/crudUsuario/UpdateUsuario');
+
 router.post('/authLogin', loginHandler);
 router.get('/', indexBackend)
 
@@ -28,6 +29,7 @@ router.get('/', indexBackend)
 router.post('/cadastroUsuario', cadastroUsuarioHandler);
 router.post('/dadosUsuario', buscarUsuarioHandler);
 router.post('/excluirUsuarios', excluirUsuarioHandler);
+router.post('/updateUsuario', UpdateUsuarioHandler);
 
 router.post('/recuperarSenha', recuperarSenhaHandler);
 router.post('/cadastroPaciente', cadastroPacienteHandler);

@@ -8,76 +8,80 @@ import { useNavigate } from 'react-router-dom';
 import MenuResponsivo from '../MenuResponsivo/MenuResponsivo';
 
 function MenuPrincipal() {
-  const [active, setActive] = useState('perfil');
-  const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+    const [active, setActive] = useState('perfil');
+    const [isOpen, setIsOpen] = useState(false);
+    const navigate = useNavigate();
 
-  const handleClick = (section) => {
-    setActive(section);
-    setIsOpen(false);
-    if (section === 'sair') {
-      localStorage.removeItem("userID");
-      navigate("/");
-    }
+    const handleClick = (section) => {
+        setActive(section);
+        setIsOpen(false);
+        if (section === 'sair') {
+            localStorage.removeItem("userID");
+            navigate("/");
+        }
 
-    if(section === 'config'){
-      navigate('/configuracoes')
-    }
-  };
+        if (section === 'config') {
+            navigate('/configuracoes')
+        }
 
-  return (
-    <>
-      <div className='caixa-menu-responsivo'>
-        <MenuResponsivo />    {/* este menu só estará visivel no mobile */}
-      </div>
+        if (section === 'perfil') {
+            navigate('/perfil')
+        }
+    };
 
-      <div className='container-menu-principal'>
-        <div className='container-logo-menu-principal' style={{ cursor: "pointer" }} onClick={() => navigate("/pagina-inicial")}>
-          Seren
-        </div>
-
-        <div className='menu-principal'>
-          <div className={`container-menu-principal-items ${isOpen ? 'open' : ''}`}>
-            <div className="menu-principal-items">
-              <button
-                className={`menu-btn ${active === 'perfil' ? 'active' : ''}`}
-                onClick={() => handleClick('perfil')}
-              >
-                <FiUser className="icon" />
-                Meu perfil
-              </button>
-
-              <button
-                className={`menu-btn ${active === 'config' ? 'active' : ''}`}
-                onClick={() => handleClick('config')}
-              >
-                <HiOutlineCog8Tooth className="icon" />
-                Configurações
-              </button>
-
-              <button
-                className={`menu-btn ${active === 'ajuda' ? 'active' : ''}`}
-                onClick={() => handleClick('ajuda')}
-              >
-                <AiOutlineQuestionCircle className="icon" />
-                Ajuda
-              </button>
+    return (
+        <>
+            <div className='caixa-menu-responsivo'>
+                <MenuResponsivo />    {/* este menu só estará visivel no mobile */}
             </div>
 
-            <div className="menu-principal-footer">
-              <button
-                className={`menu-btn-sair ${active === 'sair' ? 'active' : ''}`}
-                onClick={() => handleClick('sair')}
-              >
-                <PiSignOutBold className="icon-sair" />
-                Sair
-              </button>
+            <div className='container-menu-principal'>
+                <div className='container-logo-menu-principal' style={{ cursor: "pointer" }} onClick={() => navigate("/pagina-inicial")}>
+                    Seren
+                </div>
+
+                <div className='menu-principal'>
+                    <div className={`container-menu-principal-items ${isOpen ? 'open' : ''}`}>
+                        <div className="menu-principal-items">
+                            <button
+                                className={`menu-btn ${active === 'perfil' ? 'active' : ''}`}
+                                onClick={() => handleClick('perfil')}
+                            >
+                                <FiUser className="icon" />
+                                Meu perfil
+                            </button>
+
+                            <button
+                                className={`menu-btn ${active === 'config' ? 'active' : ''}`}
+                                onClick={() => handleClick('config')}
+                            >
+                                <HiOutlineCog8Tooth className="icon" />
+                                Configurações
+                            </button>
+
+                            <button
+                                className={`menu-btn ${active === 'ajuda' ? 'active' : ''}`}
+                                onClick={() => handleClick('ajuda')}
+                            >
+                                <AiOutlineQuestionCircle className="icon" />
+                                Ajuda
+                            </button>
+                        </div>
+
+                        <div className="menu-principal-footer">
+                            <button
+                                className={`menu-btn-sair ${active === 'sair' ? 'active' : ''}`}
+                                onClick={() => handleClick('sair')}
+                            >
+                                <PiSignOutBold className="icon-sair" />
+                                Sair
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+        </>
+    );
 }
 
 export default MenuPrincipal;
