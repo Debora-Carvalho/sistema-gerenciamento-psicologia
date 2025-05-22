@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './CriarAgendamentos.css';
 import { ObjectId } from 'bson';
 import { FaUser, FaCalendarAlt, FaPalette, FaVideo, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
@@ -12,6 +13,7 @@ import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/Cabe
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 
 const CriarAgendamentos = () => {
+    const navigate = useNavigate();
     const { adicionarAgendamento } = useCriarAgendamentos();
     const [agendamento, setAgendamento] = useState({
         id: new ObjectId().toString(),
@@ -71,16 +73,15 @@ const CriarAgendamentos = () => {
         return true;
     };
 
-    const handleSalvar = async () => {
+    const handleSalvar = () => {
         if (!verificarCampos()) return;
+        setExibirPopupConfirmacao(true);
+    };
 
+
+    const confirmarSalvar = async () => {
         const DataInicio = new Date(`${agendamento.dataInicioData}T${agendamento.dataInicioHora}:00`).toISOString();
         const DataFim = new Date(`${agendamento.dataInicioData}T${agendamento.dataFimHora}:00`).toISOString();
-
-        // if (new Date(DataInicio) >= new Date(DataFim)) {
-        //     setErro('A data de início deve ser anterior à data de término.');
-        //     return;
-        // }
 
         try {
             const userID = localStorage.getItem("userID");
@@ -98,7 +99,7 @@ const CriarAgendamentos = () => {
 
             if (agendamentoId) {
                 setMostrarSucesso(true);
-                setExibirPopupConfirmacao(true);
+                setExibirPopupConfirmacao(false);
                 // Resetar campos
                 setAgendamento({
                     id: new ObjectId().toString(),
@@ -107,7 +108,6 @@ const CriarAgendamentos = () => {
                     titulo: '',
                     dataInicioData: '',
                     dataInicioHora: '',
-                    // dataFimData: '',
                     dataFimHora: '',
                     desc: '',
                     color: '#000000',
@@ -115,6 +115,11 @@ const CriarAgendamentos = () => {
                     linkSessao: '',
                     nomePaciente: ''
                 });
+
+                setTimeout(() => {
+                    setMostrarSucesso(false);
+                    navigate("/visualizar-agendamentos");
+                }, 1000);
             } else {
                 setErro('Falha ao salvar o agendamento.');
             }
@@ -124,14 +129,6 @@ const CriarAgendamentos = () => {
         }
     };
 
-    const confirmarSalvar = () => {
-        console.log("Agendamento salvo:", agendamento);
-        setExibirPopupConfirmacao(false);
-        setMostrarSucesso(true);
-        setTimeout(() => {
-            setMostrarSucesso(false);
-        }, 10000);
-    };
 
     const cancelarSalvar = () => {
         setExibirPopupConfirmacao(false);
@@ -160,7 +157,6 @@ const CriarAgendamentos = () => {
                 <MenuPrincipal />
             </div>
             <div className="agendamento-container">
-                {/* <MenuResponsivo /> */}
                 <div className='visualizar-agendamentos-cabecalho-criar'>
                     <CabecalhoUsuarioLogado />
                 </div>
@@ -169,27 +165,9 @@ const CriarAgendamentos = () => {
                     <CabecalhoResponsivo />
                 </div>
 
-                {/* <div className="perfil">
-                    <div className="avatar"></div>
-                    <div className="info">
-                        <p>Ianara Holanda</p>
-                        <p>email@email.com</p>
-                    </div>
-                </div> */}
-
                 <h1>Novo agendamento</h1>
 
                 <div className="agendamento-form">
-                    {/* <div className="input-icon campo-longo">
-                    <MdTitle />
-                    <input
-                        type="text"
-                        name="titulo"
-                        placeholder="Título"
-                        value={agendamento.titulo}
-                        onChange={handleChange}
-                    />
-                </div> */}
 
                     <div className="input-icon campo-longo">
                         <FaUser />
@@ -228,14 +206,6 @@ const CriarAgendamentos = () => {
                             onChange={handleChange}
                         />
                     </div>
-                    {/* <label>Data de término</label>
-                <input
-                    type="date"
-                    name="dataFimData"
-                    value={agendamento.dataFimData}
-                    onChange={handleChange}
-                /> */}
-                    {/* <label>Hora de término</label> */}
 
                     <div className="input-icon campo-longo">
                         <FaClock />
@@ -280,7 +250,7 @@ const CriarAgendamentos = () => {
                                 className="seletor-cor"
                                 onMouseDown={(e) => {
                                     e.preventDefault(); // Impede o comportamento padrão do mouse down, que pode incluir a perda de foco.
-                                    e.stopPropagation(); 
+                                    e.stopPropagation();
                                 }}
                             >
                                 <div className="text-sm font-semibold mb-2 text-gray-700">Selecione uma cor abaixo:</div>
@@ -335,5 +305,3 @@ const CriarAgendamentos = () => {
 };
 
 export default CriarAgendamentos;
-//Anahí me perdoa
-//kkkkkkkkkk vai dar certo
