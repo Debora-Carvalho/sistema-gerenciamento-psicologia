@@ -1,0 +1,231 @@
+@import url('../../styles/variaveis.css');
+
+.input-com-icone {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-com-icone input {
+    padding-right: 2.5rem;
+    width: 100%;
+}
+
+.input-com-icone .olho {
+    position: absolute;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
+.container-foto-perfil {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    margin: 20px auto;
+}
+
+.imagem-perfil {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    display: block;
+    cursor: pointer;
+    border: 2px solid #ccc;
+    position: relative;
+}
+
+.foto-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.overlay-icone {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 50%;
+    padding: 6px;
+    font-size: 14px;
+}
+
+
+.container-pagina-perfil {
+    display: flex;
+    /* height: 100vh;
+    width: 100vw; */
+    max-width: 100vw !important;
+    max-height: 100vh !important;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+.container-centro-perfil {
+    /* font-family: var(--font-family-principal);
+    background-color: var(--background-color-tela);
+    min-height: 100vh;
+    padding: 40px; */
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 30px 0;
+    gap: 10px;
+}
+
+.perfil-cabecalho-responsivo {
+    display: none;
+}
+
+.container-centro-configuracoes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
+}
+
+
+.titulo-perfil {
+    height: 10%;
+    padding-left: 20px;
+    word-wrap: break-word;
+}
+
+.t-perfil {
+    color: var(--primary-color);
+    font-family: var(--font-family-principal);
+    font-weight: bolder;
+    margin-bottom: 2px;
+}
+
+.container-opcoes-perfil {
+    background-color: var(--neutral-color-100);
+    width: 100%;
+    padding: 20px 30px;
+    border-radius: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.container-informacoes-perfil {
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}
+
+.container-borda-perfil {
+    border-bottom: 1px solid #ccc;
+}
+
+.container-editar-perfil {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.pA-perfil {
+    font-weight: bolder;
+    font-size: var(--font-size-paragrafo-desktop);
+}
+
+.bt-editar {
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-weight: var(--font-weight-titulo);
+}
+
+.bt-editar:hover {
+    color: var(--primary-color-btn-hover);
+}
+
+.container-excluir-configuracoes {
+    margin-top: auto;
+}
+
+.bt-excluir {
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-weight: var(--font-weight-titulo);
+}
+
+@media (max-width: 768px) {
+    .container-pagina-perfil .navbar {
+        display: none;
+    }
+
+    .container-pagina-perfil {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .perfil-cabecalho {
+        display: none;
+    }
+
+    .perfil-cabecalho-responsivo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* .container-pagina-configuracoes {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100vw;
+    } */
+
+    .container-centro-perfil {
+        min-height: 100vh;
+        padding: 40px;
+        align-items: center;
+        /* justify-content: center; */
+        /* height: 90%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        align-items: center; */
+    }
+
+    .container-opcoes-perfil {
+        width: 90%;
+        word-wrap: break-word;
+        flex-direction: column;
+        height: auto;
+    }
+
+    .container-editar-perfil {
+        flex-direction: column;
+    }
+
+    .titulo-perfil {
+        margin-top: 10%;
+        word-wrap: break-word;
+        width: 100%;
+    }
+
+    .bt-editar {
+        display: flex;
+    }
+
+    /* 
+    .bt-excluir {
+        display: flex;
+    } */
+}
