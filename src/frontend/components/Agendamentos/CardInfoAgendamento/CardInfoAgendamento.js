@@ -4,6 +4,7 @@ import CardDropdownAgendamento from "../../Agendamentos/CardInfoAgendamento/Card
 import useAgendamentoStatus from '../../../features/PaginaAgendamentos/useAgendamentoStatus.js';
 import { FaRegClock } from "react-icons/fa6";
 import { GrLocation } from "react-icons/gr";
+import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
 function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao, statusAgendamento, id_paciente, agendamento }) {
     const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
@@ -91,7 +92,7 @@ function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao,
           className="btn-card-info-agendamento-opcoes"
           onClick={() => setMostrarOpcoes(!mostrarOpcoes)}
         >
-          Opções
+          Opções {mostrarOpcoes ? <IoIosArrowUp /> : <IoIosArrowDown />}
         </button>
         {mostrarOpcoes && <CardDropdownAgendamento id_paciente={id_paciente} agendamento={agendamento} />}
       </div>
