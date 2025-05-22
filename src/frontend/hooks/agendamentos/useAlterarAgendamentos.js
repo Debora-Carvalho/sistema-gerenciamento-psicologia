@@ -1,7 +1,7 @@
 import BASE_URL from '../configRota';
 
 export default function useAlterarAgendamento() {
-    const alterarAgendamento = async (agendamentoId, novosDados, onUpdate) => {
+    const alterarAgendamento = async (agendamentoId, novosDados) => {
         try {
             const response = await fetch(`${BASE_URL}/alterarAgendamentos`, {
                 method: 'PUT',
@@ -14,9 +14,7 @@ export default function useAlterarAgendamento() {
             const data = await response.json();
 
             if (response.ok) {
-                if (onUpdate) {
-                    onUpdate(agendamentoId, novosDados);
-                }
+                alert("agendamento atualizado!")
             } else {
                 alert(data.error || "Erro ao alterar o agendamento.");
             }

@@ -20,8 +20,16 @@ function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao,
     }); 
     const [encerrarPersistido, setEncerrarPersistido] = useState(false);
     const { ativaAtendimento, alternarAtendimento } = useAgendamentoStatus(userID, id);
-  
-  
+    
+    
+    useEffect(() => {
+            const agendamentoID = localStorage.getItem("agendamentoID");
+            if (id) {
+                localStorage.setItem("agendamentoID", id)
+                console.log(agendamentoID)
+            }
+        }, []);
+
     useEffect(() => {
       const salvo = localStorage.getItem(`atendimento-${id}`);
       if (salvo === 'true') {
