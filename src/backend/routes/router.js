@@ -29,8 +29,8 @@ const AppRoutes = () => {
                 <Route path="/recuperar-senha" element={<EsqueciSenha />} />
                 <Route path="/recuperar-senha/codigo" element={<CodigoRecuperarSenha />} />
                 <Route path="/recuperar-senha/nova-senha" element={<NovaSenha />} />
-                <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                 <Route element={<ProtectedRoute />}>
+                    <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
                     <Route path="/pagina-inicial" element={<PaginaInicial />} />
                     <Route path="/pacientes" element={<PaginaPacientes />} />
                     <Route path="/calendario" element={<PaginaCalendario />} />
