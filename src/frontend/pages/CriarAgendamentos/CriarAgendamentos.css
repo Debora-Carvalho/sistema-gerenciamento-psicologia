@@ -93,7 +93,7 @@ h1 {
 }
 
 .buttons>button {
-    margin: 0 40px;
+    margin: 0 120px;
     flex-grow: 0;
     min-width: auto;
 }
@@ -132,6 +132,7 @@ button.salvar:hover {
 @media (max-width: 768px) {
     .buttons > button {
         margin: 0 10px; /* Margem reduzida para mobile */
+        padding: 12px 30px;
     }
 }
 
