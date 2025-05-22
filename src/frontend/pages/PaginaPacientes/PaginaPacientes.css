@@ -11,6 +11,12 @@
     font-family: var(--font-family-principal);
     overflow-x: hidden;
 }
+/* Responsivo: Altera a direção do flex para coluna em telas menores */
+@media (max-width: 768px) {
+    .pagina-container {
+        flex-direction: column;
+    }
+}
 
 .logo-seren {
     padding: 20px;

@@ -276,7 +276,14 @@ const CriarAgendamentos = () => {
                             onClick={() => setMostrarSeletorCor(!mostrarSeletorCor)}
                         ></div>
                         {mostrarSeletorCor && (
-                            <div className="seletor-cor">
+                            <div
+                                className="seletor-cor"
+                                onMouseDown={(e) => {
+                                    e.preventDefault(); // Impede o comportamento padrão do mouse down, que pode incluir a perda de foco.
+                                    e.stopPropagation(); 
+                                }}
+                            >
+                                <div className="text-sm font-semibold mb-2 text-gray-700">Selecione uma cor abaixo:</div>
                                 <input
                                     type="color"
                                     value={agendamento.color}
@@ -295,7 +302,6 @@ const CriarAgendamentos = () => {
                             </div>
                         )}
                     </div>
-
                     {erro && <p className="mensagem-erro">{erro}</p>}
                 </div>
 
