@@ -57,6 +57,7 @@ function VisualizarAgendamentos() {
               linkSessao={agendamento.linkSessao}
               statusAgendamento={agendamento.statusAgendamento || ""}
               id_paciente={agendamento.id_paciente}
+              agendamento= {agendamento}
             />
           ))}
 
