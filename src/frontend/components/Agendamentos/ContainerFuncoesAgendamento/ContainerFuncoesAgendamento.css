@@ -8,6 +8,10 @@
     width: 100%;
 }
 
+.container-funcoes-visualizar-agendamento__responsivo {
+    display: none;
+}
+
 .funcoes-visualizar-agendamento__titulo {
     font-family: var(--font-family-principal);
     font-size: var(--font-size-titulo-desktop);
@@ -46,4 +50,30 @@
     background-color: transparent;
     color: var(--primary-color);
     border: none;
+}
+
+/* RESPONSIVIDADE: CONTAINER FUNÇÕES AGENDAMENTOS */
+.funcoes-visualizar-agendamento-titulo-botoes__responsivo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.funcoes-visualizar-agendamento__botoes-responsivo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 720px) {
+    .container-funcoes-visualizar-agendamento {
+        display: none;
+    }
+
+    .container-funcoes-visualizar-agendamento__responsivo {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 }
