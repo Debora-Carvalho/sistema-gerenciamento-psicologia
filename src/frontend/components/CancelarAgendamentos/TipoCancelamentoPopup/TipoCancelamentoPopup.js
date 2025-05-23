@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './TipoCancelamentoPopup.css';
 import PopupPadrao from '../../PopupPadrao/PopupPadrao.js'; // ajuste o caminho se necessário
+import useExcluirAgendamentos from '../../../hooks/agendamentos/useExcluirAgendamentos.js';
 
-function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
+function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento }) {
+    const { deleteAgendamento } = useExcluirAgendamentos();
     const [tipoSelecionado, setTipoSelecionado] = useState('');
     const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
     const [popupFinal, setPopupFinal] = useState(false);
@@ -15,9 +17,18 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
         }
     };
 
-    const handleConfirmarAcao = () => {
+    const handleConfirmarAcao = async () => {
+        try{
+            await deleteAgendamento({
+                agendamentoId: agendamento._id,
+                pacienteId: agendamento.id_paciente,
+                tipo: tipoSelecionado
+            });
         setMostrarConfirmacao(false);
         setPopupFinal(true);
+        }catch(error){
+            console.error("Erro ao cancelar agendamentos:", error);
+        }
     };
 
     const fecharTudo = () => {
@@ -25,6 +36,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
         setMostrarConfirmacao(false);
         setPopupFinal(false);
         onBotaoClick(); // Fecha o popup original
+        window.location.reload();
     };
 
     return (
@@ -32,7 +44,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
             <div className="tipo-cancelamento-popup-box-padrao">
                 {!mostrarConfirmacao && !popupFinal && (
                     <div className='tipo-cancelamento-popup-principal'>
-                        <h3>Que tipo de cancelamento deseja realizar?</h3>
+                        <h3>Que tipo de cancelamento deseja realfdgh izar?</h3>
 
                         <div className="grupo-radio-cancelamento">
                             <label className={`radio-label ${tipoSelecionado === 'um' ? 'selecionado' : ''}`}>
@@ -84,7 +96,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
                             <button className="btn-cancelamento-voltar" onClick={() => setMostrarConfirmacao(false)}>
                                 Não, quero voltar
                             </button>
-                            <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao}>
+                            <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao} >
                                 Sim
                             </button>
                         </div>

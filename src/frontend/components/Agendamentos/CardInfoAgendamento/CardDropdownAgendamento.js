@@ -51,7 +51,7 @@ function CardDropdownAgendamento({ id_paciente, agendamento }) {
                 Cancelar agendamento
             </button>
 
-            <TipoCancelamentoPopup aberto={popupAberto} onBotaoClick={fecharPopup} />
+            <TipoCancelamentoPopup aberto={popupAberto} onBotaoClick={fecharPopup} id_paciente={id_paciente} agendamento={agendamento}  />
         </div>
     );
 }
