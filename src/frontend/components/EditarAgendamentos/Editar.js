@@ -15,7 +15,7 @@ const Editar = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const { agendamento } = location.state || {};
-    const agendamentoID = localStorage.getItem("agendamentoID");
+    // const agendamentoID = localStorage.getItem("agendamentoID");
     const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
     const [mostrarSeletorCor, setMostrarSeletorCor] = useState(false);
     const { pacientes } = usePacientes();
@@ -113,7 +113,7 @@ const Editar = () => {
       const DataFim = new Date(`${formData.dataInicioData}T${formData.dataFimHora}:00`).toISOString();
       
       const agendamentoID = localStorage.getItem("agendamentoID");
-      console.log(agendamentoID)
+    //   console.log(agendamentoID)
       
       const novosDados = {
         id_usuario: formData.id_usuario,
@@ -127,7 +127,7 @@ const Editar = () => {
         linkSessao: formData.linkSessao,
         nomePaciente: formData.nomePaciente,
       };
-      console.log(novosDados)
+    //   console.log(novosDados)
       try {
             await alterarAgendamento(agendamentoID, novosDados, () => {
                 setMostrarSucesso(true);
@@ -189,7 +189,7 @@ const Editar = () => {
                         <FaUser />
                         <select
                             name="nomePaciente"
-                            value={agendamento.nomePaciente}
+                            value={formData.nomePaciente}
                             onChange={handleChange}
                         >
                             <option value="">Selecione um paciente</option>
@@ -239,14 +239,14 @@ const Editar = () => {
                             type="text"
                             name="linkSessao"
                             placeholder="Link da sessão"
-                            value={agendamento.linkSessao}
+                            value={formData.linkSessao}
                             onChange={handleChange}
                         />
                     </div>
 
                     <div className="input-icon">
                         <FaVideo />
-                        <select name="tipo" value={agendamento.tipo} onChange={handleChange}>
+                        <select name="tipo" value={formData.tipo} onChange={handleChange}>
                             <option value="">Plataforma</option>
                             {plataformas.map((plataforma, index) => (
                                 <option key={index} value={plataforma}>{plataforma}</option>
@@ -258,7 +258,7 @@ const Editar = () => {
                         <FaPalette />
                         <div
                             className="cor-selecionada"
-                            style={{ backgroundColor: agendamento.color }}
+                            style={{ backgroundColor: formData.color }}
                             onClick={() => setMostrarSeletorCor(!mostrarSeletorCor)}
                         ></div>
                         {mostrarSeletorCor && (

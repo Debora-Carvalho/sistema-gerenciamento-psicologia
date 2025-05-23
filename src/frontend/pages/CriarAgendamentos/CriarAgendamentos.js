@@ -4,10 +4,8 @@ import './CriarAgendamentos.css';
 import { ObjectId } from 'bson';
 import { FaUser, FaCalendarAlt, FaPalette, FaVideo, FaExternalLinkAlt, FaClock } from 'react-icons/fa';
 import { MdTitle } from 'react-icons/md';
-import MenuResponsivo from '../../components/MenuResponsivo/MenuResponsivo';
 import useCriarAgendamentos from '../../hooks/agendamentos/useCriarAgendamentos';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
-import usePacientesD from '../../hooks/pacientes/usePacienteDetalhes';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
@@ -20,10 +18,9 @@ const CriarAgendamentos = () => {
         id_usuario: '',
         id_paciente: '',
         titulo: '',
-        dataInicioData: '', // novo
-        dataInicioHora: '', // novo
-        // dataFimData: '', // novo
-        dataFimHora: '', // novo
+        dataInicioData: '',
+        dataInicioHora: '',
+        dataFimHora: '', 
         desc: '',
         color: '#000000',
         tipo: '',
