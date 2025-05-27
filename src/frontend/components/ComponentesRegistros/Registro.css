@@ -37,7 +37,7 @@
 .form-group {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Garante que o .form-group ocupe 100% da largura disponível */
+    width: 100%; 
 }
 
 .input-label {
@@ -51,10 +51,10 @@
 .input-field,
 .textarea-field,
 input[type="date"] {
-    box-sizing: border-box !important; /* Garante que padding e border sejam incluídos na largura total */
-    width: 100% !important; /* Força o campo a ocupar 100% da largura do seu pai */
-    max-width: 100% !important; /* Garante que não ultrapasse o contêiner */
-    display: block !important; /* Garante que se comportem como blocos e ocupem a largura total */
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    display: block !important; 
     padding: 0.8rem 1rem;
     border: 1px solid #ddd;
     border-radius: 0.5rem;
@@ -67,7 +67,7 @@ input[type="date"] {
     -moz-appearance: none;
     appearance: none;
     background-color: white;
-    /* Propriedades adicionadas anteriormente para o campo de data, mantidas */
+    
     flex-grow: 1;
     min-width: 0;
 }
@@ -109,12 +109,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .cancel-button {
     background-color: transparent;
-    color: var(--primary-color); /* Cor do texto azul, conforme variável */
-    border: none; /* REMOVIDA A BORDA, conforme solicitado */
+    color: var(--primary-color); 
+    border: none; 
     padding: 0.8rem 1.5rem;
     font-size: 1rem;
     cursor: pointer;
-    border-radius: 30px; /* MANTIDO O BORDER-RADIUS DE 30px, conforme solicitado */
+    border-radius: 30px; 
     transition: all 0.2s ease-in-out;
     font-weight: 600;
 }
