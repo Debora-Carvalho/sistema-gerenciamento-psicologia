@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import './TipoCancelamentoPopup.css';
 import PopupPadrao from '../../PopupPadrao/PopupPadrao.js'; // ajuste o caminho se necessário
-import useAtualizarStatusAgendamento from '../../../features/PaginaAgendamentos/useAtualizarAgendamentoStatus.js';
+import useExcluirAgendamentos from '../../../hooks/agendamentos/useExcluirAgendamentos.js';
 
-function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento }) {
-    const { atualizarStatus } = useAtualizarStatusAgendamento();
+function TipoExcluirPopup({ aberto, onBotaoClick, id_paciente, agendamento }) {
+    const { deleteAgendamento } = useExcluirAgendamentos();
     const [tipoSelecionado, setTipoSelecionado] = useState('');
     const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
     const [popupFinal, setPopupFinal] = useState(false);
-    const statusAgendamento = 'cancelado';
-    
+
     if (!aberto) return null;
 
     const handleContinuar = () => {
@@ -19,17 +18,15 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
     };
 
     const handleConfirmarAcao = async () => {
-        try{
-            await atualizarStatus({
+        try {
+            await deleteAgendamento({
                 agendamentoId: agendamento._id,
                 pacienteId: agendamento.id_paciente,
-                userID: agendamento.id_usuario,
-                tipo: tipoSelecionado,
-                statusAgendamento
+                tipo: tipoSelecionado
             });
-        setMostrarConfirmacao(false);
-        setPopupFinal(true);
-        }catch(error){
+            setMostrarConfirmacao(false);
+            setPopupFinal(true);
+        } catch (error) {
             console.error("Erro ao cancelar agendamentos:", error);
         }
     };
@@ -47,7 +44,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
             <div className="tipo-cancelamento-popup-box-padrao">
                 {!mostrarConfirmacao && !popupFinal && (
                     <div className='tipo-cancelamento-popup-principal'>
-                        <h3>Que tipo de cancelamento deseja realizar?</h3>
+                        <h3>Que tipo de exclusão deseja realizar?</h3>
 
                         <div className="grupo-radio-cancelamento">
                             <label className={`radio-label ${tipoSelecionado === 'um' ? 'selecionado' : ''}`}>
@@ -59,7 +56,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
                                     checked={tipoSelecionado === 'um'}
                                     onChange={() => setTipoSelecionado('um')}
                                 />
-                                Cancelar este agendamento
+                                Excluir este agendamento
                             </label>
 
                             <label className={`radio-label ${tipoSelecionado === 'todos' ? 'selecionado' : ''}`}>
@@ -71,7 +68,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
                                     checked={tipoSelecionado === 'todos'}
                                     onChange={() => setTipoSelecionado('todos')}
                                 />
-                                Cancelar este e todos os demais agendamentos deste paciente
+                                Excluir este e todos os demais agendamentos deste paciente
                             </label>
                         </div>
 
@@ -85,7 +82,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
                                 onClick={handleContinuar}
                                 disabled={!tipoSelecionado}
                             >
-                                Continuar o cancelamento
+                                Continuar exclusão
                             </button>
                         </div>
                     </div>
@@ -93,14 +90,14 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
 
                 {mostrarConfirmacao && tipoSelecionado === 'um' && (
                     <div className="container-popup-confirmacao">
-                        <h3>Cancelar este agendamento?</h3>
-                        <p>Esta ação excluirá apenas este agendamento.</p>
+                        <h3>Excluir este agendamento?</h3>
+                        <p>Esta ação excluirá <b>permanentemente</b> este agendamento do sistema.</p>
                         <div className="container-tipo-cancelamento__botoes">
                             <button className="btn-cancelamento-voltar" onClick={() => setMostrarConfirmacao(false)}>
                                 Não, quero voltar
                             </button>
                             <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao} >
-                                Sim
+                                Sim, excluir
                             </button>
                         </div>
                     </div>
@@ -108,14 +105,14 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
 
                 {mostrarConfirmacao && tipoSelecionado === 'todos' && (
                     <div className="container-popup-confirmacao">
-                        <h3>Cancelar este e demais agendamentos?</h3>
-                        <p>Essa ação apagará todos os agendamentos desse paciente e não poderá ser revertida.</p>
+                        <h3>Excluir todos os agendamentos?</h3>
+                        <p>Essa ação excluirá <b>permanentemente</b> todos os agendamentos deste paciente e <b>não poderá ser desfeita</b>.</p>
                         <div className="container-tipo-cancelamento__botoes">
                             <button className="btn-cancelamento-voltar" onClick={() => setMostrarConfirmacao(false)}>
                                 Não, quero voltar
                             </button>
                             <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao}>
-                                Cancelar todos
+                                Excluir todos
                             </button>
                         </div>
                     </div>
@@ -125,11 +122,11 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
             {popupFinal && (
                 <PopupPadrao
                     aberto={popupFinal}
-                    titulo="Cancelamento realizado"
+                    titulo="Exclusão realizado"
                     mensagem={
                         tipoSelecionado === 'um'
-                            ? 'O agendamento foi cancelado com sucesso.'
-                            : 'Todos os agendamentos deste paciente foram cancelados.'
+                            ? 'O agendamento foi excluído com sucesso.'
+                            : 'Todos os agendamentos deste paciente foram excluídos com sucesso.'
                     }
                     textoBotao="Ok, entendi!"
                     onBotaoClick={fecharTudo}
@@ -139,4 +136,4 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento 
     );
 }
 
-export default TipoCancelamentoPopup;
+export default TipoExcluirPopup;

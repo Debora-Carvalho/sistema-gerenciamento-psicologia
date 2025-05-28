@@ -139,7 +139,8 @@
   width: 200px;
 }
 
-.dropdown button {
+/* .dropdown button  tudo que estava herdando automaticamente modifiquei pra classe pois dava conflito*/
+.buttonDropdown {
   display: block;
   width: 100%;
   padding: 0.75rem 1rem;
@@ -152,11 +153,11 @@
   border-radius: 0.5rem;
 }
 
-.dropdown button:last-child {
+.buttonDropdown:last-child {
   border-bottom: none;
 }
 
-.dropdown button:hover {
+.buttonDropdown:hover {
   background-color: var(--primary-color);
   transition: 0.4s;
   color: white;

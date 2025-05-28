@@ -17,9 +17,10 @@ function CardDropdownAgendamento({ id_paciente, agendamento }) {
     const fecharPopup = () => {
         setPopupAberto(false);
     };
-    const handleEditarAgendamento = () => {
-        navigate(`/editar`, { state: { agendamento } });
-    };
+
+const handleEditarAgendamento = () => {
+    navigate(`/editar`, { state: { agendamento, modo: "editar" } });
+};
 
     const handleVerPaciente = () => {
         localStorage.setItem("pacienteID", id_paciente);
@@ -51,7 +52,7 @@ function CardDropdownAgendamento({ id_paciente, agendamento }) {
                 Cancelar agendamento
             </button>
 
-            <TipoCancelamentoPopup aberto={popupAberto} onBotaoClick={fecharPopup} />
+            <TipoCancelamentoPopup aberto={popupAberto} onBotaoClick={fecharPopup} id_paciente={id_paciente} agendamento={agendamento}  />
         </div>
     );
 }

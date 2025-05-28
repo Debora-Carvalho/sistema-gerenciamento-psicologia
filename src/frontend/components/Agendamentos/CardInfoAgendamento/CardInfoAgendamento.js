@@ -6,86 +6,94 @@ import { FaRegClock } from "react-icons/fa6";
 import { GrLocation } from "react-icons/gr";
 import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
 
-function CardInfoAgendamento({id, dataInicio, dataFim, nomePaciente, linkSessao, statusAgendamento, id_paciente, agendamento }) {
+function CardInfoAgendamento({ id, dataInicio, dataFim, nomePaciente, linkSessao, statusAgendamento, id_paciente, agendamento }) {
     const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
     const userID = localStorage.getItem("userID");
     const dataI = new Date(dataInicio)
     const dataF = new Date(dataFim)
     const horaFim = dataF.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
     });
     const horaInicio = dataI.toLocaleTimeString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-    }); 
+        hour: '2-digit',
+        minute: '2-digit',
+    });
     const [encerrarPersistido, setEncerrarPersistido] = useState(false);
-    const { ativaAtendimento, alternarAtendimento } = useAgendamentoStatus(userID, id);
-  
-  
+    const { ativaAtendimento, alternarAtendimento } = useAgendamentoStatus(userID, id, agendamento);
+
+
     useEffect(() => {
-      const salvo = localStorage.getItem(`atendimento-${id}`);
-      if (salvo === 'true') {
-        setEncerrarPersistido(true);
-      }
+        const agendamentoID = localStorage.getItem("agendamentoID");
+        if (id) {
+            localStorage.setItem("agendamentoID", id)
+            console.log(agendamentoID)
+        }
+    }, []);
+
+    useEffect(() => {
+        const salvo = localStorage.getItem(`atendimento-${id}`);
+        if (salvo === 'true') {
+            setEncerrarPersistido(true);
+        }
     }, [id]);
-  
+
     useEffect(() => {
-      localStorage.setItem(`atendimento-${id}`, ativaAtendimento);
-      setEncerrarPersistido(ativaAtendimento);
+        localStorage.setItem(`atendimento-${id}`, ativaAtendimento);
+        setEncerrarPersistido(ativaAtendimento);
     }, [ativaAtendimento, id]);
-  
+
     const handleAlternarAtendimento = (e) => {
-      if (userID && id) {
-        alternarAtendimento()
-      }
-      if (ativaAtendimento) {
-        e.preventDefault(); 
-      }
+        if (userID && id) {
+            alternarAtendimento()
+        }
+        if (ativaAtendimento) {
+            e.preventDefault();
+        }
     };
 
-  return (
-    <div className="card-info-agendamento">
-      <div className="container-conteudo-card-info-agendamento">
-        <div className="info-agendamento__hora">{horaInicio}</div>
+    return (
+        <div className="card-info-agendamento">
+            <div className="container-conteudo-card-info-agendamento">
+                <div className="info-agendamento__hora">{horaInicio}</div>
 
-        <div className="card-info-agendamento__periodo-link">
-          <p className="info-agendamento__periodo">
-            <FaRegClock className="info-agendamento__periodo__icon" />
-           {horaInicio}-{horaFim}
-          </p>
-         
-            <p className="info-agendamento__link-atendimento" href="#">
-            <GrLocation className="info-agendamento__link-atendimento__icon" />
-              <a
-              className="link-sessao"
-              href={linkSessao}
-              target="_blank"
-              rel="noopener noreferrer"
-              >
-              link da sessão
-            </a>
-            </p>
-        </div>
+                <div className="card-info-agendamento__periodo-link">
+                    <p className="info-agendamento__periodo">
+                        <FaRegClock className="info-agendamento__periodo__icon" />
+                        {horaInicio}-{horaFim}
+                    </p>
 
-        <div className="card-info-agendamento__nome-iniciar">
-          <p className="info-agendamento__nome">{nomePaciente}</p>
-          {statusAgendamento !== "Concluído" && (
-            <a
-              className="info-agendamento__iniciar-atendimento"
-              href={ativaAtendimento ? linkSessao : "#"}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={handleAlternarAtendimento}
-              style={{ cursor: "pointer" }}
-            >
-              {ativaAtendimento
-                ? "Encerrar Atendimento"
-                : "Iniciar Atendimento"}
-            </a>
-          )}
-        </div>
-      </div>
+                    <p className="info-agendamento__link-atendimento" href="#">
+                        <GrLocation className="info-agendamento__link-atendimento__icon" />
+                        <a
+                            className="link-sessao"
+                            href={linkSessao}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            link da sessão
+                        </a>
+                    </p>
+                </div>
+
+                <div className="card-info-agendamento__nome-iniciar">
+                    <p className="info-agendamento__nome">{nomePaciente}</p>
+                    {statusAgendamento !== "Concluído" && (
+                        <a
+                            className="info-agendamento__iniciar-atendimento"
+                            href={ativaAtendimento ? linkSessao : "#"}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            onClick={handleAlternarAtendimento}
+                            style={{ cursor: "pointer" }}
+                        >
+                            {ativaAtendimento
+                                ? "Encerrar Atendimento"
+                                : "Iniciar Atendimento"}
+                        </a>
+                    )}
+                </div>
+            </div>
 
       <div className="container-dropdown-card-info-agendamento">
         <button
