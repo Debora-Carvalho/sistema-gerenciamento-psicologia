@@ -4,13 +4,7 @@ import OpcoesDropdownConcluidos from "./OpcoesDropdownConcluidos";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdAccessTime } from "react-icons/md";
 
-function CardAgendamentosConcluidos({
-    id,
-    dataInicio,
-    dataFim,
-    nomePaciente,
-    linkSessao,
-}) {
+function CardAgendamentosConcluidos({ id, dataInicio,dataFim,nomePaciente,linkSessao,id_paciente, agendamento}) {
     const [mostrarOpcoes, setMostrarOpcoes] = useState(false);
     const userID = localStorage.getItem("userID");
     const dataI = new Date(dataInicio);
@@ -24,6 +18,7 @@ function CardAgendamentosConcluidos({
         minute: "2-digit",
     });
     // const periodo = data.toLocaleDateString('pt-BR');
+console.log("CardAgendamentosConcluidos - id_paciente:", id_paciente);
 
     return (
         <div className="card-agendamento-concluido">
@@ -57,7 +52,7 @@ function CardAgendamentosConcluidos({
                 >
                     Opções
                 </button>
-                {mostrarOpcoes && <OpcoesDropdownConcluidos />}
+                {mostrarOpcoes && <OpcoesDropdownConcluidos id_paciente={id_paciente} agendamento={agendamento} />}
             </div>
         </div>
     );

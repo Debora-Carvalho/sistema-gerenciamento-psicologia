@@ -6,11 +6,15 @@ async function excluirAgendamentoHandler(req, res) {
         const { agendamentoId, pacienteId, tipo } = req.body;
 
         const db = await connectToDatabase();
-
+        if (!agendamentoId) {
+            return res.status(400).json({ error: "O ID do agendamento é obrigatório" });
+        }
+        
+        if (!pacienteId || !ObjectId.isValid(pacienteId)) {
+            return res.status(400).json({ error: "ID do paciente é obrigatório ou inválido" });
+        }
+        
         if (tipo === 'um') {
-            if (!agendamentoId) {
-                return res.status(400).json({ error: "O ID do agendamento é obrigatório" });
-            }
 
             const resultado = await db.collection("Agendamento").deleteOne({ _id: new ObjectId(agendamentoId) });
 
@@ -21,9 +25,6 @@ async function excluirAgendamentoHandler(req, res) {
             }
 
         } else if (tipo === 'todos') {
-            if (!pacienteId || !ObjectId.isValid(pacienteId)) {
-                return res.status(400).json({ error: "ID do paciente é obrigatório ou inválido" });
-            }
 
             const resultado = await db.collection("Agendamento").deleteMany({
                 id_paciente: new ObjectId(pacienteId)

@@ -17,9 +17,10 @@ function CardDropdownAgendamento({ id_paciente, agendamento }) {
     const fecharPopup = () => {
         setPopupAberto(false);
     };
-    const handleEditarAgendamento = () => {
-        navigate(`/editar`, { state: { agendamento } });
-    };
+
+const handleEditarAgendamento = () => {
+    navigate(`/editar`, { state: { agendamento, modo: "editar" } });
+};
 
     const handleVerPaciente = () => {
         localStorage.setItem("pacienteID", id_paciente);

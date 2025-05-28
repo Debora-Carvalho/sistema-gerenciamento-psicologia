@@ -14,8 +14,8 @@ const Editar = () => {
     const { alterarAgendamento } = useAlterarAgendamento();
     const navigate = useNavigate();
     const location = useLocation();
-    const { agendamento } = location.state || {};
-    // const agendamentoID = localStorage.getItem("agendamentoID");
+    const { agendamento, modo } = location.state || {};
+    const modoAtual = modo || "editar";
     const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
     const [mostrarSeletorCor, setMostrarSeletorCor] = useState(false);
     const { pacientes } = usePacientes();
@@ -73,62 +73,63 @@ const Editar = () => {
 
 
     const handleChange = (e) => {
-      const { name, value } = e.target;
-      setFormData(prevState => ({
-        ...prevState,
-        [name]: value
-      }));
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
     };
     const handleCancelar = () => {
-      setFormData({
-        id: '',
-        id_usuario: '',
-        id_paciente: '',
-        titulo: '',
-        dataInicioData: '',
-        dataInicioHora: '',
-        dataFimHora: '',
-        desc: '',
-        color: '#000000',
-        tipo: '',
-        linkSessao: '',
-        nomePaciente: ''
-      });
+        setFormData({
+            id: '',
+            id_usuario: '',
+            id_paciente: '',
+            titulo: '',
+            dataInicioData: '',
+            dataInicioHora: '',
+            dataFimHora: '',
+            desc: '',
+            color: '#000000',
+            tipo: '',
+            linkSessao: '',
+            nomePaciente: ''
+        });
     };
-    
+
     const selecionarCor = (cor) => {
-      setFormData(prevState => ({
-        ...prevState,
-        color: cor
-      }));
+        setFormData(prevState => ({
+            ...prevState,
+            color: cor
+        }));
     };
-    
+
     const handleSalvar = () => {
-      setExibirPopupConfirmacao(true);
+        setExibirPopupConfirmacao(true);
     };
-    
-    
+
+
     const confirmarSalvar = async () => {
-      const DataInicio = new Date(`${formData.dataInicioData}T${formData.dataInicioHora}:00`).toISOString();
-      const DataFim = new Date(`${formData.dataInicioData}T${formData.dataFimHora}:00`).toISOString();
-      
-      const agendamentoID = localStorage.getItem("agendamentoID");
-    //   console.log(agendamentoID)
-      
-      const novosDados = {
-        id_usuario: formData.id_usuario,
-        id_paciente: formData.id_paciente,
-        titulo: formData.titulo,
-        dataInicio: DataInicio,
-        dataFim: DataFim,
-        desc: formData.desc,
-        color: formData.color,
-        tipo: formData.tipo,
-        linkSessao: formData.linkSessao,
-        nomePaciente: formData.nomePaciente,
-      };
-    //   console.log(novosDados)
-      try {
+        const DataInicio = new Date(`${formData.dataInicioData}T${formData.dataInicioHora}:00`).toISOString();
+        const DataFim = new Date(`${formData.dataInicioData}T${formData.dataFimHora}:00`).toISOString();
+
+        const agendamentoID = localStorage.getItem("agendamentoID");
+        //   console.log(agendamentoID)
+
+        const novosDados = {
+            id_usuario: formData.id_usuario,
+            id_paciente: formData.id_paciente,
+            titulo: formData.titulo,
+            dataInicio: DataInicio,
+            dataFim: DataFim,
+            desc: formData.desc,
+            color: formData.color,
+            tipo: formData.tipo,
+            linkSessao: formData.linkSessao,
+            nomePaciente: formData.nomePaciente,
+            statusAgendamento: 'Em andamento'
+        };
+        //   console.log(novosDados)
+        try {
             await alterarAgendamento(agendamentoID, novosDados, () => {
                 setMostrarSucesso(true);
                 setExibirPopupConfirmacao(false);
@@ -171,7 +172,8 @@ const Editar = () => {
                     </div>
                 </div> */}
 
-                <h1>Editar agendamento</h1>
+                <h1>{modo === "reagendar" ? "Agendar novamente" : "Editar agendamento"}</h1>
+
 
                 <div className="agendamento-form">
                     {/* <div className="input-icon campo-longo">
@@ -293,13 +295,20 @@ const Editar = () => {
 
                 <div className="buttons">
                     <button className="cancelar" onClick={handleCancelar}>Cancelar</button>
-                    <button className="salvar" onClick={handleSalvar}>Salvar</button>
+                    <button className="salvar" onClick={handleSalvar}>
+                        {modo === "reagendar" ? "Agendar novamente" : "Salvar"}
+                    </button>
                 </div>
 
                 {exibirPopupConfirmacao && (
                     <div className="popup-overlay">
                         <div className="popup-confirmacao">
-                            <p>Deseja realmente editar este agendamento?</p>
+                            <p>
+                                {modo === "reagendar"
+                                    ? "Deseja realmente reagendar novamente este agendamento?"
+                                    : "Deseja realmente editar este agendamento?"}
+                            </p>
+
                             <div className="popup-buttons">
                                 <button className="confirmar" onClick={confirmarSalvar}>Confirmar</button>
                                 <button className="voltar" onClick={cancelarSalvar}>Voltar</button>
@@ -311,7 +320,10 @@ const Editar = () => {
                 {mostrarSucesso && (
                     <div className="popup-sucesso-container show">
                         <div className="popup-sucesso">
-                            <p>Paciente foi editado com sucesso!</p>
+                            <p>{modo === "reagendar"
+                                ? "Paciente foi reagendado com sucesso!"
+                                : "Paciente foi editado com sucesso!"}
+                            </p>
                         </div>
                     </div>
                 )}
