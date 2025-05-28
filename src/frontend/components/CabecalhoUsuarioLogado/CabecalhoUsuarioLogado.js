@@ -39,7 +39,7 @@ function CabecalhoUsuarioLogado({ nomePacienteBusca, setNomePacienteBusca }) {
                      <FotoPerfil userId={usuario._id} />
                 </div>
                 <div className='infos-usuario'>
-                    <p className="nome-usuario">{usuario.username}</p>
+                    <p className="nome-usuario">{usuario.username?.split(' ')[0]}</p>
                     <p>{usuario.email}</p>
                 </div>
             </div>

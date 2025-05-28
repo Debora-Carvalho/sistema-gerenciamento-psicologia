@@ -24,7 +24,7 @@ function CabecalhoResponsivo() {
                     <FotoPerfil userId={usuario._id} />
                 </div>
                 <div className='cabecalho-responsivo-infos-usuario'>
-                    <p className="cabecalho-responsivo-nome-usuario">{usuario.username}</p>
+                    <p className="cabecalho-responsivo-nome-usuario">{usuario.username?.split(' ')[0]}</p>
                     <p>{usuario.email}</p>
                 </div>
             </div>
