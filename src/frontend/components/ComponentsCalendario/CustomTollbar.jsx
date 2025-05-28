@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import "../../components/ComponentsCalendario/Components-Calendario-css.css";
+import PropTypes from 'prop-types';
 
-const CustomTollbar = ({ label, onNavigate, onView }) => {
+const CustomTollbar = ({  label, onNavigate, onView, view, children }) => {
   return (
     <div className="custom-toolbar-container">
       <div className="custom-toolbar-header">
@@ -54,9 +55,20 @@ const CustomTollbar = ({ label, onNavigate, onView }) => {
         >
           Agenda
         </Button>
+              <span className="rbc-btn-group" style={{ marginLeft: 'auto' }}>
+        {children}
+      </span>
       </div>
     </div>
   );
+};
+
+CustomTollbar.propTypes = {
+  label: PropTypes.string,
+  onNavigate: PropTypes.func,
+  onView: PropTypes.func,
+  view: PropTypes.string,
+  children: PropTypes.node,
 };
 
 export default CustomTollbar;

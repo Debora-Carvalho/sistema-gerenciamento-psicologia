@@ -16,6 +16,7 @@ import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoR
 import useAgendamentos from '../../hooks/agendamentos/useAgendamentos';
 import ResponsividadePacientes from '../../components/ResponsividadePacientes/ResponsividadePacientes.js';
 import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela.js';
+import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil.js';
 
 function PaginaPacientes() {
   const { usuario } = useUsuarios();
@@ -51,6 +52,7 @@ function PaginaPacientes() {
   const [menuAberto, setMenuAberto] = useState(null);
   const modoEdicao = editandoIndex !== null;
   const [isMobile, setIsMobile] = useState(false);
+  const userID = localStorage.getItem("userID");
 
   useEffect(() => {
     const checkIsMobile = () => {
@@ -258,7 +260,6 @@ function PaginaPacientes() {
   const [agendamentos, setAgendamentos] = useState([]);
 
   useEffect(() => {
-    const userID = localStorage.getItem("userID");
     buscarAgendamentos(userID).then(({ agendamentos, success }) => {
       if (success) {
         setAgendamentos(agendamentos);
@@ -342,7 +343,7 @@ function PaginaPacientes() {
             )}
           </div>
           <div className="usuario-info">
-            <div className="avatar" />
+            <div className="avatar"><FotoPerfil userId={userID} /></div> 
             {usuario ? (
               <div className="info-texto">
                 <strong>{usuario.username}</strong>

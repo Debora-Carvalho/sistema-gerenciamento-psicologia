@@ -2,16 +2,21 @@ import React, { useEffect, useState } from "react";
 import './CabecalhoUsuarioLogado.css';
 import { RiSearchLine } from "react-icons/ri";
 import useUsuarios from '../../hooks/useUsuarios';
-import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome";
+import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil'
 
 function CabecalhoUsuarioLogado({ nomePacienteBusca, setNomePacienteBusca }) {
-    // const [usuario, setUsuario] = useState(null);
     const { usuario } = useUsuarios();
-    
+    const [fotoPerfilUrl, setFotoPerfilUrl] = useState(null);
+
+    // useEffect(() => {
+    //     if (usuario && usuario._id) {
+    //         setFotoPerfilUrl(`/foto/${usuario._id}`);
+    //     }
+    // }, [usuario]);
+
     if (!usuario) {
         return <div>Carregando usuário...</div>;
     }
-
 
     return (
         <div className='container-cabecalho-usuario-logado'>
@@ -30,7 +35,9 @@ function CabecalhoUsuarioLogado({ nomePacienteBusca, setNomePacienteBusca }) {
             </div>
 
             <div className='container-perfil'>
-                <div className='foto-perfil'></div>
+                <div className='foto-perfil'>
+                     <FotoPerfil userId={usuario._id} />
+                </div>
                 <div className='infos-usuario'>
                     <p className="nome-usuario">{usuario.username}</p>
                     <p>{usuario.email}</p>

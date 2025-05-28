@@ -11,6 +11,7 @@
     align-items: center;
     justify-content: space-between;
     text-align: start;
+    gap: 30px;
 }
 
 .container-cabecalho-usuario-logado p {
@@ -57,11 +58,9 @@
 }
 
 .container-perfil .foto-perfil {
-    background-color: #868383;
     width: 70px;
     height: 70px;
     border-radius: 50%;
-    margin-left: 30px;
 }
 
 .container-perfil .infos-usuario p {

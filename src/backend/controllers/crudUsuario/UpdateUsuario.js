@@ -3,7 +3,7 @@ const { ObjectId } = require("mongodb");
 
 async function UpdateUsuarioHandler(req, res) {
 
-    console.log("Body recebido:", req.body);
+    // console.log("Body recebido:", req.body);
 
     try {
         const db = await connectToDatabase();

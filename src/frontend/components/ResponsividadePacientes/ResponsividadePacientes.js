@@ -12,7 +12,7 @@ import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import Form from "../PacientesFormulario/Form";
 
 // Adiciona props: pacientes e setPacientes
-export default function ResponsividadePacientes({ pacientes, setPacientes }) {
+export default function ResponsividadePacientes({ pacientes, setPacientes, onFiltrar }) {
     
     const [search, setSearch] = useState("");
     const [visible, setVisible] = useState(4);
@@ -115,8 +115,14 @@ export default function ResponsividadePacientes({ pacientes, setPacientes }) {
                 </button>
             )}
 
-            {showFilter && (
-                <FiltroDropdown onClose={() => setShowFilter(false)} />
+           {showFilter && (
+                <FiltroDropdown
+                    onClose={() => setShowFilter(false)}
+                    onFiltrar={(tipo) => {
+                        onFiltrar(tipo);         
+                        setShowFilter(false);  
+                    }}
+                />
             )}
 
             {showExportConfirm && (
