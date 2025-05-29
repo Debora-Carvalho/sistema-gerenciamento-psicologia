@@ -20,6 +20,7 @@ import VisualizarAgendamentos from "../../frontend/pages/VisualizarAgendamentos/
 import PaginaPerfil from "../../frontend/pages/PaginaPerfil/PaginaPerfil.js"
 import PaginaConfiguracoes from "../../frontend/pages/PaginaConfiguracoes/PaginaConfiguracoes.js";
 import Teste from "../../frontend/components/ComponentesRegistros/Teste.js";
+import PaginaAnaliseResultados from "../../frontend/pages/PaginaAnaliseResultados/PaginaAnaliseResultados.js";
 
 
 const AppRoutes = () => {
@@ -45,7 +46,6 @@ const AppRoutes = () => {
           <Route path="/agendamentos-concluidos" element={<AgendamentosConcluidos />} />
           <Route path="/agendamentos-cancelados" element={<AgendamentosCancelados />} />
           <Route path="/perfil" element={<PaginaPerfil />} />
-          <Route path="/teste" element={<Teste />} />
         </Route>
       </Routes>
     </BrowserRouter>
