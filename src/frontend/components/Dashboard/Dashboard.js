@@ -1,9 +1,13 @@
 import './Dashboard.css';
 import { FiFilter } from 'react-icons/fi';
 import { BsFileEarmarkPdf } from 'react-icons/bs';
+import GraficoGeneroPacientes from './GraficoGeneroPacientes.js';
+import GraficoEstadoCivilPacientes from './GraficoEstadoCivilPacientes.js';
+import GraficoAgendamentosMensal from './GraficoAgendamentosMensal.js';
 
 function Dashboard () {
     const mesAnaliseDashboard = 'Maio de 2025';
+    const anoAnaliseDashboard = '2025';
 
     return (
         <div className='container-dashboard'>
@@ -27,7 +31,20 @@ function Dashboard () {
             </div>
 
             <div className='container-dashboard__graficos'>
-                <p>graficos analises</p>
+                <div className='dashboard-grafico-barra'>
+                    <p>Gênero</p>
+                    <GraficoGeneroPacientes />
+                </div>
+
+                <div className='dashboard-grafico-pizza'>
+                    <p>Estado civil</p>
+                    <GraficoEstadoCivilPacientes />
+                </div>
+
+                <div className='dashboard-grafico-linha'>
+                    <p>Agendamentos de { anoAnaliseDashboard }</p>
+                    <GraficoAgendamentosMensal />
+                </div>
             </div>
         </div>
     );
