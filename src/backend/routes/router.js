@@ -20,7 +20,8 @@ import VisualizarAgendamentos from "../../frontend/pages/VisualizarAgendamentos/
 import PaginaPerfil from "../../frontend/pages/PaginaPerfil/PaginaPerfil.js"
 import PaginaConfiguracoes from "../../frontend/pages/PaginaConfiguracoes/PaginaConfiguracoes.js";
 import Teste from "../../frontend/components/ComponentesRegistros/Teste.js";
-import PaginaAnaliseResultados from "../../frontend/pages/PaginaAnaliseResultados/PaginaAnaliseResultados.js";
+import PaginaVisualizarRegistros from "../../frontend/pages/PaginaVisualizarRegistros/PaginaVisualizarRegistros.js";
+
 
 
 const AppRoutes = () => {
@@ -31,8 +32,9 @@ const AppRoutes = () => {
         <Route path="/recuperar-senha" element={<EsqueciSenha />} />
         <Route path="/recuperar-senha/codigo" element={<CodigoRecuperarSenha />} />
         <Route path="/recuperar-senha/nova-senha" element={<NovaSenha />} />
+        <Route path= "/visualizar-registros" element={<PaginaVisualizarRegistros/>} />
+        <Route path="/pagina-inicial" element={<PaginaInicial />} />
         <Route element={<ProtectedRoute />}>
-          <Route path="/pagina-inicial" element={<PaginaInicial />} />
           <Route path="/pacientes" element={<PaginaPacientes />} />
           <Route path="/pacientes-detalhes" element={<PaginaPacientesDetalhes />} />
           <Route path="/pacientes-detalhes/:id" element={<PaginaPacientesDetalhes />} />
@@ -46,6 +48,7 @@ const AppRoutes = () => {
           <Route path="/agendamentos-concluidos" element={<AgendamentosConcluidos />} />
           <Route path="/agendamentos-cancelados" element={<AgendamentosCancelados />} />
           <Route path="/perfil" element={<PaginaPerfil />} />
+          
         </Route>
       </Routes>
     </BrowserRouter>
