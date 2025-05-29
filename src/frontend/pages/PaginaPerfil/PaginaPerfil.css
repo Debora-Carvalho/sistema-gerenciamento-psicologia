@@ -65,6 +65,14 @@
     height: 100%;
 }
 
+.btn-editar-foto__icon {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+}
+
+.btn-editar-foto__icon:hover {
+    color: var(--primary-color-btn-hover);
+}
 
 .container-pagina-perfil {
     display: flex;
