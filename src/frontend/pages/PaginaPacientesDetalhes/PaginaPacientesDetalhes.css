@@ -97,10 +97,17 @@
 
 .paciente-atributo {
     font-weight: 600;
+    line-height: 30px;
+    margin-bottom: 0 !important;
 }
 
 .paciente-atributo span {
     font-weight: normal;
+}
+
+/* CARD : BOTÃO ADICIONAR NOVO REGISTRO */
+.card-adicionar-registro {
+  width: 30%;
 }
 
 /* CARD : CHECK-LIST DE PAGAMENTOS*/

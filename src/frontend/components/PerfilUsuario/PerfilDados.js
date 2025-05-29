@@ -133,7 +133,7 @@ function PerfilDados() {
         <>
             {/* Imagem */}
             <div className="container-foto-perfil">
-                <label htmlFor="upload-foto" className="imagem-perfil">
+                <label htmlFor="upload-foto" className="imagem-perfil" title='Clique para editar a foto de perfil'>
                     {imagemPreview ? (
                         <img src={imagemPreview} alt="Foto de perfil" className="foto-preview" />
                     ) : (
