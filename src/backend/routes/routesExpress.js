@@ -24,6 +24,10 @@ const { UpdateUsuarioHandler } = require('../controllers/crudUsuario/UpdateUsuar
 const upload = require("../middlewares/uploadImagem");
 const { uploadFotoPerfilHandler } = require("../controllers/uploadFotoPerfil");
 const { buscarFotoPerfilHandler } = require("../controllers/buscarFotoPerfil");
+const { adicionarRegistroHandler } = require('../controllers/crudRegistros/adicionarRegistro');
+const { alterarRegistroHandler } = require('../controllers/crudRegistros/alterarRegistro');
+const { buscarRegistrosHandler } = require('../controllers/crudRegistros/buscarRegistros');
+const { excluirRegistroHandler } = require('../controllers/crudRegistros/excluirRegistro');
 
 router.post('/authLogin', loginHandler);
 router.get('/', indexBackend)
@@ -51,6 +55,11 @@ router.post('/editarPaciente', editarPacienteHandler)
 
 router.post("/upload-foto-perfil", upload.single("imagem"), uploadFotoPerfilHandler);
 router.get("/foto/:id", buscarFotoPerfilHandler);
+
+router.post('/adicionarRegistro', adicionarRegistroHandler);
+router.put('/alterarRegistro', alterarRegistroHandler);
+router.post('/buscarRegistros', buscarRegistrosHandler);
+router.delete('/excluirRegistro', excluirRegistroHandler);
 
 module.exports = router;
 
