@@ -11,67 +11,69 @@ import ConfirmExport from "../ConfirmExport/ConfirmExport";
 import ConfirmDelete from "../ConfirmDelete/ConfirmDelete";
 import Form from "../PacientesFormulario/Form";
 
-// Adiciona props: pacientes e setPacientes
-export default function ResponsividadePacientes({ pacientes, setPacientes, onFiltrar }) {
-    
+export default function ResponsividadePacientes({
+    pacientes,
+    setPacientes,
+    onFiltrar,
+    onEditar,
+    onExcluir,
+    mostrarFormulario,
+    setMostrarFormulario
+}) {
     const [search, setSearch] = useState("");
     const [visible, setVisible] = useState(4);
-
-    /*  popups  */
     const [showFilter, setShowFilter] = useState(false);
     const [showExportConfirm, setShowExportConfirm] = useState(false);
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-    const [showForm, setShowForm] = useState(false);
-
-    
     const [pacienteEmEdicao, setPacienteEmEdicao] = useState(null);
     const [pacienteParaExcluir, setPacienteParaExcluir] = useState(null);
 
-    
+    // Estado que controla quais colunas são visíveis
+    const [colunasVisiveis, setColunasVisiveis] = useState({
+        nome: true,
+        data: true,
+        idade: true,
+    });
+
+    // Filtra pacientes pela busca no nome e limita pela visibilidade
     const filtrados = pacientes
         .filter((p) => p.nome.toLowerCase().includes(search.toLowerCase()))
         .slice(0, visible);
 
-
+    // Função para salvar ou editar paciente
     const salvarPaciente = (p) => {
         if (pacienteEmEdicao) {
-            setPacientes((prev) =>
-                prev.map((item) =>
-                    item.id === pacienteEmEdicao.id ? { ...p, id: item.id } : item
-                )
-            );
+            onEditar(pacienteEmEdicao._id, p);
         } else {
             setPacientes((prev) => [...prev, { ...p, id: Date.now() }]);
         }
         setPacienteEmEdicao(null);
+        setMostrarFormulario(false);
     };
 
-    /* exportar PDF */
+    // Exportar PDF com lista de pacientes
     const exportarPDF = () => {
         const doc = new jsPDF();
         doc.text("Pacientes", 14, 15);
-
         const body = pacientes.map((p) => [p.nome, p.idade, p.dataSessao]);
-
         autoTable(doc, {
             head: [["Nome", "Idade", "Próxima Sessão"]],
             body,
             startY: 25,
         });
-
         doc.save("pacientes.pdf");
         setShowExportConfirm(false);
     };
 
-    /*  excluir-popup)  */
+    // Pede confirmação para excluir paciente
     const pedirExclusao = (pac) => {
         setPacienteParaExcluir(pac);
         setShowDeleteConfirm(true);
     };
 
-    /*  confirmar exclusão outro popup */
+    // Excluir paciente confirmado
     const excluirPaciente = () => {
-        setPacientes((prev) => prev.filter((x) => x.id !== pacienteParaExcluir.id));
+        onExcluir(pacienteParaExcluir._id);
         setShowDeleteConfirm(false);
         setPacienteParaExcluir(null);
     };
@@ -79,30 +81,35 @@ export default function ResponsividadePacientes({ pacientes, setPacientes, onFil
     return (
         <main style={{ background: "#fff6f8", minHeight: "100vh" }}>
             <MobileHeader />
-
-            <SearchBar
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-
+            <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
             <h2 style={{ margin: "0 1rem", color: "#0047b3" }}>Pacientes</h2>
 
             <PacientesActions
                 onFilter={() => setShowFilter(true)}
                 onExport={() => setShowExportConfirm(true)}
                 onAddPaciente={() => {
-                    setPacienteEmEdicao(null);  
-                    setShowForm(true);
+                    setPacienteEmEdicao(null);
+                    setMostrarFormulario(true);
                 }}
             />
 
+
+            {showFilter && (
+                <FiltroDropdown
+                    filtrosAtuais={colunasVisiveis}
+                    onClose={() => setShowFilter(false)}
+                    onApply={(novosFiltros) => {
+                        setColunasVisiveis(novosFiltros);
+                    }}
+                />
+            )}
+
+
             <PacientesList
                 pacientes={filtrados}
-                onEdit={(pac) => {
-                    setPacienteEmEdicao(pac);    
-                    setShowForm(true);
-                }}
-                onDelete={pedirExclusao}        
+                onEdit={onEditar}
+                onDelete={pedirExclusao}
+                colunasVisiveis={colunasVisiveis}
             />
 
             {visible < pacientes.length && (
@@ -113,16 +120,6 @@ export default function ResponsividadePacientes({ pacientes, setPacientes, onFil
                 >
                     Ver mais
                 </button>
-            )}
-
-           {showFilter && (
-                <FiltroDropdown
-                    onClose={() => setShowFilter(false)}
-                    onFiltrar={(tipo) => {
-                        onFiltrar(tipo);         
-                        setShowFilter(false);  
-                    }}
-                />
             )}
 
             {showExportConfirm && (
@@ -139,18 +136,14 @@ export default function ResponsividadePacientes({ pacientes, setPacientes, onFil
                 />
             )}
 
-            {showForm && (
+            {/* Se usar formulário para adicionar/editar */}
+            {mostrarFormulario && (
                 <Form
-                    onClose={() => {
-                        setShowForm(false);
-                        setPacienteEmEdicao(null);
-                    }}
-                    onSave={salvarPaciente}
                     paciente={pacienteEmEdicao}
+                    onSave={salvarPaciente}
+                    onCancel={() => setMostrarFormulario(false)}
                 />
             )}
         </main>
     );
 }
-
-/* Erro no filtro que não abre e ao adicionar ou editar paciente. */

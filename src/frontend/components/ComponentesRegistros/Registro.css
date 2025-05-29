@@ -1,0 +1,424 @@
+/* Modal - mantido igual */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(250, 186, 197, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    font-family: var(--font-family-principal);
+}
+
+.modal-content {
+    background-color: var(--neutral-color-100);
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 650px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modal-title {
+    text-align: center;
+    font-size: 1.8rem;
+    color: var(--neutral-color-900);
+    margin-bottom: 1rem;
+    font-weight: var(--font-weight-titulo);
+}
+
+/* Ajuste para garantir largura total dos campos */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+}
+
+.input-label {
+    font-size: 1rem;
+    color: var(--neutral-color-900);
+    margin-bottom: 0.5rem;
+    font-weight: var(--font-weight-paragrafo);
+}
+
+/* Estilos unificados para todos os campos */
+.input-field,
+.textarea-field,
+input[type="date"] {
+    box-sizing: border-box !important; 
+    width: 100% !important; 
+    max-width: 100% !important; 
+    display: block !important; 
+    padding: 0.8rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: var(--neutral-color-900);
+    transition: all 0.2s ease-in-out;
+    font-family: inherit;
+    margin: 0;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: white;
+    
+    flex-grow: 1;
+    min-width: 0;
+}
+
+/* Alturas específicas */
+.input-field,
+input[type="date"] {
+    height: 50px;
+    line-height: normal;
+}
+
+.textarea-field {
+    min-height: 150px;
+    line-height: 1.5;
+}
+
+/* Estilos de foco */
+.input-field:focus,
+.textarea-field:focus,
+input[type="date"]:focus {
+    outline: none;
+    border-color: #a8dadc;
+    box-shadow: 0 0 0 3px rgba(168, 218, 220, 0.3);
+}
+
+/* Ajuste específico para o date picker */
+input[type="date"]::-webkit-calendar-picker-indicator {
+    padding: 0;
+    margin-left: 0.5rem;
+    cursor: pointer;
+}
+
+/* Botões */
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1.5rem;
+}
+
+.cancel-button {
+    background-color: transparent;
+    color: var(--primary-color); 
+    border: none; 
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px; 
+    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.cancel-button:hover {
+    background-color: #f0f0f0;
+}
+
+.save-button {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    border: none;
+    padding: 0.8rem 2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: all 0.2s ease-in-out;
+    font-weight: 500;
+}
+
+.save-button:hover {
+    background-color: var(--primary-color-btn-hover);
+    box-shadow: 0 6px 15px rgba(1, 66, 158, 0.3);
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
+
+/* Confirmation Popup */
+.confirmation-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    font-family: var(--font-family-principal);
+}
+
+.confirmation-content {
+    background-color: var(--neutral-color-100);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.confirmation-message {
+    font-size: 1.1rem;
+    color: var(--neutral-color-900);
+    margin-bottom: 1rem;
+    font-weight: var(--font-weight-paragrafo);
+}
+
+.confirmation-buttons {
+    justify-content: space-around;
+}
+
+.cancel-confirmation-button {
+    background-color: #bdc3c7;
+    color: blue;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background-color 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.cancel-confirmation-button:hover {
+    background-color: #e1eff0;
+}
+
+.confirm-save-button {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px;
+    transition: background-color 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.confirm-save-button:hover {
+    background-color: var(--primary-color-btn-hover);
+}
+
+/* Success Notification */
+.success-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #28a745;
+    color: var(--neutral-color-100);
+    padding: 15px 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    font-size: 1rem;
+    font-weight: 500;
+    animation: fadeInOut 5s forwards;
+}
+
+@keyframes fadeInOut {
+    0% { opacity: 0; transform: translateY(-20px); }
+    10% { opacity: 1; transform: translateY(0); }
+    90% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* Delete Popup */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(250, 186, 197, 0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1050;
+    font-family: var(--font-family-principal);
+}
+
+.popup-content {
+    background-color: var(--neutral-color-100);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    width: 90%;
+    max-width: 450px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.popup-title {
+    font-size: 1.5rem;
+    color: var(--neutral-color-900);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.popup-message {
+    font-size: 1rem;
+    color: var(--neutral-color-900);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.popup-buttons {
+    display: flex !important; /* Adicionado para garantir que os botões fiquem lado a lado */
+    justify-content: space-around !important; /* Adicionado para espaçar os botões */
+    align-items: center !important; /* Garante alinhamento vertical se houver diferença de altura */
+}
+
+.popup-back-button {
+    background-color: var(--secondary-color); /* Rosa claro da variável, conforme a imagem */
+    color: var(--primary-color);
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px !important; /* Ajustado para 30px e !important para garantir que fique redondo */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.popup-back-button:hover {
+    background-color: var(--secondary-color); /* Mantido o hover com a cor secundária */
+}
+
+.popup-delete-button {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px !important; /* Ajustado para 30px e !important para garantir que fique redondo */
+    transition: background-color 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.popup-delete-button:hover {
+    background-color: var(--primary-color-btn-hover);
+}
+
+.single-button-group {
+    display: flex !important;
+    justify-content: center !important; 
+    align-items: center !important; 
+}
+
+.popup-understood-button {
+    background-color: var(--primary-color);
+    color: var(--neutral-color-100);
+    border: none;
+    padding: 0.8rem 2.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    border-radius: 30px !important; 
+    transition: background-color 0.2s ease-in-out;
+    font-weight: 600;
+}
+
+.popup-understood-button:hover {
+    background-color: var(--primary-color-btn-hover);
+}
+
+
+.popup-content {
+    border-radius: 30px !important; 
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 95%;
+        padding: 1.5rem;
+    }
+
+    .textarea-field {
+        min-height: 120px;
+    }
+
+    .confirmation-content {
+        max-width: 95%;
+        padding: 1.5rem;
+    }
+
+    .confirmation-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .cancel-confirmation-button,
+    .confirm-save-button {
+        width: 100%;
+    }
+
+    .success-notification {
+        top: 10px;
+        right: 10px;
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .popup-content {
+        max-width: 95%;
+        padding: 1.5rem;
+        gap: 1rem;
+    }
+
+    .popup-title {
+        font-size: 1.3rem;
+    }
+
+    .popup-message {
+        font-size: 0.9rem;
+    }
+
+    .popup-buttons {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .popup-back-button,
+    .popup-delete-button,
+    .popup-understood-button {
+        width: 100%;
+        padding: 0.9rem 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .modal-content {
+        padding: 1rem;
+    }
+
+    .textarea-field {
+        min-height: 100px;
+    }
+
+    .confirmation-content,
+    .popup-content {
+        padding: 1rem;
+    }
+}
