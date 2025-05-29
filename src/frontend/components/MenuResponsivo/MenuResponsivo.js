@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import './MenuResponsivo.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { HiOutlineBars3 } from "react-icons/hi2"
 import { FiUser } from "react-icons/fi";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
@@ -10,20 +10,26 @@ import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 
 function MenuResponsivo() {
+    const location = useLocation();
     const [openMenu, setOpenMenu] = useState(false);
     const [active, setActive] = useState('perfil');
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
     const handleClick = (section) => {
-        setActive(section);
-        setIsOpen(false); 
+        setIsOpen(false);
         if (section === 'sair') {
             localStorage.removeItem("userID");
-            navigate("/"); 
+            navigate("/");
+        }
+        if (section === 'config') {
+            navigate('/configuracoes');
+        }
+        if (section === 'perfil') {
+            navigate('/perfil');
         }
     };
 
-    return(
+    return (
         <>
             <div className="menu-responsivo-hamburguer">
                 <HiOutlineBars3 className="menu-responsivo-hamburguer__icon" onClick={() => setOpenMenu(true)} />
@@ -32,14 +38,14 @@ function MenuResponsivo() {
             <nav className="container-menu-responsivo">
                 <Drawer open={openMenu} onClose={(() => setOpenMenu(false))} anchor="left">
                     <Box
-                        sx={{ width: 250}}
+                        sx={{ width: 250 }}
                         role="presentation"
                         onClick={() => setOpenMenu(false)}
                         onKeyDown={() => setOpenMenu(false)}
                         className="container-menu-responsivo-aberto"
                     >
 
-                        <div className='container-logo-menu-responsivo' onClick={() => navigate("/pagina-inicial")}>
+                        <div className='container-logo-menu-responsivo' style={{ cursor: "pointer" }} onClick={() => navigate("/pagina-inicial")}>
                             Seren
                         </div>
 
@@ -47,7 +53,7 @@ function MenuResponsivo() {
                             <div className={`container-menu-responsivo-items ${isOpen ? 'open' : ''}`}>
                                 <div className="menu-responsivo-items">
                                     <button
-                                        className={`menu-btn-responsivo ${active === 'perfil' ? 'active' : ''}`}
+                                        className={`menu-btn-responsivo ${location.pathname === '/perfil' ? 'active' : ''}`}
                                         onClick={() => handleClick('perfil')}
                                     >
                                         <FiUser className="icon-menu-responsivo" />
@@ -55,7 +61,7 @@ function MenuResponsivo() {
                                     </button>
 
                                     <button
-                                        className={`menu-btn-responsivo ${active === 'config' ? 'active' : ''}`}
+                                        className={`menu-btn-responsivo ${location.pathname === '/configuracoes' ? 'active' : ''}`}
                                         onClick={() => handleClick('config')}
                                     >
                                         <HiOutlineCog8Tooth className="icon-menu-responsivo" />
@@ -63,17 +69,18 @@ function MenuResponsivo() {
                                     </button>
 
                                     <button
-                                        className={`menu-btn-responsivo ${active === 'ajuda' ? 'active' : ''}`}
+                                        className={`menu-btn-responsivo ${location.pathname === '/ajuda' ? 'active' : ''}`}
                                         onClick={() => handleClick('ajuda')}
                                     >
                                         <AiOutlineQuestionCircle className="icon-menu-responsivo" />
                                         Ajuda
                                     </button>
+
                                 </div>
 
                                 <div className="menu-responsivo-footer">
                                     <button
-                                        className={`menu-btn-responsivo-sair ${active === 'sair' ? 'active' : ''}`}
+                                        className={`menu-btn-responsivo-sair ${location.pathname === '/' ? 'active' : ''}`}
                                         onClick={() => handleClick('sair')}
                                     >
                                         <PiSignOutBold className="icon-menu-responsivo-sair" />

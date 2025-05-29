@@ -8,7 +8,8 @@ import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores
 import useDocumentTitle from '../../components/useDocumentTitle';
 import imgBtnAgendamentos from '../../assets/images/image-btn-home-agendamentos.png';
 import imgBtnPacientes from '../../assets/images/image-btn-home-pacientes.png';
-import imgBtnPagamentos from '../../assets/images/image-btn-home-pagamentos.png';
+import imgBtnAnaliseResultados from '../../assets/images/image-btn-home-pagamentos.png';
+// import imgBtnPagamentos from '../../assets/images/image-btn-home-pagamentos.png';
 import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
 import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.svg';
 import Calendario from '../../components/Calendario/Calendario.js';
@@ -110,11 +111,18 @@ function PaginaInicial() {
                         </div>
 
                         <div className='card-inicio-funcionalidade'>
+                            <img src={imgBtnAnaliseResultados} alt='Ilustração' />
+                            <a className='btn-analise-resultados' href='/analise-resultados'>
+                                <p>Análise de Resultados</p>
+                            </a>
+                        </div>                        
+
+                        {/* <div className='card-inicio-funcionalidade'>
                             <img src={imgBtnPagamentos} alt='Ilustração' />
                             <a className='btn-pagamentos' href='#'>
                                 <p>Pagamentos</p>
                             </a>
-                        </div>
+                        </div> */}
                     </div>
 
                     <div className='card-calendario-inicio'>

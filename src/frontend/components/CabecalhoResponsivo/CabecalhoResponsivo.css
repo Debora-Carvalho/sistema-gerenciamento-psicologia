@@ -1,7 +1,7 @@
 @import '../../styles/variaveis.css';
 
 .container-cabecalho-responsivo {
-    display: flex;
+    /* display: flex;
     flex-direction: row;
     width: 100vw !important;
     max-height: 8vh !important;
@@ -11,7 +11,21 @@
     box-sizing: border-box;
     margin-bottom: 0.5rem;
     top: 0;
-    padding: 2rem;
+    padding: 2rem; */
+    display: flex;
+    flex-direction: column;
+    /* empilha menu/perfil e barra de pesquisa */
+    width: 100vw;
+    box-sizing: border-box;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.cabecalho-linha-superior {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
 .container-cabecalho-responsivo p {
@@ -46,4 +60,33 @@
 
 .container-cabecalho-responsivo-perfil .cabecalho-responsivo-infos-usuario .cabecalho-responsivo-nome-usuario {
     font-weight: bold;
+}
+
+.container-barra-pesquisa-usuario-logado-responsivo {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    margin-left: 8px;
+    background-color: var(--neutral-color-100);
+    border-radius: 10px;
+    border: 1px solid transparent;
+}
+
+.container-barra-pesquisa-usuario-logado-responsivo .icon-lupa {
+    font-size: 32px;
+    color: #868383;
+    margin-left: 10px;
+}
+
+.container-barra-pesquisa-usuario-logado-responsivo input {
+    background: transparent;
+    border: none;
+    padding: 0px 100px 0 12px;
+    color: var(--neutral-color-900);
+    width: 100%;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    outline: none;
 }
