@@ -7,7 +7,7 @@ function GraficoAgendamentosMensal() {
     const data = {
         labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         datasets: [{
-            label: 'Agendamentos',
+            label: 'Número de agendamentos',
             data: [12, 19, 10, 23, 30, 25, 20, 18, 22, 27, 33, 40],
             borderColor: '#42a5f5',
             backgroundColor: '#bbdefb',

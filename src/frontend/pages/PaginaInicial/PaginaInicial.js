@@ -8,7 +8,7 @@ import CardsIndicadores from '../../components/CardsIndicadores/CardsIndicadores
 import useDocumentTitle from '../../components/useDocumentTitle';
 import imgBtnAgendamentos from '../../assets/images/image-btn-home-agendamentos.png';
 import imgBtnPacientes from '../../assets/images/image-btn-home-pacientes.png';
-import imgBtnAnaliseResultados from '../../assets/images/image-btn-home-pagamentos.png';
+import imgBtnAnaliseResultados from '../../assets/images/image-btn-home-analises.png';
 // import imgBtnPagamentos from '../../assets/images/image-btn-home-pagamentos.png';
 import imgBtnAnotacoes from '../../assets/images/image-btn-home-anotacoes.png';
 import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.svg';

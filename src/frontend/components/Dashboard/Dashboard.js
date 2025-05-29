@@ -4,6 +4,7 @@ import { BsFileEarmarkPdf } from 'react-icons/bs';
 import GraficoGeneroPacientes from './GraficoGeneroPacientes.js';
 import GraficoEstadoCivilPacientes from './GraficoEstadoCivilPacientes.js';
 import GraficoAgendamentosMensal from './GraficoAgendamentosMensal.js';
+import CardsIndicadores from '../CardsIndicadores/CardsIndicadores.js';
 
 function Dashboard () {
     const mesAnaliseDashboard = 'Maio de 2025';
@@ -28,6 +29,10 @@ function Dashboard () {
                         Exportar PDF
                     </button>
                 </div>
+            </div>
+
+            <div className='dashboard-cards-indicadores'>
+                <CardsIndicadores />
             </div>
 
             <div className='container-dashboard__graficos'>
