@@ -1,4 +1,5 @@
 const connectToDatabase = require("../../config/mongodb");
+const { ObjectId } = require("mongodb");
 
 async function buscarHistoSaudeHandler(req, res) {
   try {
@@ -10,9 +11,11 @@ async function buscarHistoSaudeHandler(req, res) {
 
     const db = await connectToDatabase();
 
+
+
     const historicoSaude = await db
       .collection("HistoricoSaude")
-      .findOne({ id_paciente: pacienteID }); 
+      .findOne({ id_paciente: new ObjectId(pacienteID) }); 
 
     if (!historicoSaude) {
       return res.status(404).json({ error: "Histórico de Saúde não encontrado" });

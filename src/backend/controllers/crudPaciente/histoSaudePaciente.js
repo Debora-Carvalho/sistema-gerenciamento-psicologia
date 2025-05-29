@@ -1,4 +1,5 @@
 const connectToDatabase = require("../../config/mongodb");
+const { ObjectId } = require("mongodb");
 
 async function histoSaudePacienteHandler(req, res) {
     try {
@@ -11,9 +12,17 @@ async function histoSaudePacienteHandler(req, res) {
             });
         }
 
+        const usuario = await db.collection("Usuario").findOne({ _id: new ObjectId(userID) })
+        const paciente = await db.collection("Paciente").findOne({ _id: new ObjectId(pacienteId) })
+
+        if (!usuario || !paciente) {
+            return res.status(404).json({ error: "Usuário ou paciente não encontrado" });
+        }
+
+
         const filtro = {
-            id_usuario: userID,
-            id_paciente: pacienteId
+            id_usuario: new ObjectId(userID),
+            id_paciente: new ObjectId(pacienteId)
         };
 
         const historicoExistente = await db.collection("HistoricoSaude").findOne(filtro);
@@ -33,8 +42,8 @@ async function histoSaudePacienteHandler(req, res) {
                 infoMedica,
                 condiMedica,
                 trataAnterior,
-                id_paciente: pacienteId,
-                id_usuario: userID
+                id_paciente: new ObjectId(paciente._id),
+                id_usuario: new ObjectId(usuario._id)
             };
 
             await db.collection("HistoricoSaude").insertOne(novoHistorico);

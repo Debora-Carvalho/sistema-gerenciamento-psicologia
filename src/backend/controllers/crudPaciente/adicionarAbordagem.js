@@ -1,4 +1,5 @@
 const connectToDatabase = require("../../config/mongodb");
+const { ObjectId } = require("mongodb");
 
 async function adicionarAbordagemHandler(req, res) {
     try {
@@ -10,8 +11,8 @@ async function adicionarAbordagemHandler(req, res) {
         }
 
         const filtro = {
-            id_usuario: userID,
-            id_paciente: pacienteId
+            id_usuario: new ObjectId(userID),
+            id_paciente: new ObjectId(pacienteId)
         };
 
         const historicoExistente = await db.collection("HistoricoSaude").findOne(filtro);
@@ -27,8 +28,8 @@ async function adicionarAbordagemHandler(req, res) {
 
         const novoHistorico = {
             abordagem,
-            id_paciente: pacienteId,
-            id_usuario: userID
+            id_paciente: new ObjectId(pacienteId),
+            id_usuario: new ObjectId(userID),
         };
 
         await db.collection("HistoricoSaude").insertOne(novoHistorico);
