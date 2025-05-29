@@ -36,9 +36,18 @@ body {
     padding-right: 0;
 }
 
+.container-conteudo-visualizar-calendario {
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 30px 70px 30px 30px;
+    gap: 10px;
+    width: 100%;
+}
+
 .calendario {
-    height: 100vh;
-    width: 80%; 
+    height: 80%;
+    width: 100%; 
     overflow: auto;
     padding: 10px;
     background-color: var(--neutral-color-100); 

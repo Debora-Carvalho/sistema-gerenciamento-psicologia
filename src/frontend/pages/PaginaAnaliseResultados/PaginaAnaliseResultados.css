@@ -17,13 +17,13 @@
     display: none;
 }
 
-.container-conteudo-visualizar-agendamentos {
+/* .container-conteudo-visualizar-agendamentos {
     display: flex;
     flex-direction: column;
     justify-content: start;
     padding: 30px 0;
     gap: 10px;
-}
+} */
 
 .analise-resultados__titulo {
     color: var(--primary-color);
