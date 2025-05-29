@@ -3,6 +3,7 @@ import useDocumentTitle from '../../components/useDocumentTitle';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
+import Dashboard from '../../components/Dashboard/Dashboard.js';
 
 function PaginaAnaliseResultados () {
     useDocumentTitle("Análise de resultados | Seren"); // mudando o Title da pagina
@@ -29,13 +30,7 @@ function PaginaAnaliseResultados () {
                 </div>
 
                 <div className='container-conteudo-graficos-analise-resultados'>
-                    <div className='.graficos-analise-resultados__cabecalho'>
-                        <p>cabecalho</p>
-                    </div>
-
-                    <div className='container-graficos-analise-resultados'>
-                        <p>graficos analises</p>
-                    </div>
+                    <Dashboard />
                 </div>
             </div>
         </div>
