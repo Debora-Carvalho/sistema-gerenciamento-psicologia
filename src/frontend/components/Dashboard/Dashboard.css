@@ -5,10 +5,10 @@
     flex-direction: column;
     width: 100%;
     height: 75vh;
-
     background-color: var(--neutral-color-100);
     border-radius: 20px;
     padding: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
 }
 
 .dashboard-cabecalho {
@@ -16,6 +16,18 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.dashboard-cabecalho__descricao h3 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text-color-dark);
+}
+
+.dashboard-cabecalho__descricao p {
+    font-size: 1rem;
+    color: var(--text-color-medium);
 }
 
 .dashboard-cabecalho__botoes {
@@ -26,21 +38,61 @@
     gap: 10px;
 }
 
-.btn-filtro-dashboard, .btn-exportar-dashboard {
+.btn-filtro-dashboard,
+.btn-exportar-dashboard {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding: 10px;
-    gap: 10px;
+    padding: 10px 16px;
+    gap: 8px;
     border: none;
     border-radius: 20px;
+    background-color: var(--primary-color);
+    color: #fff;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-filtro-dashboard:hover,
+.btn-exportar-dashboard:hover {
+    background-color: var(--primary-color-dark);
 }
 
 .container-dashboard__graficos {
-    display: flex;
-    max-height: 70vh;
-    height: 70vh;
-    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    overflow-y: auto;
+    padding-right: 10px;
 }
 
+.dashboard-grafico-barra,
+.dashboard-grafico-pizza,
+.dashboard-grafico-linha {
+    background-color: #F6C6B8;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.05);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.dashboard-grafico-barra p,
+.dashboard-grafico-pizza p,
+.dashboard-grafico-linha p {
+    font-weight: bolder;
+    font-size: 1rem;
+    margin-bottom: 16px;
+    color: var(--text-color-dark);
+}
+
+.dashboard-grafico-barra canvas,
+.dashboard-grafico-pizza canvas,
+.dashboard-grafico-linha canvas {
+    max-height: 280px;
+    width: 100% !important;
+}
