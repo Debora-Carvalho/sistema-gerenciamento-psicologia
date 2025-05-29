@@ -4,6 +4,7 @@ import { FiUser } from "react-icons/fi";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { PiSignOutBold } from "react-icons/pi";
+import { VscGraph } from "react-icons/vsc";
 import { useNavigate, useLocation } from 'react-router-dom';
 
 function MenuPrincipal() {
@@ -19,6 +20,9 @@ function MenuPrincipal() {
         }
         if (section === 'config') {
             navigate('/configuracoes');
+        }
+        if (section === 'analise') {
+            navigate('/analise-resultados');
         }
         if (section === 'perfil') {
             navigate('/perfil');
@@ -49,6 +53,14 @@ function MenuPrincipal() {
                             >
                                 <HiOutlineCog8Tooth className="icon" />
                                 Configurações
+                            </button>
+
+                            <button
+                                className={`menu-btn ${location.pathname === '/analise-resultados' ? 'active' : ''}`}
+                                onClick={() => handleClick('analise')}
+                            >
+                                <VscGraph className="icon" />
+                                Análises
                             </button>
 
                             <button

@@ -6,6 +6,7 @@ import { FiUser } from "react-icons/fi";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
 import { PiSignOutBold } from "react-icons/pi";
+import { VscGraph } from "react-icons/vsc";
 import Drawer from "@mui/material/Drawer";
 import Box from "@mui/material/Box";
 
@@ -23,6 +24,9 @@ function MenuResponsivo() {
         }
         if (section === 'config') {
             navigate('/configuracoes');
+        }
+        if (section === 'analise') {
+            navigate('/analise-resultados');
         }
         if (section === 'perfil') {
             navigate('/perfil');
@@ -66,6 +70,14 @@ function MenuResponsivo() {
                                     >
                                         <HiOutlineCog8Tooth className="icon-menu-responsivo" />
                                         Configurações
+                                    </button>
+
+                                    <button
+                                        className={`menu-btn-responsivo ${location.pathname === '/analise-resultados' ? 'active' : ''}`}
+                                        onClick={() => handleClick('analise')}
+                                    >
+                                        <VscGraph  className="icon-menu-responsivo" />
+                                        Análises
                                     </button>
 
                                     <button
