@@ -16,7 +16,6 @@ export default function Form({ onClose, onSave, paciente }) {
     const [dados, setDados] = useState(inicial);
     const [erro, setErro] = useState("");
 
-    // Atualiza os dados quando o paciente muda
     useEffect(() => {
         if (paciente) {
             setDados(paciente);
@@ -33,14 +32,15 @@ export default function Form({ onClose, onSave, paciente }) {
 
     const validar = () => {
         const obrigatoriosPreenchidos =
-            dados.nome.trim() &&
-            dados.profissao.trim() &&
-            dados.email.trim() &&
-            dados.telefone.trim() &&
-            dados.genero.trim() &&
-            dados.estadoCivil.trim() &&
-            dados.preferencia.trim() &&
-            dados.nascimento;
+            String(dados.nome || "").trim() &&
+            String(dados.profissao || "").trim() &&
+            String(dados.email || "").trim() &&
+            String(dados.telefone || "").trim() &&
+            String(dados.genero || "").trim() &&
+            String(dados.estadoCivil || "").trim() &&
+            String(dados.preferencia || "").trim() &&
+            String(dados.nascimento || "").trim();
+
 
         if (!obrigatoriosPreenchidos) {
             return "Preencha todos os campos obrigatórios para salvar";
@@ -66,7 +66,7 @@ export default function Form({ onClose, onSave, paciente }) {
 
     return (
         <div className="overlay" onClick={onClose}>
-            <form
+            {/* <form
                 className="form-box"
                 noValidate
                 onClick={(e) => e.stopPropagation()}
@@ -156,6 +156,7 @@ export default function Form({ onClose, onSave, paciente }) {
                     onChange={handleChange}
                     required
                 />
+            {/* </form> */}
 
                 <div className="btn-row">
                     <button type="button" className="cancel" onClick={onClose}>
@@ -164,8 +165,7 @@ export default function Form({ onClose, onSave, paciente }) {
                     <button type="submit" className="confirm">
                         Salvar
                     </button>
-                </div>
-            </form>
+                </div> 
         </div>
     );
 }

@@ -35,11 +35,14 @@ function VisualizarAgendamentos() {
                 <div className="visualizar-agendamentos-cabecalho">
                     <CabecalhoUsuarioLogado
                         nomePacienteBusca={nomePacienteBusca}
-                        setNomePacienteBusca={setNomePacienteBusca} />
+                        setNomePacienteBusca={setNomePacienteBusca}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className="visualizar-agendamentos-cabecalho-responsivo">
-                    <CabecalhoResponsivo />
+                    <CabecalhoResponsivo nomePacienteBusca={nomePacienteBusca}
+                        setNomePacienteBusca={setNomePacienteBusca} 
+                        exibirPesquisa={false}/>
                 </div>
 
                 <div className="visualizar-agendamentos-componente-funcoes">
