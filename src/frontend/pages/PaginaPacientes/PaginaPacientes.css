@@ -218,7 +218,7 @@
 .lista-pacientes .tabela-pacientes td {
     border-top: 1px solid #a19f9f;
     font-size: 16px;
-    
+    cursor: pointer;
 }
 
 .acoes-td {

@@ -4,6 +4,7 @@ import useEditarUsuario from '../../hooks/usuario/useUpdateUsuario';
 import useNovaSenha from '../../hooks/useNovaSenha';
 import useUploadFotoPerfil from '../../hooks/usuario/useUploadFotoPerfil';
 import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil';
+import { MdOutlineEdit } from "react-icons/md";
 
 function PerfilDados() {
     const { atualizarSenha } = useNovaSenha();
@@ -132,14 +133,16 @@ function PerfilDados() {
         <>
             {/* Imagem */}
             <div className="container-foto-perfil">
-                <label htmlFor="upload-foto" className="imagem-perfil">
+                <label htmlFor="upload-foto" className="imagem-perfil" title='Clique para editar a foto de perfil'>
                     {imagemPreview ? (
                         <img src={imagemPreview} alt="Foto de perfil" className="foto-preview" />
                     ) : (
                         <FotoPerfil userId={usuario._id} />
                     )}
                     <div className="overlay-icone">
-                        <span role="img" aria-label="editar">✏️</span>
+                        <span role="img" aria-label="editar">
+                            <MdOutlineEdit className='btn-editar-foto__icon'/>
+                        </span>
                     </div>
                 </label>
                 <input

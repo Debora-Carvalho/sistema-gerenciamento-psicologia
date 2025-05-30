@@ -17,6 +17,8 @@ import { atualizarPaciente } from "../../hooks/pacientes/UsePacienteAtualizar";
 import { excluirPaciente } from "../../hooks/pacientes/usePacienteExcluir";
 import calcularIdade from "../../hooks/pacientes/utilCalcularIdade";
 import { BsClipboardPulse } from "react-icons/bs";
+import RegistrosPacientesDetalhes from "../../components/RegistrosPacientesDetalhes/RegistrosPacientesDetalhes.js";
+import BtnNovoRegistro from "../../components/RegistrosPacientesDetalhes/BtnNovoRegistro.js";
 
 // function formatarDataParaInput(data) {
 //     if (!data) return "";
@@ -622,21 +624,20 @@ function PaginaPacientesDetalhes() {
               ))}
           </div>
 
+          <div className="card-adicionar-registro">
+              <BtnNovoRegistro />
+          </div>
+
           {/* <div className="card-pagamentos">
-                        <h3>Pagamentos</h3>
-                        <div className="card-pagamentos-checklist">
-                            <ChecklistPagamentos className="checklist" />
-                        </div>
-                    </div> */}
+              <h3>Pagamentos</h3>
+              <div className="card-pagamentos-checklist">
+                  <ChecklistPagamentos className="checklist" />
+              </div>
+          </div> */}
         </div>
 
         <div className="cards-anotacoes">
-          <div className="container-anotacoes-salvas">
-            <h1>Registros de sessões</h1>
-          </div>
-          <div className="container-nova-anotacao">
-            <h3>Adicionar anotação</h3>
-          </div>
+          <RegistrosPacientesDetalhes />
         </div>
       </div>
     </div>
