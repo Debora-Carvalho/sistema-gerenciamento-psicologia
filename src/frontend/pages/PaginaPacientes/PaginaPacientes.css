@@ -477,12 +477,13 @@
     }
 }
 
+/* Alterações para o popup de notificação */
 .popup-notificacao {
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 15px 25px;
-    border-radius: 5px;
+    border-radius: 20px; /* Ajustado para 20px */
     color: white;
     font-weight: bold;
     z-index: 1000;
@@ -518,6 +519,7 @@
     }
 }
 
+/* Alterações para o modal de confirmação */
 .modal-confirmacao {
     position: fixed;
     top: 50%;
@@ -526,7 +528,7 @@
     background-color: #ffffff;
     color: rgb(5, 5, 5);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px; /* Ajustado para 20px */
     text-align: center;
     z-index: 1000;
     width: 90%;
@@ -545,62 +547,55 @@
 }
 
 .btn-excluir-blue {
-    background-color: #01429E;
+    background-color:#01429E;
     color: white;
+    width: 140px; /* Mantém 150px */
+}
+
+.botoes-confirmacao {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center; 
 }
 
 .botoes-confirmacao button {
-    padding: 10px 20px;
+    padding: 6px 15px; 
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em; 
+    text-align: center;
+    width: 140px; 
+    height: 45px; 
+    line-height: 1.3; 
+    box-sizing: border-box; 
+    display: inline-flex; 
+    align-items: center; 
+    justify-content: center; 
 }
 
+/* Botão Salvar/Confirmar (azul) */
 .botoes-confirmacao button.salvar {
     background-color: #01429E;
     color: white;
-    border-radius: 15px;
-    
 }
 
 .botoes-confirmacao button.salvar:hover {
     background-color: #006eff;
 }
 
+/* Botão Cinza */
 .botoes-confirmacao button.cinza {
     background-color: #808080;
     color: white;
-    border-radius: 15px;
 }
 
 .botoes-confirmacao button.cinza:hover {
-    background-color: hsl(0, 3%, 71%);
+    background-color: #a3a3a3;
 }
 
-.popup-notificacao {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4caf50;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-.popup-notificacao.erro {
-    background-color: #f44336;
-}
-
-.popup-notificacao.sucesso {
-    background-color: #4caf50;
-}
-
-/* Estilo para mensagens de erro de validação caramba é vermelho */
+/* Estilo para mensagens de erro de validação */
 .form-group .erro-mensagem {
     color: red;
     font-size: 0.8em;

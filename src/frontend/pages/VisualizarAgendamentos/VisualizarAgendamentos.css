@@ -20,11 +20,12 @@
 }
 
 .container-conteudo-visualizar-agendamentos {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    padding: 30px 0;
-    gap: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  padding: 30px 70px 30px 30px;
+  gap: 10px;
+  width: 100%;
 }
 
 .visualizar-agendamentos-cabecalho-responsivo {

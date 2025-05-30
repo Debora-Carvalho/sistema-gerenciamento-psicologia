@@ -63,7 +63,12 @@
     height: 150px;
 }
 
-.btn-pacientes, .btn-anotacoes, .btn-agendamentos, .btn-pagamentos, .btn-abrir-calendario-responsivo {
+.btn-pacientes, 
+.btn-anotacoes, 
+.btn-agendamentos, 
+.btn-analise-resultados, 
+.btn-pagamentos, 
+.btn-abrir-calendario-responsivo {
     display: block;
     justify-self: center !important;
     background-color: var(--primary-color);
@@ -82,7 +87,11 @@
     transition: 0.5s;
 }
 
-.btn-pacientes:hover, .btn-anotacoes:hover, .btn-agendamentos:hover, .btn-pagamentos:hover {
+.btn-pacientes:hover, 
+.btn-anotacoes:hover, 
+.btn-agendamentos:hover, 
+.btn-analise-resultados:hover, 
+.btn-pagamentos:hover {
     background-color: var(--primary-color-btn-hover);    
 }
 
@@ -90,8 +99,7 @@
     display: none;
 }
 
-
-/* Responsivo */
+/* Responsivo - Pagina Inicial */
 @media (max-width: 768px) {
     .pagina-inicial-cabecalho {
         display: none;
