@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../../pages/VisualizarAgendamentos/VisualizarAgendamentos.css";
 import useDocumentTitle from "../../components/useDocumentTitle";
 import MenuPrincipal from "../../components/MenuPrincipal/MenuPrincipal.js";
@@ -6,7 +6,7 @@ import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/Cabe
 import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
 import ContainerFuncoesAgendamento from "../../components/Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.js";
 import CardInfoAgendamento from "../../components/Agendamentos/CardInfoAgendamento/CardInfoAgendamento.js";
-import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
+// import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
 import { useLocation } from 'react-router-dom';
 import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome.js";
 
