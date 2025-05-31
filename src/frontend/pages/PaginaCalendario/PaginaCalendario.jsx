@@ -14,6 +14,7 @@ import "moment/locale/pt-br";
 import '../../components/ComponentsCalendario/Components-Calendario-css.css';
 import '../../components/Menu/Menu.css';
 import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js";
+import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
 
 import Menu from '../../components/Menu/Menu';
 import eventosPadrao from "../../components/ComponentsCalendario/eventosPadrao";
@@ -106,7 +107,7 @@ function Calendario() {
 
     return (
         <div className="tela">
-            <div >
+            <div className="navbar">
                 <MenuPrincipal />
             </div>
             {/* <div className="toolbar"> */}
@@ -118,6 +119,11 @@ function Calendario() {
                         nomePacienteBusca={false}
                         setNomePacienteBusca={false}
                         exibirPesquisa={true} />
+                </div>
+                <div className="visualizar-agendamentos-cabecalho-responsivo">
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
                 </div>
                 <div className="calendario">
                     <DragAndDropCalendar
@@ -137,11 +143,11 @@ function Calendario() {
                         components={{
                             toolbar: (props) => (
                                 <CustomTollbar {...props}>
-                                    <FiltroAtividades
+                                    {/* <FiltroAtividades
                                         atividades={eventos}
                                         tiposSelecionados={tiposSelecionados}
                                         onSelecionarAtividades={handleSelecionarAtividades}
-                                    />
+                                    /> */}
                                 </CustomTollbar>
                             )
                         }}
