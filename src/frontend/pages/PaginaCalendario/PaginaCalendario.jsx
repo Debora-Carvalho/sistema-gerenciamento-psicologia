@@ -118,7 +118,7 @@ function Calendario() {
                     <CabecalhoUsuarioLogado
                         nomePacienteBusca={false}
                         setNomePacienteBusca={false}
-                        exibirPesquisa={true} />
+                        exibirPesquisa={false} />
                 </div>
                 <div className="visualizar-agendamentos-cabecalho-responsivo">
                     <CabecalhoResponsivo nomePacienteBusca={false}
