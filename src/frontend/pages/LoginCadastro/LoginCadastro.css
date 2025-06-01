@@ -6,13 +6,13 @@
 }
 
 .container-lc {
-  background-color: #f7cabd;
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  font-family: var(--font-family-principal);
-  position: relative; 
-  overflow: hidden; 
+    background-color: #f7cabd;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    font-family: var(--font-family-principal);
+    position: relative;
+    overflow: hidden;
 }
 
 .first-content,
@@ -58,7 +58,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center; 
+    text-align: center;
     overflow: hidden;
 }
 
@@ -192,7 +192,7 @@
 }
 
 .formulario-erro {
-  border: 3px solid #D10000 !important;
+    border: 3px solid #D10000 !important;
 }
 
 
@@ -215,34 +215,34 @@
 }
 
 .recuperar-senha:hover {
-  text-decoration: underline;
+    text-decoration: underline;
 }
 
 .mensagem-erro-login {
-  color: red;
-  font-size: 14px;
-  margin: 0px;
+    color: red;
+    font-size: 14px;
+    margin: 0px;
 }
 
-.mensagem-sucesso{
-  color: green;
-  font-size: 14px;
-  margin: 0px;
+.mensagem-sucesso {
+    color: green;
+    font-size: 14px;
+    margin: 0px;
 }
 
 /* IMAGENS */
-  .img-login {
-    position: absolute;         
-    left: 0;        
+.img-login {
+    position: absolute;
+    left: 0;
     bottom: 0;
-    width: 20vw;         
-    max-width: 300px;   
-    max-height: 50vh;    
+    width: 20vw;
+    max-width: 300px;
+    max-height: 50vh;
     object-fit: contain;
     z-index: 2;
-  }
-  
-  .img-cadastro {
+}
+
+.img-cadastro {
     position: absolute;
     right: 0;
     bottom: 0;
@@ -251,9 +251,9 @@
     max-height: 50vh;
     object-fit: contain;
     z-index: 2;
-  }
-  
-  .img-planta-cadastro {
+}
+
+.img-planta-cadastro {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -262,9 +262,9 @@
     max-height: 30vh;
     object-fit: contain;
     z-index: 2;
-  }
-  
-  .img-planta-login {
+}
+
+.img-planta-login {
     position: absolute;
     bottom: 0;
     left: 0;
@@ -273,124 +273,136 @@
     max-height: 30vh;
     object-fit: contain;
     z-index: 2;
-  }
-  
+}
+
 
 /* RESPONSIVIDADE */
 
 @media (max-width: 768px) {
-  .container-lc {
-    flex-direction: column;
-  }
+    .container-lc {
+        flex-direction: column;
+    }
 
-  .first-content,
-  .second-content {
-    flex-direction: column;
-    padding: 30px;
-    width: 100%;
-    justify-content: center;
-  }
+    .first-content,
+    .second-content {
+        flex-direction: column;
+        padding: 30px;
+        width: 100%;
+        justify-content: center;
+    }
 
-  .first-column,
-  .second-column {
-    width: 100%;
-    height: 100vh;
-    padding: 20px 10px;
-  }
+    .first-column,
+    .second-column {
+        width: 100%;
+        height: 100vh;
+        padding: 20px 10px;
+    }
 
-  .titulo, .titulo-logo {
-    font-size: 1.5rem;
-    text-align: center;
-  }
+    .titulo,
+    .titulo-logo {
+        font-size: 1.5rem;
+        text-align: center;
+    }
 
-  .subtitulo h4 {
-    font-size: 0.95rem;
-    text-align: center;
-  }
+    .subtitulo h4 {
+        font-size: 0.95rem;
+        text-align: center;
+    }
 
-  .conteudo-login{
-    text-align: center;
-    display: contents;
-  }
+    .conteudo-login {
+        text-align: center;
+        display: contents;
+    }
 
-  .conteudo-login-campos,
-  .conteudo-cadastro {
-    max-width: 100%;
-    width: 100%;
-    padding: 0 10px;
-  }
+    .conteudo-login-campos,
+    .conteudo-cadastro {
+        max-width: 100%;
+        width: 100%;
+        padding: 0 10px;
+    }
 
-  .btn-cadastre-se, .btn-logar-se,
-  .btn-entrar, .btn-criar {
-    width: 100%;
-    font-size: 1rem;
-    padding: 12px;
-  }
+    .btn-cadastre-se,
+    .btn-logar-se,
+    .btn-entrar,
+    .btn-criar {
+        width: 100%;
+        font-size: 1rem;
+        padding: 12px;
+    }
 
-  .recuperar-senha a {
-    font-size: 0.9rem;
-  }
+    .recuperar-senha a {
+        font-size: 0.9rem;
+    }
 
-  /* Ocultar imagens no mobile */
-  .img-login,
-  .img-cadastro,
-  .img-planta-login,
-  .img-planta-cadastro {
-    display: none;
-  }
+    /* Ocultar imagens no mobile */
+    .img-login,
+    .img-cadastro,
+    .img-planta-login,
+    .img-planta-cadastro {
+        display: none;
+    }
 }
 
-  .btn-logar-se,
-  .btn-cadastre-se,
-  .btn-criar,
-  .btn-entrar {
+.btn-logar-se,
+.btn-cadastre-se,
+.btn-criar,
+.btn-entrar {
     width: 100%;
     font-size: 1rem;
-  }
+}
 
-  .recuperar-senha a {
+.recuperar-senha a {
     font-size: 0.9rem;
     display: block;
     text-align: center;
-  }
+}
 
 /* Ajustes extras para telas até 480px */
 @media (max-width: 480px) {
-  .titulo {
-    font-size: 1.6rem;
-  }
+    .titulo {
+        font-size: 1.6rem;
+    }
 
-  .titulo-logo {
-    font-size: 1.3rem;
-  }
+    .titulo-logo {
+        font-size: 1.3rem;
+    }
 
-  .conteudo-login-campos,
-  .conteudo-cadastro {
-    padding: 10px 0;
-  }
+    .conteudo-login-campos,
+    .conteudo-cadastro {
+        padding: 10px 0;
+    }
 
-  .btn-logar-se,
-  .btn-cadastre-se,
-  .btn-criar,
-  .btn-entrar {
-    font-size: 0.9rem;
-    padding: 0.8rem;
-  }
+    .btn-logar-se,
+    .btn-cadastre-se,
+    .btn-criar,
+    .btn-entrar {
+        font-size: 0.9rem;
+        padding: 0.8rem;
+    }
 }
 
 .barra-carregamento {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 4px;
-  background-color: var(--primary-color);;
-  animation: carregando 1s linear infinite;
-  z-index: 9999;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: var(--primary-color);
+    ;
+    animation: carregando 1s linear infinite;
+    z-index: 9999;
 }
 
 @keyframes carregando {
-  0% { transform: translateX(-100%); }
-  50% { transform: translateX(0); }
-  100% { transform: translateX(100%); }
+    0% {
+        transform: translateX(-100%);
+    }
+
+    50% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100%);
+    }
 }

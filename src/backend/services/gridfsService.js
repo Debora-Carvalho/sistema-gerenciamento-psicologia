@@ -8,7 +8,7 @@ async function getGridFSBucket() {
 
     const db = await connectToDatabase();
     bucket = new GridFSBucket(db, {
-        bucketName: "fotoPerfil" 
+        bucketName: "fotoPerfil"
     });
 
     return bucket;

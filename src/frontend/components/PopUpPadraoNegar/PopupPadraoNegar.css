@@ -1,28 +1,28 @@
 .botoes-popup-padrao-negar {
 
-  gap: 10px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+    gap: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .btn-popup-padrao-confirmar {
 
-  color: #fff;
-  border: none;
-  border-radius: 30px;
-  padding: 0.8rem 2rem;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-  width: 100%;
-  background-color: #ccc;
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    padding: 0.8rem 2rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    width: 100%;
+    background-color: #ccc;
 }
 
-.btn-popup-padrao-confirmar:hover{
-  transition: 0.5s;
-  background-color: red;
+.btn-popup-padrao-confirmar:hover {
+    transition: 0.5s;
+    background-color: red;
 }
 
 #btn-popup-padrao-btn-cancelar {
@@ -35,5 +35,5 @@
     font-weight: bold;
     transition: 0.3s;
     width: 100%;
-    
+
 }
