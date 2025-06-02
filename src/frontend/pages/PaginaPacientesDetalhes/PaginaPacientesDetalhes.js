@@ -57,6 +57,7 @@ function PaginaPacientesDetalhes() {
         email: paciente?.email || "",
         preferenciaContato: paciente?.preferenciaContato || "",
         dataNascimento: paciente?.dataNascimento,
+        // dataNascimento: formatarDataParaInput(paciente?.dataNascimento),
     });
     const [erroCadastro, setErroCadastro] = useState("");
 
@@ -86,17 +87,10 @@ function PaginaPacientesDetalhes() {
             email: paciente.email,
             preferenciaContato: paciente.preferenciaContato,
             dataNascimento: paciente.dataNascimento,
+            // dataNascimento: formatarDataParaInput(paciente.dataNascimento),
         });
         setMostrarFormulario(true);
     };
-
-    function formatarDataParaInput(data) {
-        if (!data) return "";
-        const d = new Date(data);
-        if (isNaN(d.getTime())) return "";
-        return d.toISOString().split("T")[0];
-    }
-
 
     function formatarTelefoneInternacional(numero) {
         if (!numero) return "Telefone não disponível";
@@ -104,6 +98,11 @@ function PaginaPacientesDetalhes() {
         const cleaned = String(numero).replace(/\D/g, "");
 
         if (cleaned.length < 11) return "Telefone não disponível";
+
+        // const ddi = cleaned.slice(0, 2);
+        // const ddd = cleaned.slice(2, 4);
+        // const numeroLocal = cleaned.slice(4);
+
         const ddd = cleaned.slice(0, 2);
         const numeroLocal = cleaned.slice(2);
 
@@ -115,34 +114,8 @@ function PaginaPacientesDetalhes() {
             return `(${ddd}) ${numeroLocal}`;
         }
     }
-    // const { adicionarHistoricoSaude } = useHistoSaudePaciente();
-    // const [infoMedica, setInfoMedica] = useState("");
-    // const [condiMedica, setCondiMedica] = useState("");
-    // const [trataAnterior, setTrataAnterior] = useState("");
 
-    // async function handleSalvarHistorico() {
-    //     const resultado = await adicionarHistoricoSaude({
-    //         infoMedica,
-    //         condiMedica,
-    //         trataAnterior,
-    //         userID: localStorage.getItem("userID"),
-    //         pacienteId: localStorage.getItem("pacienteID"),
-    //     });
-
-    //     if (resultado.success) {
-    //         setPopupAberto(true);
-    //         setMostrarModalSaude(false);
-
-    //         setInfoMedica("");
-    //         setCondiMedica("");
-    //         setTrataAnterior("");
-
-    //         setMostrarFormulario(true);
-    //     } else {
-    //         alert(resultado.error || "Erro ao salvar histórico de saúde.");
-    //     }
-    // }
-
+    console.log(novoPaciente);
     return (
         <div className="container-pacientes-detalhes">
             <div className="navbar">
@@ -223,11 +196,13 @@ function PaginaPacientesDetalhes() {
                                         </button>
                                     )}
                                 </div>
+
                                 {mostrarFormulario && (
                                     <div className="modal-formulario-pacientes">
                                         {erroCadastro && (
                                             <p style={{ color: "red" }}>{erroCadastro}</p>
                                         )}{" "}
+                                        {/* Mensagem de erro */}
                                         <div className="form-group-pacientes">
                                             <input
                                                 type="text"
@@ -241,6 +216,7 @@ function PaginaPacientesDetalhes() {
                                                     })
                                                 }
                                             />
+
                                             <input
                                                 type="text"
                                                 placeholder="profissao"
@@ -303,6 +279,24 @@ function PaginaPacientesDetalhes() {
                                                     }
                                                 }}
                                             />
+                                            {/* <input
+                                                type="tel"
+                                                placeholder="Telefone"
+                                                title="Digite apenas números com o DDD, no formato: 5511987654321"
+                                                value={formatarTelefone(novoPaciente.telefone)}
+                                                onChange={(e) => {
+                                                    const validarNumTelefone = e.target.value.replace(
+                                                        /\D/g,
+                                                        ""
+                                                    );
+                                                    if (validarNumTelefone.length <= 13) {
+                                                        setNovoPaciente({
+                                                            ...novoPaciente,
+                                                            telefone: validarNumTelefone,
+                                                        });
+                                                    }
+                                                }}
+                                            /> */}
                                             {novoPaciente.telefone.length > 0 &&
                                                 novoPaciente.telefone.length !== 11 && (
                                                     <span style={{ color: "red", fontSize: "0.8rem" }}>
@@ -343,7 +337,11 @@ function PaginaPacientesDetalhes() {
                                                 type="date"
                                                 placeholder="Data de Nascimento"
                                                 title="Alterar data de nascimento"
-                                                value={formatarDataParaInput(novoPaciente.dataNascimento)}
+                                                value={
+                                                    new Date(novoPaciente.dataNascimento)
+                                                        .toISOString()
+                                                        .split("T")[0]
+                                                }
                                                 onChange={(e) =>
                                                     setNovoPaciente({
                                                         ...novoPaciente,
@@ -351,7 +349,6 @@ function PaginaPacientesDetalhes() {
                                                     })
                                                 }
                                             />
-
                                         </div>
                                         <div className="form-row buttons">
                                             <button
@@ -366,15 +363,13 @@ function PaginaPacientesDetalhes() {
 
                                             <button
                                                 className="btn salvar"
-                                                onClick={async () => {
-                                                    await atualizarPaciente(
+                                                onClick={() => {
+                                                    atualizarPaciente(
                                                         setErroCadastro,
                                                         novoPaciente,
                                                         editandoIndex,
                                                         resetarFormulario
                                                     );
-                                                    setMostrarFormulario(false);
-                                                    setEditandoIndex(null);
                                                     setPopupAberto(true);
                                                 }}
                                             >
@@ -520,35 +515,92 @@ function PaginaPacientesDetalhes() {
                                         <button
                                             className="btn-historico-saude"
                                             onClick={() => {
-                                                setMostrarModalSaude(true);
+                                                setMostrarModalSaude(!mostrarModalSaude);
                                                 setPopupAberto(false);
                                             }}
                                         >
                                             <LuActivity />
                                             Histórico de saúde
                                         </button>
-                                        <ModalHistoricoSaude
-                                            mostrarModalSaude={mostrarModalSaude}
-                                            setMostrarModalSaude={setMostrarModalSaude}
-                                            setPopupAberto={setPopupAberto}
-                                            setMostrarFormulario={setMostrarFormulario}
-                                        />
+                                        {mostrarModalSaude && (
+                                            <div className="modal-saude">
+                                                <h3 className="title-saude">Histórico de saúde</h3>
+                                                <input
+                                                    type="text"
+                                                    className="descricao-saude"
+                                                    placeholder="Informações médicas..."
+                                                    id="descricao"
+                                                    name="descricao"
+                                                />
 
+                                                <input
+                                                    type="text"
+                                                    className="descricao-saude"
+                                                    placeholder="Condições médicas..."
+                                                    id="descricao"
+                                                    name="descricao"
+                                                />
 
+                                                <input
+                                                    type="text"
+                                                    className="descricao-saude"
+                                                    placeholder="Tratamentos anteriores..."
+                                                    id="descricao"
+                                                    name="descricao"
+                                                />
+                                                <div className="form-row buttons">
+                                                    <button onClick={() => setMostrarModalSaude(false)}>
+                                                        Cancelar
+                                                    </button>
+                                                    <button
+                                                        className="btn salvar" onClick={() => {
+                                                            //lógica para salvar os dados aqui!
+                                                            setPopupAberto(true);
+                                                            setMostrarModalAbordagem(false);
+                                                        }}
+                                                    >
+                                                        Salvar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
                                         <button
                                             className="btn-plano-tratamento"
-                                            onClick={() => setMostrarModalAbordagem(true)
-                                            }
+                                            onClick={() => {
+                                                setMostrarModalAbordagem(true);
+                                                setPopupAberto(false);
+                                            }}
                                         >
                                             <BsClipboardPulse />
                                             Abordagem
                                         </button>
-                                        <ModalAbordagem
-                                            mostrarModalAbordagem={mostrarModalAbordagem}
-                                            setMostrarModalAbordagem={setMostrarModalAbordagem}
-                                            setPopupAberto={setPopupAberto}
-                                        />
-
+                                        {mostrarModalAbordagem && (
+                                            <div className="modal-abordagem">
+                                                <h3 className="title-abordagem">Abordagem</h3>
+                                                <textarea
+                                                    className="descricao-abordagem"
+                                                    placeholder="Adicione aqui as principais abordagens utilizadas com o paciente"
+                                                    id="descricao"
+                                                    name="descricao"
+                                                />
+                                                <div className="form-row buttons">
+                                                    <button
+                                                        onClick={() => setMostrarModalAbordagem(false)}
+                                                    >
+                                                        Cancelar
+                                                    </button>
+                                                    <button
+                                                        className="btn salvar" onClick={() => {
+                                                            //lógica para salvar os dados aqui!
+                                                            setPopupAberto(true);
+                                                            setMostrarModalAbordagem(false);
+                                                        }}
+                                                    >
+                                                        Salvar
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </>
                             ) : (
@@ -562,21 +614,20 @@ function PaginaPacientesDetalhes() {
                             ))}
                     </div>
 
+                    <div className="card-adicionar-registro">
+                        <BtnNovoRegistro />
+                    </div>
+
                     {/* <div className="card-pagamentos">
-                        <h3>Pagamentos</h3>
-                        <div className="card-pagamentos-checklist">
-                            <ChecklistPagamentos className="checklist" />
-                        </div>
-                    </div> */}
+              <h3>Pagamentos</h3>
+              <div className="card-pagamentos-checklist">
+                  <ChecklistPagamentos className="checklist" />
+              </div>
+          </div> */}
                 </div>
 
                 <div className="cards-anotacoes">
-                    <div className="container-anotacoes-salvas">
-                        <h1>Registros de sessões</h1>
-                    </div>
-                    <div className="container-nova-anotacao">
-                        <h3>Adicionar anotação</h3>
-                    </div>
+                    <RegistrosPacientesDetalhes />
                 </div>
             </div>
         </div>

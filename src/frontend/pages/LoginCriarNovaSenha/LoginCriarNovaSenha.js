@@ -5,128 +5,128 @@ import imgMulherNovaSenha from '../../assets/images/image-mulher-novasenha.png';
 import useNovaSenha from '../../hooks/useNovaSenha';
 
 function LoginCriarNovaSenha() {
-  const [novaSenha, setNovaSenha] = useState('');
-  const [mensagemErro, setMensagemErro] = useState('');
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const email = state?.email;
-  const [confirmarSenha, setConfirmarSenha] = useState('');
-  const [erroSenhaInvalida, setErroSenhaInvalida] = useState(false);
-  const [popupAberto, setPopupAberto] = useState(false);
-  const { atualizarSenha } = useNovaSenha();
+    const [novaSenha, setNovaSenha] = useState('');
+    const [mensagemErro, setMensagemErro] = useState('');
+    const navigate = useNavigate();
+    const { state } = useLocation();
+    const email = state?.email;
+    const [confirmarSenha, setConfirmarSenha] = useState('');
+    const [erroSenhaInvalida, setErroSenhaInvalida] = useState(false);
+    const [popupAberto, setPopupAberto] = useState(false);
+    const { atualizarSenha } = useNovaSenha();
 
-  useEffect(() => {
-    if (!email) {
-      navigate('/');
-    }
-  }, [email, navigate]);
+    useEffect(() => {
+        if (!email) {
+            navigate('/');
+        }
+    }, [email, navigate]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    if (!novaSenha) {
-      setMensagemErro('Preencha todos os campos.');
-      return;
-    }
+        if (!novaSenha) {
+            setMensagemErro('Preencha todos os campos.');
+            return;
+        }
 
-    const erro = validarSenha(novaSenha, confirmarSenha);
-    // usar senha Valeriano24@
+        const erro = validarSenha(novaSenha, confirmarSenha);
+        // usar senha Valeriano24@
 
-    if (erro) {
-      setMensagemErro(erro);
-      setErroSenhaInvalida(true);
-      return;
-    }
+        if (erro) {
+            setMensagemErro(erro);
+            setErroSenhaInvalida(true);
+            return;
+        }
 
-    atualizarSenha({ email, novaSenha }, setMensagemErro, setPopupAberto, setErroSenhaInvalida);
+        atualizarSenha({ email, novaSenha }, setMensagemErro, setPopupAberto, setErroSenhaInvalida);
 
-  };
+    };
 
-  const validarSenha = (novaSenha, confirmarSenha) => {
-    const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    const validarSenha = (novaSenha, confirmarSenha) => {
+        const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
-    if (!regexSenhaForte.test(novaSenha)) {
-      return 'Senha inválida, a senha precisa ter 8 dígitos, especial, maiúscula e número.';
-    }
+        if (!regexSenhaForte.test(novaSenha)) {
+            return 'Senha inválida, a senha precisa ter 8 dígitos, especial, maiúscula e número.';
+        }
 
-    if (novaSenha !== confirmarSenha) {
-      return 'As senhas não coincidem.';
-    }
+        if (novaSenha !== confirmarSenha) {
+            return 'As senhas não coincidem.';
+        }
 
-    return '';
-  };
+        return '';
+    };
 
-  return (
-    <div className='container'>
-      <div className='container-conteudo-nova-senha'>
-        <h1 className='titulo-principal'>Crie sua nova senha</h1>
-        <p className='texto-explicativo'>Sua nova senha deve ser diferente das anteriores.</p>
-        <p className='texto-explicativo'>Recomendamos utilizar no mínimo 8 caracteres.</p>
+    return (
+        <div className='container'>
+            <div className='container-conteudo-nova-senha'>
+                <h1 className='titulo-principal'>Crie sua nova senha</h1>
+                <p className='texto-explicativo'>Sua nova senha deve ser diferente das anteriores.</p>
+                <p className='texto-explicativo'>Recomendamos utilizar no mínimo 8 caracteres.</p>
 
-        <form onSubmit={handleSubmit}>
-          <div className='campo-incluir-nova-senha'>
-            <div className='input-container'>
-              {mensagemErro && (
-                <p className='mensagem-erro'>{mensagemErro}</p>
-              )}
-              <label htmlFor='senha'>Nova senha</label>
-              <input
-                type='password'
-                id='senha'
-                className={erroSenhaInvalida ? 'erro' : ''}
-                placeholder='Nova senha'
-                value={novaSenha}
-                onChange={(e) => setNovaSenha(e.target.value)}
-                required
-              />
+                <form onSubmit={handleSubmit}>
+                    <div className='campo-incluir-nova-senha'>
+                        <div className='input-container'>
+                            {mensagemErro && (
+                                <p className='mensagem-erro'>{mensagemErro}</p>
+                            )}
+                            <label htmlFor='senha'>Nova senha</label>
+                            <input
+                                type='password'
+                                id='senha'
+                                className={erroSenhaInvalida ? 'erro' : ''}
+                                placeholder='Nova senha'
+                                value={novaSenha}
+                                onChange={(e) => setNovaSenha(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className='campo-incluir-nova-senha'>
+                        <div className='input-container'>
+                            <label htmlFor='confirmarSenha'>Confirmar nova senha</label>
+                            <input
+                                type='password'
+                                id='confirmarSenha'
+                                className={erroSenhaInvalida ? 'erro' : ''}
+                                placeholder='Confirmar nova senha'
+                                value={confirmarSenha}
+                                onChange={(e) => setConfirmarSenha(e.target.value)}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <button id='btn-confirmar' className='btn-confirmar' type='submit'>
+                        Criar nova senha
+                    </button>
+
+                    <button id='btn-login' className='btn-login' type='button' onClick={() => window.location.href = '/'}>
+                        Login
+                    </button>
+                </form>
             </div>
-          </div>
 
-          <div className='campo-incluir-nova-senha'>
-            <div className='input-container'>
-              <label htmlFor='confirmarSenha'>Confirmar nova senha</label>
-              <input
-                type='password'
-                id='confirmarSenha'
-                className={erroSenhaInvalida ? 'erro' : ''}
-                placeholder='Confirmar nova senha'
-                value={confirmarSenha}
-                onChange={(e) => setConfirmarSenha(e.target.value)}
-                required
-              />
-            </div>
-          </div>
+            {popupAberto && (
+                <div className="popup-overlay">
+                    <div className="popup-box">
+                        <h3>Senha alterada</h3>
+                        <p>Você alterou sua senha com sucesso.<br />Por favor, faça novo login</p>
+                        <button className="btn-popup" onClick={() => window.location.href = '/'}>
+                            Fazer Login
+                        </button>
 
-          <button id='btn-confirmar' className='btn-confirmar' type='submit'>
-            Criar nova senha
-          </button>
+                    </div>
+                </div>
+            )}
 
-          <button id='btn-login' className='btn-login' type='button' onClick={() => window.location.href = '/'}>
-            Login
-          </button>
-        </form>
-      </div>
-
-      {popupAberto && (
-        <div className="popup-overlay">
-          <div className="popup-box">
-            <h3>Senha alterada</h3>
-            <p>Você alterou sua senha com sucesso.<br />Por favor, faça novo login</p>
-            <button className="btn-popup" onClick={() => window.location.href = '/'}>
-              Fazer Login
-            </button>
-
-          </div>
+            <img
+                src={imgMulherNovaSenha}
+                className='imagem-principal'
+                alt="Mulher sentada usando seu notebook no chão"
+            />
         </div>
-      )}
-
-      <img
-        src={imgMulherNovaSenha}
-        className='imagem-principal'
-        alt="Mulher sentada usando seu notebook no chão"
-      />
-    </div>
-  );
+    );
 }
 
 

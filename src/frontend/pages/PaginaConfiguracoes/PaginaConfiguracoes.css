@@ -1,126 +1,126 @@
 .container-pagina-configuracoes {
-  display: flex;
-  height: 100vh;
-  width: 100vw;
+    display: flex;
+    height: 100vh;
+    width: 100vw;
 }
 
 .container-centro-configuracoes {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 70%;
 }
 
 
 .titulo-configuracoes {
-  height: 10%;
-  padding-left: 20px;
-  word-wrap: break-word;
+    height: 10%;
+    padding-left: 20px;
+    word-wrap: break-word;
 }
 
 .t-configuracoes {
-  color: var(--primary-color);
-  font-family: var(--font-family-principal);
-  font-weight: bolder;
+    color: var(--primary-color);
+    font-family: var(--font-family-principal);
+    font-weight: bolder;
 
 }
 
 .container-opcoes-configuracoes {
-  background-color: var(--neutral-color-100);
-  width: 100%;
-  padding: 20px 30px;
-  border-radius: 20px;
-  height: 60%;
-  display: flex;
-  flex-direction: column;
+    background-color: var(--neutral-color-100);
+    width: 100%;
+    padding: 20px 30px;
+    border-radius: 20px;
+    height: 60%;
+    display: flex;
+    flex-direction: column;
 }
 
 .container-acessibilidade-configuracoes {
-  gap: 20px;
-  display: flex;
-  flex-direction: column;
-  padding-top: 10px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
 }
 
 .container-borda-configuracoes {
-  border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .container-habilitar-configuracoes {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .pA-configuracoes {
-  font-weight: bolder;
-  font-size: var(--font-size-paragrafo-desktop);
+    font-weight: bolder;
+    font-size: var(--font-size-paragrafo-desktop);
 }
 
 .bt-habilitar {
-  margin-bottom: 10px;
-  background-color: transparent;
-  border: none;
-  color: var(--primary-color);
-  font-weight: var(--font-weight-titulo);
+    margin-bottom: 10px;
+    background-color: transparent;
+    border: none;
+    color: var(--primary-color);
+    font-weight: var(--font-weight-titulo);
 }
 
 .bt-habilitar:hover {
-  color: var(--primary-color-btn-hover);
+    color: var(--primary-color-btn-hover);
 }
 
 .container-excluir-configuracoes {
-  margin-top: auto;
+    margin-top: auto;
 }
 
 .bt-excluir {
-  background-color: transparent;
-  border: none;
-  color: red;
-  font-weight: var(--font-weight-titulo);
+    background-color: transparent;
+    border: none;
+    color: red;
+    font-weight: var(--font-weight-titulo);
 }
 
 @media (max-width: 768px) {
 
-  .container-pagina-configuracoes {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    width: 100vw;
-  }
+    .container-pagina-configuracoes {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        width: 100vw;
+    }
 
-  .container-centro-configuracoes {
-    height: 90%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    flex-wrap: wrap;
-    width: 100%;
-    align-items: center;
-  }
+    .container-centro-configuracoes {
+        height: 90%;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-wrap: wrap;
+        width: 100%;
+        align-items: center;
+    }
 
-  .container-opcoes-configuracoes {
-    width: 90%;
-    word-wrap: break-word;
-    flex-direction: column;
-    height: auto;
-  }
+    .container-opcoes-configuracoes {
+        width: 90%;
+        word-wrap: break-word;
+        flex-direction: column;
+        height: auto;
+    }
 
-  .container-habilitar-configuracoes {
-    flex-direction: column;
-  }
+    .container-habilitar-configuracoes {
+        flex-direction: column;
+    }
 
-  .titulo-configuracoes {
-    margin-top: 10%;
-    word-wrap: break-word;
-    width: 100%;
-  }
+    .titulo-configuracoes {
+        margin-top: 10%;
+        word-wrap: break-word;
+        width: 100%;
+    }
 
-  .bt-habilitar {
-    display: flex;
-  }
+    .bt-habilitar {
+        display: flex;
+    }
 
-  .bt-excluir {
-    display: flex;
-  }
+    .bt-excluir {
+        display: flex;
+    }
 }
