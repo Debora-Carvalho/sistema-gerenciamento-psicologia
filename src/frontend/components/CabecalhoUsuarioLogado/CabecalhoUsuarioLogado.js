@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from "react";
 import './CabecalhoUsuarioLogado.css';
 import { RiSearchLine } from "react-icons/ri";
 import useUsuarios from '../../hooks/useUsuarios';
 import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil'
+import TelaDeCarregamento from '../CarregamentoTela/TelaDeCarregamento';
 
 function CabecalhoUsuarioLogado({ nomePacienteBusca, setNomePacienteBusca, exibirPesquisa }) {
     const { usuario } = useUsuarios();
+
     if (!usuario) {
-        return <div>Carregando usuário...</div>;
+        return <TelaDeCarregamento mensagem="Carregando cabeçalho..." />;
     }
 
     return (

@@ -1,187 +1,188 @@
 @import '../../styles/variaveis.css';
 
 .pagina-agendamentos {
-  display: flex;
-  background-color: var(--background-color-tela);
-  font-family: var(--font-family-principal);
-  min-height: 100vh;
+    display: flex;
+    background-color: var(--background-color-tela);
+    font-family: var(--font-family-principal);
+    min-height: 100vh;
 }
 
 .conteudo {
-  flex: 1;
-  padding: 2rem;
+    flex: 1;
+    padding: 2rem;
 }
 
 .titulo {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--primary-color);
+    font-size: 3rem;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
 .btn-novo-agendamento {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  border: none;
-  margin-top: 1rem;
-  cursor: pointer;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    border: none;
+    margin-top: 1rem;
+    cursor: pointer;
 }
 
 .link-bloquear-agenda {
-  display: inline-block;
-  margin-top: 0.5rem;
-  color: var(--primary-color);
-  font-weight: bold;
-  text-decoration: none;
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: var(--primary-color);
+    font-weight: bold;
+    text-decoration: none;
 }
 
 .lista-agendamentos {
-  /* margin-top: 2rem; */
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  overflow: auto;
-  height: 70vh;
-  max-height: 70vh;
+    /* margin-top: 2rem; */
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    height: 70vh;
+    max-height: 70vh;
 }
 
 .btn-ver-mais {
-  display: block;
-  margin: 2rem auto;
-  padding: 0.75rem 2rem;
-  border-radius: 1.5rem;
-  border: 1px solid var(--primary-color);
-  color: var(--primary-color);
-  background-color: transparent;
+    display: block;
+    margin: 2rem auto;
+    padding: 0.75rem 2rem;
+    border-radius: 1.5rem;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
 }
 
 .top-bar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
 }
 
 
 .container-pesquisa {
-  position: relative;
-  width: 900px;
+    position: relative;
+    width: 900px;
 }
 
 .icone-lupa {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-  font-size: 16px;
-  transition: opacity 0.2s;
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    font-size: 16px;
+    transition: opacity 0.2s;
 }
 
 .texto-pesquisa {
-  position: absolute;
-  left: 40px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #777;
-  pointer-events: none;
-  transition: opacity 0.2s;
+    position: absolute;
+    left: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #777;
+    pointer-events: none;
+    transition: opacity 0.2s;
 }
 
 .campo-pesquisa {
-  width: 100%;
-  padding: 10px 15px 10px 40px;
-  border-radius: 12px;
-  border: 1px solid #fff;
-  background-color: #fff;
-  font-size: 14px;
-  font-family: var(--font-family-principal);
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border-radius: 12px;
+    border: 1px solid #fff;
+    background-color: #fff;
+    font-size: 14px;
+    font-family: var(--font-family-principal);
 }
 
 .icone-lupa.escondido,
 .texto-pesquisa.escondido {
-  opacity: 0;
-  pointer-events: none;
+    opacity: 0;
+    pointer-events: none;
 }
 
 /* área de info do usuário */
 .usuario-info {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .avatar {
-  width: 70px;
-  height: 70px;
-  background-color: #ccc;
-  border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    background-color: #ccc;
+    border-radius: 50%;
 }
 
 .info-texto {
-  display: flex;
-  flex-direction: column;
-  font-size: 16px;
-  font-family: var(--font-family-principal);
-  text-align: right;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    font-family: var(--font-family-principal);
+    text-align: right;
 }
 
 /* Estilos para o hamburguer */
 .menu-hamburguer {
-  display: none;
-  font-size: 24px;
-  color: var(--primary-color);
-  cursor: pointer;
-  margin-right: 20px;
-  z-index: 30;
+    display: none;
+    font-size: 24px;
+    color: var(--primary-color);
+    cursor: pointer;
+    margin-right: 20px;
+    z-index: 30;
 }
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
-  .top-bar {
-      flex-direction: column;
-      align-items: flex-start;
-      margin-bottom: 20px;
-  }
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
 
-  .container-pesquisa {
-      width: 100%;
-      margin-top: 15px;
-  }
+    .container-pesquisa {
+        width: 100%;
+        margin-top: 15px;
+    }
 
-  .usuario-info {
-      display: none;
-  }
+    .usuario-info {
+        display: none;
+    }
 
-  .menu-hamburguer {
-      display: block;
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      z-index: 30;
-      background: none;
-      border: none;
-      padding: 8px;
-  }
+    .menu-hamburguer {
+        display: block;
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 30;
+        background: none;
+        border: none;
+        padding: 8px;
+    }
 }
 
-.pagina-container{
-  background-color: var(--background-color-tela);
+.pagina-container {
+    background-color: var(--background-color-tela);
 }
 
 .conteudo-principal {
-  flex: 1;
-  margin-left: 0px;
-  padding: 30px 40px;
-  background-color: var(--background-color-tela);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  transition: margin-left 0.3s ease-in-out;
-  height: 100vh; /*permite que a tela role, menos o menu*/
+    flex: 1;
+    margin-left: 0px;
+    padding: 30px 40px;
+    background-color: var(--background-color-tela);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease-in-out;
+    height: 100vh;
+    /*permite que a tela role, menos o menu*/
 }
 
 .conteudo-principal.menu-mobile-visivel {
-  margin-left: 0;
+    margin-left: 0;
 }
