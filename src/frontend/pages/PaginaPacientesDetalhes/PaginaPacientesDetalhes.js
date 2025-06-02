@@ -20,6 +20,8 @@ import { BsClipboardPulse } from "react-icons/bs";
 import useHistoSaudePaciente from "../../hooks/pacientes/useHistoSaudePaciente.js";
 import ModalAbordagem from "../../components/ModalAbordagem.js/ModalAbordagem.js";
 import ModalHistoricoSaude from "../../components/ModalHistoricoSaude/ModalHistoricoSaude.js";
+import BtnNovoRegistro from "../../components/RegistrosPacientesDetalhes/BtnNovoRegistro.js"
+import RegistrosPacientesDetalhes from "../../components/RegistrosPacientesDetalhes/RegistrosPacientesDetalhes.js"
 function formatarTelefone(valor) {
     const cleaned = String(valor).replace(/\D/g, "").slice(0, 11);
     const match = cleaned.match(/^(\d{2})(\d{5})(\d{4})$/);
