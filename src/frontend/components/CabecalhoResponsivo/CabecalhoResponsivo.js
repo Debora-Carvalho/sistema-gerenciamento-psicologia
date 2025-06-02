@@ -3,12 +3,13 @@ import useUsuarios from '../../hooks/useUsuarios';
 import MenuResponsivo from "../MenuResponsivo/MenuResponsivo";
 import FotoPerfil from "../../features/PaginaPerfil/FotoPerfil";
 import { RiSearchLine } from "react-icons/ri";
+import TelaDeCarregamento from '../CarregamentoTela/TelaDeCarregamento';
 
 function CabecalhoResponsivo({ nomePacienteBusca, setNomePacienteBusca, exibirPesquisa }) {
     const { usuario } = useUsuarios();
 
     if (!usuario) {
-        return <div>Carregando usuário...</div>;
+        return <TelaDeCarregamento mensagem="Carregando cabeçalho..." />;
     }
 
     return (

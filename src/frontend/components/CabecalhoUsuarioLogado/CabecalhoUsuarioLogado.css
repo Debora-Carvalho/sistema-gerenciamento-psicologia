@@ -7,11 +7,12 @@
     top: 0;
     padding: 0;
     width: 75vw;
-    height: 12.5vh;
+    /* height: 12.5vh; */
     align-items: center;
     justify-content: space-between;
     text-align: start;
     gap: 30px;
+    height: var(--font-weight-logo);
 }
 
 .container-cabecalho-usuario-logado.sem-pesquisa {
@@ -34,13 +35,13 @@
     border-radius: 10px;
     border: 1px solid transparent;
 }
-  
+
 .container-barra-pesquisa-usuario-logado .icon-lupa {
     font-size: 32px;
     color: #868383;
     margin-left: 10px;
 }
-  
+
 .container-barra-pesquisa-usuario-logado input {
     background: transparent;
     border: none;

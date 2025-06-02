@@ -49,8 +49,6 @@ async function adicionarAgendamentoHandler(req, res) {
             statusAgendamento: "Em andamento"
         };
 
-
-
         const resultado = await db.collection("Agendamento").insertOne(novoAgendamento);
         const dataInicioFormatada = dataInicioObj.toLocaleDateString("pt-BR");
         const horaInicioFormatada = dataInicioObj.toLocaleTimeString("pt-BR", { hour: '2-digit', minute: '2-digit' });

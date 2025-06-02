@@ -34,10 +34,10 @@ const handleEditarAgendamento = () => {
                 Ver paciente
             </button>
 
-            <button className='btn-dropdown-agendamento'>
+            {/* <button className='btn-dropdown-agendamento'>
                 <MdOutlineNotifications className='btn-dropdown-agendamento__icon' />
                 Enviar notificação
-            </button>
+            </button> */}
 
             <button className='btn-dropdown-agendamento' onClick={handleEditarAgendamento}>
                 <MdOutlineEdit className='btn-dropdown-agendamento__icon' />

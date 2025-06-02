@@ -1,21 +1,24 @@
-import React, { useState, useEffect } from 'react';
+// import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import { ObjectId } from 'bson';
 import useAlterarAgendamento from '../../hooks/agendamentos/useAlterarAgendamentos.js';
 import usePacientes from '../../hooks/pacientes/usePacientesListar.js';
 import { FaUser, FaCalendarAlt, FaClock, FaExternalLinkAlt, FaVideo, FaPalette } from 'react-icons/fa';
-import { MdTitle } from 'react-icons/md';
+// import { MdTitle } from 'react-icons/md';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
+import TelaDeCarregamento from '../CarregamentoTela/TelaDeCarregamento.js';
 
 const Editar = () => {
+    const [carregando, setCarregando] = useState(false);
     const { alterarAgendamento } = useAlterarAgendamento();
     const navigate = useNavigate();
     const location = useLocation();
     const { agendamento, modo } = location.state || {};
-    const modoAtual = modo || "editar";
+    // const modoAtual = modo || "editar";
     const [exibirPopupConfirmacao, setExibirPopupConfirmacao] = useState(false);
     const [mostrarSeletorCor, setMostrarSeletorCor] = useState(false);
     const { pacientes } = usePacientes();
@@ -46,7 +49,6 @@ const Editar = () => {
     };
 
     const [erro, setErro] = useState('');
-    const [mostrarSucesso, setMostrarSucesso] = useState(false);
 
     useEffect(() => {
         if (agendamento) {
@@ -128,15 +130,19 @@ const Editar = () => {
             nomePaciente: formData.nomePaciente,
             statusAgendamento: 'Em andamento'
         };
-        //   console.log(novosDados)
+
         try {
+            setCarregando(true);
             await alterarAgendamento(agendamentoID, novosDados, () => {
-                setMostrarSucesso(true);
-                setExibirPopupConfirmacao(false);
-                setTimeout(() => {
-                    setMostrarSucesso(false);
-                    navigate("/visualizar-agendamentos");
-                }, 1000);
+
+                setCarregando(false);
+                navigate("/visualizar-agendamentos", {
+                    state: {
+                        sucesso: true, mensagem: modo === "reagendar"
+                            ? "Paciente foi reagendado com sucesso!"
+                            : "Paciente foi editado com sucesso!"
+                    }
+                });
             });
         } catch (error) {
             console.error('Erro ao alterar agendamento:', error);
@@ -164,29 +170,8 @@ const Editar = () => {
                     <CabecalhoResponsivo />
                 </div>
 
-                {/* <div className="perfil">
-                    <div className="avatar"></div>
-                    <div className="info">
-                        <p>Ianara Holanda</p>
-                        <p>email@email.com</p>
-                    </div>
-                </div> */}
-
                 <h1>{modo === "reagendar" ? "Agendar novamente" : "Editar agendamento"}</h1>
-
-
                 <div className="agendamento-form">
-                    {/* <div className="input-icon campo-longo">
-                    <MdTitle />
-                    <input
-                        type="text"
-                        name="titulo"
-                        placeholder="Título"
-                        value={agendamento.titulo}
-                        onChange={handleChange}
-                    />
-                </div> */}
-
                     <div className="input-icon campo-longo">
                         <FaUser />
                         <select
@@ -316,18 +301,8 @@ const Editar = () => {
                         </div>
                     </div>
                 )}
-
-                {mostrarSucesso && (
-                    <div className="popup-sucesso-container show">
-                        <div className="popup-sucesso">
-                            <p>{modo === "reagendar"
-                                ? "Paciente foi reagendado com sucesso!"
-                                : "Paciente foi editado com sucesso!"}
-                            </p>
-                        </div>
-                    </div>
-                )}
             </div>
+            {carregando && <TelaDeCarregamento mensagem="Salvando agendamento..." />}
         </div>
     );
 };

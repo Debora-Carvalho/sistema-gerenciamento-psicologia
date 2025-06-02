@@ -1,7 +1,7 @@
 import BASE_URL from '../configRota';
 
 export default function useAlterarAgendamento() {
-    const alterarAgendamento = async (agendamentoId, novosDados, onSuccess) => {
+    const alterarAgendamento = async ( agendamentoId, novosDados, onSuccess) => {
         try {
             const response = await fetch(`${BASE_URL}/alterarAgendamentos`, {
                 method: 'PUT',
