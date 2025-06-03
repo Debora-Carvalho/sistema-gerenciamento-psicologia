@@ -110,17 +110,14 @@ function Calendario() {
             <div className="navbar">
                 <MenuPrincipal />
             </div>
-            {/* <div className="toolbar"> */}
-            {/* <Adicionar onAdicionar={handleAdicionar} /> */}
-            {/* </div> */}
             <div className="container-conteudo-visualizar-calendario">
-                <div className="visualizar-agendamentos-cabecalho">
+                <div className="calendario-cabecalho">
                     <CabecalhoUsuarioLogado
                         nomePacienteBusca={false}
                         setNomePacienteBusca={false}
                         exibirPesquisa={false} />
                 </div>
-                <div className="visualizar-agendamentos-cabecalho-responsivo">
+                <div className="calendario-cabecalho-responsivo">
                     <CabecalhoResponsivo nomePacienteBusca={false}
                         setNomePacienteBusca={false}
                         exibirPesquisa={false} />

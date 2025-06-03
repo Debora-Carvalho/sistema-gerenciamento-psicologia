@@ -41,8 +41,6 @@ body {
 .container-conteudo-visualizar-calendario {
     display: flex;
     flex-direction: column;
-    /* justify-content: start; */
-    /* padding: 30px 70px 30px 30px; */
     padding: 20px 70px 20px 30px;
     gap: 20px;
     width: 100%;
@@ -267,8 +265,12 @@ element {
     justify-content: space-between;
 }
 
+.calendario-cabecalho-responsivo {
+    display: none;
+}
+
 @media (max-width: 768px) {
-    .visualizar-agendamentos-cabecalho {
+    .calendario-cabecalho {
         display: none;
     }
 
@@ -276,7 +278,7 @@ element {
         display: none;
     }
 
-    .visualizar-agendamentos-cabecalho-responsivo {
+    .calendario-cabecalho-responsivo {
         display: flex;
         flex-direction: column;
     }

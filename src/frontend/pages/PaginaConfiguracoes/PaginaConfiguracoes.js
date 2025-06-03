@@ -6,6 +6,10 @@ import useVLibras from '../../features/Vlibras/useVLibras';
 import useDeleteUsuario from '../../hooks/useExcluirUsuario';
 import PopUpPadraoNegar from '../../components/PopUpPadraoNegar/PopupPadraoNegar';
 import PopUpPadrao from '../../components/PopupPadrao/PopupPadrao';
+import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js";
+import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
+
+
 
 function PaginaConfiguracoes() {
     const { ativado, toggleLibras } = useVLibras();
@@ -50,6 +54,18 @@ function PaginaConfiguracoes() {
             </div>
 
             <div className='container-centro-configuracoes'>
+                <div className="configuracao-cabecalho">
+                    <CabecalhoUsuarioLogado
+                        nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
+                </div>
+                <div className="configuracao-cabecalho-responsivo">
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
+                </div>
+
                 <div className='titulo-configuracoes'>
                     <h1 className='t-configuracoes'>Configurações</h1>
                 </div>
