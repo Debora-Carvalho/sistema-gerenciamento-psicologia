@@ -26,7 +26,7 @@ const { uploadFotoPerfilHandler } = require("../controllers/uploadFotoPerfil");
 const { buscarFotoPerfilHandler } = require("../controllers/buscarFotoPerfil");
 const { histoSaudePacienteHandler } = require('../controllers/crudPaciente/histoSaudePaciente');
 const { adicionarAbordagemHandler } = require('../controllers/crudPaciente/adicionarAbordagem');
-const { buscarHistoSaudeHandler } = require('../controllers/crudPaciente/buscarhistoSaude');
+const { buscarHistoSaudeHandler } = require('../controllers/crudPaciente/buscarHistoSaude');
 
 router.post('/authLogin', loginHandler);
 router.get('/', indexBackend)
