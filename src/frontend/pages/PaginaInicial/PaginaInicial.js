@@ -59,68 +59,69 @@ function PaginaInicial() {
             </div>
 
             <div className='container-conteudo-pagina-inicial'>
+
+                <div className="visualizar-agendamentos-cabecalho-responsivo">
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
+                </div>
                 <div className='pagina-inicial-cabecalho'>
                     <CabecalhoPaginaInicial />
                 </div>
-
-                {/* <div className='pagina-inicial-cabecalho-responsivo'>
-                    <CabecalhoResponsivo/>
-                    <div className='container-cumprimentos-inicio-responsivo'>
-                        <p className='texto-cumprimentos-inicio-responsivo'>{saudacao}, {usuario.username}</p>
+                <div className='container-conteudo-clicavel-pagina-inicial'>
+                    <div className='pagina-inicial-cards-indicadores'>
+                        <CardsIndicadores />
                     </div>
-                </div> */}
 
-                <div className='pagina-inicial-cards-indicadores'>
-                    <CardsIndicadores />
-                </div>
+                    <div className='container-botoes-calendario'>
+                        <div className='container-para-flex-botoes'>
+                            <div className='cards-botoes-funcionalidades'>
+                                <div className='card-inicio-funcionalidade'>
+                                    <img src={imgBtnPacientes} alt='Ilustração' />
+                                    <a className='btn-pacientes' href='/pacientes'>
+                                        <p>Pacientes</p>
+                                    </a>
+                                </div>
 
-                <div className='container-botoes-calendario'>
-                    <div className='cards-botoes-funcionalidades'>
-                        <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnPacientes} alt='Ilustração' />
-                            <a className='btn-pacientes' href='/pacientes'>
-                                <p>Pacientes</p>
-                            </a>
-                        </div>
+                                <div className='card-inicio-funcionalidade'>
+                                    <img src={imgBtnAnotacoes} alt='Ilustração' />
+                                    <a className='btn-anotacoes' href='#'>
+                                        <p>Registros</p>
+                                    </a>
+                                </div>
 
-                        <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnAnotacoes} alt='Ilustração' />
-                            <a className='btn-anotacoes' href='#'>
-                                <p>Registros</p>
-                            </a>
-                        </div>
+                                <div className='card-inicio-funcionalidade'>
+                                    <img src={imgBtnAgendamentos} alt='Ilustração' />
+                                    <a className='btn-agendamentos' href='/visualizar-agendamentos'>
+                                        <p>Agendamentos</p>
+                                    </a>
+                                </div>
 
-                        <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnAgendamentos} alt='Ilustração' />
-                            <a className='btn-agendamentos' href='/visualizar-agendamentos'>
-                                <p>Agendamentos</p>
-                            </a>
-                        </div>
+                                <div className='card-inicio-funcionalidade'>
+                                    <img src={imgBtnAnaliseResultados} alt='Ilustração' />
+                                    <a className='btn-analise-resultados' href='/analise-resultados'>
+                                        <p>Análise de Resultados</p>
+                                    </a>
+                                </div>
 
-                        <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnAnaliseResultados} alt='Ilustração' />
-                            <a className='btn-analise-resultados' href='/analise-resultados'>
-                                <p>Análise de Resultados</p>
-                            </a>
-                        </div>                        
-
-                        {/* <div className='card-inicio-funcionalidade'>
+                                {/* <div className='card-inicio-funcionalidade'>
                             <img src={imgBtnPagamentos} alt='Ilustração' />
                             <a className='btn-pagamentos' href='#'>
                                 <p>Pagamentos</p>
                             </a>
                         </div> */}
-                    </div>
+                            </div>
+                        </div>
+                        <div className='card-calendario-inicio'>
+                            <Calendario />
+                        </div>
 
-                    <div className='card-calendario-inicio'>
-                        <Calendario />
-                    </div>
-
-                    <div className='card-calendario-responsivo'>
-                        <img src={imgBtnCalendario} alt='Ilustração' />
-                        <a className='btn-abrir-calendario-responsivo' href='/calendario'>
-                            <p>Abrir calendário</p>
-                        </a>
+                        <div className='card-calendario-responsivo'>
+                            <img src={imgBtnCalendario} alt='Ilustração' />
+                            <a className='btn-abrir-calendario-responsivo' href='/calendario'>
+                                <p>Abrir calendário</p>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

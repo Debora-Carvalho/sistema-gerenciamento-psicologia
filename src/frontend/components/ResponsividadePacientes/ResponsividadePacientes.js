@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
-import MobileHeader from "../MobileHeader/MobileHeader";
 import SearchBar from "../SearchBar/SeachBar";
 import PacientesList from "../PacientesList/PacientesList";
 import PacientesActions from "../PacientesActions/PacientesActions";
@@ -80,7 +78,7 @@ export default function ResponsividadePacientes({
 
     return (
         <main style={{ background: "#fff6f8", minHeight: "100vh" }}>
-            <MobileHeader />
+
             <SearchBar value={search} onChange={(e) => setSearch(e.target.value)} />
             <h2 style={{ margin: "0 1rem", color: "#0047b3" }}>Pacientes</h2>
 
