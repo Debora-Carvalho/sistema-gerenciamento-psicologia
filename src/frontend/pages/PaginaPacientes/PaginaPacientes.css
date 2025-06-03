@@ -11,6 +11,7 @@
     font-family: var(--font-family-principal);
     overflow-x: hidden;
 }
+
 /* Responsivo: Altera a direção do flex para coluna em telas menores */
 @media (max-width: 768px) {
     .pagina-container {
@@ -41,16 +42,25 @@
     overflow-x: hidden;
 }
 
-.conteudo-principal {
-    flex: 1;
+.conteudo-principal-pacientes {
+    flex: 1 1;
+    margin-left: 0px;
+    padding: 30px 70px 30px 30px;
+    background-color: var(--background-color-tela);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: margin-left 0.3s ease-in-out;
+    height: 100vh;
+    /* flex: 1;
     margin-left: 250px;
-    padding: 30px 40px;
+    padding: 20px 70px 20px 30px;
     background-color: #fcf3f5;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     transition: margin-left 0.3s ease-in-out;
-    overflow-x: hidden;
+    overflow-x: hidden; */
 }
 
 .top-bar {
@@ -132,7 +142,9 @@
 
 .titulo-pacientes {
     color: var(--primary-color);
-    font-size: 30px; /*Tb está padronizado igual a tela criar agendamentos #Amanda*/
+    font-size: var(--font-size-titulo-desktop);
+    ;
+    /*Tb está padronizado igual a tela criar agendamentos #Amanda*/
     font-weight: bold;
     font-family: var(--font-family-principal);
     margin-bottom: 0;
@@ -174,11 +186,11 @@
     cursor: pointer;
     border: none;
     background-color: #8b1717;
-    color: #c51590; 
+    color: #c51590;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 8px; 
+    gap: 8px;
 }
 
 .btn-pdf:hover {
@@ -218,29 +230,30 @@
 .lista-pacientes .tabela-pacientes td {
     border-top: 1px solid #a19f9f;
     font-size: 16px;
-    
+    cursor: pointer;
 }
 
 .acoes-td {
     position: relative;
-    display: flex; 
-    align-items: center; 
-    gap: 8px; 
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 /*Estilos específicos para o botão de Editar*/
 .btn-acao-tabela-editar {
     color: #290dc9;
     border-radius: 15px;
-    padding: 8px 10px; /* Ajuste no padding para caber na célula */
-    font-size: 14px; 
+    padding: 8px 10px;
+    /* Ajuste no padding para caber na célula */
+    font-size: 14px;
     cursor: pointer;
     border: none;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .btn-acao-tabela-editar:hover {
@@ -249,22 +262,22 @@
 
 /* Estilo específico para o botão de Excluir */
 .btn-acao-tabela-excluir {
-    color: rgb(236, 2, 2); 
+    color: rgb(236, 2, 2);
     border-radius: 15px;
-    padding: 8px 10px; 
-    font-size: 14px; 
+    padding: 8px 10px;
+    font-size: 14px;
     cursor: pointer;
     border: none;
-    background-color: #ffffff; 
+    background-color: #ffffff;
     transition: all 0.2s ease;
     display: flex;
     align-items: center;
-    gap: 10px; 
+    gap: 10px;
 }
 
 .btn-acao-tabela-excluir:hover {
-    background-color: #d4d4d4; 
-    color: #8b1717; 
+    background-color: #d4d4d4;
+    color: #8b1717;
 }
 
 
@@ -273,7 +286,8 @@
     display: flex;
     justify-content: center;
     cursor: pointer;
-    width: auto; /* Ajustado para não ocupar 45% e permitir botões ao lado */
+    width: auto;
+    /* Ajustado para não ocupar 45% e permitir botões ao lado */
 }
 
 .menu-popup {
@@ -311,7 +325,9 @@
     background-color: #f0f0f0;
 }
 
-.modal-formulario, .modal-abordagem, .modal-saude{
+.modal-formulario,
+.modal-abordagem,
+.modal-saude {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -465,6 +481,10 @@
     accent-color: var(--primary-color);
 }
 
+.visualizar-paciente-cabecalho-responsivo {
+    display: none;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -477,12 +497,14 @@
     }
 }
 
+/* Alterações para o popup de notificação */
 .popup-notificacao {
     position: fixed;
     top: 20px;
     right: 20px;
     padding: 15px 25px;
-    border-radius: 5px;
+    border-radius: 20px;
+    /* Ajustado para 20px */
     color: white;
     font-weight: bold;
     z-index: 1000;
@@ -518,6 +540,7 @@
     }
 }
 
+/* Alterações para o modal de confirmação */
 .modal-confirmacao {
     position: fixed;
     top: 50%;
@@ -526,7 +549,8 @@
     background-color: #ffffff;
     color: rgb(5, 5, 5);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 20px;
+    /* Ajustado para 20px */
     text-align: center;
     z-index: 1000;
     width: 90%;
@@ -547,60 +571,54 @@
 .btn-excluir-blue {
     background-color: #01429E;
     color: white;
+    width: 140px;
+    /* Mantém 150px */
+}
+
+.botoes-confirmacao {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
 }
 
 .botoes-confirmacao button {
-    padding: 10px 20px;
+    padding: 6px 15px;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    font-size: 1em;
+    font-size: 0.95em;
+    text-align: center;
+    width: 140px;
+    height: 45px;
+    line-height: 1.3;
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
+/* Botão Salvar/Confirmar (azul) */
 .botoes-confirmacao button.salvar {
     background-color: #01429E;
     color: white;
-    border-radius: 15px;
-    
 }
 
 .botoes-confirmacao button.salvar:hover {
     background-color: #006eff;
 }
 
+/* Botão Cinza */
 .botoes-confirmacao button.cinza {
     background-color: #808080;
     color: white;
-    border-radius: 15px;
 }
 
 .botoes-confirmacao button.cinza:hover {
-    background-color: hsl(0, 3%, 71%);
+    background-color: #a3a3a3;
 }
 
-.popup-notificacao {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    background-color: #4caf50;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    opacity: 1;
-    transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-.popup-notificacao.erro {
-    background-color: #f44336;
-}
-
-.popup-notificacao.sucesso {
-    background-color: #4caf50;
-}
-
-/* Estilo para mensagens de erro de validação caramba é vermelho */
+/* Estilo para mensagens de erro de validação */
 .form-group .erro-mensagem {
     color: red;
     font-size: 0.8em;
@@ -618,4 +636,25 @@
 
 .erro-cadastro {
     color: red;
+}
+
+@media (max-width: 768px) {
+    
+    .visualizar-paciente-cabecalho-responsivo{
+        padding-top: 40px;
+    }
+    
+    .pagina-container .navbar {
+        display: none;
+    }
+
+    .conteudo-principal-pacientes {
+        padding: 0px 40px 40px 40px;
+    }
+
+
+    .visualizar-paciente-cabecalho-responsivo {
+        display: flex;
+        flex-direction: column;
+    }
 }

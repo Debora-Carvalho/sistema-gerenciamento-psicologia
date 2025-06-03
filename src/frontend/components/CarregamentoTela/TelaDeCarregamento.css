@@ -1,4 +1,4 @@
-.tela-carregamento {
+/* .tela-carregamento {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -15,6 +15,40 @@
     height: 50px;
     border: 6px solid #ccc;
     border-top: 6px solid var(--primary-color);; 
+    border-radius: 50%;
+    animation: girar 1s linear infinite;
+    margin-bottom: 16px;
+}
+
+@keyframes girar {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+} */
+
+.tela-carregamento {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999; /* Alto para ficar sobre todos os componentes das telas */
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo translúcido deixando pra ver tudo embasado */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: all; /* Impede clique nos elementos abaixo */
+    font-family: 'Arial', sans-serif;
+    font-size: 1.2rem;
+    color: #333;
+    backdrop-filter: blur(2px); /* desfoca o fundo o blurrrr*/
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 6px solid #ccc;
+    border-top: 6px solid var(--primary-color);
     border-radius: 50%;
     animation: girar 1s linear infinite;
     margin-bottom: 16px;

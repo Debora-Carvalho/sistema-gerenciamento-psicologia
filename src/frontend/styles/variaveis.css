@@ -6,11 +6,12 @@
     --primary-color-btn-hover: #6aa8ff;
     --secondary-color: #fabac5;
     --background-color-tela: #fcf2f4e7;
+    --background-color-grafico: #fcf2f4e7;
     --neutral-color-100: #ffffff;
     --neutral-color-900: #000000;
     --font-family-principal: 'Roboto', sans-serif;
     --font-family-logo: 'Sacramento', sans-serif, cursive;
-    --font-size-titulo-desktop: 50px;
+    --font-size-titulo-desktop: calc(4.4vh + 1.1rem); /*mudei de 50px para calc*/
     --font-size-paragrafo-desktop: 20px;
     --font-size-logo-desktop: 64px;
     --font-weight-titulo: 500;     /* peso de fonte medium */

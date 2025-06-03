@@ -2,6 +2,9 @@ import { useState, useEffect } from 'react';
 import useUsuarios from '../../hooks/useUsuarios';
 import useEditarUsuario from '../../hooks/usuario/useUpdateUsuario';
 import useNovaSenha from '../../hooks/useNovaSenha';
+import useUploadFotoPerfil from '../../hooks/usuario/useUploadFotoPerfil';
+import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil';
+import { MdOutlineEdit } from "react-icons/md";
 
 function PerfilDados() {
     const { atualizarSenha } = useNovaSenha();
@@ -16,6 +19,8 @@ function PerfilDados() {
     const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
 
     const [editandoCampo, setEditandoCampo] = useState(null);
+    const { uploadFotoPerfil } = useUploadFotoPerfil();
+
     const [dadosEditados, setDadosEditados] = useState({
         id: userID,
         nome: '',
@@ -75,16 +80,26 @@ function PerfilDados() {
 
     const [imagemPreview, setImagemPreview] = useState(null);
 
-    const handleImagemChange = (event) => {
+    const handleImagemChange = async (event) => {
         const file = event.target.files[0];
+
         if (file) {
+
             const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagemPreview(reader.result);
-            };
+            reader.onloadend = () => setImagemPreview(reader.result);
             reader.readAsDataURL(file);
+
+
+            try {
+                const userId = localStorage.getItem("userID");
+                const fileId = await uploadFotoPerfil(file, userId);
+
+            } catch (error) {
+                alert("Erro ao enviar imagem.");
+            }
         }
     };
+
 
 
     const handleClick = async (campo) => {
@@ -115,17 +130,19 @@ function PerfilDados() {
     if (!usuario) return <div>Carregando usuário...</div>;
 
     return (
-        <>  
-            {/* Imagem
+        <>
+            {/* Imagem */}
             <div className="container-foto-perfil">
-                <label htmlFor="upload-foto" className="imagem-perfil">
-                    <img
-                        src={imagemPreview || '/default-avatar.png'} // Caminho padrão
-                        alt="Foto de perfil"
-                        className="foto-preview"
-                    />
+                <label htmlFor="upload-foto" className="imagem-perfil" title='Clique para editar a foto de perfil'>
+                    {imagemPreview ? (
+                        <img src={imagemPreview} alt="Foto de perfil" className="foto-preview" />
+                    ) : (
+                        <FotoPerfil userId={usuario._id} />
+                    )}
                     <div className="overlay-icone">
-                        <span role="img" aria-label="editar">✏️</span>
+                        <span role="img" aria-label="editar">
+                            <MdOutlineEdit className='btn-editar-foto__icon'/>
+                        </span>
                     </div>
                 </label>
                 <input
@@ -135,7 +152,7 @@ function PerfilDados() {
                     onChange={handleImagemChange}
                     style={{ display: 'none' }}
                 />
-            </div> */}
+            </div>
 
 
             {/* Nome */}

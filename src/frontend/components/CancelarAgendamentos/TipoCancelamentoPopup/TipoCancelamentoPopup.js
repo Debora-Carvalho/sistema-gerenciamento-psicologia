@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import './TipoCancelamentoPopup.css';
 import PopupPadrao from '../../PopupPadrao/PopupPadrao.js'; // ajuste o caminho se necessário
+import useAtualizarStatusAgendamento from '../../../features/PaginaAgendamentos/useAtualizarAgendamentoStatus.js';
 
-function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
+function TipoCancelamentoPopup({ aberto, onBotaoClick, id_paciente, agendamento }) {
+    const { atualizarStatus } = useAtualizarStatusAgendamento();
     const [tipoSelecionado, setTipoSelecionado] = useState('');
     const [mostrarConfirmacao, setMostrarConfirmacao] = useState(false);
     const [popupFinal, setPopupFinal] = useState(false);
-
+    const statusAgendamento = 'cancelado';
+    
     if (!aberto) return null;
 
     const handleContinuar = () => {
@@ -15,9 +18,20 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
         }
     };
 
-    const handleConfirmarAcao = () => {
+    const handleConfirmarAcao = async () => {
+        try{
+            await atualizarStatus({
+                agendamentoId: agendamento._id,
+                pacienteId: agendamento.id_paciente,
+                userID: agendamento.id_usuario,
+                tipo: tipoSelecionado,
+                statusAgendamento
+            });
         setMostrarConfirmacao(false);
         setPopupFinal(true);
+        }catch(error){
+            console.error("Erro ao cancelar agendamentos:", error);
+        }
     };
 
     const fecharTudo = () => {
@@ -25,6 +39,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
         setMostrarConfirmacao(false);
         setPopupFinal(false);
         onBotaoClick(); // Fecha o popup original
+        window.location.reload();
     };
 
     return (
@@ -84,7 +99,7 @@ function TipoCancelamentoPopup({ aberto, onBotaoClick }) {
                             <button className="btn-cancelamento-voltar" onClick={() => setMostrarConfirmacao(false)}>
                                 Não, quero voltar
                             </button>
-                            <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao}>
+                            <button className="btn-cancelamento-continuar" onClick={handleConfirmarAcao} >
                                 Sim
                             </button>
                         </div>

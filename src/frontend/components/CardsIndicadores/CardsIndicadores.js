@@ -3,11 +3,11 @@ import './CardsIndicadores.css';
 import { IoIosArrowForward, IoIosArrowBack } from "react-icons/io";
 
 const dadosIndicadores = [
-    { numIndicador: 131, txtIndicador: 'Notificações' },
-    { numIndicador: 11, txtIndicador: 'Pacientes inativos' },
-    { numIndicador: 4, txtIndicador: 'Pagamentos a vencer' },
+    { numIndicador: 131, txtIndicador: 'Agendamentos concluídos' },
+    { numIndicador: 11, txtIndicador: 'Pacientes cadastrados' },
+    { numIndicador: 4, txtIndicador: 'Registros feitos' },
     { numIndicador: 9, txtIndicador: 'Agendamentos do dia' },
-    { numIndicador: 2, txtIndicador: 'Mensagens novas' },
+    { numIndicador: 2, txtIndicador: 'Pacientes agendados' },
 ];
 
 function CardsIndicadores() {

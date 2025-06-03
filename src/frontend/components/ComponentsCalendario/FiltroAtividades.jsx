@@ -1,46 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import {Form} from 'react-bootstrap'
+import React from 'react';
+import { Form } from 'react-bootstrap';
 
-function FiltroAtividades({atividades,onSelecionarAtividades}){
-    const tiposAtividades = [... new Set(atividades.map(atividade => atividade.tipo))].filter(tipo=> tipo!== '');
+function FiltroAtividades({ atividades, onSelecionarAtividades, tiposSelecionados }) {
+    const tiposAtividades = [...new Set(atividades.map(a => a.tipo))].filter(t => t);
 
-    const [tiposSelecionados, setTiposSelecionados] = useState([]);
+    const handleCheckboxClick = (tipo, isChecked) => {
+        const novosTipos = isChecked
+            ? [...tiposSelecionados, tipo]
+            : tiposSelecionados.filter(t => t !== tipo);
 
-    const toggleTipo = (tipo) =>{
-        if(tiposSelecionados.includes(tipo)){
-            setTiposSelecionados(tiposSelecionados.filter(t => t !== tipo));
-        } else {
-            setTiposSelecionados([...tiposSelecionados, tipo]);
-        }
+        const filtrados = 
+            novosTipos.length === 0
+                ? atividades
+                : atividades.filter(a => novosTipos.includes(a.tipo));
+
+        onSelecionarAtividades(filtrados, novosTipos);
     };
 
-    useEffect(() => {
-        if(tiposSelecionados.length === 0 ){
-            onSelecionarAtividades(atividades);
-        } else {
-            const eventosFiltrados = atividades.filter(atividade => tiposSelecionados.includes(atividade.tipo));
-            onSelecionarAtividades(eventosFiltrados);
-        }
-    },[tiposSelecionados, atividades,onSelecionarAtividades]);
+    const limparFiltros = () => {
+        onSelecionarAtividades(atividades, []);
+    };
 
-    return(
-        tiposAtividades.length > 0&&(
-            <div className="p-3 rounded border border-white mt-3" style={{backgroundColor: '#e9ecef', color:"#212529"}}>
-                <div    className='ps-1' style={{maxHeight:'28vh', overflowY: 'auto'}}>
-                    {tiposAtividades.map(tipo =>(
-                            <Form.Check
+    return (
+        tiposAtividades.length > 0 && (
+            <div className="p-3 rounded border border-white mt-3" style={{ color: "#212529", display: "flex", gap: "10px", flexWrap: "wrap"}}>
+                <div className='ps-1' style={{ maxHeight: '28vh', overflowY: 'auto', display: "flex", gap: "10px", flexWrap: "wrap"}}>
+                    {tiposAtividades.map(tipo => (
+                        <Form.Check
                             key={tipo}
+                            type="checkbox"
+                            id={`filter-${tipo}`}
                             label={tipo}
                             checked={tiposSelecionados.includes(tipo)}
-                            onChange={() => toggleTipo(tipo)}
-                            className='mr-3 mb-3'/>
+                            onChange={(e) => handleCheckboxClick(tipo, e.target.checked)}
+                            className="mb-3"
+                        />
                     ))}
                 </div>
-                <button className='btn btn-outline-secondary btn-hover-gray' onClick={()=> setTiposSelecionados([])}>Limpar Filtro</button>
+                <button 
+                    className='btn btn-outline-secondary btn-hover-gray' 
+                    onClick={limparFiltros}
+                    type="button"
+                >
+                    Limpar Filtro
+                </button>
             </div>
         )
-
-    )
+    );
 }
 
 export default FiltroAtividades;
