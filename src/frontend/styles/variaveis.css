@@ -11,7 +11,7 @@
     --neutral-color-900: #000000;
     --font-family-principal: 'Roboto', sans-serif;
     --font-family-logo: 'Sacramento', sans-serif, cursive;
-    --font-size-titulo-desktop: 50px;
+    --font-size-titulo-desktop: calc(4.4vh + 1.1rem); /*mudei de 50px para calc*/
     --font-size-paragrafo-desktop: 20px;
     --font-size-logo-desktop: 64px;
     --font-weight-titulo: 500;     /* peso de fonte medium */

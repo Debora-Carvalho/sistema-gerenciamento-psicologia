@@ -1,5 +1,8 @@
+@import '../../styles/variaveis.css';
+
 .container-pagina-configuracoes {
     display: flex;
+    flex-direction: row;
     height: 100vh;
     width: 100vw;
 }
@@ -8,21 +11,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    width: 70%;
+    padding: 20px 70px 20px 30px;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
 }
 
 
 .titulo-configuracoes {
     height: 10%;
-    padding-left: 20px;
+    /* padding-left: 20px; */
     word-wrap: break-word;
 }
 
 .t-configuracoes {
     color: var(--primary-color);
+    font-size: var(--font-size-titulo-desktop);
+    font-weight: bold;
     font-family: var(--font-family-principal);
-    font-weight: bolder;
-
+    margin-bottom: 20px;
 }
 
 .container-opcoes-configuracoes {
@@ -30,7 +37,7 @@
     width: 100%;
     padding: 20px 30px;
     border-radius: 20px;
-    height: 60%;
+    height: calc(88vh - 180px);
     display: flex;
     flex-direction: column;
 }
@@ -80,7 +87,30 @@
     font-weight: var(--font-weight-titulo);
 }
 
+.configuracao-cabecalho-responsivo {
+    display: none;
+}
+
 @media (max-width: 768px) {
+    .configuracao-cabecalho {
+        display: none;
+    }
+
+
+    .container-centro-configuracoes {
+        padding: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container-pagina-configuracoes .navbar {
+        display: none;
+    }
+
+    .configuracao-cabecalho-responsivo {
+        display: flex;
+        flex-direction: column;
+    }
 
     .container-pagina-configuracoes {
         display: flex;
@@ -89,21 +119,11 @@
         width: 100vw;
     }
 
-    .container-centro-configuracoes {
-        height: 90%;
-        display: flex;
-        justify-content: center;
-        align-content: center;
-        flex-wrap: wrap;
-        width: 100%;
-        align-items: center;
-    }
-
     .container-opcoes-configuracoes {
-        width: 90%;
+        /* width: 90%; */
         word-wrap: break-word;
         flex-direction: column;
-        height: auto;
+        /* height: auto; */
     }
 
     .container-habilitar-configuracoes {
@@ -111,9 +131,9 @@
     }
 
     .titulo-configuracoes {
-        margin-top: 10%;
         word-wrap: break-word;
-        width: 100%;
+        /* width: 100%; */
+        height: 6vh;
     }
 
     .bt-habilitar {
@@ -122,5 +142,9 @@
 
     .bt-excluir {
         display: flex;
+    }
+
+    .t-configuracoes {
+        font-size: 4vh;
     }
 }
