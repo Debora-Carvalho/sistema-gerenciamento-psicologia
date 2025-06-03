@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 import BASE_URL from "../../hooks/configRota";
 
 function FotoPerfil({ userId }) {
@@ -8,27 +7,25 @@ function FotoPerfil({ userId }) {
     useEffect(() => {
         if (!userId) return;
 
-        let urlCriado = null;
-
-        fetch(`${BASE_URL}/foto/${userId}`)
-            .then(res => {
-                if (!res.ok) throw new Error("Erro ao buscar foto");
-                return res.blob();
-            })
-            .then(blob => {
-                urlCriado = URL.createObjectURL(blob);
-                setFotoUrl(urlCriado);
+        fetch(`${BASE_URL}/dadosUsuario`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userID: userId })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.usuario && data.usuario.fotoPerfilUrl) {
+                    setFotoUrl(data.usuario.fotoPerfilUrl);
+                } else {
+                    setFotoUrl(null);
+                }
             })
             .catch(err => {
-                console.error(err);
+                console.error("Erro ao buscar usuário:", err);
                 setFotoUrl(null);
             });
 
-        return () => {
-            if (urlCriado) URL.revokeObjectURL(urlCriado);
-        };
     }, [userId]);
-
 
     if (!fotoUrl) {
         return <div className="foto-perfil">Sem foto</div>;

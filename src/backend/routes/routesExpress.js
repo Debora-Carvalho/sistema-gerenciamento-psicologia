@@ -57,7 +57,7 @@ router.post('/adicionarAbordagem', adicionarAbordagemHandler)
 router.post('/buscarHistoSaude', buscarHistoSaudeHandler )
 
 router.post("/upload-foto-perfil", upload.single("imagem"), uploadFotoPerfilHandler);
-router.get("/foto/:id", buscarFotoPerfilHandler);
+// router.get("/foto/:id", buscarFotoPerfilHandler);
 
 module.exports = router;
 
