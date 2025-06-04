@@ -96,6 +96,7 @@ const Editar = () => {
             linkSessao: '',
             nomePaciente: ''
         });
+        navigate("/visualizar-agendamentos");
     };
 
     const selecionarCor = (cor) => {

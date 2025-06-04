@@ -16,7 +16,8 @@ export default function ResponsividadePacientes({
     onEditar,
     onExcluir,
     mostrarFormulario,
-    setMostrarFormulario
+    setMostrarFormulario,
+    onOpenDetails
 }) {
     const [search, setSearch] = useState("");
     const [visible, setVisible] = useState(4);
@@ -108,6 +109,7 @@ export default function ResponsividadePacientes({
                 onEdit={onEditar}
                 onDelete={pedirExclusao}
                 colunasVisiveis={colunasVisiveis}
+                onOpenDetails={onOpenDetails}
             />
 
             {visible < pacientes.length && (

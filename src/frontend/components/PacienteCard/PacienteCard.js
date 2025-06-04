@@ -1,8 +1,12 @@
 import { FiEdit, FiTrash2 } from "react-icons/fi";
 import "./PacienteCard.css";
-export default function PacienteCard({ paciente, onEdit, onDelete, colunasVisiveis }) {
+export default function PacienteCard({ paciente, onEdit, onDelete, colunasVisiveis, onOpenDetails }) {
     return (
-        <div className="paciente-card">
+        <div
+            className="paciente-card"
+            onClick={() => onOpenDetails(paciente._id)}
+            style={{ cursor: "pointer" }}
+        >
             <div className="paciente-info">
                 {colunasVisiveis?.nome && (
                     <p><span>Nome</span>{paciente.nome}</p>
@@ -15,11 +19,23 @@ export default function PacienteCard({ paciente, onEdit, onDelete, colunasVisive
                 )}
             </div>
             <div className="paciente-actions">
-                <button onClick={() => onEdit(paciente._id)} className="icon-btn">
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onEdit(paciente._id);
+                    }}
+                    className="icon-btn"
+                >
                     <FiEdit size={22} />
                     <span>Editar</span>
                 </button>
-                <button onClick={() => onDelete(paciente)} className="icon-btn delete">
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        onDelete(paciente);
+                    }}
+                    className="icon-btn delete"
+                >
                     <FiTrash2 size={22} />
                     <span>Excluir</span>
                 </button>
@@ -27,3 +43,4 @@ export default function PacienteCard({ paciente, onEdit, onDelete, colunasVisive
         </div>
     );
 }
+
