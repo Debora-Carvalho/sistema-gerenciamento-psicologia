@@ -179,6 +179,7 @@
     .dropdown-container {
         align-self: flex-end;
         margin-top: 0.5rem;
+        margin-left: 14rem;
     }
 
     .tabs-filtro {

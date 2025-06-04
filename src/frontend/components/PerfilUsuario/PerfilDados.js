@@ -17,6 +17,8 @@ function PerfilDados() {
     const userID = localStorage.getItem("userID");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [mostrarConfirmar, setMostrarConfirmar] = useState(false);
+    const [mostrarSucesso, setMostrarSucesso] = useState(false);
+    const [mensagemSucesso, setMensagemSucesso] = useState('');
 
     const [editandoCampo, setEditandoCampo] = useState(null);
     const { uploadFotoPerfil } = useUploadFotoPerfil();
@@ -28,6 +30,15 @@ function PerfilDados() {
         telephone: '',
         senha: ''
     });
+
+    useEffect(() => {
+        if (mostrarSucesso) {
+            const timer = setTimeout(() => {
+                setMostrarSucesso(false);
+            }, 2000);
+            return () => clearTimeout(timer);
+        }
+    }, [mostrarSucesso]);
 
     const validarSenha = (nova, confirmar) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
@@ -52,7 +63,8 @@ function PerfilDados() {
             { email: dadosEditados.email, novaSenha },
             setMensagemErro,
             () => {
-                alert('Senha atualizada com sucesso!');
+                setMensagemSucesso("Dados atualizados com sucesso!");
+                setMostrarSucesso(true);
                 setEditandoCampo(null);
                 setNovaSenha('');
                 setConfirmarSenha('');
@@ -60,6 +72,16 @@ function PerfilDados() {
             },
             setErroSenhaInvalida
         );
+    };
+
+    const handleCancelarSenha = () => {
+        setEditandoCampo(null);
+        setNovaSenha('');
+        setConfirmarSenha('');
+        setMensagemErro('');
+        setErroSenhaInvalida(false);
+        setMostrarSenha(false);
+        setMostrarConfirmar(false);
     };
 
     useEffect(() => {
@@ -117,9 +139,10 @@ function PerfilDados() {
                     telephone: dadosEditados.telephone
                 };
                 await atualizarUsuario(dadosParaEnviar);
-                alert("Dados atualizados com sucesso!");
+                setMensagemSucesso("Dados atualizados com sucesso!");
+                setMostrarSucesso(true);
+
             } catch (error) {
-                alert("Erro ao salvar dados");
             }
             setEditandoCampo(null);
         } else {
@@ -141,7 +164,7 @@ function PerfilDados() {
                     )}
                     <div className="overlay-icone">
                         <span role="img" aria-label="editar">
-                            <MdOutlineEdit className='btn-editar-foto__icon'/>
+                            <MdOutlineEdit className='btn-editar-foto__icon' />
                         </span>
                     </div>
                 </label>
@@ -161,17 +184,29 @@ function PerfilDados() {
                     <p className='pA-perfil'>Nome</p>
                     <div className='container-editar-perfil'>
                         {editandoCampo === "nome" ? (
-                            <input
-                                type="text"
-                                value={dadosEditados.nome}
-                                onChange={(e) => handleChange("nome", e.target.value)}
-                            />
+                            <>
+                                <input
+                                    type="text"
+                                    value={dadosEditados.nome}
+                                    onChange={(e) => handleChange("nome", e.target.value)}
+                                />
+                                <div className='container-input-botoes'>
+                                    <button className="bt-editar" onClick={() => setEditandoCampo(null)}>
+                                        <label>Cancelar</label>
+                                    </button>
+                                    <button className="bt-editar" onClick={() => handleClick("nome")}>
+                                        <label>Salvar</label>
+                                    </button>
+                                </div>
+                            </>
                         ) : (
-                            <p className='pL-perfil'>{dadosEditados.nome}</p>
+                            <>
+                                <p className='pL-perfil'>{dadosEditados.nome}</p>
+                                <button className='bt-editar auto' onClick={() => handleClick("nome")}>
+                                    <label>Editar</label>
+                                </button>
+                            </>
                         )}
-                        <button className='bt-editar' onClick={() => handleClick("nome")}>
-                            <label>{editandoCampo === "nome" ? 'Salvar' : 'Editar'}</label>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -182,17 +217,29 @@ function PerfilDados() {
                     <p className='pA-perfil'>Email</p>
                     <div className='container-editar-perfil'>
                         {editandoCampo === "email" ? (
-                            <input
-                                type="text"
-                                value={dadosEditados.email}
-                                onChange={(e) => handleChange("email", e.target.value)}
-                            />
+                            <>
+                                <input
+                                    type="text"
+                                    value={dadosEditados.email}
+                                    onChange={(e) => handleChange("email", e.target.value)}
+                                />
+                                <div className='container-input-botoes'>
+                                    <button className="bt-editar" onClick={() => setEditandoCampo(null)}>
+                                        <label>Cancelar</label>
+                                    </button>
+                                    <button className="bt-editar" onClick={() => handleClick("email")}>
+                                        <label>Salvar</label>
+                                    </button>
+                                </div>
+                            </>
                         ) : (
-                            <p className='pL-perfil'>{dadosEditados.email}</p>
+                            <>
+                                <p className='pL-perfil'>{dadosEditados.email}</p>
+                                <button className='bt-editar auto' onClick={() => handleClick("email")}>
+                                    <label>Editar</label>
+                                </button>
+                            </>
                         )}
-                        <button className='bt-editar' onClick={() => handleClick("email")}>
-                            <label>{editandoCampo === "email" ? 'Salvar' : 'Editar'}</label>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -203,18 +250,31 @@ function PerfilDados() {
                     <p className='pA-perfil'>Celular</p>
                     <div className='container-editar-perfil'>
                         {editandoCampo === "telephone" ? (
-                            <input
-                                type="text"
-                                maxLength={11}
-                                value={dadosEditados.telephone}
-                                onChange={(e) => handleChange("telephone", e.target.value)}
-                            />
+                            <>
+                                <input
+                                    type="text"
+                                    maxLength={11}
+                                    value={dadosEditados.telephone}
+                                    onChange={(e) => handleChange("telephone", e.target.value)}
+                                />
+
+                                <div className='container-input-botoes'>
+                                    <button className="bt-editar" onClick={() => setEditandoCampo(null)}>
+                                        <label>Cancelar</label>
+                                    </button>
+                                    <button className="bt-editar" onClick={() => handleClick("telephone")}>
+                                        <label>Salvar</label>
+                                    </button>
+                                </div>
+                            </>
                         ) : (
-                            <p className='pL-perfil'>{dadosEditados.telephone || "Telefone não disponível"}</p>
+                            <>
+                                <p className='pL-perfil'>{dadosEditados.telephone || "Telefone não disponível"}</p>
+                                <button className='bt-editar auto' onClick={() => handleClick("telephone")}>
+                                    <label>Editar</label>
+                                </button>
+                            </>
                         )}
-                        <button className='bt-editar' onClick={() => handleClick("telephone")}>
-                            <label>{editandoCampo === "telephone" ? 'Salvar' : 'Editar'}</label>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -225,51 +285,57 @@ function PerfilDados() {
                     <p className='pA-perfil'>Senha</p>
                     <div className='container-editar-perfil'>
                         {editandoCampo === "senha" ? (
-                            <div className="inputs-senha">
-                                {mensagemErro && <p className="mensagem-erro">{mensagemErro}</p>}
-
-                                <div className="input-com-icone">
-                                    <input
-                                        type={mostrarSenha ? "text" : "password"}
-                                        placeholder="Nova senha"
-                                        value={novaSenha}
-                                        className={erroSenhaInvalida ? 'erro' : ''}
-                                        onChange={(e) => setNovaSenha(e.target.value)}
-                                    />
-                                    <button
-                                        type="button"
-                                        className="olho"
-                                        onClick={() => setMostrarSenha(!mostrarSenha)}
-                                    >
-                                        {mostrarSenha ? "🙈" : "👁️"}
-                                    </button>
+                            <div className="container-inputs-senha">
+                                {mensagemErro && <p className="mensagem-erro-perfil">{mensagemErro}</p>}
+                                <div className='container-inputs'>
+                                    <div className='container-inputs-label'>
+                                        <div className="input-com-icone">
+                                            <input
+                                                type={mostrarSenha ? "text" : "password"}
+                                                placeholder="Nova senha"
+                                                value={novaSenha}
+                                                className={erroSenhaInvalida ? 'erro' : ''}
+                                                onChange={(e) => setNovaSenha(e.target.value)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="olho"
+                                                onClick={() => setMostrarSenha(!mostrarSenha)}
+                                            >
+                                                {mostrarSenha ? "🙈" : "👁️"}
+                                            </button>
+                                        </div>
+                                        <div className="input-com-icone">
+                                            <input
+                                                type={mostrarConfirmar ? "text" : "password"}
+                                                placeholder="Confirmar nova senha"
+                                                value={confirmarSenha}
+                                                className={erroSenhaInvalida ? 'erro' : ''}
+                                                onChange={(e) => setConfirmarSenha(e.target.value)}
+                                            />
+                                            <button
+                                                type="button"
+                                                className="olho"
+                                                onClick={() => setMostrarConfirmar(!mostrarConfirmar)}
+                                            >
+                                                {mostrarConfirmar ? "🙈" : "👁️"}
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className='container-input-botoes'>
+                                        <button className="bt-editar" onClick={handleCancelarSenha}>
+                                            <label>Cancelar</label>
+                                        </button>
+                                        <button className="bt-editar" onClick={() => handleClick("senha")}>
+                                            <label>Salvar</label>
+                                        </button>
+                                    </div>
                                 </div>
-
-                                <div className="input-com-icone">
-                                    <input
-                                        type={mostrarConfirmar ? "text" : "password"}
-                                        placeholder="Confirmar nova senha"
-                                        value={confirmarSenha}
-                                        className={erroSenhaInvalida ? 'erro' : ''}
-                                        onChange={(e) => setConfirmarSenha(e.target.value)}
-                                    />
-                                    <button
-                                        type="button"
-                                        className="olho"
-                                        onClick={() => setMostrarConfirmar(!mostrarConfirmar)}
-                                    >
-                                        {mostrarConfirmar ? "🙈" : "👁️"}
-                                    </button>
-                                </div>
-
-                                <button className="bt-editar" onClick={() => handleClick("senha")}>
-                                    <label>Salvar</label>
-                                </button>
                             </div>
                         ) : (
                             <>
                                 <p className='pL-perfil'>********</p>
-                                <button className='bt-editar' onClick={() => handleClick("senha")}>
+                                <button className='bt-editar auto' onClick={() => handleClick("senha")}>
                                     <label>Editar</label>
                                 </button>
                             </>
@@ -277,6 +343,14 @@ function PerfilDados() {
                     </div>
                 </div>
             </div>
+            {mostrarSucesso && (
+                <div className="popup-sucesso-container show">
+                    <div className="popup-sucesso">
+                        <p>{mensagemSucesso}</p>
+                    </div>
+                </div>
+            )}
+
         </>
     );
 }

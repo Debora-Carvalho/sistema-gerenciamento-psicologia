@@ -2,7 +2,7 @@ import { useState } from "react";
 import PacienteCard from "../PacienteCard/PacienteCard";
 import "./PacientesList.css";
 
-export default function PacientesList({ pacientes, onEdit, onDelete, colunasVisiveis }) {
+export default function PacientesList({ pacientes, onEdit, onDelete, colunasVisiveis, onOpenDetails }) {
     const [visible, setVisible] = useState(4);
     const handleLoadMore = () => setVisible((v) => v + 4);
 
@@ -15,6 +15,7 @@ export default function PacientesList({ pacientes, onEdit, onDelete, colunasVisi
                     onEdit={() => onEdit(p._id)}
                     onDelete={() => onDelete(p)}
                     colunasVisiveis={colunasVisiveis}
+                    onOpenDetails={onOpenDetails}
                 />
             ))}
 

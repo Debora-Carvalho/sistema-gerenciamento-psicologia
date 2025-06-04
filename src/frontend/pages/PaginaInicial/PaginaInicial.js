@@ -10,7 +10,7 @@ import imgBtnPacientes from '../../assets/images/image-btn-home-pacientes.png';
 import imgBtnAnaliseResultados from '../../assets/images/image-btn-home-analises.png';
 // import imgBtnPagamentos from '../../assets/images/image-btn-home-pagamentos.png';
 import imgBtnAnotacoes from '../../assets/images/image-btn-home-registros.png';
-import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.svg';
+import imgBtnCalendario from '../../assets/images/image-btn-home-calendario.png';
 import Calendario from '../../components/Calendario/Calendario.js';
 
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
@@ -104,24 +104,19 @@ function PaginaInicial() {
                                     </a>
                                 </div>
 
-                                {/* <div className='card-inicio-funcionalidade'>
-                            <img src={imgBtnPagamentos} alt='Ilustração' />
-                            <a className='btn-pagamentos' href='#'>
-                                <p>Pagamentos</p>
-                            </a>
-                        </div> */}
+                                <div className='card-calendario-responsivo'>
+                                    <img src={imgBtnCalendario} alt='Ilustração' />
+                                    <a className='btn-abrir-calendario-responsivo' href='/calendario'>
+                                        <p>Abrir calendário</p>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                         <div className='card-calendario-inicio'>
                             <Calendario />
                         </div>
 
-                        <div className='card-calendario-responsivo'>
-                            <img src={imgBtnCalendario} alt='Ilustração' />
-                            <a className='btn-abrir-calendario-responsivo' href='/calendario'>
-                                <p>Abrir calendário</p>
-                            </a>
-                        </div>
+
                     </div>
                 </div>
             </div>

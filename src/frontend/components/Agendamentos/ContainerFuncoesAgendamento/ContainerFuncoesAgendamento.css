@@ -1,79 +1,105 @@
-@import '../../../styles/variaveis.css';
+    @import '../../../styles/variaveis.css';
 
-.container-funcoes-visualizar-agendamento {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.container-funcoes-visualizar-agendamento__responsivo {
-    display: none;
-}
-
-.funcoes-visualizar-agendamento__titulo {
-    font-family: var(--font-family-principal);
-    font-size: var(--font-size-titulo-desktop);
-    color: var(--primary-color);
-    font-weight: var(--font-weight-titulo);
-}
-
-.funcoes-visualizar-agendamento__botoes {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-.btn-criar-novo-agendamento, .btn-bloquear-agenda {
-    display: block;
-    align-items: center;
-    justify-content: center;
-    padding: 0.5rem 1rem;
-    border-radius: 0.5rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    cursor: pointer;
-    transition: 0.3s;
-    white-space: nowrap; 
-}
-
-.btn-criar-novo-agendamento {
-    background-color: var(--primary-color);
-    color: var(--neutral-color-100);
-    border: none;
-}
-
-.btn-bloquear-agenda {
-    background-color: transparent;
-    color: var(--primary-color);
-    border: none;
-}
-
-/* RESPONSIVIDADE: CONTAINER FUNÇÕES AGENDAMENTOS */
-.funcoes-visualizar-agendamento-titulo-botoes__responsivo {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.funcoes-visualizar-agendamento__botoes-responsivo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-}
-
-@media (max-width: 720px) {
     .container-funcoes-visualizar-agendamento {
-        display: none;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
     }
 
     .container-funcoes-visualizar-agendamento__responsivo {
+        display: none;
+    }
+
+    .funcoes-visualizar-agendamento__titulo {
+        font-family: var(--font-family-principal);
+        font-size: var(--font-size-titulo-desktop);
+        color: var(--primary-color);
+        font-weight: var(--font-weight-titulo);
+        margin-bottom: 20px;
+    }
+
+    .funcoes-visualizar-agendamento__botoes {
         display: flex;
         flex-direction: column;
+        align-items: center;
+        justify-content: center;
         gap: 10px;
     }
-}
+
+    .btn-criar-novo-agendamento,
+    .btn-bloquear-agenda {
+        display: block;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border-radius: 0.5rem;
+        font-weight: bold;
+        color: var(--primary-color);
+        cursor: pointer;
+        transition: 0.3s;
+        white-space: nowrap;
+    }
+
+    .btn-criar-novo-agendamento {
+        background-color: var(--primary-color);
+        color: var(--neutral-color-100);
+        border: none;
+    }
+
+    .btn-bloquear-agenda {
+        background-color: transparent;
+        color: var(--primary-color);
+        border: none;
+    }
+
+    /* RESPONSIVIDADE: CONTAINER FUNÇÕES AGENDAMENTOS */
+    .funcoes-visualizar-agendamento-titulo-botoes__responsivo {
+        display: flex;
+        flex-direction: row;
+        /* justify-content: space-between; */
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .funcoes-visualizar-agendamento__botoes-responsivo {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (max-width: 720px) {
+        .container-funcoes-visualizar-agendamento {
+            display: none;
+        }
+
+        .container-funcoes-visualizar-agendamento__responsivo {
+            background-color: #fcf3f5;
+            display: flex;
+            flex-direction: column;
+            width: 100vw;
+            box-sizing: border-box;
+            padding: 1rem;
+            gap: 1rem;
+            position: relative;
+        }
+
+        .funcoes-visualizar-agendamento__titulo-responsivo {
+            font-size: 4vh;
+            margin: 0;
+            justify-content: center;
+            gap: 10px;
+            font-weight: bold;
+            font-family: var(--font-family-principal);
+        }
+
+        .btn-criar-novo-agendamento {
+            width: 50px;
+            height: 50px;
+        }
+
+
+    }

@@ -5,7 +5,7 @@ import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/Cabe
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 import Dashboard from '../../components/Dashboard/Dashboard.js';
 
-function PaginaAnaliseResultados () {
+function PaginaAnaliseResultados() {
     useDocumentTitle("Análise de resultados | Seren"); // mudando o Title da pagina
 
     return (
@@ -16,11 +16,16 @@ function PaginaAnaliseResultados () {
 
             <div className='container-conteudo-analise-resultados'>
                 <div className='analise-resultados-cabecalho'>
-                    <CabecalhoUsuarioLogado />
+                    <CabecalhoUsuarioLogado
+                        nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className='analise-resultados-cabecalho-responsivo'>
-                    <CabecalhoResponsivo />
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className='analise-resultados-container-titulo'>
