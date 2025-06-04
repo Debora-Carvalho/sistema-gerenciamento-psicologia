@@ -5,6 +5,13 @@
 
 }
 
+.olho-logincadastro {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
+
 .container-lc {
     background-color: #f7cabd;
     width: 100%;

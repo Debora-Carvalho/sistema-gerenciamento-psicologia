@@ -21,10 +21,10 @@ function ContainerFuncoesAgendamento({ filtro, setFiltro }) {
                         Novo agendamento
                     </button>
 
-                    <button className='btn-bloquear-agenda'>
+                    {/* <button className='btn-bloquear-agenda'>
                         Bloquear agenda
-                    </button>
-                </div>              
+                    </button> */}
+                </div>
             </div>
 
             <div className='container-funcoes-visualizar-agendamento__responsivo'>
@@ -32,22 +32,15 @@ function ContainerFuncoesAgendamento({ filtro, setFiltro }) {
                     <h1 className='funcoes-visualizar-agendamento__titulo-responsivo'>
                         Agendamentos
                     </h1>
-
-                    <div className='funcoes-visualizar-agendamento__botoes-responsivo'>
-                        <button className='btn-criar-novo-agendamento' onClick={() => navigate("/agendar")}>
-                            Novo agendamento
-                        </button>
-
-                        <button className='btn-bloquear-agenda'>
-                            Bloquear agenda
-                        </button>
-                    </div> 
+                    <button className='btn-criar-novo-agendamento' onClick={() => navigate("/agendar")}>
+                        Novo agendamento
+                    </button>
                 </div>
 
                 <div className='funcoes-visualizar-agendamento__filtro-responsivo'>
                     <NavFiltroAgendamento filtro={filtro} setFiltro={setFiltro} />
                 </div>
-            </div>  
+            </div>
         </>
     );
 }

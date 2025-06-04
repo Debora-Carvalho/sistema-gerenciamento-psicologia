@@ -31,12 +31,9 @@
     border-radius: 20px;
 }
 
-/* .pagina-inicial-cabecalho-responsivo {
-    display: none;
-} */
-
 .container-para-flex-botoes {
     display: flex;
+    justify-content: center;
 }
 
 .container-botoes-calendario {
@@ -136,21 +133,24 @@
     .cards-botoes-funcionalidades {
         grid-template-columns: 1fr;
         grid-template-rows: auto;
-        padding:20px 0px;
+        padding:20px 0px  0px  0px ;
         gap: 15px;
     }
 
     .cards-botoes-funcionalidades .card-inicio-funcionalidade,
     .card-calendario-responsivo {
+        display: flex;
         width: 90vw;
         height: auto;
-        flex-direction: column;
+        flex-direction: inherit;
         gap: 10px;
         padding: 15px;
+        justify-content: space-around;
     }
 
-    .cards-botoes-funcionalidades .card-inicio-funcionalidade img {
-        width: 80%;
+    .cards-botoes-funcionalidades .card-inicio-funcionalidade img,
+    .card-calendario-responsivo img {
+        width: 13vh;
         height: auto;
     }
 
@@ -160,9 +160,22 @@
     .btn-analise-resultados,
     .btn-pagamentos,
     .btn-abrir-calendario-responsivo {
-        width: 100%;
+        width: 20vh;
         font-size: 1rem;
         padding: 10px;
+        margin-bottom: 0rem;
+        height: 6vh;
+        justify-content: center;
+        align-content: center;
+    }
+
+    .btn-pacientes p,
+    .btn-anotacoes p,
+    .btn-agendamentos p,
+    .btn-analise-resultados p,
+    .btn-pagamentos p,
+    .btn-abrir-calendario-responsivo p {
+        margin-bottom: 0rem;
     }
 
     .container-botoes-calendario {
@@ -180,5 +193,13 @@
     .container-cumprimentos-inicio-responsivo .texto-cumprimentos-inicio-responsivo {
         font-size: 1.5rem;
         text-align: center;
+    }
+
+    /* .card-calendario-responsivo {
+        display: flex;
+    } */
+
+    .calendario-inicial-container {
+        display: none;
     }
 }

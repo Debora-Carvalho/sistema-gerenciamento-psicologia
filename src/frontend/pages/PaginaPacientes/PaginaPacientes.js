@@ -315,6 +315,7 @@ function PaginaPacientes() {
                         onEditar={abrirPopupEdicao}
                         onExcluir={confirmarExclusao}
                         onFiltrar={handleFiltrarMobile}
+                        handleAbrirDetalhesPaciente={handleAbrirDetalhesPaciente}
                     />
                 ) : (
                     <DesktopView

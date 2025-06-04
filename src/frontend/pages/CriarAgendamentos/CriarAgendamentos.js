@@ -10,7 +10,6 @@ import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
 import TelaDeCarregamento from '../../components/CarregamentoTela/TelaDeCarregamento.js';
-
 const CriarAgendamentos = () => {
     const [carregando, setCarregando] = useState(false);
     const navigate = useNavigate();
@@ -149,6 +148,7 @@ const CriarAgendamentos = () => {
             nomePaciente: ''
         });
         setErro('');
+        navigate("/visualizar-agendamentos");
     };
 
     return (

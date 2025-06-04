@@ -14,6 +14,8 @@ function LoginCriarNovaSenha() {
     const [erroSenhaInvalida, setErroSenhaInvalida] = useState(false);
     const [popupAberto, setPopupAberto] = useState(false);
     const { atualizarSenha } = useNovaSenha();
+    const [mostrarSenha, setMostrarSenha] = useState(false);
+    const [mostrarSenhaNova, setMostrarSenhaNova] = useState(false);
 
     useEffect(() => {
         if (!email) {
@@ -71,7 +73,7 @@ function LoginCriarNovaSenha() {
                             )}
                             <label htmlFor='senha'>Nova senha</label>
                             <input
-                                type='password'
+                                type={mostrarSenha ? "text" : "password"}
                                 id='senha'
                                 className={erroSenhaInvalida ? 'erro' : ''}
                                 placeholder='Nova senha'
@@ -79,6 +81,13 @@ function LoginCriarNovaSenha() {
                                 onChange={(e) => setNovaSenha(e.target.value)}
                                 required
                             />
+                            <button
+                                type="button"
+                                className="olho-novasenha"
+                                onClick={() => setMostrarSenha(!mostrarSenha)}
+                            >
+                                {mostrarSenha ? "🙈" : "👁️"}
+                            </button>
                         </div>
                     </div>
 
@@ -86,7 +95,7 @@ function LoginCriarNovaSenha() {
                         <div className='input-container'>
                             <label htmlFor='confirmarSenha'>Confirmar nova senha</label>
                             <input
-                                type='password'
+                                type={mostrarSenhaNova ? "text" : "password"}
                                 id='confirmarSenha'
                                 className={erroSenhaInvalida ? 'erro' : ''}
                                 placeholder='Confirmar nova senha'
@@ -94,6 +103,13 @@ function LoginCriarNovaSenha() {
                                 onChange={(e) => setConfirmarSenha(e.target.value)}
                                 required
                             />
+                            <button
+                                type="button"
+                                className="olho-novasenha"
+                                onClick={() => setMostrarSenhaNova(!mostrarSenhaNova)}
+                            >
+                                {mostrarSenhaNova ? "🙈" : "👁️"}
+                            </button>
                         </div>
                     </div>
 

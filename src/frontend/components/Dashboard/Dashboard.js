@@ -66,14 +66,14 @@ function Dashboard() {
                 </div>
 
                 <div className='dashboard-cabecalho__botoes'>
-                    <button
+                    {/* <button
                         className='btn-filtro-dashboard'
                         ref={btnFiltroRef} //passa a referencia de onde está o filtro
                         onClick={handleAbrirFiltro}
                     >
                         <FiFilter />
                         Filtros
-                    </button>
+                    </button> */}
 
                     <button 
                     className='btn-exportar-dashboard'

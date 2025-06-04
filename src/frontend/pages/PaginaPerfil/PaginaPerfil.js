@@ -16,11 +16,16 @@ function PaginaPerfil() {
 
             <div className='container-centro-perfil'>
                 <div className='perfil-cabecalho'>
-                    <CabecalhoUsuarioLogado />
+                    <CabecalhoUsuarioLogado
+                        nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className='perfil-cabecalho-responsivo'>
-                    <CabecalhoResponsivo />
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className='titulo-perfil'>

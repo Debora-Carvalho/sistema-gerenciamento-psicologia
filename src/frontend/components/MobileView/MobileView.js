@@ -12,7 +12,8 @@ export function MobileView({
     pacienteEmEdicao,
     setPacienteEmEdicao,
     salvarPaciente,
-    fecharFormulario
+    fecharFormulario,
+    handleAbrirDetalhesPaciente
 }) {
     return (
         <ResponsividadePacientes
@@ -23,6 +24,7 @@ export function MobileView({
             onExcluir={onExcluir}
             mostrarFormulario={mostrarFormulario}
             setMostrarFormulario={setMostrarFormulario}
+            onOpenDetails={handleAbrirDetalhesPaciente}
         />
 
     );
