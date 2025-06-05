@@ -7,7 +7,7 @@ import './Registro.css';
  * @param {function} props.onConfirm - Função de callback a ser chamada quando a exclusão é confirmada.
  */
 
-const PopupExcluir = ({ isOpen, onClose, onConfirm }) => {
+const ExcluirRegistro = ({ isOpen, onClose, onConfirm }) => {
     const [showDeletedPopup, setShowDeletedPopup] = useState(false);
     const [showSuccessNotification, setShowSuccessNotification] = useState(false);
 
@@ -87,4 +87,4 @@ const PopupExcluir = ({ isOpen, onClose, onConfirm }) => {
     );
 };
 
-export default PopupExcluir;
+export default ExcluirRegistro;

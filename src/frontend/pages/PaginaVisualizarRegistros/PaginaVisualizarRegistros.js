@@ -97,7 +97,7 @@ function VisualizarRegistros() {
           <FuncoesRegistro
             filtro={filtro}
             setFiltro={setFiltro}
-            adicionarRegistro={adicionarRegistro}  // passando função pra FuncoesRegistro
+            adicionarRegistro={adicionarRegistro}  
           />
         </div>
 

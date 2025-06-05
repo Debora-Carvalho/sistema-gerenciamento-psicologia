@@ -370,11 +370,16 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   justify-content: space-between;
   background-color: #fff;
   padding: 1.5rem;
-  margin: 2rem;
+  margin: 1rem;
   border-radius: 0.75rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
+.data-registro {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
 .hora-registro {
   font-size: 2.2rem;
   font-weight: 500;
@@ -401,7 +406,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .card-registro-descricao {
   font-size: 1.2rem;
   display: flex;
-  margin-right: 57rem;
+  margin-right: 50rem;
   margin-top: 0.5rem;
 }
 
