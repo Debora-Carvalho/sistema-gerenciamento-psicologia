@@ -21,8 +21,7 @@ import PaginaPerfil from "../../frontend/pages/PaginaPerfil/PaginaPerfil.js"
 import PaginaConfiguracoes from "../../frontend/pages/PaginaConfiguracoes/PaginaConfiguracoes.js";
 import Teste from "../../frontend/components/ComponentesRegistros/Teste.js";
 import PaginaVisualizarRegistros from "../../frontend/pages/PaginaVisualizarRegistros/PaginaVisualizarRegistros.js";
-
-
+import PaginaAnaliseResultados from "../../frontend/pages/PaginaAnaliseResultados/PaginaAnaliseResultados.js";
 
 const AppRoutes = () => {
     return (
@@ -32,7 +31,6 @@ const AppRoutes = () => {
                 <Route path="/recuperar-senha" element={<EsqueciSenha />} />
                 <Route path="/recuperar-senha/codigo" element={<CodigoRecuperarSenha />} />
                 <Route path="/recuperar-senha/nova-senha" element={<NovaSenha />} />
-                <Route path="/visualizar-registros" element={<PaginaVisualizarRegistros />} />
                 <Route element={<ProtectedRoute />}>
                     <Route path="/pagina-inicial" element={<PaginaInicial />} />
                     <Route path="/pacientes" element={<PaginaPacientes />} />
@@ -47,6 +45,7 @@ const AppRoutes = () => {
                     <Route path="/configuracoes" element={<PaginaConfiguracoes />} />
                     <Route path="/agendamentos-concluidos" element={<AgendamentosConcluidos />} />
                     <Route path="/agendamentos-cancelados" element={<AgendamentosCancelados />} />
+                    <Route path="/visualizar-registros" element={<PaginaVisualizarRegistros />} />
                     <Route path="/perfil" element={<PaginaPerfil />} />
                     <Route path="/analise-resultados" element={<PaginaAnaliseResultados />} />
                 </Route>

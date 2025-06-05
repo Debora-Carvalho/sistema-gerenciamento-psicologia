@@ -20,6 +20,7 @@
         "bcryptjs": "^3.0.2",
         "bootstrap": "^5.3.5",
         "bson": "^6.10.3",
+        "cloudinary": "^2.6.1",
         "chart.js": "^4.4.9",
         "corn": "^0.0.1",
         "cors": "^2.8.5",

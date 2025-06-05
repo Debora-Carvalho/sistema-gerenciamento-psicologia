@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import '../Agendamentos/NavFiltroAgendamento/NavFiltroAgendamento.css';
 import { useNavigate } from 'react-router-dom';
 
-function NavFiltroAgendamento ({ filtro, setFiltro }) {
+function FiltroRegistro ({ filtro, setFiltro }) {
     const [active, setActive] = useState('hoje');
     const navigate = useNavigate();
     const handleClick = (section) => {
         setActive(section);
         if(section === 'hoje' || section === 'semana' || section === 'mes'){
-             navigate("/visualizar-registro", { state: { filtro: section } });                
+             navigate("/visualizar-registros", { state: { filtro: section } });                
         }     
         };
     return (
@@ -25,11 +25,11 @@ function NavFiltroAgendamento ({ filtro, setFiltro }) {
 
             <button className={`btn-nav-filtro-agendamento ${filtro === 'mes' ? 'active' : ''}`} 
                 onClick={() => {setFiltro('mes'); handleClick('mes')}}>
-                Esse Mês
+                Esse mês
             </button>
         </div>
     );
 
   };
 
-export default NavFiltroAgendamento;
+export default FiltroRegistro;
