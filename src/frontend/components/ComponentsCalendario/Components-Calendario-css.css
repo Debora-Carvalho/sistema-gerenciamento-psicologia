@@ -4,44 +4,57 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .tela {
     display: flex;
-    flex-direction: row;  
+    flex-direction: row;
     background-color: var(--background-color-tela);
     height: 100vh;
-    width: 100%; 
+    width: 100%;
 }
 
 .seren-logo {
-    font-family: var(--font-family-logo);  
-    font-size: var(--font-size-logo-desktop);  
-    color: var(--primary-color);  
-    position: absolute; 
-    top: 0; 
-    left: 50px;  
-    z-index: 1000; 
+    font-family: var(--font-family-logo);
+    font-size: var(--font-size-logo-desktop);
+    color: var(--primary-color);
+    position: absolute;
+    top: 0;
+    left: 50px;
+    z-index: 1000;
     margin-top: 10px;
     align-items: center;
     margin-right: 0;
     padding-right: 0;
 }
-.menu-container{
-    height: 100vh; 
-    width: 18%;  
+
+.menu-container {
+    height: 100vh;
+    width: 18%;
     --secondary-color: #ffe6ea;
-    padding-top: 100px; 
+    padding-top: 100px;
     padding-left: 20px;
     position: relative;
     margin-right: 0;
     padding-right: 0;
 }
 
+.container-conteudo-visualizar-calendario {
+    display: flex;
+    flex-direction: column;
+    padding: 20px 70px 20px 30px;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
 .calendario {
-    height: 100vh;
-    width: 80%; 
+    /* height: 80%; */
+    width: 100%;
     overflow: auto;
     padding: 10px;
-    background-color: var(--neutral-color-100); 
+    background-color: var(--neutral-color-100);
+    height: calc(100vh - 180px);
+    border-radius: 20px;
 }
 
 .toolbar {
@@ -51,16 +64,16 @@ body {
     min-width: 20px;
     color: var(--neutral-color-100);
     border-right: 3px solid var(--neutral-color-100);
-    padding-top: 110px; 
+    padding-top: 110px;
     padding-right: 15px;
     position: relative;
 }
 
 .toolbar-container {
     display: flex;
-    flex-direction: column;  
-    padding-left: 20px; 
-    padding-top: 20px;  
+    flex-direction: column;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 
 .mesAno {
@@ -69,7 +82,7 @@ body {
     justify-content: flex-start;
     font-size: var(--font-size-paragrafo-desktop);
     font-family: var(--font-family-principal);
-    text-align: left; 
+    text-align: left;
 }
 
 .dirtop {
@@ -77,7 +90,7 @@ body {
     justify-content: flex-end;
     display: flex;
     align-items: center;
-    padding-right: 20px; 
+    padding-right: 20px;
     padding-top: 20px;
 }
 
@@ -101,6 +114,7 @@ body {
     color: var(--primary-color);
     font-size: var(--font-size-titulo-desktop);
 }
+
 .rbc-toolbar button {
     background-color: var(--primary-color);
     color: var(--neutral-color-100);
@@ -110,16 +124,18 @@ body {
     font-family: var(--font-family-principal);
     transition: background-color 0.3s;
 }
+
 .rbc-toolbar button:hover {
     background-color: var(--primary-color-btn-hover);
 }
+
 .filtro-container {
     background-color: var(--neutral-color-100);
     color: var(--neutral-color-900);
     border-radius: 6px;
     padding: 15px;
     margin-bottom: 20px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border: 1px solid var(--secondary-color);
 }
 
@@ -155,11 +171,11 @@ body {
     border-color: var(--neutral-color-100);
 }
 
-.rbc-month-row + .rbc-month-row {
+.rbc-month-row+.rbc-month-row {
     border-color: var(--neutral-color-900);
 }
 
-.rbc-day-bg + .rbc-day-bg {
+.rbc-day-bg+.rbc-day-bg {
     border-color: var(--neutral-color-900);
 }
 
@@ -183,7 +199,7 @@ body {
 .rbc-button-link {
     margin: 5px;
     font-size: var(--font-size-paragrafo-desktop);
-    color: var(--neutral-color-900); 
+    color: var(--neutral-color-900);
     font-family: var(--font-family-principal);
     font-weight: var(--font-weight-paragrafo);
 }
@@ -204,27 +220,31 @@ body {
 
 
 .adicionar-evento-plus {
-    font-size: 30px; 
+    font-size: 30px;
     COLOR: WHITE;
     cursor: pointer;
-    background-color:  #01429E; /*cOR AZUL */
+    background-color: #01429E;
+    /*cOR AZUL */
     border: none;
-    padding: 0; 
-    border-radius: 20%;  
-    transition: all 0.3s ease; 
+    padding: 0;
+    border-radius: 20%;
+    transition: all 0.3s ease;
     text-align: center;
-    width: 40px; 
-    height: 35px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center; 
-    position: relative; 
-    top: 10px; /* AMANDAAAA É AQUI PARA VC AJUSTAR. PQP */
+    width: 40px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 10px;
+    /* AMANDAAAA É AQUI PARA VC AJUSTAR. PQP */
 }
 
 .adicionar-evento-plus:hover {
-    color: white; /* Cor do texto quando passar o mouse */
-    background-color: #6aa8ff; /* Cor de fundo mais escura no hover */
+    color: white;
+    /* Cor do texto quando passar o mouse */
+    background-color: #6aa8ff;
+    /* Cor de fundo mais escura no hover */
 }
 
 .adicionar-evento-plus:focus {
@@ -233,6 +253,54 @@ body {
 
 button[type="submit"] {
     margin-top: 10px;
-    margin-left: auto; 
+    margin-left: auto;
     display: block;
+}
+
+element {
+    color: rgb(33, 37, 41);
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.calendario-cabecalho-responsivo {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .calendario-cabecalho {
+        display: none;
+    }
+
+    .tela .navbar {
+        display: none;
+    }
+
+    .calendario-cabecalho-responsivo {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container-visualizar-agendamentos {
+        display: flex;
+        flex-direction: column;
+        overflow-y: scroll;
+    }
+
+    .container-conteudo-visualizar-calendario {
+        padding: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rbc-toolbar .rbc-toolbar-label {
+        font-size: 25px;
+    }
+
+    .rbc-toolbar {
+        font-size: 15px;
+    }
+
 }

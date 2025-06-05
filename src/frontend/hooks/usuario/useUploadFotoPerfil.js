@@ -3,7 +3,7 @@ import BASE_URL from '../configRota';
 const useUploadFotoPerfil = () => {
     const uploadFotoPerfil = async (file, userId) => {
         const formData = new FormData();
-        formData.append("imagem", file);       
+        formData.append("imagem", file);
         formData.append("userId", userId);
 
         try {
@@ -15,11 +15,11 @@ const useUploadFotoPerfil = () => {
             const data = await response.json();
 
             if (!response.ok || !data.success) {
-                throw new Error(data.error || "Erro ao enviar foto.");
+                throw new Error(data.error || "Erro ao enviar imagem.");
             }
 
             window.location.reload();
-            return data.fileId;
+            return data.url; 
         } catch (error) {
             console.error("Erro no upload:", error);
             throw error;

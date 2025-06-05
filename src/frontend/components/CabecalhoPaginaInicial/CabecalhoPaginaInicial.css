@@ -6,11 +6,13 @@
     margin-bottom: 5px;
     top: 0;
     padding: 0;
-    width: 80vw;
-    height: 12.5vh;
+    width: 75vw;
+    /* height: 12.5vh; */
     align-items: center;
     justify-content: space-between;
     text-align: start;
+    gap: 30px;
+    height: var(--font-weight-logo);
 }
 
 .container-cabecalho-inicio p {
@@ -25,7 +27,7 @@
 }
 
 .container-cumprimentos-inicio .texto-cumprimentos-inicio {
-    font-size: 40px;
+    font-size: 30px;
     font-weight: 200;
 }
 
@@ -38,4 +40,14 @@
 
 .container-agendamentos-inicio .texto-agendamentos-inicio span {
     font-weight: bold;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+    .container-agendamentos-inicio .texto-agendamentos-inicio {
+        font-size: 1.5vh;
+    }
+    .container-cumprimentos-inicio .texto-cumprimentos-inicio {
+        font-size: 2vh;
+    }
 }

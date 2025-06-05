@@ -13,6 +13,8 @@ import "moment/locale/pt-br";
 
 import '../../components/ComponentsCalendario/Components-Calendario-css.css';
 import '../../components/Menu/Menu.css';
+import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js";
+import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
 
 import Menu from '../../components/Menu/Menu';
 import eventosPadrao from "../../components/ComponentsCalendario/eventosPadrao";
@@ -105,50 +107,60 @@ function Calendario() {
 
     return (
         <div className="tela">
-            <div className='navbar'>
+            <div className="navbar">
                 <MenuPrincipal />
             </div>
-            {/* <div className="toolbar"> */}
-            {/* <Adicionar onAdicionar={handleAdicionar} /> */}
-            {/* </div> */}
-
-            <div className="calendario">
-                <DragAndDropCalendar
-                    date={date}
-                    view={view}
-                    defaultView="month"
-                    views={['month', 'week', 'day', 'agenda']}
-                    onView={setView}
-                    onNavigate={handleNavigate}
-                    events={eventosFiltrados}
-                    localizer={localizer}
-                    resizable
-                    onEventDrop={moverEventos}
-                    onEventResize={moverEventos}
-                    onSelectEvent={handleEventClick}
-                    eventPropGetter={eventStyle}
-                    components={{
-                        toolbar: (props) => (
-                            <CustomTollbar {...props}>
-                                <FiltroAtividades
-                                    atividades={eventos}
-                                    tiposSelecionados={tiposSelecionados}
-                                    onSelecionarAtividades={handleSelecionarAtividades}
-                                />
-                            </CustomTollbar>
-                        )
-                    }}
-                    className="calendar"
-                    messages={{
-                        date: 'Data',
-                        time: 'Hora',
-                        event: 'Agendamento',
-                        allDay: 'Dia inteiro',
-                        noEventsInRange: 'Não há eventos para este período',
-                        showMore: (total) => `+${total} agendamentos`
-                    }}
-                />
+            <div className="container-conteudo-visualizar-calendario">
+                <div className="calendario-cabecalho">
+                    <CabecalhoUsuarioLogado
+                        nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
+                </div>
+                <div className="calendario-cabecalho-responsivo">
+                    <CabecalhoResponsivo nomePacienteBusca={false}
+                        setNomePacienteBusca={false}
+                        exibirPesquisa={false} />
+                </div>
+                <div className="calendario">
+                    <DragAndDropCalendar
+                        date={date}
+                        view={view}
+                        defaultView="month"
+                        views={['month', 'week', 'day', 'agenda']}
+                        onView={setView}
+                        onNavigate={handleNavigate}
+                        events={eventosFiltrados}
+                        localizer={localizer}
+                        resizable
+                        onEventDrop={moverEventos}
+                        onEventResize={moverEventos}
+                        onSelectEvent={handleEventClick}
+                        eventPropGetter={eventStyle}
+                        components={{
+                            toolbar: (props) => (
+                                <CustomTollbar {...props}>
+                                    {/* <FiltroAtividades
+                                        atividades={eventos}
+                                        tiposSelecionados={tiposSelecionados}
+                                        onSelecionarAtividades={handleSelecionarAtividades}
+                                    /> */}
+                                </CustomTollbar>
+                            )
+                        }}
+                        className="calendar"
+                        messages={{
+                            date: 'Data',
+                            time: 'Hora',
+                            event: 'Agendamento',
+                            allDay: 'Dia inteiro',
+                            noEventsInRange: 'Não há eventos para este período',
+                            showMore: (total) => `+${total} agendamentos`
+                        }}
+                    />
+                </div>
             </div>
+
         </div>
     );
 }

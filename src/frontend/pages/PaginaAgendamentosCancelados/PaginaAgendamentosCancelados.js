@@ -29,11 +29,14 @@ function AgendamentosCancelados() {
                 <div className="visualizar-agendamentos-cabecalho">
                     <CabecalhoUsuarioLogado
                         nomePacienteBusca={nomePacienteBusca}
-                        setNomePacienteBusca={setNomePacienteBusca} />
+                        setNomePacienteBusca={setNomePacienteBusca} 
+                        exibirPesquisa={true} />
                 </div>
 
                 <div className="visualizar-agendamentos-cabecalho-responsivo">
-                    <CabecalhoResponsivo />
+                    <CabecalhoResponsivo nomePacienteBusca={nomePacienteBusca}
+                        setNomePacienteBusca={setNomePacienteBusca} 
+                        exibirPesquisa={false}/>
                 </div>
 
                 <div className="conteudo-concluidos">

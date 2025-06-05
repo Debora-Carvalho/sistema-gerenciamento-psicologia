@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import "../../pages/VisualizarAgendamentos/VisualizarAgendamentos.css";
 import useDocumentTitle from "../../components/useDocumentTitle";
 import MenuPrincipal from "../../components/MenuPrincipal/MenuPrincipal.js";
@@ -6,7 +6,7 @@ import CabecalhoUsuarioLogado from "../../components/CabecalhoUsuarioLogado/Cabe
 import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
 import ContainerFuncoesAgendamento from "../../components/Agendamentos/ContainerFuncoesAgendamento/ContainerFuncoesAgendamento.js";
 import CardInfoAgendamento from "../../components/Agendamentos/CardInfoAgendamento/CardInfoAgendamento.js";
-import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
+// import useMapearAgendamentos from '../../features/PaginaAgendamentos/useMapearAgendamentos';
 import { useLocation } from 'react-router-dom';
 import useAgendamentosPorNome from "../../features/PaginaAgendamentos/useAgendamentoPorNome.js";
 
@@ -18,12 +18,25 @@ function VisualizarAgendamentos() {
     const [limiteCards, setLimiteCards] = useState(3); //esse é o limite de cards exibidos de inicio na tela
     const [nomePacienteBusca, setNomePacienteBusca] = useState('');
     const agendamentosFiltrados = useAgendamentosPorNome(nomePacienteBusca, filtro);
+    const [mostrarSucesso, setMostrarSucesso] = useState(false);
+    const mensagemSucesso = location.state?.mensagem || "Ação realizada com sucesso!";
 
     function formatarData(dataRecebida) {
         if (!dataRecebida) return '';
         const data = new Date(dataRecebida);
         return data.toLocaleDateString('pt-BR');
     }
+
+    useEffect(() => {
+        if (location.state?.sucesso) {
+            setMostrarSucesso(true);
+            const timer = setTimeout(() => {
+                setMostrarSucesso(false);
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [location.state]);
 
     return (
         <div className="container-visualizar-agendamentos">
@@ -36,13 +49,13 @@ function VisualizarAgendamentos() {
                     <CabecalhoUsuarioLogado
                         nomePacienteBusca={nomePacienteBusca}
                         setNomePacienteBusca={setNomePacienteBusca}
-                        exibirPesquisa={false} />
+                        exibirPesquisa={true} />
                 </div>
 
                 <div className="visualizar-agendamentos-cabecalho-responsivo">
                     <CabecalhoResponsivo nomePacienteBusca={nomePacienteBusca}
-                        setNomePacienteBusca={setNomePacienteBusca} 
-                        exibirPesquisa={false}/>
+                        setNomePacienteBusca={setNomePacienteBusca}
+                        exibirPesquisa={false} />
                 </div>
 
                 <div className="visualizar-agendamentos-componente-funcoes">
@@ -87,6 +100,13 @@ function VisualizarAgendamentos() {
                     )}
                 </div>
             </div>
+            {mostrarSucesso && (
+                <div className="popup-sucesso-container show">
+                    <div className="popup-sucesso">
+                        <p>{mensagemSucesso}</p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

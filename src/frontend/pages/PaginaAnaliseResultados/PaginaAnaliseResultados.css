@@ -3,37 +3,60 @@
 .container-pagina-analise-resultados {
     display: flex;
     flex-direction: row;
-    max-width: 100vw !important;
-    max-height: 100vh !important;
-    width: 100%;
-    height: 100%;
+    /* max-width: 100vw !important;
+    max-height: 100vh !important; */
+    /* width: 100%;
+    height: 100%; */
     top: 0;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
+    height: 100vh;
+    width: 100vw;
+}
+
+.container-conteudo-analise-resultados {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px 70px 20px 30px;
+    gap: 20px;
+    width: 100%;
 }
 
 .analise-resultados-cabecalho-responsivo {
     display: none;
 }
 
-.container-conteudo-visualizar-agendamentos {
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    padding: 30px 0;
-    gap: 10px;
+.analise-resultados-container-titulo {
+    height: 10%;
+    word-wrap: break-word;
 }
 
 .analise-resultados__titulo {
     color: var(--primary-color);
+    font-size: var(--font-size-titulo-desktop);
+    font-weight: bold;
     font-family: var(--font-family-principal);
-    font-weight: bolder;
     margin-bottom: 20px;
 }
 
+/* .container-conteudo-graficos-analise-resultados {
+    background-color: var(--neutral-color-100);
+    width: 100%;
+    padding: 20px 30px;
+    border-radius: 20px;
+    height: calc(88vh - 180px);
+    display: flex;
+    flex-direction: column;
+} */
+
 /* RESPONSIVIDADE - PAGINA ANALISE DE RESULTADOS */
 @media (max-width: 768px) {
+    .container-pagina-analise-resultados {
+        display: flex;
+    }
+
     .container-pagina-analise-resultados .navbar {
         display: none;
     }
@@ -45,5 +68,27 @@
     .analise-resultados-cabecalho-responsivo {
         display: flex;
         flex-direction: column;
+    }
+
+    .titulo-analise-resultados-container-titulo {
+        word-wrap: break-word;
+        height: 6vh;
+    }
+
+    .analise-resultados__titulo {
+        font-size: 4vh;
+    }
+
+    .container-conteudo-analise-resultados {
+        padding: 40px;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .analise-resultados-container-titulo {
+        width: 120%;
+        align-content: center;
+        justify-content: center;
+        display: flex;
     }
 }

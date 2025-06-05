@@ -1,8 +1,12 @@
 import React from 'react';
-import { FiSearch, FiFilter, FiEdit, FiTrash } from 'react-icons/fi';
+import { RiSearchLine } from "react-icons/ri";
+import {FiFilter, FiEdit, FiTrash } from 'react-icons/fi';
 import { BsFileEarmarkPdf } from 'react-icons/bs';
 import { AiOutlineUserAdd } from 'react-icons/ai';
 import FotoPerfil from '../../features/PaginaPerfil/FotoPerfil';
+import TelaDeCarregamento from '../CarregamentoTela/TelaDeCarregamento';
+import useUsuarios from '../../hooks/useUsuarios';
+
 
 export function DesktopView({
     filtro,
@@ -27,35 +31,35 @@ export function DesktopView({
     calcularIdade,
     datasPorPaciente
 }) {
+    // const { usuario } = useUsuarios();
+    if (!usuario) {
+        return <TelaDeCarregamento mensagem="Carregando cabeçalho..." />;
+    }
     return (
         <>
             <header className="top-bar">
-                <div className="container-pesquisa">
-                    <FiSearch className={`icone-lupa ${campoPesquisaFocado || filtro ? 'escondido' : ''}`} />
+                <div className='container-cabecalho-usuario-logado'>
+                <div className="container-barra-pesquisa-usuario-logado">
+                    <RiSearchLine className="icon-lupa" alt="Ícone de lupa" />
                     <input
                         type="text"
                         className="campo-pesquisa"
                         value={filtro}
+                        placeholder="Pesquisar paciente"
                         onChange={e => setFiltro(e.target.value)}
                         onFocus={() => setCampoPesquisaFocado(true)}
                         onBlur={() => setCampoPesquisaFocado(false)}
                     />
-                    {!campoPesquisaFocado && !filtro && (
-                        <span className="texto-pesquisa">Pesquisar paciente</span>
-                    )}
                 </div>
-                <div className="usuario-info">
-                    <div className="avatar"><FotoPerfil userId={userID} /></div>
-                    {usuario ? (
-                        <div className="info-texto">
-                            <strong>{usuario.username}</strong>
-                            <span>{usuario.email}</span>
-                        </div>
-                    ) : (
-                        <div className="info-texto">
-                            <strong>Carregando...</strong>
-                        </div>
-                    )}
+                <div className='container-perfil'>
+                    <div className='foto-perfil'>
+                        <FotoPerfil userId={usuario._id} />
+                    </div>
+                    <div className='infos-usuario'>
+                        <p className="nome-usuario">{usuario.username?.split(' ')[0]}</p>
+                        <p>{usuario.email}</p>
+                    </div>
+                </div>
                 </div>
             </header>
             <div className="titulo-acoes-container">

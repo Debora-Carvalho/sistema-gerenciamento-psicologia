@@ -1,5 +1,11 @@
 @import '../../styles/variaveis.css';
 
+.olho-novasenha {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+}
 .container {
     max-width: 100vw;
     max-height: 100vh;
@@ -239,13 +245,13 @@
     }
 
     .campo-incluir-nova-senha .input-container input {
-        width: 90%;
+        width: 80%;
         max-width: 354px;
         height: 45px;
         font-size: 0.9rem;
         margin-left: auto;
         margin-right: auto;
-        display: block;
+        /* display: block; */
     }
 
     .container form .btn-confirmar,

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './PaginaPacientes.css';
-import { FiFilter, FiSearch, FiEdit, FiTrash } from "react-icons/fi"; // Importando FiEdit e FiTrash
-import { BsFileEarmarkPdf } from "react-icons/bs"; // Removido BsThreeDots
-import { AiOutlineUserAdd } from "react-icons/ai";
+// import { FiFilter, FiSearch, FiEdit, FiTrash } from "react-icons/fi"; // Importando FiEdit e FiTrash
+// import { BsFileEarmarkPdf } from "react-icons/bs"; // Removido BsThreeDots
+// import { AiOutlineUserAdd } from "react-icons/ai";
 import useUsuarios from '../../hooks/useUsuarios';
 import usePacientes from '../../hooks/pacientes/usePacientesListar';
 import { exportarPDF } from '../../hooks/pacientes/usePacientesPdf';
@@ -12,7 +12,7 @@ import { atualizarPaciente } from '../../hooks/pacientes/UsePacienteAtualizar';
 import { cadastrarPaciente } from '../../hooks/pacientes/usePacienteCadastrar';
 import calcularIdade from '../../hooks/pacientes/utilCalcularIdade';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
-import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
+import CabecalhoResponsivo from "../../components/CabecalhoResponsivo/CabecalhoResponsivo.js";
 import useAgendamentos from '../../hooks/agendamentos/useAgendamentos';
 import useLeitorDeTela from '../../features/LeitorTela/useLeitorTela.js';
 import useInitPaginaPacientes from '../../features/PaginaPacientes/useInitPaginaPacientes.js';
@@ -299,7 +299,13 @@ function PaginaPacientes() {
                     </div>
                 </div>
             )}
-            <div className="conteudo-principal">
+
+            <div className="visualizar-paciente-cabecalho-responsivo">
+                <CabecalhoResponsivo nomePacienteBusca={false}
+                    setNomePacienteBusca={false}
+                    exibirPesquisa={false} />
+            </div>
+            <div className="conteudo-principal-pacientes">
                 {isMobile ? (
                     <MobileView
                         pacientes={pacientesFiltradosMobile}
@@ -309,6 +315,7 @@ function PaginaPacientes() {
                         onEditar={abrirPopupEdicao}
                         onExcluir={confirmarExclusao}
                         onFiltrar={handleFiltrarMobile}
+                        handleAbrirDetalhesPaciente={handleAbrirDetalhesPaciente}
                     />
                 ) : (
                     <DesktopView

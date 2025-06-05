@@ -9,8 +9,9 @@ import usePacientes from '../../hooks/pacientes/usePacientesListar';
 import MenuPrincipal from '../../components/MenuPrincipal/MenuPrincipal.js';
 import CabecalhoUsuarioLogado from '../../components/CabecalhoUsuarioLogado/CabecalhoUsuarioLogado.js';
 import CabecalhoResponsivo from '../../components/CabecalhoResponsivo/CabecalhoResponsivo.js';
-
+import TelaDeCarregamento from '../../components/CarregamentoTela/TelaDeCarregamento.js';
 const CriarAgendamentos = () => {
+    const [carregando, setCarregando] = useState(false);
     const navigate = useNavigate();
     const { adicionarAgendamento } = useCriarAgendamentos();
     const [agendamento, setAgendamento] = useState({
@@ -20,7 +21,7 @@ const CriarAgendamentos = () => {
         titulo: '',
         dataInicioData: '',
         dataInicioHora: '',
-        dataFimHora: '', 
+        dataFimHora: '',
         desc: '',
         color: '#000000',
         tipo: '',
@@ -81,6 +82,7 @@ const CriarAgendamentos = () => {
         const DataFim = new Date(`${agendamento.dataInicioData}T${agendamento.dataFimHora}:00`).toISOString();
 
         try {
+            setCarregando(true);
             const userID = localStorage.getItem("userID");
             const agendamentoId = await adicionarAgendamento(
                 userID,
@@ -93,7 +95,7 @@ const CriarAgendamentos = () => {
                 agendamento.nomePaciente,
                 agendamento.linkSessao
             );
-
+            setCarregando(false);
             if (agendamentoId) {
                 setMostrarSucesso(true);
                 setExibirPopupConfirmacao(false);
@@ -113,10 +115,10 @@ const CriarAgendamentos = () => {
                     nomePaciente: ''
                 });
 
-                setTimeout(() => {
-                    setMostrarSucesso(false);
-                    navigate("/visualizar-agendamentos");
-                }, 1000);
+                navigate("/visualizar-agendamentos", {
+                    state: { sucesso: true, mensagem: "Paciente foi agendado com sucesso!" }
+                });
+
             } else {
                 setErro('Falha ao salvar o agendamento.');
             }
@@ -146,6 +148,7 @@ const CriarAgendamentos = () => {
             nomePaciente: ''
         });
         setErro('');
+        navigate("/visualizar-agendamentos");
     };
 
     return (
@@ -286,17 +289,11 @@ const CriarAgendamentos = () => {
                                 <button className="voltar" onClick={cancelarSalvar}>Voltar</button>
                             </div>
                         </div>
-                    </div>
-                )}
 
-                {mostrarSucesso && (
-                    <div className="popup-sucesso-container show">
-                        <div className="popup-sucesso">
-                            <p>Paciente foi agendado com sucesso!</p>
-                        </div>
                     </div>
                 )}
             </div>
+            {carregando && <TelaDeCarregamento mensagem="Salvando agendamento..." />}
         </div>
     );
 };

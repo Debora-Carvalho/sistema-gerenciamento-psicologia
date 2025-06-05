@@ -1,58 +1,58 @@
 import { useState, useEffect } from 'react';
 
 export default function useVLibras() {
-  const [ativado, setAtivado] = useState(() => {
-    return localStorage.getItem('Vlibras_ativado') === 'true';
-  });
-
-  const aplicarEstadoVLibras = (isAtivado) => {
-    if (isAtivado) {
-      mostrarBotaoVLibras();
-    } else {
-      esconderBotaoVLibras();
-    }
-  };
-
-  useEffect(() => {
-  
-    aplicarEstadoVLibras(ativado);
-
-    const observer = new MutationObserver(() => {
-      const botao = document.getElementById('vw-access-button');
-      if (botao) {
-        aplicarEstadoVLibras(ativado); 
-      }
+    const [ativado, setAtivado] = useState(() => {
+        return localStorage.getItem('Vlibras_ativado') === 'true';
     });
 
-    observer.observe(document.body, {
-      childList: true, 
-      subtree: true,   
-    });
+    const aplicarEstadoVLibras = (isAtivado) => {
+        if (isAtivado) {
+            mostrarBotaoVLibras();
+        } else {
+            esconderBotaoVLibras();
+        }
+    };
 
-    return () => observer.disconnect();
-  }, [ativado]);
+    useEffect(() => {
 
-  const esconderBotaoVLibras = () => {
-    const botao = document.getElementById('vw-access-button');
-    if (botao) {
-      botao.style.display = 'none'; 
-    }
-  };
+        aplicarEstadoVLibras(ativado);
 
-  const mostrarBotaoVLibras = () => {
-    const botao = document.getElementById('vw-access-button');
-    if (botao) {
-      botao.style.display = 'flex'; 
-    }
-  };
+        const observer = new MutationObserver(() => {
+            const botao = document.getElementById('vw-access-button');
+            if (botao) {
+                aplicarEstadoVLibras(ativado);
+            }
+        });
 
-  const toggleLibras = () => {
-    const novoEstado = !ativado;
-    localStorage.setItem('Vlibras_ativado', novoEstado.toString());
-    setAtivado(novoEstado); 
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true,
+        });
 
-    aplicarEstadoVLibras(novoEstado);
-  };
+        return () => observer.disconnect();
+    }, [ativado]);
 
-  return { ativado, toggleLibras };
+    const esconderBotaoVLibras = () => {
+        const botao = document.getElementById('vw-access-button');
+        if (botao) {
+            botao.style.display = 'none';
+        }
+    };
+
+    const mostrarBotaoVLibras = () => {
+        const botao = document.getElementById('vw-access-button');
+        if (botao) {
+            botao.style.display = 'flex';
+        }
+    };
+
+    const toggleLibras = () => {
+        const novoEstado = !ativado;
+        localStorage.setItem('Vlibras_ativado', novoEstado.toString());
+        setAtivado(novoEstado);
+
+        aplicarEstadoVLibras(novoEstado);
+    };
+
+    return { ativado, toggleLibras };
 }

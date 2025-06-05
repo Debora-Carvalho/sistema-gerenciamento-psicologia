@@ -24,6 +24,9 @@ const { UpdateUsuarioHandler } = require('../controllers/crudUsuario/UpdateUsuar
 const upload = require("../middlewares/uploadImagem");
 const { uploadFotoPerfilHandler } = require("../controllers/uploadFotoPerfil");
 const { buscarFotoPerfilHandler } = require("../controllers/buscarFotoPerfil");
+const { histoSaudePacienteHandler } = require('../controllers/crudPaciente/histoSaudePaciente');
+const { adicionarAbordagemHandler } = require('../controllers/crudPaciente/adicionarAbordagem');
+const { buscarHistoSaudeHandler } = require('../controllers/crudPaciente/buscarHistoSaude');
 
 router.post('/authLogin', loginHandler);
 router.get('/', indexBackend)
@@ -49,8 +52,12 @@ router.post('/dadosPaciente', buscarPacienteHandler);
 router.post('/excluirPaciente', excluirPacienteHandler);
 router.post('/editarPaciente', editarPacienteHandler)
 
+router.post('/histoSaudePaciente', histoSaudePacienteHandler)
+router.post('/adicionarAbordagem', adicionarAbordagemHandler)
+router.post('/buscarHistoSaude', buscarHistoSaudeHandler )
+
 router.post("/upload-foto-perfil", upload.single("imagem"), uploadFotoPerfilHandler);
-router.get("/foto/:id", buscarFotoPerfilHandler);
+// router.get("/foto/:id", buscarFotoPerfilHandler);
 
 module.exports = router;
 
